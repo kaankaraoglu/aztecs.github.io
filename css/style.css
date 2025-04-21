@@ -1,3 +1,7 @@
+html {
+  background: #111;
+}
+
 .wrapper {
   font-family: 'Titillium Web', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -6,8 +10,15 @@
   width: 50%;
   color: white;
   font-size: 1.7em;
-  line-height: 1.6;
   font-weight: 300;
-  margin: 12% auto;
-  background: #111;
+  margin: auto;
+}
+
+.description {
+  font-size: 0.7em;
+  font-weight: 300;
+}
+
+footer {
+  border-top: solid 2px white;
 }
