@@ -81,13 +81,13 @@ export default {
     display: inline-block;
 
     .logo {
-      height: 7em;
+      height: 12em;
       margin-top: 3em;
     }
   }
 
   .splash-text {
-    font-size: .2em;
+    font-size: .5em;
     font-weight: bold;
     color: #fdbe00;
     animation: fadeIn 1s ease-in-out;

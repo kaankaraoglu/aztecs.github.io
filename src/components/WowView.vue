@@ -2,7 +2,7 @@
   <div class="wow-view">
     <KillCardView
       raidName="Liberation of Undermine (AOTC)"
-      imageUrl="/images/kills/liberation_of_undermine_2025-04-20_1939.png"
+      :imageUrl="require('@/assets/images/kills/liberation_of_undermine_2025-04-20_1939.png')"
       date="2025-04-20 19:39"
       :tries="5"
       :tanks="[
