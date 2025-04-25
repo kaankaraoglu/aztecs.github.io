@@ -4,9 +4,9 @@
       <h3 class="contact-info">
         We are a friendly guild that welcomes all players, regardless of
         experience or playstyle. 
-        <br><br>
-        Reach out to any of the online officers or
-        veterans in-game or on discord for an invite to the guild.
+        <br/><br/>
+        Reach out to any of the online officers or veterans in-game or on
+        discord for an invite to the guild.
       </h3>
     </div>
     <div class="right">
@@ -24,11 +24,11 @@
           </tr>
           <tr>
             <th scope="row" class="quality-epic">Officer</th>
-            <td class="evoker">Rhyianne</td>
+            <td class="paladin">Valorite</td>
           </tr>
           <tr>
             <th scope="row" class="quality-epic">Officer</th>
-            <td class="paladin">Valorite</td>
+            <td class="paladin">Aurielle</td>
           </tr>
           <tr>
             <th scope="row" class="quality-epic">Officer</th>
@@ -50,6 +50,10 @@
             <th scope="row" class="quality-epic">Officer</th>
             <td class="paladin">Petsy</td>
           </tr>
+          <tr>
+            <th scope="row" class="quality-epic">Sympathy Hire</th>
+            <td class="warlock">Rhysanatic</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -59,7 +63,6 @@
 <script>
 export default {
   name: "ContactView",
-  // Add your component logic here
 };
 </script>
 
@@ -67,10 +70,9 @@ export default {
 @import "@/assets/styles/_variables.scss";
 
 .contact-view {
-    width: 80%;
-    margin: 0 auto;
-    text-align: left;
-
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
 
   .left {
     width: 50%;
@@ -86,11 +88,11 @@ export default {
   .right {
     width: 50%;
     float: right;
-    
+
     .table {
       margin: 0 auto;
       text-align: left;
-  
+
       thead {
         th {
           color: $accent-color;
@@ -98,7 +100,7 @@ export default {
           padding-left: 20px;
         }
       }
-  
+
       tbody {
         tr {
           th,
@@ -108,8 +110,7 @@ export default {
           }
         }
       }
-  }
-
+    }
   }
 }
 </style>
