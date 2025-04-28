@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
-$accent-color: #fdbe00;
+
+// COLOR PALETTE: #F54545, #FE691E, #FF8A05, #FFA203, #F5BD25
+$accent-color: #FFA203;
+$accent-color-hover: #F54545;
 $background-color: #111;
 
 .accent-color {
   color: $accent-color;
+}
+
+.accent-color-hover {
+  color: $accent-color-hover;
 }
 
 // ITEM QUALITIES

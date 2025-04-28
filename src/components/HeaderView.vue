@@ -102,7 +102,7 @@ export default {
   .splash-text {
     font-size: 1em;
     font-weight: bold;
-    color: #fdbe00;
+    color: $accent-color;
     animation: fadeIn 1s ease-in-out;
     white-space: nowrap;
     pointer-events: none;
@@ -122,13 +122,17 @@ export default {
   .router-link-active {
     color: $accent-color !important;
     transition: color 0.3s ease;
+
+    &:hover {
+      color: $accent-color-hover !important;
+    }
   }
 
   .nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 2em;
+    margin: 2em 0 5em;
 
     .nav-header {
       display: none;
@@ -174,7 +178,7 @@ export default {
         font-size: 1.2em;
 
         &:hover {
-          color: #fdbe00;
+          color: $accent-color-hover;
           transition: color 0.3s ease;
         }
       }

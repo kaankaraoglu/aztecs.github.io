@@ -1,9 +1,7 @@
 <template>
-  <div class="divider"></div>
+  <div class="top-line"></div>
 
   <HeaderView />
-
-  <div class="nav-divider"></div>
 
   <main>
     <RouterView />
@@ -24,16 +22,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.divider {
+@import "@/assets/styles/_variables.scss";
+
+.top-line {
   top: 0;
   height: 5px;
-  background: linear-gradient(to right, #9000ff, #ff0000);
-}
-
-.nav-divider {
-  height: 2px;
-  margin: 1em 0 4em 0;
-  background: linear-gradient(to right, #ffa600, #ffffff);
+  background: linear-gradient(to right, #F54545, #FE691E, #FF8A05, #FFA203, #F5BD25);  
 }
 </style>
 
