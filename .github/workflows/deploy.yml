@@ -1,47 +1,50 @@
-name: Deploy to GitHub Pages
+name: Deploy to GitHub Pages (no 3rd party)
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - main  # or your default branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # your node version
+          node-version: '20'  # or your project's Node version
 
       - name: Install dependencies
         run: npm install
 
       - name: Build the site
-        run: npm run build
+        run: npm run build  # or your build command
 
-      - name: Deploy built site
+      - name: Create CNAME file
+        run: echo "aztecs.se" > build/CNAME
+
+      - name: Deploy to gh-pages branch
         run: |
-          # Set up Git config
+          # Set up Git config for committing
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           # Clone the gh-pages branch into 'out' directory
-          git clone --depth=1 --branch=gh-pages https://x-access-token:${{ secrets.AZTECS_GH_TOKEN }}@github.com/${{ github.repository }} out
+          git clone --depth=1 --branch=gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} out
 
-          # Clean out existing contents
+          # Clean old files
           rm -rf out/*
 
-          # Copy build output to 'out'
+          # Copy new build files
           cp -r build/* out/
 
           # Commit and push
           cd out
           git add .
-          git commit -m "Deploy site - $(date +'%Y-%m-%d %H:%M:%S')" || echo "Nothing to commit"
+          git commit -m "Deploy site - $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
