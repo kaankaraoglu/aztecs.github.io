@@ -47,6 +47,7 @@ export default {
         "Blood Price!",
         "DO NOT RELEASE!!!",
         "mxk ydb",
+        "BALLS! BALLS! BALLS!",
       ],
       currentSplash: "",
       splashInterval: null,
