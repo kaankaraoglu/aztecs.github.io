@@ -76,7 +76,7 @@
     />
 
     <KillCardView
-      raidName="Obisidian Sanctum"
+      raidName="Obsidian Sanctum"
       :imageUrl="require('@/assets/images/kills/obsidian_sanctum_2009_02_23.jpg')"
       date="2009-02-23"
     />
