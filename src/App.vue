@@ -42,11 +42,11 @@ export default {
     return {
       menuOpen: false,
       splashMessages: [
-        "TIP TO TIP",
-        "RULE #1: IGNORE RHYS",
-        "BLOOD PRICE!",
-        "DON'T RELEASE!!!",
-        "MXK YDB",
+        "tip to tip",
+        "Rule #1: IGNORE Rhys",
+        "Blood Price!",
+        "DO NOT RELEASE!!!",
+        "mxk ydb",
       ],
       currentSplash: "",
       splashInterval: null,
@@ -54,7 +54,7 @@ export default {
   },
   mounted() {
     this.rotateSplash();
-    this.splashInterval = setInterval(this.rotateSplash, 5000);
+    this.splashInterval = setInterval(this.rotateSplash, 3000);
   },
   beforeUnmount() {
     clearInterval(this.splashInterval);
@@ -81,20 +81,20 @@ export default {
     display: inline-block;
 
     .logo {
-      height: 12em;
+      height: 10em;
       margin-top: 3em;
     }
   }
 
   .splash-text {
-    font-size: .5em;
+    font-size: 1em;
     font-weight: bold;
     color: #fdbe00;
     animation: fadeIn 1s ease-in-out;
     white-space: nowrap;
     pointer-events: none;
     user-select: none;
-    margin-bottom: 5em;
+    margin-bottom: 1em;
   }
 
   @keyframes fadeIn {

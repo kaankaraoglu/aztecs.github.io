@@ -47,25 +47,25 @@ export default {
 
   .welcome-heading {
     font-weight: 800;
-    margin-bottom: 0;
+
   }
 
   .who-are-we {
-    font-size: 1em;
-    font-weight: 100;
+    font-size: 1.5em;
+    font-weight: 500;
     margin: auto;
     padding: 20px;
     width: 65vw;
     line-height: 1.5;
     text-align: justify;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Roboto", sans-serif;
 
     @media (min-width: 768px) {
       max-width: 66vw;
     }
 
     @media (min-width: 1200px) {
-      max-width: 45vw;
+      max-width: 60vw;
     }
   }
 
