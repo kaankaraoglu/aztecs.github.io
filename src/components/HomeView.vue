@@ -5,7 +5,7 @@
       <b>"Aztecs"</b> are an established, multinational Horde guild based on
       Al’Akir, where we've been the home of more than 160 accounts and over 900
       characters. <br /><br />
-      We formed on the <b>11th of February 2005</b>, making us one of the few
+      We formed on the <b>9th of September, 2005</b>, making us one of the few
       remaining launch day guilds on Al'Akir. We're from all over Europe - most
       members are in their 20s-30s, although we have several ‘more experienced’
       colleagues :) Many of us have played games together for up to 15 years, as
