@@ -58,7 +58,7 @@ export default {
     width: 65vw;
     line-height: 1.5;
     text-align: justify;
-    font-family: "Roboto", sans-serif;
+    font-family: "Cal Sans", sans-serif;
 
     @media (min-width: 768px) {
       max-width: 66vw;

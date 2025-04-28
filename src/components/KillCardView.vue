@@ -111,7 +111,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/styles/_variables.scss";
+@use "@/assets/styles/_variables.scss" as variables;
 
 .kill-card-view {
   display: flex;

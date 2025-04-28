@@ -4,7 +4,6 @@
       raidName="Liberation of Undermine (AOTC)"
       :imageUrl="require('@/assets/images/kills/liberation_of_undermine_2025_04_20.png')"
       date="2025-04-20 19:39"
-      :tries="5"
       :tanks="[
         { name: 'Phing', class: 'monk' },
         { name: 'Agro', class: 'warrior' },
