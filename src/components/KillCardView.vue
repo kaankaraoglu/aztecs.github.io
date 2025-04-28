@@ -134,7 +134,7 @@ export default {
     }
 
     @media (min-width: 1200px) {
-      max-width: 45vw;
+      max-width: 55vw;
     }
 
     .image-container {

@@ -95,7 +95,7 @@ export default {
 
     .logo {
       height: 10em;
-      margin-top: 3em;
+      margin-top: 1em;
     }
   }
 
@@ -128,7 +128,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 50px;
+    margin-top: 2em;
 
     .nav-header {
       display: none;

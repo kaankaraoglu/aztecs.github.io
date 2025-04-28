@@ -74,6 +74,14 @@ export default {
   margin: 0 auto;
   text-align: left;
 
+  @media (min-width: 768px) {
+      max-width: 66vw;
+    }
+
+    @media (min-width: 1200px) {
+      max-width: 60vw;
+    }
+
   .left {
     width: 50%;
     float: left;
