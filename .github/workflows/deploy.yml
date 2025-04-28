@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # your node version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the site
+        run: npm run build
+
+      - name: Deploy built site
+        run: |
+          # Set up Git config
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Clone the gh-pages branch into 'out' directory
+          git clone --depth=1 --branch=gh-pages https://x-access-token:${{ secrets.AZTECS_GH_TOKEN }}@github.com/${{ github.repository }} out
+
+          # Clean out existing contents
+          rm -rf out/*
+
+          # Copy build output to 'out'
+          cp -r build/* out/
+
+          # Commit and push
+          cd out
+          git add .
+          git commit -m "Deploy site - $(date +'%Y-%m-%d %H:%M:%S')" || echo "Nothing to commit"
+          git push
