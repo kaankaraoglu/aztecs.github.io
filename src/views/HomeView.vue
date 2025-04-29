@@ -67,10 +67,15 @@
 
       <div class="info-box">
         <h2 class="info-box-heading">Raid Schedule</h2>
+        <p>2 raids/week</p>
         <p class="raid-day">Wednesdays at 20:00 - 22:00 ST</p>
         <p class="raid-day">Sundays at 19:00 - 22:00 ST</p>
         <p>
           We sometimes skip raids that correspond with holidays but they are announced in advance.
+        </p>
+        <p>
+          Every tier, we start with normals, switch to heroics when we feel like we can manage and
+          after the AOTC, we do an achievement run.
         </p>
       </div>
 
