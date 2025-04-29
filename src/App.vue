@@ -1,5 +1,5 @@
 <template>
-  <div class="top-line"></div>
+  <div class="gradient-line"></div>
 
   <HeaderView />
 
@@ -7,43 +7,50 @@
     <RouterView />
   </main>
 
-  <!-- FOOTER WILL GO HERE -->
+  <FooterView />
 </template>
 
 <script>
-import HeaderView from "./components/HeaderView.vue";
+import FooterView from '@/views/FooterView.vue'
+import HeaderView from '@/views/HeaderView.vue'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     HeaderView,
+    FooterView,
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/_variables.scss";
-
-.top-line {
+.gradient-line {
   top: 0;
   height: 5px;
-  background: linear-gradient(to right, #F54545, #FE691E, #FF8A05, #FFA203, #F5BD25);  
+  background: linear-gradient(to right, #f54545, #fe691e, #ff8a05, #ffa203, #f5bd25);
 }
 </style>
 
 <style lang="scss">
-@import "@/assets/styles/_variables.scss";
+@use '@/assets/styles/_variables.scss' as *;
 
 html {
   color: whitesmoke;
   background-color: $background-color;
-  font-family: "Cal Sans", sans-serif;
+  font-family: 'Cal Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 
   body {
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    main {
+      flex: 1;
+    }
   }
 }
 </style>

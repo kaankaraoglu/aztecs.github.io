@@ -1,9 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Cal+Sans&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
+/*
+  COLOR PALLETTE
+  #F54545 - Red
+  #FE691E - Orange
+  #FF8A05 - Yellow
+  #FFA203 - Light Orange
+  #F5BD25 - Light Yellow
+*/
 
-// COLOR PALETTE: #F54545, #FE691E, #FF8A05, #FFA203, #F5BD25
-$accent-color: #FFA203;
-$accent-color-hover: #F54545;
+$color-red: #f54545;
+$color-orange: #fe691e;
+$color-yellow: #ff8a05;
+$color-light-orange: #ffa203;
+$color-light-yellow: #f5bd25;
+
+$text-color: #ffffff;
+
+/*
+  END OF COLOR PALLETTE
+*/
+
+$accent-color: #ffa203;
+$accent-color-hover: #f54545;
 $background-color: #111;
 
 .accent-color {
@@ -14,8 +33,10 @@ $background-color: #111;
   color: $accent-color-hover;
 }
 
-// ITEM QUALITIES
-$quality-poor: #9d9d9d; 
+/*
+ ITEM QUALITIES
+*/
+$quality-poor: #9d9d9d;
 $quality-common: #ffffff;
 $quality-uncommon: #1eff00;
 $quality-rare: #0070dd;
@@ -44,9 +65,28 @@ $quality-artifact: #e6cc80;
 .quality-artifact {
   color: $quality-artifact;
 }
+/*
+ END OF ITEM QUALITIES
+*/
 
-// CLASS COLORS
-// https://wowpedia.fandom.com/wiki/Class_colors
+/*
+  CLASS COLORS
+  https://wowpedia.fandom.com/wiki/Class_colors
+
+  Death Knight: #c41f3b
+  Demon Hunter: #a330c9
+  Druid: #ff7d0a
+  Evoker: #33937f
+  Hunter: #abd473
+  Mage: #69ccf0
+  Monk: #00ff96
+  Paladin: #f58cba
+  Priest: #ffffff
+  Rogue: #fff569
+  Shaman: #0070de
+  Warlock: #9482c9
+  Warrior: #c79c6e
+*/
 $color-death-knight: #c41f3b;
 $color-demon-hunter: #a330c9;
 $color-druid: #ff7d0a;

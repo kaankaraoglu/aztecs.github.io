@@ -1,21 +1,11 @@
-import { createApp } from "vue";
-import App from "./App.vue";
+import './assets/main.scss'
 
-import { createRouter, createMemoryHistory } from "vue-router";
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
 
-import HomeView from "./components/HomeView.vue";
-import ContactView from "./components/ContactView.vue";
-import WowView from "./components/WowView.vue";
+const app = createApp(App)
 
-const routes = [
-  { path: "/", component: HomeView },
-  { path: "/contact", component: ContactView },
-  { path: "/wow", component: WowView },
-];
+app.use(router)
 
-const router = createRouter({
-  history: createMemoryHistory(),
-  routes,
-});
-
-createApp(App).use(router).mount("#app");
+app.mount('#app')

@@ -2,11 +2,10 @@
   <div class="contact-view">
     <div class="left">
       <h3 class="contact-info">
-        We are a friendly guild that welcomes all players, regardless of
-        experience or playstyle. 
-        <br/><br/>
-        Reach out to any of the online officers or veterans in-game or on
-        discord for an invite to the guild.
+        We are a friendly guild that welcomes all players, regardless of experience or playstyle.
+        <br /><br />
+        Reach out to any of the online officers or veterans in-game or on discord for an invite to
+        the guild.
       </h3>
     </div>
     <div class="right">
@@ -62,25 +61,25 @@
 
 <script>
 export default {
-  name: "ContactView",
-};
+  name: 'ContactView',
+}
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/styles/_variables.scss";
-
+@use '@/assets/styles/_variables.scss' as *;
 .contact-view {
   width: 80%;
   margin: 0 auto;
   text-align: left;
+  overflow: auto; // Ensures the container clears floated children
 
   @media (min-width: 768px) {
-      max-width: 66vw;
-    }
+    max-width: 66vw;
+  }
 
-    @media (min-width: 1200px) {
-      max-width: 60vw;
-    }
+  @media (min-width: 1200px) {
+    max-width: 60vw;
+  }
 
   .left {
     width: 50%;

@@ -22,20 +22,14 @@
           </div>
 
           <div class="show-image-button">
-            <a :href="imageUrl" target="_blank" rel="noopener noreferrer">
-              Show Image
-            </a>
+            <a :href="imageUrl" target="_blank" rel="noopener noreferrer"> Show Image </a>
           </div>
 
           <div class="roster">
             <template v-if="tanks && tanks.length > 0">
               <span>Tanks: </span>
               <div class="names">
-                <span
-                  v-for="(tank, index) in tanks"
-                  :key="'tank-' + index"
-                  :class="tank.class"
-                >
+                <span v-for="(tank, index) in tanks" :key="'tank-' + index" :class="tank.class">
                   {{ tank.name }}<span v-if="index < tanks.length - 1">,</span>
                 </span>
               </div>
@@ -58,11 +52,7 @@
             <template v-if="dds && dds.length > 0">
               <span>DDs: </span>
               <div class="names">
-                <span
-                  v-for="(dd, index) in dds"
-                  :key="'dd-' + index"
-                  :class="dd.class"
-                >
+                <span v-for="(dd, index) in dds" :key="'dd-' + index" :class="dd.class">
                   {{ dd.name }}<span v-if="index < dds.length - 1">,</span>
                 </span>
               </div>
@@ -76,7 +66,7 @@
 
 <script>
 export default {
-  name: "KillCardView",
+  name: 'KillCardView',
   props: {
     raidName: {
       type: String,
@@ -107,12 +97,10 @@ export default {
       required: false,
     },
   },
-};
+}
 </script>
 
 <style scoped lang="scss">
-@use "@/assets/styles/_variables.scss" as variables;
-
 .kill-card-view {
   display: flex;
   justify-content: center;

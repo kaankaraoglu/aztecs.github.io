@@ -2,7 +2,7 @@
   <div class="wow-view">
     <KillCardView
       raidName="Liberation of Undermine (AOTC)"
-      :imageUrl="require('@/assets/images/kills/liberation_of_undermine_2025_04_20.png')"
+      :imageUrl="liberationOfUndermineImage"
       date="2025-04-20 19:39"
       :tanks="[
         { name: 'Phing', class: 'monk' },
@@ -32,7 +32,7 @@
 
     <KillCardView
       raidName="Glory of the Liberation of Undermine Raider"
-      :imageUrl="require('@/assets/images/kills/glory_of_the_liberation_of_undermine_raider_2025_04_27.jpg')"
+      :imageUrl="gloryOfLiberationImage"
       date="2025-04-27 20:21"
       :tries="1"
       :tanks="[
@@ -63,36 +63,38 @@
       ]"
     />
 
-    <KillCardView
-      raidName="Yogg-Saron"
-      :imageUrl="require('@/assets/images/kills/yoggsaron_2009_06_01.jpg')"
-      date="2009-06-01"
-    />
+    <KillCardView raidName="Yogg-Saron" date="2009-06-01" :imageUrl="yoggSaronImage" />
 
-    <KillCardView
-      raidName="Ulduar"
-      :imageUrl="require('@/assets/images/kills/ulduar_2009_04_19.jpg')"
-      date="2009-04-19"
-    />
+    <KillCardView raidName="Ulduar" date="2009-04-19" :imageUrl="ulduarImage" />
 
-    <KillCardView
-      raidName="Obsidian Sanctum"
-      :imageUrl="require('@/assets/images/kills/obsidian_sanctum_2009_02_23.jpg')"
-      date="2009-02-23"
-    />
+    <KillCardView raidName="Obsidian Sanctum" date="2009-02-23" :imageUrl="obsidianSanctumImage" />
   </div>
 </template>
 
 <script>
-import KillCardView from "@/components/KillCardView.vue";
+import KillCardView from '@/views/KillCardView.vue'
+
+import liberationOfUndermineImage from '@/assets/images/kills/liberation_of_undermine_2025_04_20.png'
+import gloryOfLiberationImage from '@/assets/images/kills/glory_of_the_liberation_of_undermine_raider_2025_04_27.jpg'
+import yoggSaronImage from '@/assets/images/kills/yoggsaron_2009_06_01.jpg'
+import ulduarImage from '@/assets/images/kills/ulduar_2009_04_19.jpg'
+import obsidianSanctumImage from '@/assets/images/kills/obsidian_sanctum_2009_02_23.jpg'
+
 export default {
-  name: "WowView",
+  name: 'WowView',
   components: {
     KillCardView,
   },
-};
+  data() {
+    return {
+      liberationOfUndermineImage,
+      gloryOfLiberationImage,
+      yoggSaronImage,
+      ulduarImage,
+      obsidianSanctumImage,
+    }
+  },
+}
 </script>
 
-<style scoped>
-/* Add your styles here */
-</style>
+<style scoped lang="scss"></style>
