@@ -133,13 +133,14 @@ export default {
 .home-view {
   background-color: $background-color;
   margin: auto;
+  max-width: 60vw;
 
-  @media (min-width: 1440px) {
-    max-width: 70vw;
+  @media (max-width: 1440px) {
+    max-width: 80vw;
   }
 
-  @media (min-width: 768px) {
-    max-width: 66vw;
+  @media (max-width: 750px) {
+    max-width: 75vw;
   }
 
   .info-boxes {
@@ -147,32 +148,26 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 3em;
     text-align: left;
 
     @media (max-width: 1200px) {
-      display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 3em;
       text-align: left;
-      padding: 20px;
     }
 
     .info-box {
-      @media (min-width: 375px) {
-        margin-bottom: 1em;
-      }
-
       .info-box-heading {
         color: $accent-color;
       }
 
       .raid-requirements {
-        max-width: 300px;
-        font-size: 0.7em;
+        max-width: 400px;
+        font-size: 0.8em;
         padding: 0;
 
         li {
@@ -203,10 +198,10 @@ export default {
 
   .welcome-heading {
     font-weight: 800;
-    font-size: 2em;
+    font-size: 5em;
 
-    @media (min-width: 768px) {
-      font-size: 5em;
+    @media (max-width: 1200px) {
+      font-size: 2em;
     }
   }
 
@@ -214,7 +209,6 @@ export default {
     font-size: 1.5em;
     font-weight: 500;
     margin: auto;
-    padding: 20px;
     width: 100%;
     line-height: 1.5;
     text-align: justify;

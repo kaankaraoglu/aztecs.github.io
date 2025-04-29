@@ -68,35 +68,37 @@ export default {
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
 .contact-view {
-  width: 80%;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
   text-align: left;
-  overflow: auto; // Ensures the container clears floated children
 
-  @media (min-width: 768px) {
-    max-width: 66vw;
+  @media (max-width: 1200px) {
+    display: flex;
+    flex-direction: column;
+    max-width: 50vw;
+    margin: 0 auto;
   }
 
-  @media (min-width: 1200px) {
-    max-width: 60vw;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    max-width: 70vw;
   }
 
   .left {
-    width: 50%;
-    float: left;
-
     .contact-info {
       font-size: 1.2em;
       font-weight: 600;
       padding: 0 6em;
       margin: 0;
+
+      @media (max-width: 1200px) {
+        padding: 0 2em;
+      }
     }
   }
 
   .right {
-    width: 50%;
-    float: right;
-
     .table {
       margin: auto;
       text-align: left;
