@@ -122,7 +122,7 @@ export default {
       @media (max-width: 768px) {
         display: flex;
         width: 100%;
-        justify-content: flex-end;
+        justify-content: center;
       }
     }
 
@@ -168,8 +168,9 @@ export default {
       @media (max-width: 768px) {
         flex-direction: column;
         width: 100%;
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         display: none;
+        gap: 5px;
 
         &.open {
           display: flex;

@@ -88,6 +88,7 @@ export default {
     .contact-info {
       font-size: 1.2em;
       font-weight: 600;
+      padding: 0 6em;
       margin: 0;
     }
   }
@@ -97,7 +98,7 @@ export default {
     float: right;
 
     .table {
-      margin: 0 auto;
+      margin: auto;
       text-align: left;
 
       thead {

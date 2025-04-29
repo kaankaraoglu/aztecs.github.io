@@ -1,6 +1,100 @@
 <template>
   <div class="home-view">
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
+    <div class="info-boxes">
+      <div class="info-box">
+        <h2 class="info-box-heading">Liberation of Undermine Progress</h2>
+        <table>
+          <thead>
+            <tr>
+              <th class="accent-color">Boss</th>
+              <th class="quality-rare">Normal</th>
+              <th class="quality-epic">Heroic</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td class="boss-name">Vexie Fullthrottle and The Geargrinders</td>
+              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">💀</td>
+            </tr>
+
+            <tr>
+              <td class="boss-name">Cauldron of Carnage</td>
+              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">💀</td>
+            </tr>
+
+            <tr>
+              <td class="boss-name">Rik Reverb</td>
+              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">💀</td>
+            </tr>
+
+            <tr>
+              <td class="boss-name">Stix Bunkjunker</td>
+              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">💀</td>
+            </tr>
+
+            <tr>
+              <td class="boss-name">Sprocketmonger Lockenstock</td>
+              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">💀</td>
+            </tr>
+
+            <tr>
+              <td class="boss-name">One-Armed Bandit</td>
+              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">💀</td>
+            </tr>
+
+            <tr>
+              <td class="boss-name">Mug'Zee</td>
+              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">💀</td>
+            </tr>
+
+            <tr>
+              <td class="boss-name">Chrome King Gallywix</td>
+              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">💀</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="info-box">
+        <h2 class="info-box-heading">Raid Schedule</h2>
+        <p class="raid-day">Wednesdays at 20:00 - 22:00 ST</p>
+        <p class="raid-day">Sundays at 19:00 - 22:00 ST</p>
+      </div>
+      <div class="info-box">
+        <h2 class="info-box-heading">Requirements for raiding</h2>
+        <ul class="raid-requirements">
+          <li>
+            Sign up for raids on discord #raidcalendar channel. If you don't have access, talk to an
+            officer in game or ask in discord.
+          </li>
+          <li>
+            During progression raids, we require everyone to;
+            <ul>
+              <li>Have a reasonable item level</li>
+              <li>
+                Have your gear enchanted (We understand that some enchants may be expensive for
+                people who don't play much, so we can help with this. Just ask for help in discord
+                or guild chat)
+              </li>
+              <li>
+                It is <b>NOT MANDATORY</b> but we appreciate if you are active on comms during the
+                raids.
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
     <p class="who-are-we">
       <b>"Aztecs"</b> are an established, multi-national Horde guild based on Al’Akir, where we've
       been the home of more than 160 accounts and over 900 characters. <br /><br />
@@ -38,6 +132,74 @@ export default {
 
 .home-view {
   background-color: $background-color;
+  margin: auto;
+
+  @media (min-width: 1440px) {
+    max-width: 70vw;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 66vw;
+  }
+
+  .info-boxes {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    margin-bottom: 3em;
+    text-align: left;
+
+    @media (max-width: 1200px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 3em;
+      text-align: left;
+      padding: 20px;
+    }
+
+    .info-box {
+      @media (min-width: 375px) {
+        margin-bottom: 1em;
+      }
+
+      .info-box-heading {
+        color: $accent-color;
+      }
+
+      .raid-requirements {
+        max-width: 300px;
+        font-size: 0.7em;
+        padding: 0;
+
+        li {
+          margin-bottom: 1em;
+        }
+      }
+
+      table {
+        width: 100%;
+
+        tr {
+          .boss-name {
+            font-size: 0.7em;
+          }
+
+          .killed-or-not {
+            font-size: 0.7em;
+            text-align: center;
+          }
+        }
+      }
+
+      .raid-day {
+        font-size: 0.8em;
+      }
+    }
+  }
 
   .welcome-heading {
     font-weight: 800;
@@ -53,18 +215,10 @@ export default {
     font-weight: 500;
     margin: auto;
     padding: 20px;
-    width: 65vw;
+    width: 100%;
     line-height: 1.5;
     text-align: justify;
     font-family: 'Cal Sans', sans-serif;
-
-    @media (min-width: 768px) {
-      max-width: 66vw;
-    }
-
-    @media (min-width: 1200px) {
-      max-width: 60vw;
-    }
   }
 
   .discord-svg {
