@@ -140,7 +140,7 @@ export default {
   }
 
   @media (max-width: 750px) {
-    max-width: 75vw;
+    max-width: 85vw;
   }
 
   .info-boxes {
@@ -161,8 +161,14 @@ export default {
     }
 
     .info-box {
+      border: 1px dashed $accent-color;
+      border-radius: 20px;
+      padding: 30px;
+      margin: 10px;
+
       .info-box-heading {
         color: $accent-color;
+        margin-top: 0;
       }
 
       .raid-requirements {
@@ -180,7 +186,11 @@ export default {
 
         tr {
           .boss-name {
-            font-size: 0.7em;
+            font-size: 1.2em;
+
+            @media (max-width: 1440px) {
+              font-size: 1em;
+            }
           }
 
           .killed-or-not {
@@ -191,7 +201,11 @@ export default {
       }
 
       .raid-day {
-        font-size: 0.8em;
+        font-size: 1.8em;
+
+        @media (max-width: 1440px) {
+          font-size: 1em;
+        }
       }
     }
   }
