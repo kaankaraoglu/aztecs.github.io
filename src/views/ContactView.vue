@@ -1,12 +1,10 @@
 <template>
   <div class="contact-view">
     <div class="left">
-      <h3 class="contact-info">
-        We are a friendly guild that welcomes all players, regardless of experience or playstyle.
-        <br /><br />
+      <p class="contact-info">
         Reach out to any of the online officers or veterans in-game or on discord for an invite to
         the guild.
-      </h3>
+      </p>
     </div>
     <div class="right">
       <table class="table">
@@ -69,8 +67,11 @@ export default {
 @use '@/assets/styles/_variables.scss' as *;
 .contact-view {
   display: flex;
-  justify-content: center;
   text-align: left;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 
   @media (max-width: 1200px) {
     display: flex;
@@ -82,15 +83,17 @@ export default {
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    max-width: 70vw;
+    max-width: 90vw;
+    gap: 20px;
   }
 
   .left {
     .contact-info {
-      font-size: 1.2em;
-      font-weight: 600;
+      font-size: 1.5em;
+      font-weight: 500;
       padding: 0 6em;
       margin: 0;
+      max-width: 30em;
 
       @media (max-width: 1200px) {
         padding: 0 2em;

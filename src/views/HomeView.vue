@@ -8,8 +8,8 @@
           <thead>
             <tr>
               <th class="accent-color">Boss</th>
-              <th class="quality-rare">Normal</th>
-              <th class="quality-epic">Heroic</th>
+              <th class="quality-rare difficulty">Normal</th>
+              <th class="quality-epic difficulty">Heroic</th>
             </tr>
           </thead>
 
@@ -69,7 +69,11 @@
         <h2 class="info-box-heading">Raid Schedule</h2>
         <p class="raid-day">Wednesdays at 20:00 - 22:00 ST</p>
         <p class="raid-day">Sundays at 19:00 - 22:00 ST</p>
+        <p>
+          We sometimes skip raids that correspond with holidays but they are announced in advance.
+        </p>
       </div>
+
       <div class="info-box">
         <h2 class="info-box-heading">Requirements for raiding</h2>
         <ul class="raid-requirements">
@@ -144,18 +148,18 @@ export default {
   }
 
   .info-boxes {
-    width: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
     margin-bottom: 3em;
     text-align: left;
+    gap: 10px;
 
     @media (max-width: 1200px) {
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       margin-bottom: 3em;
       text-align: left;
     }
@@ -165,6 +169,8 @@ export default {
       border-radius: 20px;
       padding: 30px;
       margin: 10px;
+      display: flex;
+      flex-direction: column;
 
       .info-box-heading {
         color: $accent-color;
@@ -172,8 +178,7 @@ export default {
       }
 
       .raid-requirements {
-        max-width: 400px;
-        font-size: 0.8em;
+        max-width: 500px;
         padding: 0;
 
         li {
@@ -191,6 +196,15 @@ export default {
             @media (max-width: 1440px) {
               font-size: 1em;
             }
+
+            @media screen and (max-width: 768px) {
+              font-size: 0.6em;
+            }
+          }
+
+          .difficulty {
+            font-size: 1.2em;
+            text-align: center;
           }
 
           .killed-or-not {
@@ -202,6 +216,7 @@ export default {
 
       .raid-day {
         font-size: 1.8em;
+        margin: 0;
 
         @media (max-width: 1440px) {
           font-size: 1em;

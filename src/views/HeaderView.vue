@@ -114,7 +114,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2em 0 5em;
+    margin: 2em 0 2em;
 
     .nav-header {
       display: none;
