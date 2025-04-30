@@ -1,4 +1,4 @@
-name: Deploy Vue Project to GitHub Pages
+name: Build main and push to gh-pages branch
 
 on:
   workflow_dispatch:

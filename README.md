@@ -1,4 +1,10 @@
-# aztecs
+# Aztecs
+
+[![Dependabot Updates](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates)
+
+[![Deploy Vue Project to GitHub Pages](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/deploy.yml)
+
+[![pages-build-deployment](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/pages/pages-build-deployment)
 
 This template should help get you started developing with Vue 3 in Vite.
 
