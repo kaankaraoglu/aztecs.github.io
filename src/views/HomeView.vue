@@ -65,13 +65,14 @@
         </table>
       </div>
 
-      <div class="info-box">
+      <div class="info-box raid-schedule">
         <h2 class="info-box-heading">Raid Schedule</h2>
         <p>2 raids/week</p>
         <p class="raid-day">Wednesdays at 20:00 - 22:00 ST</p>
         <p class="raid-day">Sundays at 19:00 - 22:00 ST</p>
         <p>
-          We sometimes skip raids that correspond with holidays but they are announced in advance.
+          We sometimes skip raids that correspond with holidays <br />but they are announced in
+          advance.
         </p>
         <p>
           Every tier, we start with normals, switch to heroics when we feel like we can manage and
@@ -169,6 +170,12 @@ export default {
       text-align: left;
     }
 
+    .raid-schedule {
+      p {
+        max-width: 32em;
+      }
+    }
+
     .info-box {
       border: 1px dashed $accent-color;
       border-radius: 20px;
@@ -196,7 +203,7 @@ export default {
 
         tr {
           .boss-name {
-            font-size: 1.2em;
+            font-size: 1em;
 
             @media (max-width: 1440px) {
               font-size: 1em;
