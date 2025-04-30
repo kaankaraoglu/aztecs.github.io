@@ -2,7 +2,7 @@
 
 [![Dependabot Updates](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates)
 
-[![Deploy Vue Project to GitHub Pages](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/deploy.yml)
+[![Build and push](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/build-and-push.yml)
 
 [![pages-build-deployment](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/pages/pages-build-deployment)
 
