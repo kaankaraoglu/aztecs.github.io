@@ -106,18 +106,18 @@
       </div>
     </div>
     <p class="who-are-we">
-      <b>"Aztecs"</b> are an established, multi-national Horde guild based on Al’Akir, where we've
+      <b>"Aztecs"</b> are an established, multi-national Horde guild based on Al'Akir, where we've
       been the home of more than 160 accounts and over 900 characters. <br /><br />
       We formed on the <b>9th of September, 2005</b>, making us one of the few remaining launch day
-      guilds on Al'Akir. We're from all over Europe - most members are in their 20s-30s, although we
-      have several ‘more experienced’ colleagues :) Many of us have played games together for up to
+      guilds on Al'Akir. We're from all over Europe - most members are in their 30s-40s, although we
+      have several "more experienced" colleagues :) Many of us have played games together for up to
       15 years, as the guild/clan previously existed in other MMOs and FPSs. <br /><br />
       Although everyone hasn't been around all that time, we've made many new friends along the way,
       as the server merged with Xavius and Skullcrusher, and recently with Burning Legion. By this
       stage, blood is thicker than water ;)
       <br /><br />
       If you can give and take the odd joke, like to try kill raid dragons (or do regular Mythic+
-      dungeoning of any level!), and to make the most of your WoW time, feel free to join us! Our
+      dungeons of any level!), and to make the most of your WoW time, feel free to join us! Our
       raiding history is a long and proud one since Vanilla, when we were one of the most
       active/leading Horde raiders on a very active Al'Akir server.
       <br /><br />
