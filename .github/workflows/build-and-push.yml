@@ -1,4 +1,4 @@
-name: Build main and push to gh-pages branch
+name: Build and push
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-main-and-push-to-gh-pages-branch:
     runs-on: ubuntu-latest
 
     steps:
