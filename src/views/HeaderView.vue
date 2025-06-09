@@ -42,6 +42,7 @@ export default {
         'DO NOT RELEASE!!!',
         'mxk ydb',
         'Soak the balls!',
+        'What do you mean "you people"?'
       ],
       currentSplash: '',
       splashInterval: null,
