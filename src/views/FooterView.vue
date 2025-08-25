@@ -14,7 +14,7 @@ export default {
 @use '@/assets/styles/_variables.scss' as *;
 
 .footer {
-  width: 100vw;
+  width: 100%;
   color: $text-color;
   background-color: $background-color;
   text-align: center;
