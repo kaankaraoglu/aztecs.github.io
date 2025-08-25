@@ -2,64 +2,64 @@
   <div class="home-view">
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
     <div class="info-boxes">
-      <div class="info-box">
-        <h2 class="info-box-heading">Liberation of Undermine Progress</h2>
+      <div class="info-box progression">
+        <h2 class="info-box-heading">Manaforge Omega</h2>
         <table>
           <thead>
             <tr>
               <th class="accent-color">Boss</th>
-              <th class="quality-rare difficulty">Normal</th>
-              <th class="quality-epic difficulty">Heroic</th>
+              <th class="quality-rare difficulty">N</th>
+              <th class="quality-epic difficulty">HC</th>
             </tr>
           </thead>
 
           <tbody>
             <tr>
-              <td class="boss-name">Vexie Fullthrottle and The Geargrinders</td>
+              <td class="boss-name">Plexus Sentinel</td>
               <td class="killed-or-not">💀</td>
               <td class="killed-or-not">💀</td>
             </tr>
 
             <tr>
-              <td class="boss-name">Cauldron of Carnage</td>
+              <td class="boss-name">Loom'ithar</td>
               <td class="killed-or-not">💀</td>
               <td class="killed-or-not">💀</td>
             </tr>
 
             <tr>
-              <td class="boss-name">Rik Reverb</td>
+              <td class="boss-name">Soulbinder Naazindhri</td>
               <td class="killed-or-not">💀</td>
               <td class="killed-or-not">💀</td>
             </tr>
 
             <tr>
-              <td class="boss-name">Stix Bunkjunker</td>
+              <td class="boss-name">Forgeweaver Araz</td>
               <td class="killed-or-not">💀</td>
               <td class="killed-or-not">💀</td>
             </tr>
 
             <tr>
-              <td class="boss-name">Sprocketmonger Lockenstock</td>
+              <td class="boss-name">The Soul Hunters</td>
               <td class="killed-or-not">💀</td>
               <td class="killed-or-not">💀</td>
             </tr>
 
             <tr>
-              <td class="boss-name">One-Armed Bandit</td>
+              <td class="boss-name">Fractillus</td>
               <td class="killed-or-not">💀</td>
               <td class="killed-or-not">💀</td>
             </tr>
 
             <tr>
-              <td class="boss-name">Mug'Zee</td>
+              <td class="boss-name">Nexus-King Salhadaar</td>
               <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">-</td>
             </tr>
 
             <tr>
-              <td class="boss-name">Chrome King Gallywix</td>
+              <td class="boss-name">Dimensius</td>
               <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">💀</td>
+              <td class="killed-or-not">-</td>
             </tr>
           </tbody>
         </table>
@@ -161,7 +161,7 @@ export default {
     align-items: stretch;
     margin-bottom: 3em;
     text-align: left;
-    gap: 10px;
+    gap: 5px;
 
     @media (max-width: 1200px) {
       flex-direction: column;
@@ -170,9 +170,13 @@ export default {
       text-align: left;
     }
 
+    .progression {
+      min-width: 20em;
+    }
+
     .raid-schedule {
       p {
-        max-width: 32em;
+        max-width: 30em;
       }
     }
 
