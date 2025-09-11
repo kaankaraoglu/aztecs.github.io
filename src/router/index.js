@@ -8,10 +8,10 @@ const WowKillsView = () => import('@/views/WowKillsView.vue')
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', name: 'home', component: HomeView },
+    { path: '/', component: HomeView },
     { path: '/contact', component: ContactView },
     { path: '/raiding', component: RaidingView },
-    { path: '/wow-kills', name: 'wow-kills', component: WowKillsView },
+    { path: '/wow-kills', component: WowKillsView },
   ],
 })
 
