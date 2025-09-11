@@ -2,7 +2,6 @@ import './assets/main.scss'
 
 // Firebase Core
 import { initializeApp } from 'firebase/app'
-// Removed direct getAnalytics import to defer analytics loading
 
 // Vue
 import { createApp } from 'vue'
