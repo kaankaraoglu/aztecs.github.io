@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  build-main-and-push-to-gh-pages-branch:
+  build-and-push-to-gh-pages-branch:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,9 +18,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Lint
+        run: npx eslint . --max-warnings=0
 
       - name: Build the site
         env:
