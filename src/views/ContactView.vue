@@ -1,12 +1,11 @@
 <template>
-  <div class="contact-view">
-    <div class="left">
+  <div class="contact-view content-wrapper">
+    <div class="contact-box">
+      <h1 class="contact-heading">Contact & Guild Roster</h1>
       <p class="contact-info">
-        Reach out to any of the online officers or veterans in-game or on discord for an invite to
+        Reach out to any of the online officers or veterans in-game or on Discord for an invite to
         the guild.
       </p>
-    </div>
-    <div class="right">
       <table class="table">
         <thead>
           <tr>
@@ -65,65 +64,73 @@ export default {
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
+
 .contact-view {
   display: flex;
-  text-align: left;
-  flex-wrap: nowrap;
+  justify-content: center;
+  padding: 2rem 0 4rem; // horizontal padding from content-wrapper
+  max-width: 64rem; // custom page width narrower than global 80rem
+  box-sizing: border-box;
+}
+
+.contact-box {
+  border: 1px dashed $accent-color;
+  border-radius: 20px;
+  padding: 40px 50px;
+  max-width: 780px; // restore previous card width
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 30px;
+  align-items: stretch;
+  box-sizing: border-box;
+  margin: 0 auto; // center inside custom width
 
-  @media (max-width: 1200px) {
-    display: flex;
-    flex-direction: column;
-    max-width: 50vw;
-    margin: 0 auto;
+  @media (max-width: 900px) {
+    padding: 30px 30px;
+  }
+  @media (max-width: 600px) {
+    padding: 25px 20px;
+  }
+}
+
+.contact-heading {
+  margin: 0 0 1rem;
+  font-size: 2.2em;
+  font-weight: 800;
+  color: $accent-color;
+  text-align: center;
+}
+
+.contact-info {
+  font-size: 1.3em;
+  line-height: 1.5;
+  font-weight: 500;
+  margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.05em;
+
+  thead th {
+    color: $accent-color;
+    font-weight: 800;
+    text-align: left;
+    padding: 0.4rem 0.75rem;
   }
 
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    max-width: 90vw;
-    gap: 20px;
+  tbody tr th,
+  tbody tr td {
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    text-align: left; /* added to override global center alignment */
   }
 
-  .left {
-    .contact-info {
-      font-size: 1.5em;
-      font-weight: 500;
-      padding: 0 6em;
-      margin: 0;
-      max-width: 30em;
-
-      @media (max-width: 1200px) {
-        padding: 0 2em;
-      }
-    }
-  }
-
-  .right {
-    .table {
-      margin: auto;
-      text-align: left;
-
-      thead {
-        th {
-          color: $accent-color;
-          font-weight: 800;
-          padding-left: 20px;
-        }
-      }
-
-      tbody {
-        tr {
-          th,
-          td {
-            font-weight: 800;
-            padding-left: 20px;
-          }
-        }
-      }
-    }
+  tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
   }
 }
 </style>

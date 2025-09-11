@@ -1,10 +1,7 @@
 import './assets/main.scss'
 
-// Firebase stuff
+// Firebase Core
 import { initializeApp } from 'firebase/app'
-import { getAnalytics } from 'firebase/analytics'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Vue
 import { createApp } from 'vue'
@@ -12,7 +9,6 @@ import App from './App.vue'
 import router from './router'
 
 // Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -23,12 +19,35 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 }
 
-// Initialize Firebase
+// Initialize Firebase core as early as needed for the app
 const firebaseApp = initializeApp(firebaseConfig)
-getAnalytics(firebaseApp)
 
 const app = createApp(App)
-
 app.use(router)
-
 app.mount('#app')
+
+// Defer analytics: only load in production, in browser, and if measurementId provided
+if (
+  import.meta.env.PROD &&
+  typeof window !== 'undefined' &&
+  firebaseConfig.measurementId &&
+  firebaseConfig.measurementId !== ''
+) {
+  const loadAnalytics = () => {
+    import('firebase/analytics')
+      .then(({ getAnalytics }) => {
+        try {
+          getAnalytics(firebaseApp)
+        } catch (e) {
+          console.warn('Firebase Analytics initialization failed:', e)
+        }
+      })
+      .catch((err) => console.warn('Failed to lazy-load Firebase Analytics:', err))
+  }
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(loadAnalytics)
+  } else {
+    setTimeout(loadAnalytics, 0)
+  }
+}

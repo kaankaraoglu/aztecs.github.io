@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+# Husky v9+ minimal pre-commit hook
+# Runs lint-staged using local dependencies (no global install needed)
+command -v node >/dev/null 2>&1 || {
+  echo "[husky] Node.js not found in PATH; skipping lint-staged." >&2
+  exit 0
+}
+
+# --no-install: fail if dependencies not installed instead of auto-installing
+npx --no-install lint-staged || {
+  code=$?
+  echo "[husky] lint-staged failed (exit $code)." >&2
+  exit $code
+}
