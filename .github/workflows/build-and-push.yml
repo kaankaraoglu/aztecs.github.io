@@ -1,4 +1,4 @@
-name: Build and push
+name: Lint, Build and Deploy
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ on:
       - main
 
 jobs:
-  build-and-push-to-gh-pages-branch:
+  lint-build-deploy:
     runs-on: ubuntu-latest
 
     steps:
