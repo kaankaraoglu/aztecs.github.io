@@ -1,34 +1,14 @@
-# Husky v10-ready pre-commit hook (no deprecated husky.sh, no npx)
-# Ensure local node binaries are on PATH
-export PATH="$PWD/node_modules/.bin:$PATH"
-
-# Attempt to locate node if not found (common install locations)
-if ! command -v node >/dev/null 2>&1; then
-  for candidate in \
-    "$HOME/.volta/bin" \
-    "/opt/homebrew/bin" \
-    "/usr/local/bin" \
-    $HOME/.nvm/versions/node/*/bin \
-    $HOME/.asdf/installs/nodejs/*/bin; do
-    if [ -d "$candidate" ] && [ -x "$candidate/node" ]; then
-      export PATH="$candidate:$PATH"
-    fi
-  done
-fi
-
-# If still not present, skip with notice (avoid hard failure on GUI Git environments missing shell init)
-if ! command -v node >/dev/null 2>&1; then
-  echo "[husky] Node.js not found in PATH; skipping lint-staged. Install Node or adjust PATH to enable pre-commit checks." >&2
+#!/usr/bin/env sh
+# Husky v9+ minimal pre-commit hook
+# Runs lint-staged using local dependencies (no global install needed)
+command -v node >/dev/null 2>&1 || {
+  echo "[husky] Node.js not found in PATH; skipping lint-staged." >&2
   exit 0
-fi
+}
 
-if command -v lint-staged >/dev/null 2>&1; then
-  lint-staged || {
-    code=$?
-    echo "lint-staged failed (exit $code) — aborting commit" >&2
-    exit $code
-  }
-else
-  echo "lint-staged not found. Run 'npm install' before committing." >&2
-  exit 1
-fi
+# --no-install: fail if dependencies not installed instead of auto-installing
+npx --no-install lint-staged || {
+  code=$?
+  echo "[husky] lint-staged failed (exit $code)." >&2
+  exit $code
+}
