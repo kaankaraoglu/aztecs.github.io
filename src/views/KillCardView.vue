@@ -6,7 +6,16 @@
           <span id="raid-name" class="raid-name">{{ raidName }}</span>
         </div>
 
-        <img class="raid-image" :src="imageUrl" alt="Raid Kill" />
+        <a
+          class="image-anchor"
+          :href="imageUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          :aria-label="'Open full image for ' + raidName + ' in a new tab'"
+        >
+          <img class="raid-image" :src="imageUrl" :alt="raidName + ' screenshot'" loading="lazy" />
+          <div class="enlarge-indicator" aria-hidden="true">🔍</div>
+        </a>
 
         <div class="image-overlay">
           <div class="summary-line">
@@ -126,7 +135,7 @@ export default {
     }
 
     .image-container {
-      position: relative;
+      position: relative; /* ensure stacking context */
       width: 100%;
       background-color: #111;
 
@@ -147,6 +156,10 @@ export default {
       }
 
       .image-top-overlay {
+        position: absolute; /* ensure always above */
+        top: 0;
+        left: 0;
+        z-index: 3;
         width: 100%;
         padding: 8px 12px;
         backdrop-filter: blur(10px);
@@ -160,14 +173,59 @@ export default {
         text-overflow: ellipsis;
 
         @media (min-width: 641px) {
-          position: absolute;
-          top: 0;
           text-align: center;
         }
 
         @media (max-width: 640px) {
           text-align: left;
         }
+      }
+
+      .image-anchor {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        cursor: zoom-in;
+        text-decoration: none;
+        color: inherit;
+        z-index: 1;
+
+        @media (max-width: 640px) {
+          display: none; // image hidden on small screens, keep existing mobile link button
+        }
+      }
+
+      .enlarge-indicator {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        background: rgba(0, 0, 0, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 6px;
+        backdrop-filter: blur(4px);
+        opacity: 0.55;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .image-anchor:hover .enlarge-indicator {
+        opacity: 0.95;
+        transform: scale(1.05);
+      }
+
+      .image-anchor:active .enlarge-indicator {
+        transform: scale(0.92);
+        opacity: 1;
       }
 
       .image-overlay {

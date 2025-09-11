@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky install"
   },
   "dependencies": {
     "firebase": "^12.2.1",
@@ -25,6 +27,14 @@
     "prettier": "3.6.2",
     "sass-embedded": "^1.92.1",
     "vite": "^7.1.5",
-    "vite-plugin-vue-devtools": "^8.0.1"
+    "vite-plugin-vue-devtools": "^8.0.1",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,vue,scss,css,md,json,yml,yaml}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }

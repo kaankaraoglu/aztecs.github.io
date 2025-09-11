@@ -1,299 +1,188 @@
 <template>
   <div class="home-view">
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
-    <div class="info-boxes">
-      <div class="info-box progression">
-        <h2 class="info-box-heading">Manaforge Omega</h2>
-        <table>
-          <thead>
-            <tr>
-              <th class="accent-color">Boss</th>
-              <th class="quality-rare difficulty">N</th>
-              <th class="quality-epic difficulty">HC</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td class="boss-name">Plexus Sentinel</td>
-              <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">💀</td>
-            </tr>
-
-            <tr>
-              <td class="boss-name">Loom'ithar</td>
-              <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">💀</td>
-            </tr>
-
-            <tr>
-              <td class="boss-name">Soulbinder Naazindhri</td>
-              <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">💀</td>
-            </tr>
-
-            <tr>
-              <td class="boss-name">Forgeweaver Araz</td>
-              <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">💀</td>
-            </tr>
-
-            <tr>
-              <td class="boss-name">The Soul Hunters</td>
-              <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">💀</td>
-            </tr>
-
-            <tr>
-              <td class="boss-name">Fractillus</td>
-              <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">💀</td>
-            </tr>
-
-            <tr>
-              <td class="boss-name">Nexus-King Salhadaar</td>
-              <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">-</td>
-            </tr>
-
-            <tr>
-              <td class="boss-name">Dimensius</td>
-              <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">-</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="content-wrapper">
+      <div class="top-boxes">
+        <div class="info-box progression">
+          <h2 class="info-box-heading">{{ tierName }}</h2>
+          <table>
+            <thead>
+              <tr>
+                <th class="accent-color">Boss</th>
+                <th class="quality-rare difficulty">N</th>
+                <th class="quality-epic difficulty">HC</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="boss in bosses" :key="boss.name">
+                <td class="boss-name">{{ boss.name }}</td>
+                <td class="killed-or-not">{{ killMark(boss.normal) }}</td>
+                <td class="killed-or-not">{{ killMark(boss.heroic) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-box raid-schedule">
+          <h2 class="info-box-heading">Raid Schedule</h2>
+          <p>2 raids/week</p>
+          <p class="raid-day">Wednesdays at 20:00 - 22:00 ST</p>
+          <p class="raid-day">Sundays at 19:00 - 22:00 ST</p>
+          <p>
+            We sometimes skip raids that correspond with holidays <br />but they are announced in
+            advance.
+          </p>
+          <p>
+            Every tier, we start with normals, switch to heroics when we feel like we can manage and
+            after the AOTC, we do an achievement run.
+          </p>
+        </div>
       </div>
-
-      <div class="info-box raid-schedule">
-        <h2 class="info-box-heading">Raid Schedule</h2>
-        <p>2 raids/week</p>
-        <p class="raid-day">Wednesdays at 20:00 - 22:00 ST</p>
-        <p class="raid-day">Sundays at 19:00 - 22:00 ST</p>
-        <p>
-          We sometimes skip raids that correspond with holidays <br />but they are announced in
-          advance.
+      <div class="about-box">
+        <p class="who-are-we">
+          <b>"Aztecs"</b> are an established, multi-national Horde guild based on Al'Akir, where
+          we've been the home of more than 160 accounts and over 900 characters. <br /><br />
+          We formed on the <b>9th of September, 2005</b>, making us one of the few remaining launch
+          day guilds on Al'Akir. We're from all over Europe - most members are in their 30s-40s,
+          although we have several "more experienced" colleagues :) Many of us have played games
+          together for up to 15 years, as the guild/clan previously existed in other MMOs and FPSs.
+          <br /><br />
+          Although everyone hasn't been around all that time, we've made many new friends along the
+          way, as the server merged with Xavius and Skullcrusher, and recently with Burning Legion.
+          By this stage, blood is thicker than water ;)
+          <br /><br />
+          If you can give and take the odd joke, like to try kill raid dragons (or do regular
+          Mythic+ dungeons of any level!), and to make the most of your WoW time, feel free to join
+          us! Our raiding history is a long and proud one since Vanilla, when we were one of the
+          most active/leading Horde raiders on a very active Al'Akir server.
+          <br /><br />
+          Nowadays, we're more chilled. Our raiding goals are usually to complete AOTC/Heroic in
+          good time each tier, then try Mythic when it goes cross-realm or if we have enough
+          interest. We know people's time is precious, so we want to make the most of the time we
+          spend, whatever it is :)
         </p>
-        <p>
-          Every tier, we start with normals, switch to heroics when we feel like we can manage and
-          after the AOTC, we do an achievement run.
-        </p>
-      </div>
-
-      <div class="info-box">
-        <h2 class="info-box-heading">Requirements for raiding</h2>
-        <ul class="raid-requirements">
-          <li>
-            Sign up for raids on discord #raidcalendar channel. If you don't have access, talk to an
-            officer in game or ask in discord.
-          </li>
-          <li>
-            During progression raids, we require everyone to;
-            <ul>
-              <li>Have a reasonable item level</li>
-              <li>
-                Have your gear enchanted (We understand that some enchants may be expensive for
-                people who don't play much, so we can help with this. Just ask for help in discord
-                or guild chat)
-              </li>
-              <li>
-                It is <b>NOT MANDATORY</b> but we appreciate if you are active on comms during the
-                raids.
-              </li>
-            </ul>
-          </li>
-        </ul>
       </div>
     </div>
-    <p class="who-are-we">
-      <b>"Aztecs"</b> are an established, multi-national Horde guild based on Al'Akir, where we've
-      been the home of more than 160 accounts and over 900 characters. <br /><br />
-      We formed on the <b>9th of September, 2005</b>, making us one of the few remaining launch day
-      guilds on Al'Akir. We're from all over Europe - most members are in their 30s-40s, although we
-      have several "more experienced" colleagues :) Many of us have played games together for up to
-      15 years, as the guild/clan previously existed in other MMOs and FPSs. <br /><br />
-      Although everyone hasn't been around all that time, we've made many new friends along the way,
-      as the server merged with Xavius and Skullcrusher, and recently with Burning Legion. By this
-      stage, blood is thicker than water ;)
-      <br /><br />
-      If you can give and take the odd joke, like to try kill raid dragons (or do regular Mythic+
-      dungeons of any level!), and to make the most of your WoW time, feel free to join us! Our
-      raiding history is a long and proud one since Vanilla, when we were one of the most
-      active/leading Horde raiders on a very active Al'Akir server.
-      <br /><br />
-      Nowadays, we're more chilled. Our raiding goals are usually to complete AOTC/Heroic in good
-      time each tier, then try Mythic when it goes cross-realm or if we have enough interest. We
-      know people's time is precious, so we want to make the most of the time we spend, whatever it
-      is :)
-    </p>
   </div>
 </template>
 
 <script>
+import { tierName, bosses, killMark } from '@/data/progression.js'
 export default {
   name: 'HomeView',
-  components: {},
-  props: {},
+  data() {
+    return { tierName, bosses }
+  },
+  methods: { killMark },
 }
 </script>
 
 <style lang="scss" scoped>
 @use '@/assets/styles/_variables.scss' as *;
-
 .home-view {
   background-color: $background-color;
-  margin: auto;
-  max-width: 60vw;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+  max-width: 100%;
 
-  @media (max-width: 1440px) {
-    max-width: 80vw;
-  }
-
-  @media (max-width: 750px) {
-    max-width: 85vw;
-  }
-
-  .info-boxes {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: stretch;
-    margin-bottom: 3em;
-    text-align: left;
-    gap: 5px;
-
-    @media (max-width: 1200px) {
-      flex-direction: column;
-      align-items: stretch;
-      margin-bottom: 3em;
-      text-align: left;
-    }
-
-    .progression {
-      min-width: 20em;
-    }
-
-    .raid-schedule {
-      p {
-        max-width: 30em;
-      }
-    }
-
-    .info-box {
-      border: 1px dashed $accent-color;
-      border-radius: 20px;
-      padding: 30px;
-      margin: 10px;
-      display: flex;
-      flex-direction: column;
-
-      .info-box-heading {
-        color: $accent-color;
-        margin-top: 0;
-      }
-
-      .raid-requirements {
-        max-width: 500px;
-        padding: 0;
-
-        li {
-          margin-bottom: 1em;
-        }
-      }
-
-      table {
-        width: 100%;
-
-        tr {
-          .boss-name {
-            font-size: 1em;
-
-            @media (max-width: 1440px) {
-              font-size: 1em;
-            }
-
-            @media screen and (max-width: 768px) {
-              font-size: 0.6em;
-            }
-          }
-
-          .difficulty {
-            font-size: 1.2em;
-            text-align: center;
-          }
-
-          .killed-or-not {
-            font-size: 0.7em;
-            text-align: center;
-          }
-        }
-      }
-
-      .raid-day {
-        font-size: 1.8em;
-        margin: 0;
-
-        @media (max-width: 1440px) {
-          font-size: 1em;
-        }
-      }
-    }
+  @media (max-width: 700px) {
+    padding: 0 1.2rem 2.5rem;
   }
 
   .welcome-heading {
     font-weight: 800;
-    font-size: 5em;
-
+    font-size: 4.5em;
+    margin: 0.3em 0 0.4em;
     @media (max-width: 1200px) {
-      font-size: 2em;
+      font-size: 2.4em;
     }
   }
 
-  .who-are-we {
-    font-size: 1.5em;
-    font-weight: 500;
-    margin: auto;
-    width: 100%;
-    line-height: 1.5;
-    text-align: justify;
-    font-family: 'Cal Sans', sans-serif;
-  }
-
-  .discord-svg {
-    fill: white;
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-  }
-  .discord-button:hover {
-    background-color: #5b6eae;
-    transition: background-color 0.3s ease;
-  }
-  .discord-button:active {
-    background-color: #4e5b8d;
-    transition: background-color 0.1s ease;
-  }
-  .discord-button:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(114, 137, 218, 0.5);
-  }
-  .discord-button:disabled {
-    background-color: #4e5b8d;
-    cursor: not-allowed;
-  }
-
-  .discord-button {
-    background-color: #7289da;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 12px;
-    border-radius: 5px;
-    cursor: pointer;
+  .top-boxes {
     display: flex;
-    align-items: center;
-    margin-top: 20px;
+    gap: 18px;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .top-boxes .info-box {
+    flex: 1 1 250px;
+    min-width: 250px;
+    text-align: left; /* ensure small boxes content is left-aligned */
+  }
+  @media (max-width: 900px) {
+    .top-boxes {
+      flex-direction: column;
+    }
+  }
+
+  .info-box {
+    border: 1px dashed $accent-color;
+    border-radius: 20px;
+    padding: 24px 26px;
+    background: rgba(255, 255, 255, 0.02);
+    box-sizing: border-box;
+  }
+  .info-box-heading {
+    color: $accent-color;
+    margin-top: 0;
+    text-align: left;
+  }
+
+  .progression table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .progression table tr .boss-name {
+    font-size: 0.95em;
+    @media (max-width: 700px) {
+      font-size: 0.7em;
+    }
+  }
+  .progression table tr .difficulty {
+    font-size: 1.15em;
+    text-align: center;
+  }
+  .progression table tr .killed-or-not {
+    font-size: 0.7em;
+    text-align: center;
+  }
+  .progression table th:first-child {
+    text-align: left;
+  }
+
+  .raid-schedule .raid-day {
+    font-size: 1.3em;
+    margin: 0;
+    @media (max-width: 900px) {
+      font-size: 1.05em;
+    }
+  }
+  .raid-schedule p {
+    max-width: 30em;
+    text-align: left;
+  }
+
+  .about-box {
+    border: 2px dotted $color-yellow;
+    border-radius: 20px;
+    padding: 32px 40px;
+    background: rgba($color-yellow, 0.05);
+    text-align: center;
+    line-height: 1.55;
+    margin-top: 18px;
+    @media (max-width: 900px) {
+      padding: 28px 32px;
+    }
+    @media (max-width: 600px) {
+      padding: 22px 20px;
+    }
+    .who-are-we {
+      margin: 0;
+      font-size: 1.25em;
+      @media (max-width: 700px) {
+        font-size: 1.05em;
+      }
+    }
   }
 }
 </style>

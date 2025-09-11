@@ -14,9 +14,10 @@
 
       <div :class="['nav-links', { open: menuOpen }]">
         <RouterLink class="nav-link" to="/" @click="menuOpen = false">Home</RouterLink>
-        <RouterLink class="nav-link" to="/wow" @click="menuOpen = false"
-          >World of Warcraft</RouterLink
+        <RouterLink class="nav-link" to="/wow-kills" @click="menuOpen = false"
+          >WoW Kills</RouterLink
         >
+        <RouterLink class="nav-link" to="/raiding" @click="menuOpen = false">Raiding</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
         <DiscordIcon @click="openDiscordInvite" />
       </div>
@@ -43,7 +44,7 @@ export default {
         'mxk ydb',
         'Soak the balls!',
         'What do you mean "you people"?',
-        'Just a gentle jerk'
+        'Just a gentle jerk',
       ],
       currentSplash: '',
       splashInterval: null,
