@@ -53,4 +53,20 @@ html {
     }
   }
 }
+
+/* Unified content width utility */
+.content-wrapper {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 2rem 2.5rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 900px) {
+    padding: 0 1.5rem 2.2rem;
+  }
+  @media (max-width: 600px) {
+    padding: 0 1rem 2rem;
+  }
+}
 </style>
