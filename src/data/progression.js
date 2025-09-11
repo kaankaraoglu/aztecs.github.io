@@ -8,7 +8,7 @@ export const bosses = [
   { name: 'Forgeweaver Araz', normal: true, heroic: true },
   { name: 'The Soul Hunters', normal: true, heroic: true },
   { name: 'Fractillus', normal: true, heroic: true },
-  { name: 'Nexus-King Salhadaar', normal: true, heroic: false },
+  { name: 'Nexus-King Salhadaar', normal: true, heroic: true },
   { name: 'Dimensius', normal: true, heroic: false },
 ]
 
