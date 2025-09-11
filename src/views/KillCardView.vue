@@ -192,7 +192,7 @@ export default {
         z-index: 1;
 
         @media (max-width: 640px) {
-          display: none; // image hidden on small screens, keep existing mobile link button
+          display: none; /* image hidden on small screens, keep existing mobile link button */
         }
       }
 
