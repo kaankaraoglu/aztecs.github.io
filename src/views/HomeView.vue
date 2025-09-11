@@ -53,7 +53,7 @@
             <tr>
               <td class="boss-name">Nexus-King Salhadaar</td>
               <td class="killed-or-not">💀</td>
-              <td class="killed-or-not">-</td>
+              <td class="killed-or-not">💀</td>
             </tr>
 
             <tr>
