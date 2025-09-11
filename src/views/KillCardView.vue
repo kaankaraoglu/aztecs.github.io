@@ -11,9 +11,9 @@
           :href="imageUrl"
           target="_blank"
           rel="noopener noreferrer"
-          :aria-label="'Open full image for ' + raidName + ' in a new tab'"
+          :aria-label="`Open full image for ${raidName} in a new tab`"
         >
-          <img class="raid-image" :src="imageUrl" :alt="raidName + ' screenshot'" loading="lazy" />
+          <img class="raid-image" :src="imageUrl" :alt="`${raidName} screenshot`" loading="lazy" />
           <div class="enlarge-indicator" aria-hidden="true">🔍</div>
         </a>
 
