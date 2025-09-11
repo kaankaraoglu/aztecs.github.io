@@ -11,9 +11,9 @@
           :href="imageUrl"
           target="_blank"
           rel="noopener noreferrer"
-          :aria-label="'Open full image for ' + raidName + ' in a new tab'"
+          :aria-label="`Open full image for ${raidName} in a new tab`"
         >
-          <img class="raid-image" :src="imageUrl" :alt="raidName + ' screenshot'" loading="lazy" />
+          <img class="raid-image" :src="imageUrl" :alt="`${raidName} screenshot`" loading="lazy" />
           <div class="enlarge-indicator" aria-hidden="true">🔍</div>
         </a>
 
@@ -192,7 +192,7 @@ export default {
         z-index: 1;
 
         @media (max-width: 640px) {
-          display: none; // image hidden on small screens, keep existing mobile link button
+          display: none; /* image hidden on small screens, keep existing mobile link button */
         }
       }
 
