@@ -1,4 +1,4 @@
-name: Build only
+name: Lint and Build
 
 on:
   workflow_dispatch:
