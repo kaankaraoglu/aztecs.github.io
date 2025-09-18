@@ -1,5 +1,5 @@
 <template>
-  <button class="discord-btn">
+  <button class="discord-btn" aria-label="Discord" type="button">
     <svg class="discord-svg" viewBox="0 -28.5 256 256" preserveAspectRatio="xMidYMid">
       <path
         class="discord-svg-path"
