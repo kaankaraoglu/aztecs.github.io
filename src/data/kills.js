@@ -7,8 +7,38 @@ import gloryOfLiberationImage from '@/assets/images/kills/glory_of_the_liberatio
 import yoggSaronImage from '@/assets/images/kills/yoggsaron_2009_06_01.jpg'
 import ulduarImage from '@/assets/images/kills/ulduar_2009_04_19.jpg'
 import obsidianSanctumImage from '@/assets/images/kills/obsidian_sanctum_2009_02_23.jpg'
+import manaforgeOmegaImage from '@/assets/images/kills/manaforge_omega_2025_09_17.jpg'
 
 export const kills = [
+  {
+    raidName: 'Manaforge Omega (AOTC)',
+    imageUrl: manaforgeOmegaImage,
+    date: '2025-09-17 22:01',
+    tanks: [
+      { name: 'Phruity', class: 'druid' },
+      { name: 'Agro', class: 'warrior' },
+    ],
+    healers: [
+      { name: 'Blackmaira', class: 'paladin' },
+      { name: 'Éowyn', class: 'druid' },
+      { name: 'Tuck', class: 'monk' },
+      { name: 'Kiyanne', class: 'evoker' },
+      { name: 'Samáar', class: 'paladin' },
+      { name: 'Edemption', class: 'priest' },
+    ],
+    dds: [
+      { name: 'Synjin', class: 'shaman' },
+      { name: 'Chaos', class: 'warlock' },
+      { name: 'Aerioth', class: 'priest' },
+      { name: 'Snyxx', class: 'mage' },
+      { name: 'Frosteyes', class: 'death-knight' },
+      { name: 'Daruni', class: 'druid' },
+      { name: 'Valthor', class: 'warrior' },
+      { name: 'Trupolini', class: 'warrior' },
+      { name: 'Aurielle', class: 'paladin' },
+      { name: 'Baraddûr', class: 'death-knight' },
+    ],
+  },
   {
     raidName: 'Liberation of Undermine (AOTC)',
     imageUrl: liberationOfUndermineImage,
