@@ -215,7 +215,7 @@ export default {
           opacity 0.25s ease,
           transform 0.25s ease;
         pointer-events: none;
-        z-index: 2;
+        z-index: 4; /* raise above overlay (2) */
       }
 
       .image-anchor:hover .enlarge-indicator {
@@ -236,6 +236,7 @@ export default {
         color: white;
         font-size: 0.85rem;
         text-align: left;
+        z-index: 2; /* ensure roster text sits above .image-anchor (z-index:1) */
 
         @media (min-width: 641px) {
           position: absolute;
