@@ -169,7 +169,6 @@ export default {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
       gap: 30px;
 
       .nav-link {
