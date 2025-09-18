@@ -19,7 +19,6 @@ export const kills = [
       { name: 'Agro', class: 'warrior' },
     ],
     healers: [
-      { name: 'Blackmaira', class: 'paladin' },
       { name: 'Éowyn', class: 'druid' },
       { name: 'Tuck', class: 'monk' },
       { name: 'Kiyanne', class: 'evoker' },
@@ -27,7 +26,9 @@ export const kills = [
       { name: 'Edemption', class: 'priest' },
     ],
     dds: [
+      { name: 'Blackmaira', class: 'paladin' },
       { name: 'Synjin', class: 'shaman' },
+      { name: 'Skátari', class: 'warlock' },
       { name: 'Chaos', class: 'warlock' },
       { name: 'Aerioth', class: 'priest' },
       { name: 'Snyxx', class: 'mage' },

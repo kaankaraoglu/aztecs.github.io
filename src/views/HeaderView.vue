@@ -1,7 +1,9 @@
 <template>
   <div class="header-view">
     <div class="logo-wrapper">
-      <img class="logo" alt="Aztecs logo" src="@/assets/images/logo.png" />
+      <RouterLink to="/" aria-label="Go to home" class="logo-home-link" @click="menuOpen = false">
+        <img class="logo" alt="Aztecs logo" src="@/assets/images/logo.png" />
+      </RouterLink>
     </div>
     <div class="splash-text">{{ currentSplash }}</div>
 
@@ -81,6 +83,20 @@ export default {
     .logo {
       height: 10em;
       margin-top: 1em;
+    }
+
+    .logo-home-link {
+      display: inline-block;
+      line-height: 0; /* remove extra inline spacing */
+      cursor: pointer;
+      text-decoration: none;
+      outline: none;
+
+      &:focus-visible {
+        outline: 2px solid $accent-color;
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
     }
   }
 
