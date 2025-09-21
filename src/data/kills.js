@@ -26,6 +26,7 @@ export const kills = [
       { name: 'Edemption', class: 'priest' },
     ],
     dds: [
+      { name: 'Wablakin', class: 'shaman' },
       { name: 'Blackmaira', class: 'paladin' },
       { name: 'Synjin', class: 'shaman' },
       { name: 'Skátari', class: 'warlock' },
