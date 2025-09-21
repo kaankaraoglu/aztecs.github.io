@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -26,7 +26,7 @@ jobs:
       - name: Lint
         run: npx eslint . --max-warnings=0
 
-      - name: Build the site
+      - name: Build
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
@@ -40,7 +40,7 @@ jobs:
       - name: Create CNAME file
         run: echo "aztecs.se" > dist/CNAME
 
-      - name: Deploy to gh-pages branch
+      - name: Push to gh-pages branch
         run: |
           # Set up Git config for committing
           git config --global user.name "github-actions[bot]"
