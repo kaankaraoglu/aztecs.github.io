@@ -8,8 +8,37 @@ import yoggSaronImage from '@/assets/images/kills/yoggsaron_2009_06_01.jpg'
 import ulduarImage from '@/assets/images/kills/ulduar_2009_04_19.jpg'
 import obsidianSanctumImage from '@/assets/images/kills/obsidian_sanctum_2009_02_23.jpg'
 import manaforgeOmegaImage from '@/assets/images/kills/manaforge_omega_2025_09_17.jpg'
+import gloryOfTheOmegaRaiderImage from '@/assets/images/kills/glory_of_the_omega_raider_2025_09_21.jpg'
 
 export const kills = [
+    {
+    raidName: 'Glory of the Omega Raider',
+    imageUrl: manaforgeOmegaImage,
+    date: '2025-09-21 21:15',
+    tanks: [
+      { name: 'Phruity', class: 'druid' },
+      { name: 'Peavy', class: 'warrior' },
+    ],
+    healers: [
+      { name: 'Éowyn', class: 'druid' },
+      { name: 'Kiyanne', class: 'evoker' },
+      { name: 'Samáar', class: 'paladin' },
+      { name: 'Edemption', class: 'priest' },
+    ],
+    dds: [
+      { name: 'Blackmaira', class: 'paladin' },
+      { name: 'Synjin', class: 'shaman' },
+      { name: 'Skátari', class: 'warlock' },
+      { name: 'Mzk', class: 'rogue' },
+      { name: 'Aerioth', class: 'priest' },
+      { name: 'Snyxx', class: 'mage' },
+      { name: 'Frosteyes', class: 'death-knight' },
+      { name: 'Valorite', class: 'death-knight' },
+      { name: 'Aurielle', class: 'paladin' },
+      { name: 'Rhapidfire', class: 'hunter' },
+      { name: 'Agro', class: 'warrior' },
+    ],
+  },
   {
     raidName: 'Manaforge Omega (AOTC)',
     imageUrl: manaforgeOmegaImage,
@@ -38,6 +67,8 @@ export const kills = [
       { name: 'Trupolini', class: 'warrior' },
       { name: 'Aurielle', class: 'paladin' },
       { name: 'Baraddûr', class: 'death-knight' },
+      { name: 'Rhapidfire', class: 'hunter' },
+      
     ],
   },
   {
