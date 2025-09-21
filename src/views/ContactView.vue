@@ -15,7 +15,7 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row" class="quality-legendary">Guild Master</th>
+            <th scope="row" class="quality-legendary">Guild Master/Figurehead</th>
             <td class="monk">Phing</td>
           </tr>
           <tr>
@@ -23,7 +23,7 @@
             <td class="paladin">Valorite</td>
           </tr>
           <tr>
-            <th scope="row" class="quality-epic">Officer</th>
+            <th scope="row" class="quality-epic">Achievement Officer</th>
             <td class="paladin">Aurielle</td>
           </tr>
           <tr>
