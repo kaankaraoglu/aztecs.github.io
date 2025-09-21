@@ -27,7 +27,7 @@
             <td class="paladin">Aurielle</td>
           </tr>
           <tr>
-            <th scope="row" class="quality-epic">Officer</th>
+            <th scope="row" class="quality-epic">Officer/Shaman Class Leader</th>
             <td class="shaman">Synjin</td>
           </tr>
           <tr>
