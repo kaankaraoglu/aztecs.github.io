@@ -13,7 +13,7 @@ import gloryOfTheOmegaRaiderImage from '@/assets/images/kills/glory_of_the_omega
 export const kills = [
     {
     raidName: 'Glory of the Omega Raider',
-    imageUrl: manaforgeOmegaImage,
+    imageUrl: gloryOfTheOmegaRaiderImage,
     date: '2025-09-21 21:15',
     tanks: [
       { name: 'Phruity', class: 'druid' },
