@@ -5,5 +5,11 @@
 
 <script>
 import AchievementsView from '@/views/AchievementsView.vue'
-export default AchievementsView
+
+export default {
+  name: 'WowKillsView',
+  components: {
+    AchievementsView
+  }
+}
 </script>
