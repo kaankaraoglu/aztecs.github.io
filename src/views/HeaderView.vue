@@ -16,8 +16,8 @@
 
       <div :class="['nav-links', { open: menuOpen }]">
         <RouterLink class="nav-link" to="/" @click="menuOpen = false">Home</RouterLink>
-        <RouterLink class="nav-link" to="/wow-kills" @click="menuOpen = false"
-          >WoW Kills</RouterLink
+        <RouterLink class="nav-link" to="/achievements" @click="menuOpen = false"
+          >Achievements</RouterLink
         >
         <RouterLink class="nav-link" to="/raiding" @click="menuOpen = false">Raiding</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
@@ -39,7 +39,7 @@ export default {
     return {
       menuOpen: false,
       splashMessages: [
-        'tip to tip',
+        'Tip to tip',
         'Rule #1: IGNORE Rhys',
         'Blood Price!',
         'DO NOT RELEASE!!!',
@@ -47,6 +47,7 @@ export default {
         'Soak the balls!',
         'What do you mean "you people"?',
         'Just a gentle jerk',
+        'Get sucked',
       ],
       currentSplash: '',
       splashInterval: null,
