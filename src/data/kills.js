@@ -11,7 +11,7 @@ import manaforgeOmegaImage from '@/assets/images/kills/manaforge_omega_2025_09_1
 import gloryOfTheOmegaRaiderImage from '@/assets/images/kills/glory_of_the_omega_raider_2025_09_21.jpg'
 
 export const kills = [
-    {
+  {
     raidName: 'Glory of the Omega Raider',
     imageUrl: gloryOfTheOmegaRaiderImage,
     date: '2025-09-21 21:15',
@@ -69,7 +69,6 @@ export const kills = [
       { name: 'Aurielle', class: 'paladin' },
       { name: 'Baraddûr', class: 'death-knight' },
       { name: 'Rhapidfire', class: 'hunter' },
-      
     ],
   },
   {
