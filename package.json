@@ -29,7 +29,7 @@
     "vite": "^7.1.6",
     "vite-plugin-vue-devtools": "^8.0.2",
     "husky": "^9.1.6",
-    "lint-staged": "^16.2.0"
+    "lint-staged": "^16.2.4"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue,scss,css,md,json,yml,yaml}": [
