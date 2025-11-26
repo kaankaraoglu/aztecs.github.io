@@ -48,6 +48,10 @@ export default {
         'What do you mean "you people"?',
         'Just a gentle jerk',
         'Get sucked',
+        'Nilay NO!!!',
+        'Proud on you',
+        'Damit Delmos!',
+        "My wife is home, let's kill the bitch!"
       ],
       currentSplash: '',
       splashInterval: null,
