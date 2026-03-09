@@ -3,40 +3,36 @@
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
     <div class="content-wrapper">
       <div class="top-boxes">
-        <div class="info-box progression">
-          <h2 class="info-box-heading">{{ tierName }}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th class="accent-color">Boss</th>
-                <th class="quality-rare difficulty">N</th>
-                <th class="quality-epic difficulty">HC</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="boss in bosses" :key="boss.name">
-                <td class="boss-name">{{ boss.name }}</td>
-                <td class="killed-or-not">{{ killMark(boss.normal) }}</td>
-                <td class="killed-or-not">{{ killMark(boss.heroic) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="info-box raid-schedule">
-          <h2 class="info-box-heading">Raid Schedule</h2>
-          <p>2 raids/week</p>
-          <p class="raid-day">Wednesdays at 20:00 - 22:00 ST</p>
-          <p class="raid-day">Sundays at 19:00 - 22:00 ST</p>
-          <p>
-            We sometimes skip raids that correspond with holidays <br />but they are announced in
-            advance.
-          </p>
-          <p>
-            Every tier, we start with normals, switch to heroics when we feel like we can manage and
-            after the AOTC, we do an achievement run.
-          </p>
-        </div>
+        <RaidProgressionBox
+          v-for="raid in raids"
+          :key="raid.name"
+          :raid="raid"
+          class="info-box"
+        />
       </div>
+      <FadingDivider />
+      <div class="latest-achievement">
+        <p class="achievement-name">{{ latestKill.raidName }}</p>
+        <a :href="latestKill.imageUrl" target="_blank" rel="noopener noreferrer">
+          <img :src="latestKill.imageUrl" :alt="latestKill.raidName" class="achievement-image" />
+        </a>
+      </div>
+      <FadingDivider />
+      <div class="info-box raid-schedule">
+        <h2 class="info-box-heading">Raid Schedule</h2>
+        <p>2 raids/week</p>
+        <p class="raid-day">Wednesdays at 20:00 - 22:00 ST</p>
+        <p class="raid-day">Sundays at 19:00 - 22:00 ST</p>
+        <p>
+          We sometimes skip raids that correspond with holidays <br />but they are announced in
+          advance.
+        </p>
+        <p>
+          Every tier, we start with normals, switch to heroics when we feel like we can manage and
+          after the AOTC, we do an achievement run.
+        </p>
+      </div>
+      <FadingDivider />
       <div class="about-box">
         <p class="who-are-we">
           <b>"Aztecs"</b> are an established, multi-national Horde guild based on Al'Akir, where
@@ -66,13 +62,16 @@
 </template>
 
 <script>
-import { tierName, bosses, killMark } from '@/data/progression.js'
+import { raids } from '@/data/progression.js'
+import { kills } from '@/data/kills.js'
+import FadingDivider from '@/components/FadingDivider.vue'
+import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 export default {
   name: 'HomeView',
+  components: { FadingDivider, RaidProgressionBox },
   data() {
-    return { tierName, bosses }
+    return { raids, latestKill: kills[0] }
   },
-  methods: { killMark },
 }
 </script>
 
@@ -91,23 +90,26 @@ export default {
   .welcome-heading {
     font-weight: 800;
     font-size: 4.5em;
-    margin: 0.3em 0 0.4em;
+    margin: 0.3rem 0 1.5rem;
     @media (max-width: 1200px) {
       font-size: 2.4em;
+    }
+    @media (max-width: 400px) {
+      font-size: 1.8em;
     }
   }
 
   .top-boxes {
     display: flex;
-    gap: 18px;
+    gap: 1.125rem;
     align-items: stretch;
     justify-content: space-between;
     flex-wrap: wrap;
   }
   .top-boxes .info-box {
     flex: 1 1 250px;
-    min-width: 250px;
-    text-align: left; /* ensure small boxes content is left-aligned */
+    min-width: 0;
+    text-align: left;
   }
   @media (max-width: 900px) {
     .top-boxes {
@@ -118,63 +120,72 @@ export default {
   .info-box {
     border: 1px dashed $accent-color;
     border-radius: 20px;
-    padding: 24px 26px;
+    padding: 1.5rem 1.625rem;
     background: rgba(255, 255, 255, 0.02);
     box-sizing: border-box;
-  }
-  .info-box-heading {
-    color: $accent-color;
-    margin-top: 0;
-    text-align: left;
-  }
-
-  .progression table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .progression table tr .boss-name {
-    font-size: 0.95em;
-    @media (max-width: 700px) {
-      font-size: 0.7em;
+    transition: background 0.3s ease;
+    &:hover {
+      background: rgba($color-yellow, 0.05);
+    }
+    @media (max-width: 600px) {
+      padding: 1.125rem 1rem;
+      border-radius: 14px;
     }
   }
-  .progression table tr .difficulty {
-    font-size: 1.15em;
+  .latest-achievement {
     text-align: center;
-  }
-  .progression table tr .killed-or-not {
-    font-size: 0.7em;
-    text-align: center;
-  }
-  .progression table th:first-child {
-    text-align: left;
-  }
-
-  .raid-schedule .raid-day {
-    font-size: 1.3em;
-    margin: 0;
-    @media (max-width: 900px) {
-      font-size: 1.05em;
+    margin-bottom: 1.125rem;
+    .achievement-name {
+      font-size: 1.3em;
+      margin: 0 0 0.75rem;
+      color: $color-yellow;
+      @media (max-width: 600px) {
+        font-size: 1.05em;
+      }
+    }
+    .achievement-image {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba($accent-color, 0.3);
     }
   }
-  .raid-schedule p {
-    max-width: 30em;
+
+  .raid-schedule {
+    margin-top: 1.125rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: left;
+    .raid-day {
+      font-size: 1.3em;
+      margin: 0;
+      @media (max-width: 900px) {
+        font-size: 1.05em;
+      }
+    }
+    p {
+      max-width: 30em;
+      text-align: left;
+    }
   }
 
   .about-box {
     border: 2px dotted $color-yellow;
     border-radius: 20px;
-    padding: 32px 40px;
-    background: rgba($color-yellow, 0.05);
+    padding: 2rem 2.5rem;
+    background: rgba(255, 255, 255, 0.02);
     text-align: center;
+    transition: background 0.3s ease;
+    &:hover {
+      background: rgba($color-yellow, 0.05);
+    }
     line-height: 1.55;
-    margin-top: 18px;
+    margin-top: 1.125rem;
     @media (max-width: 900px) {
-      padding: 28px 32px;
+      padding: 1.75rem 2rem;
     }
     @media (max-width: 600px) {
-      padding: 22px 20px;
+      padding: 1.375rem 1.25rem;
     }
     .who-are-we {
       margin: 0;

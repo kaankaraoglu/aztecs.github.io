@@ -1,61 +1,45 @@
 <template>
   <div class="raiding-view content-wrapper">
-    <h1 class="heading">Raiding</h1>
-    <section class="intro">
-      <p>
-        Welcome to the Aztecs raiding page. Here you'll find detailed information about our current
-        raid tier, loot rules, raid schedule, and requirements & expectations for raiders.
-      </p>
-      <!-- This page can expand over time with logs, sign-up links, and strategy
-        resources. -->
-    </section>
     <section class="progression">
       <div class="progression-boxes">
-        <div class="info-box progression">
-          <h2 class="info-box-heading">{{ tierName }}</h2>
-          <table>
-            <thead>
-              <tr>
-                <th class="accent-color">Boss</th>
-                <th class="quality-rare difficulty">N</th>
-                <th class="quality-epic difficulty">HC</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="boss in bosses" :key="boss.name">
-                <td class="boss-name">{{ boss.name }}</td>
-                <td class="killed-or-not">{{ killMark(boss.normal) }}</td>
-                <td class="killed-or-not">{{ killMark(boss.heroic) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="info-box loot-rules">
-          <h2 class="info-box-heading">Loot Rules</h2>
-          <ol class="loot-rules-list">
-            <li>One loot specialisation per raid (DO NOT switch roles mid-raid)</li>
-            <li>
-              Your loot spec must match your sign up role in the
-              <a
-                href="https://discord.com/channels/150712806054821889/784846321332781076"
-                target="_blank"
-                rel="noopener noreferrer"
-                >#raidcalendar</a
-              >
-              unless you've been asked to switch by an officer, in which case it can be either but
-              rule #1 still applies.
-            </li>
-            <li>
-              During the progression raids, we are gearing up your main raid spec, not M+ spec. This
-              applies until we go into farming mode, where everything becomes free for all including
-              off-spec and transmogs.
-            </li>
-          </ol>
-          <p>Feel free to talk to any of the officers if you have any questions or objections.</p>
-        </div>
+        <RaidProgressionBox
+          v-for="raid in raids"
+          :key="raid.name"
+          :raid="raid"
+          class="info-box progression"
+        />
       </div>
     </section>
+
+    <FadingDivider />
+
+    <section class="loot-section">
+      <div class="info-box loot-rules">
+        <h2 class="info-box-heading">Loot Rules</h2>
+        <ol class="loot-rules-list">
+          <li>One loot specialisation per raid (DO NOT switch roles mid-raid)</li>
+          <li>
+            Your loot spec must match your sign up role in the
+            <a
+              href="https://discord.com/channels/150712806054821889/784846321332781076"
+              target="_blank"
+              rel="noopener noreferrer"
+              >#raidcalendar</a
+            >
+            unless you've been asked to switch by an officer, in which case it can be either but
+            rule #1 still applies.
+          </li>
+          <li>
+            During the progression raids, we are gearing up your main raid spec, not M+ spec. This
+            applies until we go into farming mode, where everything becomes free for all including
+            off-spec and transmogs.
+          </li>
+        </ol>
+        <p>Feel free to talk to any of the officers if you have any questions or objections.</p>
+      </div>
+    </section>
+
+    <FadingDivider />
 
     <div class="support-boxes">
       <section class="schedule info-box">
@@ -101,17 +85,16 @@
 </template>
 
 <script>
-import { tierName, bosses, killMark } from '@/data/progression.js'
+import { raids } from '@/data/progression.js'
+import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
+import FadingDivider from '@/components/FadingDivider.vue'
 export default {
   name: 'RaidingView',
+  components: { RaidProgressionBox, FadingDivider },
   data() {
     return {
-      tierName,
-      bosses,
+      raids,
     }
-  },
-  methods: {
-    killMark,
   },
 }
 </script>
@@ -125,70 +108,42 @@ export default {
   text-align: left;
   background-color: $background-color;
 
-  .heading {
-    font-size: 4em;
-    font-weight: 800;
-    margin: 0 0 0.5em;
-    @media (max-width: 1200px) {
-      font-size: 2.2em;
-    }
-  }
-  .section-title {
-    color: $accent-color;
-    margin-top: 2em;
-  }
   p,
   li {
     font-size: 1.1em;
     line-height: 1.5;
   }
-  .intro p {
-    font-size: 1.7em;
-    line-height: 1.6;
-  }
 
   .info-box {
     border: 1px dashed $accent-color;
     border-radius: 20px;
-    padding: 30px;
-    margin: 10px 0 30px;
+    padding: 1.875rem;
+    margin: 0.625rem 0 1.875rem;
     display: flex;
     flex-direction: column;
+    background: rgba(255, 255, 255, 0.02);
+    transition: background 0.3s ease;
+    &:hover {
+      background: rgba($color-yellow, 0.05);
+    }
+    @media (max-width: 600px) {
+      padding: 1.125rem 1rem;
+      border-radius: 14px;
+    }
   }
   .progression-boxes .info-box {
-    margin: 10px 0 10px;
+    margin: 0.625rem 0;
   }
   .info-box-heading {
     color: $accent-color;
     margin-top: 0;
   }
   .progression {
-    min-width: 20em;
-  }
-
-  table {
-    width: 100%;
-  }
-  table tr .boss-name {
-    font-size: 1em;
-    @media (max-width: 1440px) {
-      font-size: 1em;
-    }
-    @media (max-width: 768px) {
-      font-size: 0.6em;
-    }
-  }
-  table tr .difficulty {
-    font-size: 1.2em;
-    text-align: center;
-  }
-  table tr .killed-or-not {
-    font-size: 0.7em;
-    text-align: center;
+    min-width: 0;
   }
 
   ul {
-    padding-left: 1.2em;
+    padding-left: 1.2rem;
   }
   .note {
     font-style: italic;
@@ -198,47 +153,47 @@ export default {
   .progression-boxes {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 0.625rem;
     align-items: stretch;
-    flex-wrap: nowrap;
-    @media (max-width: 1200px) {
+    flex-wrap: wrap;
+    @media (max-width: 900px) {
       flex-direction: column;
     }
   }
   .support-boxes {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 0.625rem;
     align-items: stretch;
-    flex-wrap: nowrap;
-    margin-bottom: 30px;
-    @media (max-width: 1200px) {
+    flex-wrap: wrap;
+    margin-bottom: 1.875rem;
+    @media (max-width: 900px) {
       flex-direction: column;
     }
   }
   .loot-rules {
     .loot-rules-list {
       margin: 0;
-      padding-left: 1.2em;
+      padding-left: 1.2rem;
       li {
-        margin-bottom: 0.8em;
+        margin-bottom: 0.8rem;
       }
     }
   }
   .raid-requirements {
     max-width: none;
     width: 100%;
-    padding-left: 1.2em;
+    padding-left: 1.2rem;
     list-style: disc outside;
     word-break: normal;
     white-space: normal;
     li {
-      margin-bottom: 1em;
+      margin-bottom: 1rem;
     }
     ul {
       list-style: circle;
-      margin-top: 0.5em;
-      padding-left: 1.2em;
+      margin-top: 0.5rem;
+      padding-left: 1.2rem;
     }
   }
 
@@ -254,10 +209,8 @@ export default {
   }
 
   .progression-boxes > .progression {
-    flex: 0 0 35%;
-  }
-  .progression-boxes > .loot-rules {
-    flex: 1 1 0;
+    flex: 1 1 250px;
+    min-width: 0;
   }
   .support-boxes > .schedule {
     flex: 0 0 35%;
