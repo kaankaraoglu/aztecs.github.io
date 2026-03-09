@@ -4,8 +4,8 @@
       <RouterLink to="/" aria-label="Go to home" class="logo-home-link" @click="menuOpen = false">
         <img class="logo" alt="Aztecs logo" src="@/assets/images/logo.png" />
       </RouterLink>
+      <div class="splash-text" :style="{ opacity: splashVisible ? 1 : 0 }">{{ currentSplash }}</div>
     </div>
-    <div class="splash-text">{{ currentSplash }}</div>
 
     <nav class="nav">
       <div class="nav-header">
@@ -54,11 +54,12 @@ export default {
         "My wife is home, let's kill the bitch!"
       ],
       currentSplash: '',
+      splashVisible: true,
       splashInterval: null,
     }
   },
   mounted() {
-    this.rotateSplash()
+    this.currentSplash = this.pickRandomSplash()
     this.splashInterval = setInterval(this.rotateSplash, 3000)
   },
   beforeUnmount() {
@@ -69,9 +70,16 @@ export default {
       const discordInviteUrl = 'https://discord.gg/GfmnD24VHa'
       window.open(discordInviteUrl, '_blank')
     },
-    rotateSplash() {
+    pickRandomSplash() {
       const index = Math.floor(Math.random() * this.splashMessages.length)
-      this.currentSplash = this.splashMessages[index]
+      return this.splashMessages[index]
+    },
+    rotateSplash() {
+      this.splashVisible = false
+      setTimeout(() => {
+        this.currentSplash = this.pickRandomSplash()
+        this.splashVisible = true
+      }, 500)
     },
   },
 }
@@ -86,8 +94,11 @@ export default {
     display: inline-block;
 
     .logo {
-      height: 10em;
-      margin-top: 1em;
+      height: 14em;
+      margin-top: 1rem;
+      @media (max-width: 600px) {
+        height: 8em;
+      }
     }
 
     .logo-home-link {
@@ -106,22 +117,23 @@ export default {
   }
 
   .splash-text {
+    position: absolute;
+    bottom: 0.5rem;
+    right: -2rem;
     font-size: 1em;
     font-weight: bold;
-    color: $accent-color;
-    animation: fadeIn 1s ease-in-out;
+    color: $color-yellow;
     white-space: nowrap;
     pointer-events: none;
     user-select: none;
-    margin-bottom: 1em;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
+    transform: rotate(-8deg);
+    transform-origin: center center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.5s ease;
+    @media (max-width: 600px) {
+      font-size: 0.75em;
+      right: -1rem;
+      bottom: 0.25rem;
     }
   }
 
@@ -138,7 +150,10 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2em 0 2em;
+    margin: 2rem 0;
+    @media (max-width: 600px) {
+      margin: 1rem 0;
+    }
 
     .nav-header {
       display: none;
@@ -174,7 +189,7 @@ export default {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 30px;
+      gap: 1.875rem;
 
       .nav-link {
         text-decoration: none;
@@ -193,7 +208,7 @@ export default {
         width: 100%;
         margin-top: 0.5rem;
         display: none;
-        gap: 5px;
+        gap: 0.3125rem;
 
         &.open {
           display: flex;
