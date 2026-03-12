@@ -41,46 +41,46 @@
 
     <FadingDivider />
 
-    <div class="support-boxes">
-      <section class="schedule info-box">
-        <h2 class="info-box-heading">Raid Schedule</h2>
-        <ul>
-          <li>Wednesdays 20:00 - 22:00 ST</li>
-          <li>Sundays 19:00 - 22:00 ST</li>
-        </ul>
-        <p class="note">Holiday adjustments are announced in advance.</p>
-      </section>
+    <section class="requirements info-box">
+      <h2 class="info-box-heading">Requirements & Expectations</h2>
+      <ul class="raid-requirements">
+        <li>
+          Sign up for raids on Discord
+          <a
+            href="https://discord.com/channels/150712806054821889/784846321332781076"
+            target="_blank"
+            rel="noopener noreferrer"
+            >#raidcalendar</a
+          >
+          channel. If you don't have access, talk to an officer in game or ask in Discord.
+        </li>
+        <li>
+          During progression raids, we require everyone to:
+          <ul>
+            <li>Have a reasonable item level (+-10 of group average)</li>
+            <li>
+              Have your gear enchanted (We understand some enchants may be expensive for people
+              who don't play much, so we can help. Just ask in Discord or guild chat.)
+            </li>
+            <li>
+              It is <b>NOT MANDATORY</b> but we appreciate if you are active on comms during the
+              raids.
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
 
-      <section class="requirements info-box">
-        <h2 class="info-box-heading">Requirements & Expectations</h2>
-        <ul class="raid-requirements">
-          <li>
-            Sign up for raids on Discord
-            <a
-              href="https://discord.com/channels/150712806054821889/784846321332781076"
-              target="_blank"
-              rel="noopener noreferrer"
-              >#raidcalendar</a
-            >
-            channel. If you don't have access, talk to an officer in game or ask in Discord.
-          </li>
-          <li>
-            During progression raids, we require everyone to:
-            <ul>
-              <li>Have a reasonable item level (+-10 of group average)</li>
-              <li>
-                Have your gear enchanted (We understand some enchants may be expensive for people
-                who don't play much, so we can help. Just ask in Discord or guild chat.)
-              </li>
-              <li>
-                It is <b>NOT MANDATORY</b> but we appreciate if you are active on comms during the
-                raids.
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </section>
-    </div>
+    <FadingDivider />
+
+    <section class="schedule info-box">
+      <h2 class="info-box-heading">Raid Schedule</h2>
+      <ul>
+        <li>Wednesdays 20:00 - 22:00 ST</li>
+        <li>Sundays 19:00 - 22:00 ST</li>
+      </ul>
+      <p class="note">Holiday adjustments are announced in advance.</p>
+    </section>
   </div>
 </template>
 
@@ -160,16 +160,8 @@ export default {
       flex-direction: column;
     }
   }
-  .support-boxes {
-    display: flex;
-    flex-direction: row;
-    gap: 0.625rem;
-    align-items: stretch;
-    flex-wrap: wrap;
+  .schedule {
     margin-bottom: 1.875rem;
-    @media (max-width: 900px) {
-      flex-direction: column;
-    }
   }
   .loot-rules {
     .loot-rules-list {
@@ -212,11 +204,8 @@ export default {
     flex: 1 1 250px;
     min-width: 0;
   }
-  .support-boxes > .schedule {
-    flex: 0 0 35%;
-  }
-  .support-boxes > .requirements {
-    flex: 1 1 0;
+  .requirements {
+    margin-bottom: 1.875rem;
   }
 }
 </style>
