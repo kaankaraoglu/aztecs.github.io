@@ -1,15 +1,28 @@
 // Centralized current tier progression data
-// Extend objects with more metadata if needed (e.g. order, mythic status, ids)
-export const tierName = 'Manaforge Omega'
-export const bosses = [
-  { name: 'Plexus Sentinel', normal: true, heroic: true },
-  { name: "Loom'ithar", normal: true, heroic: true },
-  { name: 'Soulbinder Naazindhri', normal: true, heroic: true },
-  { name: 'Forgeweaver Araz', normal: true, heroic: true },
-  { name: 'The Soul Hunters', normal: true, heroic: true },
-  { name: 'Fractillus', normal: true, heroic: true },
-  { name: 'Nexus-King Salhadaar', normal: true, heroic: true },
-  { name: 'Dimensius', normal: true, heroic: true },
+// Each raid has its own name and boss list
+export const raids = [
+  {
+    name: 'The Dreamrift',
+    bosses: [{ name: 'Chimaerus, the Undreamt God', normal: false, heroic: false }],
+  },
+  {
+    name: 'The Voidspire',
+    bosses: [
+      { name: 'Imperator Averzian', normal: false, heroic: false },
+      { name: 'Vorasius', normal: false, heroic: false },
+      { name: 'Fallen-King Salhadaar', normal: false, heroic: false },
+      { name: 'Vaelgor & Ezzorak', normal: false, heroic: false },
+      { name: 'Lightblinded Vanguard', normal: false, heroic: false },
+      { name: 'Crown of the Cosmos', normal: false, heroic: false },
+    ],
+  },
+  {
+    name: "March on Quel'Danas",
+    bosses: [
+      { name: "Belo'ren", normal: false, heroic: false },
+      { name: 'Midnight Falls', normal: false, heroic: false },
+    ],
+  },
 ]
 
 // Helper to map boolean -> display symbol

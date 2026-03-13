@@ -117,14 +117,19 @@ export default {
 
   .card {
     width: 100%;
-    max-width: 90vw;
+    max-width: 95vw;
     background-color: #000;
     border-radius: 5px;
     overflow: hidden;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    margin-bottom: 4em;
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transform: translateY(-2px);
+    }
 
     @media (min-width: 768px) {
       max-width: 66vw;
@@ -161,7 +166,7 @@ export default {
         left: 0;
         z-index: 3;
         width: 100%;
-        padding: 8px 12px;
+        padding: 0.5rem 0.75rem;
         backdrop-filter: blur(10px);
         background: rgba(0, 0, 0, 0.3);
         color: white;
@@ -230,7 +235,7 @@ export default {
 
       .image-overlay {
         width: 100%;
-        padding: 10px 14px;
+        padding: 0.625rem 0.875rem;
         backdrop-filter: blur(10px);
         background: rgba(0, 0, 0, 0.4);
         color: white;
@@ -256,8 +261,8 @@ export default {
         .summary-line {
           display: flex;
           align-items: center;
-          gap: 8px;
-          margin-bottom: 6px;
+          gap: 0.5rem;
+          margin-bottom: 0.375rem;
 
           .date {
             font-weight: 600;
@@ -280,13 +285,13 @@ export default {
 
           @media (max-width: 640px) {
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 0.75rem;
             text-align: left;
             padding-left: 2px;
 
             a {
               display: inline-block;
-              padding: 6px 12px;
+              padding: 0.375rem 0.75rem;
               font-size: 0.85rem;
               background-color: #333;
               color: #fff;
@@ -302,7 +307,7 @@ export default {
         }
 
         .roster {
-          margin-top: 6px;
+          margin-top: 0.375rem;
 
           span {
             font-weight: 600;

@@ -27,8 +27,8 @@
             <td class="paladin">Aurielle</td>
           </tr>
           <tr>
-            <th scope="row" class="quality-epic">Officer/Shaman Class Leader</th>
-            <td class="shaman">Synjin</td>
+            <th scope="row" class="quality-epic">Officer</th>
+            <td class="demon-hunter">Synthia</td>
           </tr>
           <tr>
             <th scope="row" class="quality-epic">Officer</th>
@@ -68,18 +68,25 @@ export default {
 .contact-view {
   display: flex;
   justify-content: center;
-  padding: 2rem 0 4rem; // horizontal padding from content-wrapper
-  max-width: 64rem; // custom page width narrower than global 80rem
+  padding: 2rem 2rem 4rem;
+  max-width: 64rem;
   box-sizing: border-box;
+  @media (max-width: 600px) {
+    padding: 1rem 1rem 3rem;
+  }
 }
 
 .contact-box {
   border: 1px dashed $accent-color;
   border-radius: 20px;
-  padding: 40px 50px;
+  padding: 2.5rem 3.125rem;
   max-width: 780px; // restore previous card width
   width: 100%;
   background: rgba(255, 255, 255, 0.02);
+  transition: background 0.3s ease;
+  &:hover {
+    background: rgba(#ff8a05, 0.05);
+  }
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -87,10 +94,10 @@ export default {
   margin: 0 auto; // center inside custom width
 
   @media (max-width: 900px) {
-    padding: 30px 30px;
+    padding: 1.875rem;
   }
   @media (max-width: 600px) {
-    padding: 25px 20px;
+    padding: 1.5625rem 1.25rem;
   }
 }
 
@@ -100,6 +107,9 @@ export default {
   font-weight: 800;
   color: $accent-color;
   text-align: center;
+  @media (max-width: 600px) {
+    font-size: 1.6em;
+  }
 }
 
 .contact-info {
@@ -108,12 +118,18 @@ export default {
   font-weight: 500;
   margin: 0 0 1.5rem;
   text-align: center;
+  @media (max-width: 600px) {
+    font-size: 1.05em;
+  }
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   font-size: 1.05em;
+  @media (max-width: 480px) {
+    font-size: 0.9em;
+  }
 
   thead th {
     color: $accent-color;
@@ -131,6 +147,12 @@ export default {
 
   tbody tr:nth-child(even) {
     background: rgba(255, 255, 255, 0.03);
+  }
+  tbody tr {
+    transition: background 0.2s ease;
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
   }
 }
 </style>
