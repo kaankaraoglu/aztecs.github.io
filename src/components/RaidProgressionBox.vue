@@ -68,7 +68,7 @@
           <Transition name="roster">
             <div v-if="expanded[boss.name] && hasRoster(boss)" class="roster-panel">
               <div v-if="boss.roster.tanks?.length" class="role-group">
-                <span class="role-icon" title="Tanks">&#x1F6E1;&#xFE0F;</span>
+                <RoleIcon role="tank" />
                 <span
                   v-for="p in boss.roster.tanks"
                   :key="p.name"
@@ -78,7 +78,7 @@
                 >
               </div>
               <div v-if="boss.roster.healers?.length" class="role-group">
-                <span class="role-icon" title="Healers">&#x1F49A;</span>
+                <RoleIcon role="healer" />
                 <span
                   v-for="p in boss.roster.healers"
                   :key="p.name"
@@ -88,7 +88,7 @@
                 >
               </div>
               <div v-if="boss.roster.dps?.length" class="role-group">
-                <span class="role-icon" title="DPS">&#x2694;&#xFE0F;</span>
+                <RoleIcon role="dps" />
                 <span
                   v-for="p in boss.roster.dps"
                   :key="p.name"
@@ -116,6 +116,7 @@
 
 <script setup>
 import { reactive } from 'vue'
+import RoleIcon from '@/components/icons/RoleIcon.vue'
 
 const props = defineProps({
   raids: {
@@ -373,13 +374,6 @@ function rosterSize(boss) {
     flex-wrap: wrap;
     align-items: center;
     gap: 0.15rem 0.4rem;
-  }
-
-  .role-icon {
-    font-size: 0.7em;
-    width: 1.2em;
-    text-align: center;
-    flex-shrink: 0;
   }
 
   .roster-player {

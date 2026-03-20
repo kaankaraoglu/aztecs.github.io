@@ -1,4 +1,4 @@
-name: CI
+name: PR Checks
 
 on:
   pull_request:
@@ -6,6 +6,7 @@ on:
 
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -17,6 +18,7 @@ jobs:
       - run: npx eslint . --max-warnings=0
 
   test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -28,6 +30,7 @@ jobs:
       - run: npx vitest run
 
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -36,7 +39,7 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm ci
-      - name: Build
+      - name: Build (without WCL data)
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
