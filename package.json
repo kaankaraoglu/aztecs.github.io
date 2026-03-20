@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/fetch-wcl-rosters.js",
+    "prebuild": "node scripts/fetch-wcl-data.js",
     "build": "vite build",
     "postbuild": "cp dist/index.html dist/404.html || copy dist/index.html dist/404.html",
     "preview": "vite preview",
