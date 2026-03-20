@@ -21,18 +21,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { killMark } from '@/data/progression.js'
-export default {
-  name: 'RaidProgressionBox',
-  props: {
-    raid: {
-      type: Object,
-      required: true,
-    },
+
+defineProps({
+  raid: {
+    type: Object,
+    required: true,
   },
-  methods: { killMark },
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -56,14 +56,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ContactView',
-}
-</script>
+<script setup></script>
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
+@use '@/assets/styles/_info-box.scss';
 
 .contact-view {
   display: flex;
@@ -80,7 +77,7 @@ export default {
   border: 1px dashed $accent-color;
   border-radius: 20px;
   padding: 2.5rem 3.125rem;
-  max-width: 780px; // restore previous card width
+  max-width: 780px;
   width: 100%;
   background: rgba(255, 255, 255, 0.02);
   transition: background 0.3s ease;
@@ -91,7 +88,7 @@ export default {
   flex-direction: column;
   align-items: stretch;
   box-sizing: border-box;
-  margin: 0 auto; // center inside custom width
+  margin: 0 auto;
 
   @media (max-width: 900px) {
     padding: 1.875rem;
