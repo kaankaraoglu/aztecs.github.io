@@ -33,8 +33,14 @@
             :key="boss.name"
             :class="[
               'boss-entry',
-              { expandable: hasRoster(boss), killed: boss.normal || boss.heroic || boss.mythic },
+              {
+                expandable: hasRoster(boss),
+                killed: boss.normal || boss.heroic || boss.mythic,
+                'in-progress':
+                  !boss.normal && !boss.heroic && !boss.mythic && boss.bestPercent != null,
+              },
             ]"
+            :style="bossBarStyle(boss)"
           >
             <div class="boss-row" @click="toggle(boss.name)">
               <span class="boss-status">
@@ -185,6 +191,16 @@ const CLASS_DISPLAY = {
   warrior: 'Warrior',
 }
 
+function bossBarStyle(boss) {
+  if (boss.normal || boss.heroic || boss.mythic) {
+    return { '--bar-width': '100%' }
+  }
+  if (boss.bestPercent != null) {
+    return { '--bar-width': `${100 - boss.bestPercent}%` }
+  }
+  return { '--bar-width': '0%' }
+}
+
 function playerTooltip(player) {
   if (player.name.toLowerCase() === 'mxk') {
     return `The worst ${CLASS_DISPLAY[player.class] || player.class} ever`
@@ -291,7 +307,7 @@ function rosterSize(boss) {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 0.75rem;
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       grid-template-columns: 1fr;
       gap: 0.5rem;
     }
@@ -318,8 +334,27 @@ function rosterSize(boss) {
 
   /* ── Boss rows ── */
   .boss-entry {
+    position: relative;
     background: rgba(255, 255, 255, 0.025);
     transition: background 0.12s;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: var(--bar-width, 0%);
+      border-radius: inherit;
+      transition: width 0.5s ease;
+      pointer-events: none;
+    }
+
+    &.killed::before {
+      background: rgba($quality-uncommon, 0.08);
+    }
+
+    &.in-progress::before {
+      background: rgba($color-yellow, 0.1);
+    }
 
     &:hover {
       background: rgba(255, 255, 255, 0.05);
@@ -329,23 +364,35 @@ function rosterSize(boss) {
       cursor: pointer;
     }
 
-    &:not(.killed) {
+    &:not(.killed):not(.in-progress) {
       opacity: 0.55;
     }
   }
 
   .boss-row {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.4rem 0.6rem;
     min-height: 2.2rem;
+
+    @media (max-width: 700px) {
+      flex-wrap: wrap;
+      gap: 0.2rem 0.5rem;
+      padding: 0.35rem 0.5rem;
+      min-height: unset;
+    }
   }
 
   .boss-status {
     display: flex;
     gap: 3px;
     flex-shrink: 0;
+
+    @media (max-width: 700px) {
+      order: -1;
+    }
   }
 
   .pip {
@@ -367,6 +414,12 @@ function rosterSize(boss) {
       background: rgba($quality-uncommon, 0.15);
       color: $quality-uncommon;
     }
+
+    @media (max-width: 700px) {
+      width: 1.5rem;
+      height: 1.1rem;
+      font-size: 0.6em;
+    }
   }
 
   .boss-name {
@@ -378,8 +431,9 @@ function rosterSize(boss) {
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       font-size: 0.9em;
+      flex-basis: 0;
     }
   }
 
@@ -389,6 +443,13 @@ function rosterSize(boss) {
     gap: 0.4rem;
     flex-shrink: 0;
     font-size: 0.75em;
+
+    @media (max-width: 700px) {
+      width: 100%;
+      font-size: 0.7em;
+      opacity: 0.5;
+      padding-left: calc(1.5rem * 2 + 3px + 0.5rem);
+    }
   }
 
   .meta-sep {
@@ -413,6 +474,10 @@ function rosterSize(boss) {
     gap: 0.25rem;
     padding: 0.3rem 0.6rem 0.5rem 3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
+
+    @media (max-width: 700px) {
+      padding-left: 0.5rem;
+    }
   }
 
   .role-group {
@@ -466,6 +531,7 @@ function rosterSize(boss) {
   /* ── Footer ── */
   .footer-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.85rem;
   }
