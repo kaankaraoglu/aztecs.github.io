@@ -47,7 +47,9 @@
                 <span v-if="boss.bestPercent != null" class="best-pct"
                   >{{ boss.bestPercent.toFixed(1) }}%</span
                 >
-                <span v-if="boss.pulls" class="meta-dim">{{ boss.pulls }}p</span>
+                <span v-if="boss.pulls" class="meta-dim"
+                  >{{ boss.pulls }} {{ boss.pulls !== 1 ? 'pulls' : 'pull' }}</span
+                >
                 <span v-if="boss.killedAt" class="meta-dim">{{ formatDate(boss.killedAt) }}</span>
                 <span
                   v-if="hasRoster(boss)"
@@ -165,20 +167,20 @@ function hasRoster(boss) {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.3rem;
-    padding: 0.4rem 0.65rem;
-    border-radius: 6px;
+    gap: 0.35rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 8px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
 
     .summary-count {
-      font-size: 1.2em;
+      font-size: 1.5em;
       font-weight: 800;
       line-height: 1;
     }
 
     .summary-label {
-      font-size: 0.65em;
+      font-size: 0.8em;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       opacity: 0.4;
@@ -228,7 +230,7 @@ function hasRoster(boss) {
   /* ── Instances grid ── */
   .instances {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 0.75rem;
 
     @media (max-width: 600px) {
@@ -238,8 +240,8 @@ function hasRoster(boss) {
   }
 
   .instance-name {
-    margin: 0 0 0.25rem;
-    font-size: 0.65em;
+    margin: 0 0 0.3rem;
+    font-size: 0.8em;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -277,14 +279,14 @@ function hasRoster(boss) {
   .boss-row {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.3rem 0.5rem;
-    min-height: 1.8rem;
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    min-height: 2.2rem;
   }
 
   .boss-status {
     display: flex;
-    gap: 2px;
+    gap: 3px;
     flex-shrink: 0;
   }
 
@@ -292,10 +294,10 @@ function hasRoster(boss) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.4rem;
-    height: 1.1rem;
-    border-radius: 3px;
-    font-size: 0.55em;
+    width: 1.7rem;
+    height: 1.3rem;
+    border-radius: 4px;
+    font-size: 0.65em;
     font-weight: 700;
     background: rgba(255, 255, 255, 0.03);
     color: rgba(255, 255, 255, 0.15);
@@ -311,7 +313,7 @@ function hasRoster(boss) {
 
   .boss-name {
     flex: 1;
-    font-size: 0.82em;
+    font-size: 1em;
     font-weight: 500;
     min-width: 0;
     white-space: nowrap;
@@ -319,16 +321,16 @@ function hasRoster(boss) {
     text-overflow: ellipsis;
 
     @media (max-width: 600px) {
-      font-size: 0.75em;
+      font-size: 0.9em;
     }
   }
 
   .boss-meta {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
     flex-shrink: 0;
-    font-size: 0.6em;
+    font-size: 0.75em;
   }
 
   .meta-dim {
@@ -355,8 +357,8 @@ function hasRoster(boss) {
   .roster-panel {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-    padding: 0.25rem 0.5rem 0.4rem 2.6rem;
+    gap: 0.25rem;
+    padding: 0.3rem 0.6rem 0.5rem 3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
   }
 
@@ -364,11 +366,11 @@ function hasRoster(boss) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.1rem 0.3rem;
+    gap: 0.15rem 0.35rem;
   }
 
   .player {
-    font-size: 0.65em;
+    font-size: 0.8em;
     font-weight: 600;
 
     &::after {
@@ -404,8 +406,8 @@ function hasRoster(boss) {
   /* ── Footer ── */
   .footer-link {
     display: inline-block;
-    margin-top: 0.5rem;
-    font-size: 0.65em;
+    margin-top: 0.6rem;
+    font-size: 0.75em;
     color: $accent-color;
     opacity: 0.3;
     text-decoration: none;
