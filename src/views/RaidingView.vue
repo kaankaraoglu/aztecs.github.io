@@ -59,8 +59,8 @@
           <ul>
             <li>Have a reasonable item level (+-10 of group average)</li>
             <li>
-              Have your gear enchanted (We understand some enchants may be expensive for people
-              who don't play much, so we can help. Just ask in Discord or guild chat.)
+              Have your gear enchanted (We understand some enchants may be expensive for people who
+              don't play much, so we can help. Just ask in Discord or guild chat.)
             </li>
             <li>
               It is <b>NOT MANDATORY</b> but we appreciate if you are active on comms during the

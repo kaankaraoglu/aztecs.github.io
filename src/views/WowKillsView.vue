@@ -9,7 +9,7 @@ import AchievementsView from '@/views/AchievementsView.vue'
 export default {
   name: 'WowKillsView',
   components: {
-    AchievementsView
-  }
+    AchievementsView,
+  },
 }
 </script>
