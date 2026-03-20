@@ -9,7 +9,7 @@
 
     <nav class="nav">
       <div class="nav-header">
-        <div class="hamburger" @click="menuOpen = !menuOpen">
+        <div :class="['hamburger', { open: menuOpen }]" @click="menuOpen = !menuOpen">
           <span></span><span></span><span></span>
         </div>
       </div>
@@ -30,6 +30,15 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import DiscordIcon from '@/components/icons/DiscordIcon.vue'
+
+function shuffleArray(arr) {
+  const shuffled = [...arr]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
 
 const menuOpen = ref(false)
 
@@ -52,16 +61,22 @@ const splashMessages = [
 const currentSplash = ref('')
 const splashVisible = ref(true)
 let splashInterval = null
-
-function pickRandomSplash() {
-  const index = Math.floor(Math.random() * splashMessages.length)
-  return splashMessages[index]
-}
+let shuffledSplashes = shuffleArray(splashMessages)
+let splashIndex = 0
 
 function rotateSplash() {
   splashVisible.value = false
   setTimeout(() => {
-    currentSplash.value = pickRandomSplash()
+    splashIndex++
+    if (splashIndex >= shuffledSplashes.length) {
+      const lastSplash = shuffledSplashes[shuffledSplashes.length - 1]
+      shuffledSplashes = shuffleArray(splashMessages)
+      if (shuffledSplashes[0] === lastSplash) {
+        ;[shuffledSplashes[0], shuffledSplashes[1]] = [shuffledSplashes[1], shuffledSplashes[0]]
+      }
+      splashIndex = 0
+    }
+    currentSplash.value = shuffledSplashes[splashIndex]
     splashVisible.value = true
   }, 500)
 }
@@ -72,7 +87,7 @@ function openDiscordInvite() {
 }
 
 onMounted(() => {
-  currentSplash.value = pickRandomSplash()
+  currentSplash.value = shuffledSplashes[0]
   splashInterval = setInterval(rotateSplash, 3000)
 })
 
@@ -173,7 +188,19 @@ onBeforeUnmount(() => {
         width: 24px;
         height: 3px;
         background: white;
-        transition: 0.3s;
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+      }
+
+      &.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      &.open span:nth-child(2) {
+        opacity: 0;
+      }
+      &.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
       }
 
       @media (max-width: 768px) {
@@ -212,6 +239,11 @@ onBeforeUnmount(() => {
 
         .nav-link {
           padding: 0.5rem 0;
+        }
+
+        .nav-link.router-link-active {
+          border-left: 3px solid $accent-color;
+          padding-left: 0.5rem;
         }
       }
     }

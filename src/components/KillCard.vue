@@ -9,9 +9,8 @@
         <a
           class="image-anchor"
           :href="imageUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          :aria-label="`Open full image for ${raidName} in a new tab`"
+          :aria-label="`Open full image for ${raidName}`"
+          @click.prevent="lightboxOpen = true"
         >
           <img class="raid-image" :src="imageUrl" :alt="`${raidName} screenshot`" loading="lazy" />
           <div class="enlarge-indicator" aria-hidden="true">🔍</div>
@@ -70,10 +69,19 @@
         </div>
       </div>
     </div>
+    <ImageLightbox
+      :open="lightboxOpen"
+      :src="imageUrl"
+      :alt="raidName + ' screenshot'"
+      @close="lightboxOpen = false"
+    />
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import ImageLightbox from '@/components/ImageLightbox.vue'
+
 defineProps({
   raidName: {
     type: String,
@@ -104,6 +112,8 @@ defineProps({
     required: false,
   },
 })
+
+const lightboxOpen = ref(false)
 </script>
 
 <style scoped lang="scss">
