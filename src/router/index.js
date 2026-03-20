@@ -13,6 +13,11 @@ const router = createRouter({
     { path: '/raiding', component: RaidingView },
     { path: '/achievements', component: AchievementsView },
     { path: '/wow-kills', redirect: '/achievements' },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/NotFoundView.vue'),
+    },
   ],
 })
 

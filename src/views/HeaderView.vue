@@ -51,7 +51,7 @@ export default {
         'Nilay NO!!!',
         'Proud on you',
         'Damit Delmos!',
-        "My wife is home, let's kill the bitch!"
+        "My wife is home, let's kill the bitch!",
       ],
       currentSplash: '',
       splashVisible: true,

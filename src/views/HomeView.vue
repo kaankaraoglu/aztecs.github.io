@@ -3,12 +3,7 @@
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
     <div class="content-wrapper">
       <div class="top-boxes">
-        <RaidProgressionBox
-          v-for="raid in raids"
-          :key="raid.name"
-          :raid="raid"
-          class="info-box"
-        />
+        <RaidProgressionBox v-for="raid in raids" :key="raid.name" :raid="raid" class="info-box" />
       </div>
       <FadingDivider />
       <div class="latest-achievement">

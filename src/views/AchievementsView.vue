@@ -33,6 +33,5 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-
 }
 </style>
