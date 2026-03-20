@@ -44,7 +44,7 @@ describe('RaidProgressionBox', () => {
     expect(wrapper.text()).toContain('Other Raid')
   })
 
-  it('renders all bosses across raids', () => {
+  it('renders all bosses', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
@@ -53,12 +53,21 @@ describe('RaidProgressionBox', () => {
     expect(wrapper.text()).toContain('Boss 3')
   })
 
-  it('marks killed bosses with the killed class', () => {
+  it('marks killed bosses with active pips', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    const pips = wrapper.findAll('.pip.killed')
-    expect(pips.length).toBe(3)
+    // Boss 1: N active. Boss 3: N + HC active = 3 active pips
+    expect(wrapper.findAll('.pip.active').length).toBe(3)
+  })
+
+  it('dims unkilled bosses', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    const entries = wrapper.findAll('.boss-entry')
+    // Boss 2 is unkilled — should not have .killed class
+    expect(entries[1].classes()).not.toContain('killed')
   })
 
   it('shows summary pills when there are kills', () => {
@@ -77,32 +86,19 @@ describe('RaidProgressionBox', () => {
     expect(wrapper.find('.summary').exists()).toBe(false)
   })
 
-  it('shows kill date for defeated bosses', () => {
+  it('shows kill date and pull count', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
     expect(wrapper.text()).toContain('18 Mar')
-  })
-
-  it('shows pull count', () => {
-    const wrapper = mount(RaidProgressionBox, {
-      props: { raids: mockRaids, summary: mockSummary },
-    })
-    expect(wrapper.text()).toContain('3 pulls')
+    expect(wrapper.text()).toContain('3p')
   })
 
   it('shows best percent for unkilled bosses', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    expect(wrapper.text()).toContain('Best: 12.3%')
-  })
-
-  it('shows raider count for bosses with rosters', () => {
-    const wrapper = mount(RaidProgressionBox, {
-      props: { raids: mockRaids, summary: mockSummary },
-    })
-    expect(wrapper.text()).toContain('3 raiders')
+    expect(wrapper.text()).toContain('12.3%')
   })
 
   it('expands roster grouped by role on click', async () => {
@@ -114,8 +110,7 @@ describe('RaidProgressionBox', () => {
     await wrapper.findAll('.boss-row')[0].trigger('click')
 
     expect(wrapper.find('.roster-panel').exists()).toBe(true)
-    const roleGroups = wrapper.findAll('.role-group')
-    expect(roleGroups.length).toBe(3) // tanks, healers, dps
+    expect(wrapper.findAll('.role-group').length).toBe(3)
     expect(wrapper.text()).toContain('Phruity')
     expect(wrapper.text()).toContain('Proto')
     expect(wrapper.text()).toContain('Aurielle')

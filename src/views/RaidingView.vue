@@ -1,7 +1,7 @@
 <template>
   <div class="raiding-view content-wrapper">
     <section class="progression">
-      <RaidProgressionBox :raids="raids" :summary="summary" class="info-box" />
+      <RaidProgressionBox :raids="raids" :summary="summary" class="info-box info-box--no-hover" />
     </section>
 
     <FadingDivider />

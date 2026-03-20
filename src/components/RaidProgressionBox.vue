@@ -24,87 +24,80 @@
       </div>
     </div>
 
-    <div v-for="raid in raids" :key="raid.name" class="instance">
-      <h3 class="instance-name">{{ raid.name }}</h3>
-      <div class="boss-list">
-        <div
-          v-for="boss in raid.bosses"
-          :key="boss.name"
-          :class="['boss-entry', { expandable: hasRoster(boss) }]"
-        >
-          <div class="boss-row" @click="toggle(boss.name)">
-            <div class="boss-info">
-              <span class="boss-name">{{ boss.name }}</span>
-              <span
-                v-if="boss.killedAt || boss.pulls || boss.bestPercent != null"
-                class="boss-meta"
-              >
-                <span v-if="boss.killedAt" class="meta-item">{{ formatDate(boss.killedAt) }}</span>
-                <span v-if="boss.pulls" class="meta-item"
-                  >{{ boss.pulls }} pull{{ boss.pulls !== 1 ? 's' : '' }}</span
-                >
-                <span v-if="boss.bestPercent != null" class="meta-item best-pct"
-                  >Best: {{ boss.bestPercent.toFixed(1) }}%</span
-                >
-                <span v-if="hasRoster(boss)" class="meta-item">{{ rosterSize(boss) }} raiders</span>
-              </span>
-            </div>
-            <div class="boss-right">
-              <span v-if="hasRoster(boss)" :class="['expand-icon', { open: expanded[boss.name] }]"
-                >&#9662;</span
-              >
+    <div class="instances">
+      <div v-for="raid in raids" :key="raid.name" class="instance">
+        <h3 class="instance-name">{{ raid.name }}</h3>
+        <div class="boss-list">
+          <div
+            v-for="boss in raid.bosses"
+            :key="boss.name"
+            :class="[
+              'boss-entry',
+              { expandable: hasRoster(boss), killed: boss.normal || boss.heroic || boss.mythic },
+            ]"
+          >
+            <div class="boss-row" @click="toggle(boss.name)">
               <span class="boss-status">
-                <span :class="['pip', { killed: boss.normal }]" title="Normal">N</span>
-                <span :class="['pip', { killed: boss.heroic }]" title="Heroic">HC</span>
+                <span :class="['pip', { active: boss.normal }]">N</span>
+                <span :class="['pip', { active: boss.heroic }]">HC</span>
+                <span v-if="summary.mythic > 0" :class="['pip', { active: boss.mythic }]">M</span>
+              </span>
+              <span class="boss-name">{{ boss.name }}</span>
+              <span class="boss-meta">
+                <span v-if="boss.bestPercent != null" class="best-pct"
+                  >{{ boss.bestPercent.toFixed(1) }}%</span
+                >
+                <span v-if="boss.pulls" class="meta-dim">{{ boss.pulls }}p</span>
+                <span v-if="boss.killedAt" class="meta-dim">{{ formatDate(boss.killedAt) }}</span>
                 <span
-                  v-if="summary.mythic > 0"
-                  :class="['pip', { killed: boss.mythic }]"
-                  title="Mythic"
-                  >M</span
+                  v-if="hasRoster(boss)"
+                  class="expand-caret"
+                  :class="{ open: expanded[boss.name] }"
+                  >&#9662;</span
                 >
               </span>
             </div>
+            <Transition name="roster">
+              <div v-if="expanded[boss.name] && hasRoster(boss)" class="roster-panel">
+                <div v-if="boss.roster.tanks?.length" class="role-group">
+                  <RoleIcon role="tank" />
+                  <span
+                    v-for="p in boss.roster.tanks"
+                    :key="p.name"
+                    :class="['player', p.class]"
+                    :title="p.spec"
+                    >{{ p.name }}</span
+                  >
+                </div>
+                <div v-if="boss.roster.healers?.length" class="role-group">
+                  <RoleIcon role="healer" />
+                  <span
+                    v-for="p in boss.roster.healers"
+                    :key="p.name"
+                    :class="['player', p.class]"
+                    :title="p.spec"
+                    >{{ p.name }}</span
+                  >
+                </div>
+                <div v-if="boss.roster.dps?.length" class="role-group">
+                  <RoleIcon role="dps" />
+                  <span
+                    v-for="p in boss.roster.dps"
+                    :key="p.name"
+                    :class="['player', p.class]"
+                    :title="p.spec"
+                    >{{ p.name }}</span
+                  >
+                </div>
+              </div>
+            </Transition>
           </div>
-          <Transition name="roster">
-            <div v-if="expanded[boss.name] && hasRoster(boss)" class="roster-panel">
-              <div v-if="boss.roster.tanks?.length" class="role-group">
-                <RoleIcon role="tank" />
-                <span
-                  v-for="p in boss.roster.tanks"
-                  :key="p.name"
-                  :class="['roster-player', p.class]"
-                  :title="p.spec"
-                  >{{ p.name }}</span
-                >
-              </div>
-              <div v-if="boss.roster.healers?.length" class="role-group">
-                <RoleIcon role="healer" />
-                <span
-                  v-for="p in boss.roster.healers"
-                  :key="p.name"
-                  :class="['roster-player', p.class]"
-                  :title="p.spec"
-                  >{{ p.name }}</span
-                >
-              </div>
-              <div v-if="boss.roster.dps?.length" class="role-group">
-                <RoleIcon role="dps" />
-                <span
-                  v-for="p in boss.roster.dps"
-                  :key="p.name"
-                  :class="['roster-player', p.class]"
-                  :title="p.spec"
-                  >{{ p.name }}</span
-                >
-              </div>
-            </div>
-          </Transition>
         </div>
       </div>
     </div>
 
     <a
-      class="raiderio-link"
+      class="footer-link"
       href="https://raider.io/guilds/eu/alakir/Aztecs"
       target="_blank"
       rel="noopener noreferrer"
@@ -148,11 +141,6 @@ function hasRoster(boss) {
   const r = boss.roster
   return r && (r.tanks?.length || 0) + (r.healers?.length || 0) + (r.dps?.length || 0) > 0
 }
-
-function rosterSize(boss) {
-  const r = boss.roster
-  return (r?.tanks?.length || 0) + (r?.healers?.length || 0) + (r?.dps?.length || 0)
-}
 </script>
 
 <style lang="scss" scoped>
@@ -161,11 +149,11 @@ function rosterSize(boss) {
 .raid-progression {
   text-align: left;
 
-  /* ── Summary pills ── */
+  /* ── Summary ── */
   .summary {
     display: flex;
     gap: 0.5rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
 
     @media (max-width: 500px) {
       flex-direction: column;
@@ -177,36 +165,36 @@ function rosterSize(boss) {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.35rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 8px;
+    gap: 0.3rem;
+    padding: 0.4rem 0.65rem;
+    border-radius: 6px;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 
     .summary-count {
-      font-size: 1.3em;
+      font-size: 1.2em;
       font-weight: 800;
       line-height: 1;
     }
 
     .summary-label {
-      font-size: 0.7em;
+      font-size: 0.65em;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      opacity: 0.45;
+      letter-spacing: 0.05em;
+      opacity: 0.4;
     }
 
     .summary-track {
       width: 100%;
-      height: 3px;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.08);
-      margin-top: 0.2rem;
+      height: 2px;
+      border-radius: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      margin-top: 0.15rem;
 
       .summary-fill {
         display: block;
         height: 100%;
-        border-radius: 2px;
+        border-radius: 1px;
         transition: width 0.6s ease;
       }
     }
@@ -237,152 +225,155 @@ function rosterSize(boss) {
     }
   }
 
-  /* ── Raid instances ── */
-  .instance {
-    &:not(:last-of-type) {
-      margin-bottom: 0.75rem;
+  /* ── Instances grid ── */
+  .instances {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.75rem;
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
   }
 
   .instance-name {
-    margin: 0 0 0.35rem;
-    font-size: 0.75em;
+    margin: 0 0 0.25rem;
+    font-size: 0.65em;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: $accent-color;
-    opacity: 0.7;
+    opacity: 0.6;
+    padding-left: 0.15rem;
   }
 
   .boss-list {
     display: flex;
     flex-direction: column;
     gap: 1px;
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
   }
 
+  /* ── Boss rows ── */
   .boss-entry {
-    background: rgba(255, 255, 255, 0.03);
-    transition: background 0.15s;
+    background: rgba(255, 255, 255, 0.025);
+    transition: background 0.12s;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
     }
 
     &.expandable .boss-row {
       cursor: pointer;
+    }
+
+    &:not(.killed) {
+      opacity: 0.55;
     }
   }
 
   .boss-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 0.45rem 0.65rem;
-  }
-
-  .boss-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    min-width: 0;
-  }
-
-  .boss-name {
-    font-size: 0.9em;
-    font-weight: 500;
-    @media (max-width: 600px) {
-      font-size: 0.8em;
-    }
-  }
-
-  .boss-meta {
-    display: flex;
-    gap: 0.5rem;
-    font-size: 0.65em;
-    opacity: 0.4;
-    @media (max-width: 600px) {
-      gap: 0.35rem;
-      font-size: 0.6em;
-    }
-  }
-
-  .meta-item {
-    white-space: nowrap;
-  }
-
-  .best-pct {
-    color: $color-yellow;
-    opacity: 1;
-  }
-
-  .boss-right {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex-shrink: 0;
-  }
-
-  .expand-icon {
-    font-size: 0.7em;
-    opacity: 0.3;
-    transition: transform 0.2s;
-    line-height: 1;
-    &.open {
-      transform: rotate(180deg);
-    }
+    gap: 0.45rem;
+    padding: 0.3rem 0.5rem;
+    min-height: 1.8rem;
   }
 
   .boss-status {
     display: flex;
-    gap: 0.3rem;
+    gap: 2px;
+    flex-shrink: 0;
   }
 
   .pip {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 1.65rem;
-    height: 1.35rem;
-    border-radius: 4px;
-    font-size: 0.6em;
+    width: 1.4rem;
+    height: 1.1rem;
+    border-radius: 3px;
+    font-size: 0.55em;
     font-weight: 700;
-    background: rgba(255, 255, 255, 0.04);
-    color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.15);
     transition:
-      background 0.2s,
-      color 0.2s;
-    &.killed {
+      background 0.15s,
+      color 0.15s;
+
+    &.active {
       background: rgba($quality-uncommon, 0.15);
       color: $quality-uncommon;
     }
   }
 
-  /* ── Roster panel ── */
+  .boss-name {
+    flex: 1;
+    font-size: 0.82em;
+    font-weight: 500;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @media (max-width: 600px) {
+      font-size: 0.75em;
+    }
+  }
+
+  .boss-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    font-size: 0.6em;
+  }
+
+  .meta-dim {
+    opacity: 0.3;
+  }
+
+  .best-pct {
+    color: $color-yellow;
+    font-weight: 700;
+  }
+
+  .expand-caret {
+    opacity: 0.25;
+    font-size: 0.9em;
+    transition: transform 0.2s;
+    line-height: 1;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  /* ── Roster ── */
   .roster-panel {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-    padding: 0.4rem 0.65rem 0.55rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    gap: 0.2rem;
+    padding: 0.25rem 0.5rem 0.4rem 2.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
   }
 
   .role-group {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.15rem 0.4rem;
+    gap: 0.1rem 0.3rem;
   }
 
-  .roster-player {
-    font-size: 0.7em;
+  .player {
+    font-size: 0.65em;
     font-weight: 600;
 
     &::after {
       content: ',';
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.12);
     }
 
     &:last-of-type::after {
@@ -393,8 +384,8 @@ function rosterSize(boss) {
   .roster-enter-active,
   .roster-leave-active {
     transition:
-      max-height 0.25s ease,
-      opacity 0.2s ease;
+      max-height 0.2s ease,
+      opacity 0.15s ease;
     overflow: hidden;
   }
 
@@ -406,21 +397,22 @@ function rosterSize(boss) {
 
   .roster-enter-to,
   .roster-leave-from {
-    max-height: 12rem;
+    max-height: 10rem;
     opacity: 1;
   }
 
-  /* ── Footer link ── */
-  .raiderio-link {
+  /* ── Footer ── */
+  .footer-link {
     display: inline-block;
-    margin-top: 0.75rem;
-    font-size: 0.7em;
+    margin-top: 0.5rem;
+    font-size: 0.65em;
     color: $accent-color;
-    opacity: 0.35;
+    opacity: 0.3;
     text-decoration: none;
     transition: opacity 0.2s;
+
     &:hover {
-      opacity: 0.8;
+      opacity: 0.7;
     }
   }
 }
