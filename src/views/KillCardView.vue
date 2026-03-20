@@ -73,37 +73,40 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  raidName: {
-    type: String,
-    required: true,
+<script>
+export default {
+  name: 'KillCardView',
+  props: {
+    raidName: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: String,
+      required: false,
+    },
+    attempts: {
+      type: [Number, String],
+      required: false,
+    },
+    tanks: {
+      type: Array,
+      required: false, // [{ name: "Phing", class: "monk" }]
+    },
+    healers: {
+      type: Array,
+      required: false,
+    },
+    dds: {
+      type: Array,
+      required: false,
+    },
   },
-  imageUrl: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: String,
-    required: false,
-  },
-  attempts: {
-    type: [Number, String],
-    required: false,
-  },
-  tanks: {
-    type: Array,
-    required: false,
-  },
-  healers: {
-    type: Array,
-    required: false,
-  },
-  dds: {
-    type: Array,
-    required: false,
-  },
-})
+}
 </script>
 
 <style scoped lang="scss">

@@ -1,9 +1,5 @@
-/**
- * @typedef {{ name: string, normal: boolean, heroic: boolean }} Boss
- * @typedef {{ name: string, bosses: Boss[] }} Raid
- */
-
-/** @type {Raid[]} */
+// Centralized current tier progression data
+// Each raid has its own name and boss list
 export const raids = [
   {
     name: 'The Dreamrift',
@@ -29,6 +25,7 @@ export const raids = [
   },
 ]
 
+// Helper to map boolean -> display symbol
 export function killMark(killed) {
   return killed ? '💀' : '-'
 }

@@ -59,8 +59,8 @@
           <ul>
             <li>Have a reasonable item level (+-10 of group average)</li>
             <li>
-              Have your gear enchanted (We understand some enchants may be expensive for people who
-              don't play much, so we can help. Just ask in Discord or guild chat.)
+              Have your gear enchanted (We understand some enchants may be expensive for people
+              who don't play much, so we can help. Just ask in Discord or guild chat.)
             </li>
             <li>
               It is <b>NOT MANDATORY</b> but we appreciate if you are active on comms during the
@@ -84,15 +84,23 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { raids } from '@/data/progression.js'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import FadingDivider from '@/components/FadingDivider.vue'
+export default {
+  name: 'RaidingView',
+  components: { RaidProgressionBox, FadingDivider },
+  data() {
+    return {
+      raids,
+    }
+  },
+}
 </script>
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
-@use '@/assets/styles/_info-box.scss';
 @use 'sass:color';
 
 .raiding-view {
@@ -107,13 +115,28 @@ import FadingDivider from '@/components/FadingDivider.vue'
   }
 
   .info-box {
+    border: 1px dashed $accent-color;
+    border-radius: 20px;
     padding: 1.875rem;
     margin: 0.625rem 0 1.875rem;
     display: flex;
     flex-direction: column;
+    background: rgba(255, 255, 255, 0.02);
+    transition: background 0.3s ease;
+    &:hover {
+      background: rgba($color-yellow, 0.05);
+    }
+    @media (max-width: 600px) {
+      padding: 1.125rem 1rem;
+      border-radius: 14px;
+    }
   }
   .progression-boxes .info-box {
     margin: 0.625rem 0;
+  }
+  .info-box-heading {
+    color: $accent-color;
+    margin-top: 0;
   }
   .progression {
     min-width: 0;

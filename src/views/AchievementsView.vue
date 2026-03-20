@@ -2,7 +2,7 @@
   <div class="achievements-view content-wrapper">
     <template v-for="(kill, idx) in kills" :key="kill.raidName + '-' + idx">
       <FadingDivider v-if="idx > 0" />
-      <KillCard
+      <KillCardView
         :raidName="kill.raidName"
         :imageUrl="kill.imageUrl"
         :date="kill.date"
@@ -15,10 +15,17 @@
   </div>
 </template>
 
-<script setup>
-import KillCard from '@/components/KillCard.vue'
+<script>
+import KillCardView from '@/views/KillCardView.vue'
 import FadingDivider from '@/components/FadingDivider.vue'
 import { kills } from '@/data/kills.js'
+export default {
+  name: 'AchievementsView',
+  components: { KillCardView, FadingDivider },
+  data() {
+    return { kills }
+  },
+}
 </script>
 
 <style scoped lang="scss">
@@ -26,5 +33,6 @@ import { kills } from '@/data/kills.js'
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
 }
 </style>
