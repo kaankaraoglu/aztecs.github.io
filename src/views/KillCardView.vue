@@ -6,16 +6,24 @@
           <span id="raid-name" class="raid-name">{{ raidName }}</span>
         </div>
 
-        <a
+        <div
           class="image-anchor"
-          :href="imageUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          :aria-label="`Open full image for ${raidName} in a new tab`"
+          role="button"
+          tabindex="0"
+          :aria-label="`Open full image for ${raidName}`"
+          @click="lightboxOpen = true"
+          @keydown.enter="lightboxOpen = true"
         >
           <img class="raid-image" :src="imageUrl" :alt="`${raidName} screenshot`" loading="lazy" />
           <div class="enlarge-indicator" aria-hidden="true">🔍</div>
-        </a>
+        </div>
+
+        <ImageLightbox
+          :src="imageUrl"
+          :alt="`${raidName} screenshot`"
+          :open="lightboxOpen"
+          @close="lightboxOpen = false"
+        />
 
         <div class="image-overlay">
           <div class="summary-line">
@@ -74,8 +82,18 @@
 </template>
 
 <script>
+import ImageLightbox from '@/components/ImageLightbox.vue'
+
 export default {
   name: 'KillCardView',
+  components: {
+    ImageLightbox,
+  },
+  data() {
+    return {
+      lightboxOpen: false,
+    }
+  },
   props: {
     raidName: {
       type: String,
@@ -192,7 +210,6 @@ export default {
         width: 100%;
         height: 100%;
         cursor: zoom-in;
-        text-decoration: none;
         color: inherit;
         z-index: 1;
 

@@ -2,13 +2,9 @@
   <div class="home-view">
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
     <div class="content-wrapper">
+      <RaiderIOWidget />
       <div class="top-boxes">
-        <RaidProgressionBox
-          v-for="raid in raids"
-          :key="raid.name"
-          :raid="raid"
-          class="info-box"
-        />
+        <RaidProgressionBox v-for="raid in raids" :key="raid.name" :raid="raid" class="info-box" />
       </div>
       <FadingDivider />
       <div class="latest-achievement">
@@ -66,9 +62,10 @@ import { raids } from '@/data/progression.js'
 import { kills } from '@/data/kills.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
+import RaiderIOWidget from '@/components/RaiderIOWidget.vue'
 export default {
   name: 'HomeView',
-  components: { FadingDivider, RaidProgressionBox },
+  components: { FadingDivider, RaidProgressionBox, RaiderIOWidget },
   data() {
     return { raids, latestKill: kills[0] }
   },

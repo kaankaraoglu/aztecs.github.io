@@ -9,7 +9,7 @@
 
     <nav class="nav">
       <div class="nav-header">
-        <div class="hamburger" @click="menuOpen = !menuOpen">
+        <div :class="['hamburger', { open: menuOpen }]" @click="menuOpen = !menuOpen">
           <span></span><span></span><span></span>
         </div>
       </div>
@@ -51,15 +51,19 @@ export default {
         'Nilay NO!!!',
         'Proud on you',
         'Damit Delmos!',
-        "My wife is home, let's kill the bitch!"
+        "My wife is home, let's kill the bitch!",
       ],
       currentSplash: '',
       splashVisible: true,
       splashInterval: null,
+      shuffledSplashes: [],
+      splashIndex: 0,
     }
   },
   mounted() {
-    this.currentSplash = this.pickRandomSplash()
+    this.shuffledSplashes = this.shuffleArray(this.splashMessages)
+    this.splashIndex = 0
+    this.currentSplash = this.shuffledSplashes[this.splashIndex]
     this.splashInterval = setInterval(this.rotateSplash, 3000)
   },
   beforeUnmount() {
@@ -70,14 +74,31 @@ export default {
       const discordInviteUrl = 'https://discord.gg/GfmnD24VHa'
       window.open(discordInviteUrl, '_blank')
     },
-    pickRandomSplash() {
-      const index = Math.floor(Math.random() * this.splashMessages.length)
-      return this.splashMessages[index]
+    shuffleArray(array) {
+      const shuffled = [...array]
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+      }
+      return shuffled
+    },
+    nextSplash() {
+      this.splashIndex++
+      if (this.splashIndex >= this.shuffledSplashes.length) {
+        const lastItem = this.shuffledSplashes[this.shuffledSplashes.length - 1]
+        let newShuffle = this.shuffleArray(this.splashMessages)
+        while (newShuffle[0] === lastItem && this.splashMessages.length > 1) {
+          newShuffle = this.shuffleArray(this.splashMessages)
+        }
+        this.shuffledSplashes = newShuffle
+        this.splashIndex = 0
+      }
+      return this.shuffledSplashes[this.splashIndex]
     },
     rotateSplash() {
       this.splashVisible = false
       setTimeout(() => {
-        this.currentSplash = this.pickRandomSplash()
+        this.currentSplash = this.nextSplash()
         this.splashVisible = true
       }, 500)
     },
@@ -177,7 +198,19 @@ export default {
         width: 24px;
         height: 3px;
         background: white;
-        transition: 0.3s;
+        transition:
+          transform 0.3s ease,
+          opacity 0.3s ease;
+      }
+
+      &.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      &.open span:nth-child(2) {
+        opacity: 0;
+      }
+      &.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
       }
 
       @media (max-width: 768px) {
@@ -216,6 +249,11 @@ export default {
 
         .nav-link {
           padding: 0.5rem 0;
+        }
+
+        .nav-link.router-link-active {
+          border-left: 3px solid $accent-color;
+          padding-left: 0.5rem;
         }
       }
     }
