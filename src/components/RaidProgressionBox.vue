@@ -64,7 +64,7 @@
                     v-for="p in boss.roster.tanks"
                     :key="p.name"
                     :class="['player', p.class]"
-                    :title="p.spec"
+                    :title="playerTooltip(p)"
                     :href="p.armory"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -77,7 +77,7 @@
                     v-for="p in boss.roster.healers"
                     :key="p.name"
                     :class="['player', p.class]"
-                    :title="p.spec"
+                    :title="playerTooltip(p)"
                     :href="p.armory"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -90,7 +90,7 @@
                     v-for="p in boss.roster.dps"
                     :key="p.name"
                     :class="['player', p.class]"
-                    :title="p.spec"
+                    :title="playerTooltip(p)"
                     :href="p.armory"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -167,6 +167,29 @@ function metaItems(boss) {
   if (boss.killedAt) items.push(formatDate(boss.killedAt))
   if (hasRoster(boss)) items.push(`${rosterSize(boss)} raiders`)
   return items
+}
+
+const CLASS_DISPLAY = {
+  'death-knight': 'Death Knight',
+  'demon-hunter': 'Demon Hunter',
+  druid: 'Druid',
+  evoker: 'Evoker',
+  hunter: 'Hunter',
+  mage: 'Mage',
+  monk: 'Monk',
+  paladin: 'Paladin',
+  priest: 'Priest',
+  rogue: 'Rogue',
+  shaman: 'Shaman',
+  warlock: 'Warlock',
+  warrior: 'Warrior',
+}
+
+function playerTooltip(player) {
+  if (player.name.toLowerCase() === 'mxk') {
+    return `The worst ${CLASS_DISPLAY[player.class] || player.class} ever`
+  }
+  return player.spec
 }
 
 function hasRoster(boss) {
