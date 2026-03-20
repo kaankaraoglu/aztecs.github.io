@@ -33,8 +33,14 @@
             :key="boss.name"
             :class="[
               'boss-entry',
-              { expandable: hasRoster(boss), killed: boss.normal || boss.heroic || boss.mythic },
+              {
+                expandable: hasRoster(boss),
+                killed: boss.normal || boss.heroic || boss.mythic,
+                'in-progress':
+                  !boss.normal && !boss.heroic && !boss.mythic && boss.bestPercent != null,
+              },
             ]"
+            :style="bossBarStyle(boss)"
           >
             <div class="boss-row" @click="toggle(boss.name)">
               <span class="boss-status">
@@ -185,6 +191,16 @@ const CLASS_DISPLAY = {
   warrior: 'Warrior',
 }
 
+function bossBarStyle(boss) {
+  if (boss.normal || boss.heroic || boss.mythic) {
+    return { '--bar-width': '100%' }
+  }
+  if (boss.bestPercent != null) {
+    return { '--bar-width': `${100 - boss.bestPercent}%` }
+  }
+  return { '--bar-width': '0%' }
+}
+
 function playerTooltip(player) {
   if (player.name.toLowerCase() === 'mxk') {
     return `The worst ${CLASS_DISPLAY[player.class] || player.class} ever`
@@ -318,8 +334,27 @@ function rosterSize(boss) {
 
   /* ── Boss rows ── */
   .boss-entry {
+    position: relative;
     background: rgba(255, 255, 255, 0.025);
     transition: background 0.12s;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: var(--bar-width, 0%);
+      border-radius: inherit;
+      transition: width 0.5s ease;
+      pointer-events: none;
+    }
+
+    &.killed::before {
+      background: rgba($quality-uncommon, 0.08);
+    }
+
+    &.in-progress::before {
+      background: rgba($color-yellow, 0.1);
+    }
 
     &:hover {
       background: rgba(255, 255, 255, 0.05);
@@ -329,12 +364,13 @@ function rosterSize(boss) {
       cursor: pointer;
     }
 
-    &:not(.killed) {
+    &:not(.killed):not(.in-progress) {
       opacity: 0.55;
     }
   }
 
   .boss-row {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
