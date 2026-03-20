@@ -1,4 +1,4 @@
-name: Deploy
+name: Build & Deploy to GitHub Pages
 
 on:
   workflow_dispatch:
@@ -11,7 +11,8 @@ on:
     - cron: '0 5 * * *' # Daily 05:00 UTC = 06:00 CET
 
 jobs:
-  deploy:
+  build-and-deploy:
+    name: Fetch WCL data, build & deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -21,7 +22,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
 
-      - name: Build
+      - name: Fetch WCL data & build
         env:
           WCL_CLIENT_ID: ${{ secrets.WCL_CLIENT_ID }}
           WCL_CLIENT_SECRET: ${{ secrets.WCL_CLIENT_SECRET }}
@@ -37,7 +38,7 @@ jobs:
       - name: Create CNAME
         run: echo "aztecs.se" > dist/CNAME
 
-      - name: Push to gh-pages
+      - name: Deploy to gh-pages
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
