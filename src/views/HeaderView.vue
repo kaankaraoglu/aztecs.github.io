@@ -4,9 +4,7 @@
       <RouterLink to="/" aria-label="Go to home" class="logo-home-link" @click="menuOpen = false">
         <img class="logo" alt="Aztecs logo" src="@/assets/images/logo.png" />
       </RouterLink>
-      <div class="splash-text" :style="{ opacity: splashVisible ? 1 : 0 }">
-        {{ currentSplash }}
-      </div>
+      <div class="splash-text" :style="{ opacity: splashVisible ? 1 : 0 }">{{ currentSplash }}</div>
     </div>
 
     <nav class="nav">
@@ -29,57 +27,62 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+<script>
 import DiscordIcon from '@/components/icons/DiscordIcon.vue'
 
-const splashMessages = [
-  'Tip to tip',
-  'Rule #1: IGNORE Rhys',
-  'Blood Price!',
-  'DO NOT RELEASE!!!',
-  'mxk ydb',
-  'Soak the balls!',
-  'What do you mean "you people"?',
-  'Just a gentle jerk',
-  'Get sucked',
-  'Nilay NO!!!',
-  'Proud on you',
-  'Damit Delmos!',
-  "My wife is home, let's kill the bitch!",
-]
-
-const menuOpen = ref(false)
-const currentSplash = ref('')
-const splashVisible = ref(true)
-let splashInterval = null
-
-function pickRandomSplash() {
-  const index = Math.floor(Math.random() * splashMessages.length)
-  return splashMessages[index]
+export default {
+  name: 'HeaderView',
+  components: {
+    DiscordIcon,
+  },
+  data() {
+    return {
+      menuOpen: false,
+      splashMessages: [
+        'Tip to tip',
+        'Rule #1: IGNORE Rhys',
+        'Blood Price!',
+        'DO NOT RELEASE!!!',
+        'mxk ydb',
+        'Soak the balls!',
+        'What do you mean "you people"?',
+        'Just a gentle jerk',
+        'Get sucked',
+        'Nilay NO!!!',
+        'Proud on you',
+        'Damit Delmos!',
+        "My wife is home, let's kill the bitch!"
+      ],
+      currentSplash: '',
+      splashVisible: true,
+      splashInterval: null,
+    }
+  },
+  mounted() {
+    this.currentSplash = this.pickRandomSplash()
+    this.splashInterval = setInterval(this.rotateSplash, 3000)
+  },
+  beforeUnmount() {
+    clearInterval(this.splashInterval)
+  },
+  methods: {
+    openDiscordInvite() {
+      const discordInviteUrl = 'https://discord.gg/GfmnD24VHa'
+      window.open(discordInviteUrl, '_blank')
+    },
+    pickRandomSplash() {
+      const index = Math.floor(Math.random() * this.splashMessages.length)
+      return this.splashMessages[index]
+    },
+    rotateSplash() {
+      this.splashVisible = false
+      setTimeout(() => {
+        this.currentSplash = this.pickRandomSplash()
+        this.splashVisible = true
+      }, 500)
+    },
+  },
 }
-
-function rotateSplash() {
-  splashVisible.value = false
-  setTimeout(() => {
-    currentSplash.value = pickRandomSplash()
-    splashVisible.value = true
-  }, 500)
-}
-
-function openDiscordInvite() {
-  const discordInviteUrl = 'https://discord.gg/GfmnD24VHa'
-  window.open(discordInviteUrl, '_blank')
-}
-
-onMounted(() => {
-  currentSplash.value = pickRandomSplash()
-  splashInterval = setInterval(rotateSplash, 3000)
-})
-
-onBeforeUnmount(() => {
-  clearInterval(splashInterval)
-})
 </script>
 
 <style scoped lang="scss">

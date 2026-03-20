@@ -10,9 +10,17 @@
   <FooterView />
 </template>
 
-<script setup>
-import FooterView from '@/components/FooterView.vue'
-import HeaderView from '@/components/HeaderView.vue'
+<script>
+import FooterView from '@/views/FooterView.vue'
+import HeaderView from '@/views/HeaderView.vue'
+
+export default {
+  name: 'App',
+  components: {
+    HeaderView,
+    FooterView,
+  },
+}
 </script>
 
 <style lang="scss" scoped>
