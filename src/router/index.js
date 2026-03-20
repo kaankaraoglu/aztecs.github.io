@@ -17,6 +17,11 @@ const router = createRouter({
       meta: { title: 'Aztecs - Achievements' },
     },
     { path: '/wow-kills', redirect: '/achievements' },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/NotFoundView.vue'),
+    },
   ],
 })
 
