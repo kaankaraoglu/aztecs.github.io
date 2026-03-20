@@ -51,6 +51,7 @@
                   >{{ boss.pulls }} {{ boss.pulls !== 1 ? 'pulls' : 'pull' }}</span
                 >
                 <span v-if="boss.killedAt" class="meta-dim">{{ formatDate(boss.killedAt) }}</span>
+                <span v-if="hasRoster(boss)" class="meta-dim">{{ rosterSize(boss) }} raiders</span>
                 <span
                   v-if="hasRoster(boss)"
                   class="expand-caret"
@@ -142,6 +143,11 @@ function formatDate(isoString) {
 function hasRoster(boss) {
   const r = boss.roster
   return r && (r.tanks?.length || 0) + (r.healers?.length || 0) + (r.dps?.length || 0) > 0
+}
+
+function rosterSize(boss) {
+  const r = boss.roster
+  return (r?.tanks?.length || 0) + (r?.healers?.length || 0) + (r?.dps?.length || 0)
 }
 </script>
 
@@ -334,7 +340,7 @@ function hasRoster(boss) {
   }
 
   .meta-dim {
-    opacity: 0.3;
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .best-pct {
