@@ -44,14 +44,10 @@
               </span>
               <span class="boss-name">{{ boss.name }}</span>
               <span class="boss-meta">
-                <span v-if="boss.bestPercent != null" class="best-pct"
-                  >{{ boss.bestPercent.toFixed(1) }}%</span
-                >
-                <span v-if="boss.pulls" class="meta-dim"
-                  >{{ boss.pulls }} {{ boss.pulls !== 1 ? 'pulls' : 'pull' }}</span
-                >
-                <span v-if="boss.killedAt" class="meta-dim">{{ formatDate(boss.killedAt) }}</span>
-                <span v-if="hasRoster(boss)" class="meta-dim">{{ rosterSize(boss) }} raiders</span>
+                <template v-for="(item, i) in metaItems(boss)" :key="i">
+                  <span v-if="i > 0" class="meta-sep">|</span>
+                  <span>{{ item }}</span>
+                </template>
                 <span
                   v-if="hasRoster(boss)"
                   class="expand-caret"
@@ -138,6 +134,15 @@ function pct(killed) {
 function formatDate(isoString) {
   const d = new Date(isoString)
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+}
+
+function metaItems(boss) {
+  const items = []
+  if (boss.bestPercent != null) items.push(`Best: ${boss.bestPercent.toFixed(1)}%`)
+  if (boss.pulls) items.push(`${boss.pulls} ${boss.pulls !== 1 ? 'pulls' : 'pull'}`)
+  if (boss.killedAt) items.push(formatDate(boss.killedAt))
+  if (hasRoster(boss)) items.push(`${rosterSize(boss)} raiders`)
+  return items
 }
 
 function hasRoster(boss) {
@@ -339,13 +344,8 @@ function rosterSize(boss) {
     font-size: 0.75em;
   }
 
-  .meta-dim {
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  .best-pct {
-    color: $color-yellow;
-    font-weight: 700;
+  .meta-sep {
+    opacity: 0.2;
   }
 
   .expand-caret {
