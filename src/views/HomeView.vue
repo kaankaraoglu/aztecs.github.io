@@ -58,12 +58,13 @@
 </template>
 
 <script setup>
-import { raids } from '@/data/progression.js'
 import { kills } from '@/data/kills.js'
+import { useRaiderIO } from '@/composables/useRaiderIO.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import RaiderIOWidget from '@/components/RaiderIOWidget.vue'
 
+const { raids } = useRaiderIO()
 const latestKill = kills[0]
 </script>
 
