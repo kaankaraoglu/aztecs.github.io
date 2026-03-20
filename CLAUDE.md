@@ -31,7 +31,7 @@ Pre-commit hook runs lint-staged (Prettier + ESLint) on staged files.
 Primary source is **Warcraft Logs**, fetched at build time:
 
 1. **`scripts/fetch-wcl-data.js`** runs as `prebuild` npm script. Authenticates with WCL OAuth2 (`WCL_CLIENT_ID`/`WCL_CLIENT_SECRET` env vars), fetches zone encounters and guild reports, writes `src/data/wcl-progression.json`. Per boss: kill status per difficulty, kill date, pull count, best %, and full kill roster with player names/classes.
-2. **`useRaiderIO` composable** (`src/composables/useRaiderIO.js`) reads the WCL JSON. Falls back to `src/data/progression.js` if WCL data is empty.
+2. **`useProgression` composable** (`src/composables/useProgression.js`) reads the WCL JSON. Falls back to `src/data/progression.js` if WCL data is empty.
 
 **When a new raid tier launches**, update `CURRENT_ZONE_ID` and `RAID_INSTANCE_ENCOUNTERS` in `scripts/fetch-wcl-data.js`. The zone ID can be found via the WCL GraphQL API: `{ worldData { expansion(id: N) { zones { id name } } } }`.
 

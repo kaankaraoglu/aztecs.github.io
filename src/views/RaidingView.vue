@@ -78,11 +78,11 @@
 </template>
 
 <script setup>
-import { useRaiderIO } from '@/composables/useRaiderIO.js'
+import { useProgression } from '@/composables/useProgression.js'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import FadingDivider from '@/components/FadingDivider.vue'
 
-const { raids, summary } = useRaiderIO()
+const { raids, summary } = useProgression()
 </script>
 
 <style scoped lang="scss">

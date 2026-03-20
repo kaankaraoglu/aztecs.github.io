@@ -56,11 +56,11 @@
 
 <script setup>
 import { kills } from '@/data/kills.js'
-import { useRaiderIO } from '@/composables/useRaiderIO.js'
+import { useProgression } from '@/composables/useProgression.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 
-const { raids, summary } = useRaiderIO()
+const { raids, summary } = useProgression()
 const latestKill = kills[0]
 </script>
 
