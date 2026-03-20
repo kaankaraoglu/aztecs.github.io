@@ -1,14 +1,7 @@
 <template>
   <div class="raiding-view content-wrapper">
     <section class="progression">
-      <div class="progression-boxes">
-        <RaidProgressionBox
-          v-for="raid in raids"
-          :key="raid.name"
-          :raid="raid"
-          class="info-box progression"
-        />
-      </div>
+      <RaidProgressionBox :raids="raids" :summary="summary" class="info-box" />
     </section>
 
     <FadingDivider />
@@ -89,7 +82,7 @@ import { useRaiderIO } from '@/composables/useRaiderIO.js'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import FadingDivider from '@/components/FadingDivider.vue'
 
-const { raids } = useRaiderIO()
+const { raids, summary } = useRaiderIO()
 </script>
 
 <style scoped lang="scss">
@@ -114,9 +107,6 @@ const { raids } = useRaiderIO()
     display: flex;
     flex-direction: column;
   }
-  .progression-boxes .info-box {
-    margin: 0.625rem 0;
-  }
   .progression {
     min-width: 0;
   }
@@ -129,16 +119,6 @@ const { raids } = useRaiderIO()
     color: color.adjust($accent-color, $lightness: 10%);
   }
 
-  .progression-boxes {
-    display: flex;
-    flex-direction: row;
-    gap: 0.625rem;
-    align-items: stretch;
-    flex-wrap: wrap;
-    @media (max-width: 900px) {
-      flex-direction: column;
-    }
-  }
   .schedule {
     margin-bottom: 1.875rem;
   }
@@ -179,10 +159,6 @@ const { raids } = useRaiderIO()
     color: $accent-color-hover;
   }
 
-  .progression-boxes > .progression {
-    flex: 1 1 250px;
-    min-width: 0;
-  }
   .requirements {
     margin-bottom: 1.875rem;
   }
