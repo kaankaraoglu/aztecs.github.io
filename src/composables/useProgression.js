@@ -37,7 +37,7 @@ function computeSummary(raids) {
  * Primary source: Warcraft Logs data fetched at build time (wcl-progression.json).
  * Fallback: static data from progression.js.
  */
-export function useRaiderIO() {
+export function useProgression() {
   const hasWclData = wclData.raids && wclData.raids.length > 0
 
   /** @type {import('vue').Ref<Raid[]>} */
