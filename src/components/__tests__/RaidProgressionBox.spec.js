@@ -36,26 +36,30 @@ describe('RaidProgressionBox', () => {
     expect(wrapper.text()).toContain('Boss 3')
   })
 
-  it('shows kill mark for killed bosses', () => {
+  it('marks killed bosses with the killed class', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    expect(wrapper.html()).toContain('💀')
+    const pips = wrapper.findAll('.pip.killed')
+    // Boss 1: normal killed. Boss 3: normal + heroic killed = 3 killed pips
+    expect(pips.length).toBe(3)
   })
 
-  it('shows progress bars when there are kills', () => {
+  it('shows summary pills when there are kills', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    expect(wrapper.text()).toContain('2/3 N')
-    expect(wrapper.text()).toContain('1/3 HC')
+    expect(wrapper.text()).toContain('2/3')
+    expect(wrapper.text()).toContain('Normal')
+    expect(wrapper.text()).toContain('1/3')
+    expect(wrapper.text()).toContain('Heroic')
   })
 
-  it('hides progress bars when no kills', () => {
+  it('hides summary when no kills', () => {
     const emptySummary = { total: 2, normal: 0, heroic: 0, mythic: 0 }
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: emptySummary },
     })
-    expect(wrapper.find('.progress-bars').exists()).toBe(false)
+    expect(wrapper.find('.summary').exists()).toBe(false)
   })
 })
