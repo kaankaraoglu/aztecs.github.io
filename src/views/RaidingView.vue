@@ -84,23 +84,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { raids } from '@/data/progression.js'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import FadingDivider from '@/components/FadingDivider.vue'
-export default {
-  name: 'RaidingView',
-  components: { RaidProgressionBox, FadingDivider },
-  data() {
-    return {
-      raids,
-    }
-  },
-}
 </script>
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
+@use '@/assets/styles/_info-box.scss';
 @use 'sass:color';
 
 .raiding-view {
@@ -115,28 +107,13 @@ export default {
   }
 
   .info-box {
-    border: 1px dashed $accent-color;
-    border-radius: 20px;
     padding: 1.875rem;
     margin: 0.625rem 0 1.875rem;
     display: flex;
     flex-direction: column;
-    background: rgba(255, 255, 255, 0.02);
-    transition: background 0.3s ease;
-    &:hover {
-      background: rgba($color-yellow, 0.05);
-    }
-    @media (max-width: 600px) {
-      padding: 1.125rem 1rem;
-      border-radius: 14px;
-    }
   }
   .progression-boxes .info-box {
     margin: 0.625rem 0;
-  }
-  .info-box-heading {
-    color: $accent-color;
-    margin-top: 0;
   }
   .progression {
     min-width: 0;

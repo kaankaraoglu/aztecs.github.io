@@ -5,12 +5,8 @@
   </footer>
 </template>
 
-<script>
+<script setup>
 import FadingDivider from '@/components/FadingDivider.vue'
-export default {
-  name: 'FooterView',
-  components: { FadingDivider },
-}
 </script>
 
 <style lang="scss" scoped>

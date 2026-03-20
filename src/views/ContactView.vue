@@ -56,14 +56,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ContactView',
-}
-</script>
+<script setup></script>
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
+@use '@/assets/styles/_info-box.scss';
 
 .contact-view {
   display: flex;
