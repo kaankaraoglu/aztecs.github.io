@@ -427,19 +427,25 @@ function rosterSize(boss) {
   /* ── Footer ── */
   .footer-links {
     display: flex;
-    gap: 1rem;
-    margin-top: 0.6rem;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
   }
 
   .footer-link {
-    font-size: 0.75em;
+    font-size: 0.8em;
+    font-weight: 600;
     color: $accent-color;
-    opacity: 0.3;
     text-decoration: none;
-    transition: opacity 0.2s;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid rgba($accent-color, 0.3);
+    border-radius: 6px;
+    transition:
+      background 0.15s,
+      border-color 0.15s;
 
     &:hover {
-      opacity: 0.7;
+      background: rgba($accent-color, 0.1);
+      border-color: rgba($accent-color, 0.6);
     }
   }
 }
