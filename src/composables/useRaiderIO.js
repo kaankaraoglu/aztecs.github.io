@@ -2,15 +2,12 @@ import { ref, onMounted } from 'vue'
 import { raids as fallbackRaids } from '@/data/progression.js'
 
 const API_BASE = 'https://raider.io/api/v1'
-const GUILD_URL = `${API_BASE}/guilds/profile?region=eu&realm=al-akir&name=Aztecs&fields=raid_progression`
-const CACHE_KEY = 'raiderio_raid_progression'
+const CACHE_KEY = 'raiderio_boss_progression'
 const CACHE_DURATION = 60 * 60 * 1000
+const MAX_PAGES = 10
 
 /**
  * Maps Raider.IO encounter slugs to the raid instance they belong to.
- * The Midnight tier (tier-mn-1) has 9 bosses across 3 raid instances.
- * Boss order within each instance determines which bosses are marked killed
- * based on aggregate kill counts from the API.
  */
 const RAID_INSTANCES = [
   {
@@ -63,44 +60,58 @@ function setCache(data) {
 }
 
 /**
- * Fetches the static raid data for the current expansion to get encounter
- * display names, then fetches guild progression to get kill counts.
- * Combines them into the Raid[] shape that RaidProgressionBox expects.
+ * Searches the raid-rankings endpoint for Aztecs, paginating until found.
+ * Returns the set of encounter slugs the guild has defeated at the given difficulty.
  *
- * @param {object} staticRaid - Static raid data from Raider.IO
- * @param {object} guildTier - Guild progression for the tier
+ * @param {string} raidSlug
+ * @param {string} difficulty
+ * @returns {Promise<Set<string>>}
+ */
+async function fetchDefeatedEncounters(raidSlug, difficulty) {
+  for (let page = 0; page < MAX_PAGES; page++) {
+    const url =
+      `${API_BASE}/raiding/raid-rankings?raid=${raidSlug}` +
+      `&difficulty=${difficulty}&region=eu&realm=al-akir&page=${page}`
+    const res = await fetch(url)
+    if (!res.ok) break
+
+    const data = await res.json()
+    const rankings = data.raidRankings || []
+    if (rankings.length === 0) break
+
+    const guild = rankings.find((g) => g.guild.name === 'Aztecs')
+    if (guild) {
+      return new Set((guild.encountersDefeated || []).map((e) => e.slug))
+    }
+  }
+  return new Set()
+}
+
+/**
+ * Builds the Raid[] data by combining static encounter names with
+ * exact per-boss kill data from the raid-rankings endpoint.
+ *
+ * @param {{ encounters: { slug: string, name: string }[] }} staticRaid
+ * @param {Set<string>} normalKills
+ * @param {Set<string>} heroicKills
  * @returns {Raid[]}
  */
-function buildRaids(staticRaid, guildTier) {
+function buildRaids(staticRaid, normalKills, heroicKills) {
   const encounterNames = new Map(staticRaid.encounters.map((e) => [e.slug, e.name]))
-
-  const normalKilled = guildTier.normal_bosses_killed
-  const heroicKilled = guildTier.heroic_bosses_killed
-
-  // Raider.IO gives aggregate counts, not per-boss. We distribute kills
-  // across raid instances in encounter order (matching how raids are
-  // typically progressed).
-  let normalCount = 0
-  let heroicCount = 0
 
   return RAID_INSTANCES.map((instance) => ({
     name: instance.name,
-    bosses: instance.encounters.map((slug) => {
-      const boss = {
-        name: encounterNames.get(slug) || slug,
-        normal: normalCount < normalKilled,
-        heroic: heroicCount < heroicKilled,
-      }
-      normalCount++
-      heroicCount++
-      return boss
-    }),
+    bosses: instance.encounters.map((slug) => ({
+      name: encounterNames.get(slug) || slug,
+      normal: normalKills.has(slug),
+      heroic: heroicKills.has(slug),
+    })),
   }))
 }
 
 /**
- * Composable that provides live raid progression data from Raider.IO.
- * Falls back to static data from progression.js if the API is unavailable.
+ * Composable that provides live raid progression data from Raider.IO
+ * with exact per-boss kill data. Falls back to progression.js if unavailable.
  */
 export function useRaiderIO() {
   /** @type {import('vue').Ref<Raid[]>} */
@@ -116,29 +127,25 @@ export function useRaiderIO() {
     }
 
     try {
-      const [staticRes, guildRes] = await Promise.all([
-        fetch(`${API_BASE}/raiding/static-data?expansion_id=11`),
-        fetch(GUILD_URL),
-      ])
-
-      if (!staticRes.ok || !guildRes.ok) {
+      const staticRes = await fetch(`${API_BASE}/raiding/static-data?expansion_id=11`)
+      if (!staticRes.ok) {
         loading.value = false
         return
       }
 
       const staticData = await staticRes.json()
-      const guildData = await guildRes.json()
-
       const currentRaid = staticData.raids?.[0]
-      const tierSlug = currentRaid?.slug
-      const guildTier = guildData.raid_progression?.[tierSlug]
-
-      if (!currentRaid || !guildTier) {
+      if (!currentRaid) {
         loading.value = false
         return
       }
 
-      const built = buildRaids(currentRaid, guildTier)
+      const [normalKills, heroicKills] = await Promise.all([
+        fetchDefeatedEncounters(currentRaid.slug, 'normal'),
+        fetchDefeatedEncounters(currentRaid.slug, 'heroic'),
+      ])
+
+      const built = buildRaids(currentRaid, normalKills, heroicKills)
       raids.value = built
       setCache(built)
     } catch {
