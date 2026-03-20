@@ -1,0 +1,22 @@
+@use './variables' as *;
+
+.info-box {
+  border: 1px dashed $accent-color;
+  border-radius: 20px;
+  padding: 1.5rem 1.625rem;
+  background: rgba(255, 255, 255, 0.02);
+  box-sizing: border-box;
+  transition: background 0.3s ease;
+  &:hover {
+    background: rgba($color-yellow, 0.05);
+  }
+  @media (max-width: 600px) {
+    padding: 1.125rem 1rem;
+    border-radius: 14px;
+  }
+}
+
+.info-box-heading {
+  color: $accent-color;
+  margin-top: 0;
+}

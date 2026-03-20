@@ -1,6 +1,19 @@
 // Centralized kill card data similar to progression.js
-// Each entry corresponds to a KillCardView instance.
+// Each entry corresponds to a KillCard instance.
 // Date format (YYYY-MM-DD HH:mm or YYYY-MM-DD) for display.
+
+/**
+ * @typedef {{ name: string, class: string }} RaidMember
+ * @typedef {{
+ *   raidName: string,
+ *   imageUrl: string,
+ *   date: string,
+ *   attempts?: number,
+ *   tanks?: RaidMember[],
+ *   healers?: RaidMember[],
+ *   dds?: RaidMember[]
+ * }} Kill
+ */
 
 import liberationOfUndermineImage from '@/assets/images/kills/liberation_of_undermine_2025_04_20.png'
 import gloryOfLiberationImage from '@/assets/images/kills/glory_of_the_liberation_of_undermine_raider_2025_04_27.jpg'
@@ -10,6 +23,7 @@ import obsidianSanctumImage from '@/assets/images/kills/obsidian_sanctum_2009_02
 import manaforgeOmegaImage from '@/assets/images/kills/manaforge_omega_2025_09_17.jpg'
 import gloryOfTheOmegaRaiderImage from '@/assets/images/kills/glory_of_the_omega_raider_2025_09_21.jpg'
 
+/** @type {Kill[]} */
 export const kills = [
   {
     raidName: 'Glory of the Omega Raider',

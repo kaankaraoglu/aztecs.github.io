@@ -6,11 +6,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'NotFoundView',
-}
-</script>
+<script setup></script>
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;

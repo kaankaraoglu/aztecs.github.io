@@ -56,22 +56,18 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { raids } from '@/data/progression.js'
 import { kills } from '@/data/kills.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
-export default {
-  name: 'HomeView',
-  components: { FadingDivider, RaidProgressionBox },
-  data() {
-    return { raids, latestKill: kills[0] }
-  },
-}
+
+const latestKill = kills[0]
 </script>
 
 <style lang="scss" scoped>
 @use '@/assets/styles/_variables.scss' as *;
+@use '@/assets/styles/_info-box.scss';
 .home-view {
   background-color: $background-color;
   margin: 0 auto;
@@ -112,21 +108,6 @@ export default {
     }
   }
 
-  .info-box {
-    border: 1px dashed $accent-color;
-    border-radius: 20px;
-    padding: 1.5rem 1.625rem;
-    background: rgba(255, 255, 255, 0.02);
-    box-sizing: border-box;
-    transition: background 0.3s ease;
-    &:hover {
-      background: rgba($color-yellow, 0.05);
-    }
-    @media (max-width: 600px) {
-      padding: 1.125rem 1rem;
-      border-radius: 14px;
-    }
-  }
   .latest-achievement {
     text-align: center;
     margin-bottom: 1.125rem;
