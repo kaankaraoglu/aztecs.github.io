@@ -27,12 +27,52 @@
     <div v-for="raid in raids" :key="raid.name" class="instance">
       <h3 class="instance-name">{{ raid.name }}</h3>
       <div class="boss-list">
-        <div v-for="boss in raid.bosses" :key="boss.name" class="boss-row">
-          <span class="boss-name">{{ boss.name }}</span>
-          <span class="boss-status">
-            <span :class="['pip', { killed: boss.normal }]" title="Normal">N</span>
-            <span :class="['pip', { killed: boss.heroic }]" title="Heroic">HC</span>
-          </span>
+        <div
+          v-for="boss in raid.bosses"
+          :key="boss.name"
+          :class="['boss-entry', { expandable: boss.roster?.length }]"
+        >
+          <div class="boss-row" @click="toggle(boss.name)">
+            <div class="boss-info">
+              <span class="boss-name">{{ boss.name }}</span>
+              <span
+                v-if="boss.killedAt || boss.pulls || boss.bestPercent != null"
+                class="boss-meta"
+              >
+                <span v-if="boss.killedAt" class="meta-item">{{ formatDate(boss.killedAt) }}</span>
+                <span v-if="boss.pulls" class="meta-item"
+                  >{{ boss.pulls }} pull{{ boss.pulls !== 1 ? 's' : '' }}</span
+                >
+                <span v-if="boss.bestPercent != null" class="meta-item best-pct"
+                  >Best: {{ boss.bestPercent.toFixed(1) }}%</span
+                >
+                <span v-if="boss.roster?.length" class="meta-item"
+                  >{{ boss.roster.length }} raiders</span
+                >
+              </span>
+            </div>
+            <div class="boss-right">
+              <span
+                v-if="boss.roster?.length"
+                :class="['expand-icon', { open: expanded[boss.name] }]"
+                >&#9662;</span
+              >
+              <span class="boss-status">
+                <span :class="['pip', { killed: boss.normal }]" title="Normal">N</span>
+                <span :class="['pip', { killed: boss.heroic }]" title="Heroic">HC</span>
+              </span>
+            </div>
+          </div>
+          <Transition name="roster">
+            <div v-if="expanded[boss.name] && boss.roster?.length" class="roster-panel">
+              <span
+                v-for="player in boss.roster"
+                :key="player.name"
+                :class="['roster-player', player.class]"
+                >{{ player.name }}</span
+              >
+            </div>
+          </Transition>
         </div>
       </div>
     </div>
@@ -49,6 +89,8 @@
 </template>
 
 <script setup>
+import { reactive } from 'vue'
+
 const props = defineProps({
   raids: {
     type: Array,
@@ -60,8 +102,19 @@ const props = defineProps({
   },
 })
 
+const expanded = reactive({})
+
+function toggle(bossName) {
+  expanded[bossName] = !expanded[bossName]
+}
+
 function pct(killed) {
   return props.summary.total > 0 ? `${(killed / props.summary.total) * 100}%` : '0%'
+}
+
+function formatDate(isoString) {
+  const d = new Date(isoString)
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 }
 </script>
 
@@ -172,17 +225,32 @@ function pct(killed) {
     overflow: hidden;
   }
 
-  .boss-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.4rem 0.65rem;
+  .boss-entry {
     background: rgba(255, 255, 255, 0.03);
     transition: background 0.15s;
 
     &:hover {
       background: rgba(255, 255, 255, 0.06);
     }
+
+    &.expandable .boss-row {
+      cursor: pointer;
+    }
+  }
+
+  .boss-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.45rem 0.65rem;
+  }
+
+  .boss-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
   }
 
   .boss-name {
@@ -194,10 +262,48 @@ function pct(killed) {
     }
   }
 
+  .boss-meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.65em;
+    opacity: 0.4;
+
+    @media (max-width: 600px) {
+      gap: 0.35rem;
+      font-size: 0.6em;
+    }
+  }
+
+  .meta-item {
+    white-space: nowrap;
+  }
+
+  .best-pct {
+    color: $color-yellow;
+    opacity: 1;
+  }
+
+  .boss-right {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+
+  .expand-icon {
+    font-size: 0.7em;
+    opacity: 0.3;
+    transition: transform 0.2s;
+    line-height: 1;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
   .boss-status {
     display: flex;
     gap: 0.3rem;
-    flex-shrink: 0;
   }
 
   .pip {
@@ -219,6 +325,40 @@ function pct(killed) {
       background: rgba($quality-uncommon, 0.15);
       color: $quality-uncommon;
     }
+  }
+
+  /* ── Roster panel ── */
+  .roster-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.5rem;
+    padding: 0.35rem 0.65rem 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .roster-player {
+    font-size: 0.7em;
+    font-weight: 600;
+  }
+
+  .roster-enter-active,
+  .roster-leave-active {
+    transition:
+      max-height 0.25s ease,
+      opacity 0.2s ease;
+    overflow: hidden;
+  }
+
+  .roster-enter-from,
+  .roster-leave-to {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .roster-enter-to,
+  .roster-leave-from {
+    max-height: 10rem;
+    opacity: 1;
   }
 
   /* ── Footer link ── */

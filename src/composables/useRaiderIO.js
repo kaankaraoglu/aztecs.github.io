@@ -1,8 +1,9 @@
 import { ref, onMounted } from 'vue'
 import { raids as fallbackRaids } from '@/data/progression.js'
+import wclRosters from '@/data/wcl-rosters.json'
 
 const API_BASE = 'https://raider.io/api/v1'
-const CACHE_KEY = 'raiderio_boss_progression'
+const CACHE_KEY = 'raiderio_boss_progression_v3'
 const CACHE_DURATION = 60 * 60 * 1000
 const MAX_PAGES = 10
 
@@ -32,9 +33,25 @@ const RAID_INSTANCES = [
 ]
 
 /**
- * @typedef {{ name: string, normal: boolean, heroic: boolean }} Boss
+ * @typedef {{ name: string, class: string }} RosterPlayer
+ *
+ * @typedef {{
+ *   name: string,
+ *   normal: boolean,
+ *   heroic: boolean,
+ *   killedAt?: string,
+ *   pulls?: number,
+ *   bestPercent?: number,
+ *   roster?: RosterPlayer[]
+ * }} Boss
+ *
  * @typedef {{ name: string, bosses: Boss[] }} Raid
  * @typedef {{ total: number, normal: number, heroic: number, mythic: number }} ProgressSummary
+ *
+ * @typedef {{
+ *   defeated: Map<string, { firstDefeated: string }>,
+ *   pulled: Map<string, { numPulls: number, bestPercent: number, isDefeated: boolean }>
+ * }} GuildRaidData
  */
 
 function getCached() {
@@ -62,13 +79,15 @@ function setCache(data) {
 
 /**
  * Searches the raid-rankings endpoint for Aztecs, paginating until found.
- * Returns the set of encounter slugs the guild has defeated at the given difficulty.
+ * Returns full encounter data including kills, pulls, and best percent.
  *
  * @param {string} raidSlug
  * @param {string} difficulty
- * @returns {Promise<Set<string>>}
+ * @returns {Promise<GuildRaidData>}
  */
-async function fetchDefeatedEncounters(raidSlug, difficulty) {
+async function fetchGuildRaidData(raidSlug, difficulty) {
+  const empty = { defeated: new Map(), pulled: new Map() }
+
   for (let page = 0; page < MAX_PAGES; page++) {
     const url =
       `${API_BASE}/raiding/raid-rankings?raid=${raidSlug}` +
@@ -82,38 +101,55 @@ async function fetchDefeatedEncounters(raidSlug, difficulty) {
 
     const guild = rankings.find((g) => g.guild.name === 'Aztecs')
     if (guild) {
-      return new Set((guild.encountersDefeated || []).map((e) => e.slug))
+      const defeated = new Map((guild.encountersDefeated || []).map((e) => [e.slug, e]))
+      const pulled = new Map((guild.encountersPulled || []).map((e) => [e.slug, e]))
+      return { defeated, pulled }
     }
   }
-  return new Set()
+  return empty
 }
 
 /**
- * Builds the Raid[] data by combining static encounter names with
- * exact per-boss kill data from the raid-rankings endpoint.
+ * Builds the Raid[] data by combining:
+ * - Static encounter names from Raider.IO
+ * - Per-boss kill/pull data from raid-rankings
+ * - Kill rosters from Warcraft Logs (build-time data)
  *
  * @param {{ encounters: { slug: string, name: string }[] }} staticRaid
- * @param {Set<string>} normalKills
- * @param {Set<string>} heroicKills
+ * @param {GuildRaidData} normalData
+ * @param {GuildRaidData} heroicData
  * @returns {Raid[]}
  */
-function buildRaids(staticRaid, normalKills, heroicKills) {
+function buildRaids(staticRaid, normalData, heroicData) {
   const encounterNames = new Map(staticRaid.encounters.map((e) => [e.slug, e.name]))
 
   return RAID_INSTANCES.map((instance) => ({
     name: instance.name,
-    bosses: instance.encounters.map((slug) => ({
-      name: encounterNames.get(slug) || slug,
-      normal: normalKills.has(slug),
-      heroic: heroicKills.has(slug),
-    })),
+    bosses: instance.encounters.map((slug) => {
+      const normalKill = normalData.defeated.get(slug)
+      const heroicKill = heroicData.defeated.get(slug)
+      const normalPull = normalData.pulled.get(slug)
+      const bossName = encounterNames.get(slug) || slug
+
+      // Match WCL roster by boss display name
+      const rosterData = wclRosters[bossName]
+
+      return {
+        name: bossName,
+        normal: !!normalKill,
+        heroic: !!heroicKill,
+        killedAt: normalKill?.firstDefeated || heroicKill?.firstDefeated || undefined,
+        pulls: normalPull?.numPulls || undefined,
+        bestPercent:
+          normalPull && !normalPull.isDefeated && normalPull.bestPercent > 0
+            ? normalPull.bestPercent
+            : undefined,
+        roster: rosterData?.players || undefined,
+      }
+    }),
   }))
 }
 
-/**
- * Composable that provides live raid progression data from Raider.IO
- * with exact per-boss kill data. Falls back to progression.js if unavailable.
- */
 /** @param {Raid[]} raids @returns {ProgressSummary} */
 function computeSummary(raids) {
   const allBosses = raids.flatMap((r) => r.bosses)
@@ -125,6 +161,11 @@ function computeSummary(raids) {
   }
 }
 
+/**
+ * Composable that provides live raid progression data from Raider.IO
+ * with exact per-boss kill data and WCL rosters. Falls back to progression.js
+ * if the API is unavailable.
+ */
 export function useRaiderIO() {
   /** @type {import('vue').Ref<Raid[]>} */
   const raids = ref(fallbackRaids)
@@ -155,12 +196,12 @@ export function useRaiderIO() {
         return
       }
 
-      const [normalKills, heroicKills] = await Promise.all([
-        fetchDefeatedEncounters(currentRaid.slug, 'normal'),
-        fetchDefeatedEncounters(currentRaid.slug, 'heroic'),
+      const [normalData, heroicData] = await Promise.all([
+        fetchGuildRaidData(currentRaid.slug, 'normal'),
+        fetchGuildRaidData(currentRaid.slug, 'heroic'),
       ])
 
-      const built = buildRaids(currentRaid, normalKills, heroicKills)
+      const built = buildRaids(currentRaid, normalData, heroicData)
       raids.value = built
       summary.value = computeSummary(built)
       setCache(built)

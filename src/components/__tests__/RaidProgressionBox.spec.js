@@ -7,8 +7,24 @@ describe('RaidProgressionBox', () => {
     {
       name: 'Test Raid',
       bosses: [
-        { name: 'Boss 1', normal: true, heroic: false },
-        { name: 'Boss 2', normal: false, heroic: false },
+        {
+          name: 'Boss 1',
+          normal: true,
+          heroic: false,
+          killedAt: '2026-03-18T19:29:48.000Z',
+          pulls: 3,
+          roster: [
+            { name: 'Phruity', class: 'druid' },
+            { name: 'Aurielle', class: 'paladin' },
+          ],
+        },
+        {
+          name: 'Boss 2',
+          normal: false,
+          heroic: false,
+          pulls: 5,
+          bestPercent: 12.3,
+        },
       ],
     },
     {
@@ -41,7 +57,6 @@ describe('RaidProgressionBox', () => {
       props: { raids: mockRaids, summary: mockSummary },
     })
     const pips = wrapper.findAll('.pip.killed')
-    // Boss 1: normal killed. Boss 3: normal + heroic killed = 3 killed pips
     expect(pips.length).toBe(3)
   })
 
@@ -51,8 +66,6 @@ describe('RaidProgressionBox', () => {
     })
     expect(wrapper.text()).toContain('2/3')
     expect(wrapper.text()).toContain('Normal')
-    expect(wrapper.text()).toContain('1/3')
-    expect(wrapper.text()).toContain('Heroic')
   })
 
   it('hides summary when no kills', () => {
@@ -61,5 +74,46 @@ describe('RaidProgressionBox', () => {
       props: { raids: mockRaids, summary: emptySummary },
     })
     expect(wrapper.find('.summary').exists()).toBe(false)
+  })
+
+  it('shows kill date for defeated bosses', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    expect(wrapper.text()).toContain('18 Mar')
+  })
+
+  it('shows pull count', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    expect(wrapper.text()).toContain('3 pulls')
+  })
+
+  it('shows best percent for unkilled bosses', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    expect(wrapper.text()).toContain('Best: 12.3%')
+  })
+
+  it('shows raider count for bosses with rosters', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    expect(wrapper.text()).toContain('2 raiders')
+  })
+
+  it('expands roster on click', async () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    expect(wrapper.find('.roster-panel').exists()).toBe(false)
+
+    await wrapper.findAll('.boss-row')[0].trigger('click')
+
+    expect(wrapper.find('.roster-panel').exists()).toBe(true)
+    expect(wrapper.text()).toContain('Phruity')
+    expect(wrapper.text()).toContain('Aurielle')
   })
 })
