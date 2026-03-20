@@ -1,7 +1,12 @@
 <template>
   <div class="raiding-view content-wrapper">
     <section class="progression">
-      <RaidProgressionBox :raids="raids" :summary="summary" class="info-box info-box--no-hover" />
+      <RaidProgressionBox
+        :raids="raids"
+        :summary="summary"
+        :latest-report="latestReport"
+        class="info-box info-box--no-hover"
+      />
     </section>
 
     <FadingDivider />
@@ -82,7 +87,7 @@ import { useProgression } from '@/composables/useProgression.js'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import FadingDivider from '@/components/FadingDivider.vue'
 
-const { raids, summary } = useProgression()
+const { raids, summary, latestReport } = useProgression()
 </script>
 
 <style scoped lang="scss">

@@ -2,7 +2,12 @@
   <div class="home-view">
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
     <div class="content-wrapper">
-      <RaidProgressionBox :raids="raids" :summary="summary" class="info-box info-box--no-hover" />
+      <RaidProgressionBox
+        :raids="raids"
+        :summary="summary"
+        :latest-report="latestReport"
+        class="info-box info-box--no-hover"
+      />
       <FadingDivider />
       <div class="latest-achievement">
         <p class="achievement-name">{{ latestKill.raidName }}</p>
@@ -60,7 +65,7 @@ import { useProgression } from '@/composables/useProgression.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 
-const { raids, summary } = useProgression()
+const { raids, summary, latestReport } = useProgression()
 const latestKill = kills[0]
 </script>
 

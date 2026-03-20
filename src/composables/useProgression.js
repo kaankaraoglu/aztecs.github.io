@@ -44,7 +44,8 @@ export function useProgression() {
   const raids = ref(hasWclData ? wclData.raids : fallbackRaids)
   /** @type {import('vue').Ref<ProgressSummary>} */
   const summary = ref(hasWclData ? wclData.summary : computeSummary(fallbackRaids))
+  const latestReport = hasWclData ? wclData.latestReport || null : null
   const loading = ref(false)
 
-  return { raids, summary, loading }
+  return { raids, summary, latestReport, loading }
 }

@@ -95,14 +95,25 @@
       </div>
     </div>
 
-    <a
-      class="footer-link"
-      href="https://raider.io/guilds/eu/alakir/Aztecs"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      raider.io/aztecs
-    </a>
+    <div class="footer-links">
+      <a
+        v-if="latestReport"
+        class="footer-link"
+        :href="latestReport"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Latest Log
+      </a>
+      <a
+        class="footer-link"
+        href="https://raider.io/guilds/eu/alakir/Aztecs"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Raider.IO
+      </a>
+    </div>
   </div>
 </template>
 
@@ -118,6 +129,10 @@ const props = defineProps({
   summary: {
     type: Object,
     required: true,
+  },
+  latestReport: {
+    type: String,
+    default: null,
   },
 })
 
@@ -410,9 +425,13 @@ function rosterSize(boss) {
   }
 
   /* ── Footer ── */
-  .footer-link {
-    display: inline-block;
+  .footer-links {
+    display: flex;
+    gap: 1rem;
     margin-top: 0.6rem;
+  }
+
+  .footer-link {
     font-size: 0.75em;
     color: $accent-color;
     opacity: 0.3;
