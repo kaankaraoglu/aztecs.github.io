@@ -2,7 +2,7 @@
   <div class="home-view">
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
     <div class="content-wrapper">
-      <RaidProgressionBox :raids="raids" :summary="summary" class="info-box" />
+      <RaidProgressionBox :raids="raids" :summary="summary" class="info-box info-box--no-hover" />
       <FadingDivider />
       <div class="latest-achievement">
         <p class="achievement-name">{{ latestKill.raidName }}</p>

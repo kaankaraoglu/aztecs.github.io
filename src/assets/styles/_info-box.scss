@@ -16,6 +16,12 @@
   }
 }
 
+.info-box--no-hover {
+  &:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+}
+
 .info-box-heading {
   color: $accent-color;
   margin-top: 0;
