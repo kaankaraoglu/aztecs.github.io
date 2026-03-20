@@ -33,8 +33,9 @@
     "prettier": "3.6.2",
     "sass-embedded": "^1.93.2",
     "vite": "^7.2.2",
+    "vite-plugin-image-optimizer": "^2.0.3",
+    "vite-plugin-vue-devtools": "^8.0.2"
     "vite-plugin-vue-devtools": "^8.0.2",
-    "vitest": "^4.1.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue,scss,css,md,json,yml,yaml}": [

@@ -8,10 +8,14 @@ const AchievementsView = () => import('@/views/AchievementsView.vue')
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', component: HomeView },
-    { path: '/contact', component: ContactView },
-    { path: '/raiding', component: RaidingView },
-    { path: '/achievements', component: AchievementsView },
+    { path: '/', component: HomeView, meta: { title: "Aztecs - Horde Guild on Al'Akir" } },
+    { path: '/contact', component: ContactView, meta: { title: 'Aztecs - Contact & Roster' } },
+    { path: '/raiding', component: RaidingView, meta: { title: 'Aztecs - Raiding' } },
+    {
+      path: '/achievements',
+      component: AchievementsView,
+      meta: { title: 'Aztecs - Achievements' },
+    },
     { path: '/wow-kills', redirect: '/achievements' },
     {
       path: '/:pathMatch(.*)*',
@@ -19,6 +23,10 @@ const router = createRouter({
       component: () => import('@/views/NotFoundView.vue'),
     },
   ],
+})
+
+router.beforeEach((to) => {
+  document.title = to.meta.title || 'Aztecs'
 })
 
 export default router
