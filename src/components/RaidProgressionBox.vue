@@ -30,7 +30,7 @@
         <div
           v-for="boss in raid.bosses"
           :key="boss.name"
-          :class="['boss-entry', { expandable: boss.roster?.length }]"
+          :class="['boss-entry', { expandable: hasRoster(boss) }]"
         >
           <div class="boss-row" @click="toggle(boss.name)">
             <div class="boss-info">
@@ -46,15 +46,11 @@
                 <span v-if="boss.bestPercent != null" class="meta-item best-pct"
                   >Best: {{ boss.bestPercent.toFixed(1) }}%</span
                 >
-                <span v-if="boss.roster?.length" class="meta-item"
-                  >{{ boss.roster.length }} raiders</span
-                >
+                <span v-if="hasRoster(boss)" class="meta-item">{{ rosterSize(boss) }} raiders</span>
               </span>
             </div>
             <div class="boss-right">
-              <span
-                v-if="boss.roster?.length"
-                :class="['expand-icon', { open: expanded[boss.name] }]"
+              <span v-if="hasRoster(boss)" :class="['expand-icon', { open: expanded[boss.name] }]"
                 >&#9662;</span
               >
               <span class="boss-status">
@@ -70,13 +66,37 @@
             </div>
           </div>
           <Transition name="roster">
-            <div v-if="expanded[boss.name] && boss.roster?.length" class="roster-panel">
-              <span
-                v-for="player in boss.roster"
-                :key="player.name"
-                :class="['roster-player', player.class]"
-                >{{ player.name }}</span
-              >
+            <div v-if="expanded[boss.name] && hasRoster(boss)" class="roster-panel">
+              <div v-if="boss.roster.tanks?.length" class="role-group">
+                <span class="role-icon" title="Tanks">&#x1F6E1;&#xFE0F;</span>
+                <span
+                  v-for="p in boss.roster.tanks"
+                  :key="p.name"
+                  :class="['roster-player', p.class]"
+                  :title="p.spec"
+                  >{{ p.name }}</span
+                >
+              </div>
+              <div v-if="boss.roster.healers?.length" class="role-group">
+                <span class="role-icon" title="Healers">&#x1F49A;</span>
+                <span
+                  v-for="p in boss.roster.healers"
+                  :key="p.name"
+                  :class="['roster-player', p.class]"
+                  :title="p.spec"
+                  >{{ p.name }}</span
+                >
+              </div>
+              <div v-if="boss.roster.dps?.length" class="role-group">
+                <span class="role-icon" title="DPS">&#x2694;&#xFE0F;</span>
+                <span
+                  v-for="p in boss.roster.dps"
+                  :key="p.name"
+                  :class="['roster-player', p.class]"
+                  :title="p.spec"
+                  >{{ p.name }}</span
+                >
+              </div>
             </div>
           </Transition>
         </div>
@@ -121,6 +141,16 @@ function pct(killed) {
 function formatDate(isoString) {
   const d = new Date(isoString)
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+}
+
+function hasRoster(boss) {
+  const r = boss.roster
+  return r && (r.tanks?.length || 0) + (r.healers?.length || 0) + (r.dps?.length || 0) > 0
+}
+
+function rosterSize(boss) {
+  const r = boss.roster
+  return (r?.tanks?.length || 0) + (r?.healers?.length || 0) + (r?.dps?.length || 0)
 }
 </script>
 
@@ -262,7 +292,6 @@ function formatDate(isoString) {
   .boss-name {
     font-size: 0.9em;
     font-weight: 500;
-
     @media (max-width: 600px) {
       font-size: 0.8em;
     }
@@ -273,7 +302,6 @@ function formatDate(isoString) {
     gap: 0.5rem;
     font-size: 0.65em;
     opacity: 0.4;
-
     @media (max-width: 600px) {
       gap: 0.35rem;
       font-size: 0.6em;
@@ -301,7 +329,6 @@ function formatDate(isoString) {
     opacity: 0.3;
     transition: transform 0.2s;
     line-height: 1;
-
     &.open {
       transform: rotate(180deg);
     }
@@ -326,7 +353,6 @@ function formatDate(isoString) {
     transition:
       background 0.2s,
       color 0.2s;
-
     &.killed {
       background: rgba($quality-uncommon, 0.15);
       color: $quality-uncommon;
@@ -336,15 +362,38 @@ function formatDate(isoString) {
   /* ── Roster panel ── */
   .roster-panel {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem 0.5rem;
-    padding: 0.35rem 0.65rem 0.5rem;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.4rem 0.65rem 0.55rem;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .role-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.15rem 0.4rem;
+  }
+
+  .role-icon {
+    font-size: 0.7em;
+    width: 1.2em;
+    text-align: center;
+    flex-shrink: 0;
   }
 
   .roster-player {
     font-size: 0.7em;
     font-weight: 600;
+
+    &::after {
+      content: ',';
+      color: rgba(255, 255, 255, 0.15);
+    }
+
+    &:last-of-type::after {
+      content: '';
+    }
   }
 
   .roster-enter-active,
@@ -363,7 +412,7 @@ function formatDate(isoString) {
 
   .roster-enter-to,
   .roster-leave-from {
-    max-height: 10rem;
+    max-height: 12rem;
     opacity: 1;
   }
 
@@ -376,7 +425,6 @@ function formatDate(isoString) {
     opacity: 0.35;
     text-decoration: none;
     transition: opacity 0.2s;
-
     &:hover {
       opacity: 0.8;
     }

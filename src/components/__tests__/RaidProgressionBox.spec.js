@@ -13,10 +13,11 @@ describe('RaidProgressionBox', () => {
           heroic: false,
           killedAt: '2026-03-18T19:29:48.000Z',
           pulls: 3,
-          roster: [
-            { name: 'Phruity', class: 'druid' },
-            { name: 'Aurielle', class: 'paladin' },
-          ],
+          roster: {
+            tanks: [{ name: 'Phruity', class: 'druid', spec: 'Guardian' }],
+            healers: [{ name: 'Proto', class: 'evoker', spec: 'Preservation' }],
+            dps: [{ name: 'Aurielle', class: 'paladin', spec: 'Retribution' }],
+          },
         },
         {
           name: 'Boss 2',
@@ -101,10 +102,10 @@ describe('RaidProgressionBox', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    expect(wrapper.text()).toContain('2 raiders')
+    expect(wrapper.text()).toContain('3 raiders')
   })
 
-  it('expands roster on click', async () => {
+  it('expands roster grouped by role on click', async () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
@@ -113,7 +114,10 @@ describe('RaidProgressionBox', () => {
     await wrapper.findAll('.boss-row')[0].trigger('click')
 
     expect(wrapper.find('.roster-panel').exists()).toBe(true)
+    const roleGroups = wrapper.findAll('.role-group')
+    expect(roleGroups.length).toBe(3) // tanks, healers, dps
     expect(wrapper.text()).toContain('Phruity')
+    expect(wrapper.text()).toContain('Proto')
     expect(wrapper.text()).toContain('Aurielle')
   })
 })

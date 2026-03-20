@@ -4,6 +4,11 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+  schedule:
+    # After raid nights (CET: Wed 23:00, Sun 23:00) + daily morning refresh
+    - cron: '0 22 * * 3' # Wed 22:00 UTC = 23:00 CET
+    - cron: '0 22 * * 0' # Sun 22:00 UTC = 23:00 CET
+    - cron: '0 5 * * *' # Daily 05:00 UTC = 06:00 CET
 
 jobs:
   deploy:

@@ -4,7 +4,7 @@
  * Writes to src/data/wcl-progression.json with per-boss data including:
  * - Kill status per difficulty (Normal/Heroic/Mythic)
  * - Kill date, pull count, best % on unkilled bosses
- * - Full kill roster with player names and classes
+ * - Full kill roster grouped by role (tanks/healers/dps) with class and spec
  *
  * Requires WCL_CLIENT_ID and WCL_CLIENT_SECRET env vars.
  * Usage: node scripts/fetch-wcl-data.js
@@ -44,10 +44,6 @@ const CLASS_MAP = {
   Warrior: 'warrior',
 }
 
-/**
- * Groups encounters into raid instances based on WoW's actual structure.
- * WCL combines all bosses under one zone — this mapping splits them back.
- */
 const RAID_INSTANCE_ENCOUNTERS = {
   'The Voidspire': [
     'Imperator Averzian',
@@ -95,13 +91,50 @@ async function graphql(token, query) {
   })
 
   if (!res.ok) throw new Error(`GraphQL request failed: ${res.status}`)
-  return res.json()
+  const data = await res.json()
+  if (data.errors?.length) throw new Error(data.errors[0].message)
+  return data
 }
 
 const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }
 
+function mapPlayer(p) {
+  return {
+    name: p.name,
+    class: CLASS_MAP[p.type] || p.type.toLowerCase(),
+    spec: p.specs?.[0]?.spec || null,
+  }
+}
+
+/**
+ * Fetches playerDetails for a specific fight, returning roster grouped by role.
+ */
+async function fetchRoster(token, reportCode, fightId) {
+  const query = `{
+    reportData {
+      report(code: "${reportCode}") {
+        playerDetails(fightIDs: [${fightId}])
+      }
+    }
+  }`
+
+  const result = await graphql(token, query)
+  const raw = result.data?.reportData?.report?.playerDetails
+  if (!raw) return null
+
+  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
+  const pd = parsed?.data?.playerDetails
+  if (!pd) return null
+
+  return {
+    tanks: (pd.tanks || []).map(mapPlayer),
+    healers: (pd.healers || []).map(mapPlayer),
+    dps: (pd.dps || []).map(mapPlayer),
+  }
+}
+
 async function fetchProgression(token) {
-  // Fetch zone encounters for boss list, then all guild reports for the zone
+  // Phase 1: fetch zone structure + all fights (kills and wipes)
   const query = `{
     worldData {
       zone(id: ${CURRENT_ZONE_ID}) {
@@ -112,22 +145,16 @@ async function fetchProgression(token) {
     reportData {
       reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: 25) {
         data {
+          code
           startTime
           fights {
+            id
             name
             encounterID
             kill
             difficulty
             startTime
             fightPercentage
-            friendlyPlayers
-          }
-          masterData {
-            actors(type: "Player") {
-              id
-              name
-              subType
-            }
           }
         }
       }
@@ -140,18 +167,11 @@ async function fetchProgression(token) {
 
   if (!zone) throw new Error('Zone not found')
 
-  // Build per-boss data across all reports and difficulties
+  // Build per-boss data across all reports
   // Key: "bossName|difficulty"
   const bossData = new Map()
 
   for (const report of reports) {
-    const actorMap = new Map(
-      (report.masterData?.actors || []).map((a) => [
-        a.id,
-        { name: a.name, class: CLASS_MAP[a.subType] || a.subType.toLowerCase() },
-      ]),
-    )
-
     for (const fight of report.fights || []) {
       if (fight.encounterID === 0) continue
 
@@ -168,7 +188,8 @@ async function fetchProgression(token) {
           killedAt: null,
           pulls: 0,
           bestPercent: null,
-          roster: null,
+          killReportCode: null,
+          killFightId: null,
         })
       }
 
@@ -177,14 +198,9 @@ async function fetchProgression(token) {
 
       if (fight.kill && !entry.killed) {
         entry.killed = true
-        // Convert WCL timestamps (report startTime is epoch ms, fight startTime is ms offset)
         entry.killedAt = new Date(report.startTime + fight.startTime).toISOString()
-
-        const players = (fight.friendlyPlayers || [])
-          .map((id) => actorMap.get(id))
-          .filter(Boolean)
-          .sort((a, b) => a.name.localeCompare(b.name))
-        entry.roster = players
+        entry.killReportCode = report.code
+        entry.killFightId = fight.id
       }
 
       if (!fight.kill) {
@@ -196,7 +212,28 @@ async function fetchProgression(token) {
     }
   }
 
-  // Build the output structure grouped by raid instance
+  // Phase 2: fetch playerDetails for each kill (role-grouped roster)
+  const killEntries = [...bossData.values()].filter((e) => e.killed && e.killReportCode)
+
+  // Fetch rosters in parallel (bounded to avoid rate limits)
+  const BATCH_SIZE = 5
+  const rosterMap = new Map()
+
+  for (let i = 0; i < killEntries.length; i += BATCH_SIZE) {
+    const batch = killEntries.slice(i, i + BATCH_SIZE)
+    const results = await Promise.all(
+      batch.map(async (entry) => {
+        const key = `${entry.name}|${entry.difficulty}`
+        const roster = await fetchRoster(token, entry.killReportCode, entry.killFightId)
+        return [key, roster]
+      }),
+    )
+    for (const [key, roster] of results) {
+      if (roster) rosterMap.set(key, roster)
+    }
+  }
+
+  // Build output grouped by raid instance
   const raids = Object.entries(RAID_INSTANCE_ENCOUNTERS).map(([instanceName, bossNames]) => ({
     name: instanceName,
     bosses: bossNames.map((bossName) => {
@@ -204,7 +241,6 @@ async function fetchProgression(token) {
       const heroicData = bossData.get(`${bossName}|heroic`)
       const mythicData = bossData.get(`${bossName}|mythic`)
 
-      // Use the highest difficulty kill for roster display
       const killData = mythicData?.killed
         ? mythicData
         : heroicData?.killed
@@ -213,14 +249,15 @@ async function fetchProgression(token) {
             ? normalData
             : null
 
-      // Aggregate pulls across all difficulties
       const totalPulls =
         (normalData?.pulls || 0) + (heroicData?.pulls || 0) + (mythicData?.pulls || 0)
 
-      // Best % only for the highest difficulty being progressed but NOT yet killed
       const progressEntry = [mythicData, heroicData, normalData].find(
         (d) => d && !d.killed && d.bestPercent != null,
       )
+
+      const rosterKey = killData ? `${killData.name}|${killData.difficulty}` : null
+      const roster = rosterKey ? rosterMap.get(rosterKey) : undefined
 
       return {
         name: bossName,
@@ -230,7 +267,7 @@ async function fetchProgression(token) {
         killedAt: killData?.killedAt || undefined,
         pulls: totalPulls || undefined,
         bestPercent: progressEntry?.bestPercent ?? undefined,
-        roster: killData?.roster || undefined,
+        roster: roster || undefined,
       }
     }),
   }))
@@ -258,10 +295,12 @@ async function main() {
     const data = await fetchProgression(token)
     const bosses = data.raids.flatMap((r) => r.bosses)
     const killed = bosses.filter((b) => b.normal || b.heroic || b.mythic).length
+    const rosterCount = bosses.filter((b) => b.roster).length
 
     writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2) + '\n')
     console.log(
       `[wcl] Wrote progression: ${killed}/${bosses.length} bosses killed, ` +
+        `${rosterCount} rosters, ` +
         `${data.summary.normal}N ${data.summary.heroic}HC ${data.summary.mythic}M`,
     )
   } catch (err) {
