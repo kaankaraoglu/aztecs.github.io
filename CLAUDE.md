@@ -56,4 +56,8 @@ Firebase Analytics is initialized in `src/main.js`, lazy-loaded only in producti
 
 ### Deployment
 
-Push to `main` triggers the `build-and-push.yml` workflow which builds and pushes to `gh-pages`. PRs trigger `lint-and-test.yml` (lint + vitest). Branch protection requires PRs for all changes to `main`.
+PRs trigger `ci.yml` which runs lint, test, and build as 3 parallel jobs. Push to `main` triggers `deploy.yml` which builds and pushes to `gh-pages`. Branch protection requires PRs for all changes to `main`.
+
+### Custom Instructions
+
+Always check before you push to a branch to see if it is already merged or not. If so, open a new branch and PR.
