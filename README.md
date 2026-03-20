@@ -1,77 +1,100 @@
-# Aztecs
+<!-- markdownlint-disable-file MD041 no-emphasis-as-heading -->
+<!-- markdownlint-disable-file MD033 -->
 
-[![Dependabot Updates](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates)
+<div align="center">
+
+# ⚔️ `aztecs.github.io`
+
+**Guild website for Aztecs — an established Horde guild on Al'Akir since 2005**
+
 [![PR Checks](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/ci.yml)
 [![Build & Deploy](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/deploy.yml)
 [![GitHub Pages](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/pages/pages-build-deployment)
+[![Dependabot Updates](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates)
 
-This template should help get you started developing with Vue 3 in Vite.
+[**aztecs.se**](https://aztecs.se) · Vue 3 · Vite · Warcraft Logs · GitHub Pages
 
-## Recommended IDE Setup
+</div>
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+---
 
-## Customize configuration
+## Overview
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Raiding, Mythic+, and good times. The site features live raid progression pulled from [Warcraft Logs](https://www.warcraftlogs.com/) at build time, historical kill screenshots with rosters, guild info, and a contact page.
 
-## Project Setup
+**Key features:**
+
+- **Live raid progression** — per-boss kill status, pull counts, best %, and full kill rosters fetched from the WCL API
+- **Scheduled deploys** — auto-deploys after raid nights (Wed/Sun) to keep progression fresh
+- **Kill archive** — screenshot cards with date, roster, and class-colored player names
+- **Splash text** — rotating guild inside jokes on the header
+
+## Getting Started
 
 ```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
+git clone git@github.com:kaankaraoglu/aztecs.github.io.git
+cd aztecs.github.io
+npm ci
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Commands
 
-```sh
-npm run build
+| Command          | Description                       |
+| ---------------- | --------------------------------- |
+| `npm run dev`    | Start dev server                  |
+| `npm run build`  | Fetch WCL data + production build |
+| `npm test`       | Run tests (Vitest)                |
+| `npm run lint`   | ESLint with auto-fix              |
+| `npm run format` | Prettier format all files         |
+
+### Environment Variables
+
+WCL credentials are optional for local dev (progression falls back to static data):
+
+| Variable            | Required    | Description                        |
+| ------------------- | ----------- | ---------------------------------- |
+| `WCL_CLIENT_ID`     | Deploy only | Warcraft Logs OAuth client ID      |
+| `WCL_CLIENT_SECRET` | Deploy only | Warcraft Logs OAuth client secret  |
+| `VITE_FIREBASE_*`   | Deploy only | Firebase Analytics config (7 vars) |
+
+## Architecture
+
+```
+src/
+├── components/         # Reusable components (HeaderView, KillCard, etc.)
+├── composables/        # useRaiderIO — reads WCL build-time data
+├── data/               # Static kills, progression fallback, WCL JSON
+├── views/              # Route-level pages (Home, Raiding, Achievements, Contact)
+├── assets/styles/      # SCSS variables, shared partials
+└── router/             # Vue Router with per-route titles
+scripts/
+└── fetch-wcl-data.js   # Build-time WCL fetcher (runs as prebuild)
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Data Flow
 
-```sh
-npm run lint
 ```
+Build time:  WCL API  →  fetch-wcl-data.js  →  wcl-progression.json
+Runtime:     wcl-progression.json  →  useRaiderIO()  →  RaidProgressionBox
+Fallback:    progression.js (static)  →  useRaiderIO()  (if WCL data empty)
+```
+
+## CI/CD
+
+| Workflow           | Trigger                        | What it does                           |
+| ------------------ | ------------------------------ | -------------------------------------- |
+| **PR Checks**      | Pull requests                  | Lint, test, build (parallel)           |
+| **Build & Deploy** | Push to main, schedule, manual | Fetch WCL → build → deploy to gh-pages |
+
+The deploy workflow runs on a schedule: **Wed 23:00 CET**, **Sun 23:00 CET** (after raids), and **daily 06:00 CET**.
 
 ## Contributing
 
-### Git hooks (Husky v9)
-
-Husky hooks are committed to the repo. After cloning, just install dependencies and the `pre-commit` hook will run automatically.
-
-Quick start:
+Pre-commit hooks run `lint-staged` (Prettier + ESLint) automatically. CI enforces zero warnings.
 
 ```sh
-git clone <repo-url>
-cd aztecs.github.io
-npm ci   # or: npm install
+npm ci           # Install dependencies (hooks activate automatically)
+npm run dev      # Start developing
+npm test         # Run tests before pushing
 ```
-
-The pre-commit hook runs `lint-staged` (Prettier + ESLint) on staged files.
-
-If you need to add another hook (e.g. commit-msg):
-
-```sh
-npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'
-chmod +x .husky/commit-msg
-```
-
-(No `husky install` needed for v9+.)
-
-If dependencies are missing, the hook will fail fast; run `npm ci` and retry.
-
-### Adding / updating lint rules
-
-Edit `eslint.config.js`, then run:
-
-```sh
-npx eslint . --fix
-```
-
-Commit your changes; CI enforces zero warnings (`--max-warnings=0`).
