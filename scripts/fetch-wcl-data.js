@@ -100,10 +100,13 @@ async function graphql(token, query) {
 const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }
 
 function mapPlayer(p) {
+  const server = p.server || "Al'Akir"
+  const realmSlug = server.toLowerCase().replace(/'/g, '').replace(/\s+/g, '-')
   return {
     name: p.name,
     class: CLASS_MAP[p.type] || p.type.toLowerCase(),
     spec: p.specs?.[0]?.spec || null,
+    armory: `https://worldofwarcraft.blizzard.com/en-gb/character/eu/${realmSlug}/${encodeURIComponent(p.name.toLowerCase())}`,
   }
 }
 

@@ -60,32 +60,41 @@
               <div v-if="expanded[boss.name] && hasRoster(boss)" class="roster-panel">
                 <div v-if="boss.roster.tanks?.length" class="role-group">
                   <RoleIcon role="tank" />
-                  <span
+                  <a
                     v-for="p in boss.roster.tanks"
                     :key="p.name"
                     :class="['player', p.class]"
                     :title="p.spec"
-                    >{{ p.name }}</span
+                    :href="p.armory"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ p.name }}</a
                   >
                 </div>
                 <div v-if="boss.roster.healers?.length" class="role-group">
                   <RoleIcon role="healer" />
-                  <span
+                  <a
                     v-for="p in boss.roster.healers"
                     :key="p.name"
                     :class="['player', p.class]"
                     :title="p.spec"
-                    >{{ p.name }}</span
+                    :href="p.armory"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ p.name }}</a
                   >
                 </div>
                 <div v-if="boss.roster.dps?.length" class="role-group">
                   <RoleIcon role="dps" />
-                  <span
+                  <a
                     v-for="p in boss.roster.dps"
                     :key="p.name"
                     :class="['player', p.class]"
                     :title="p.spec"
-                    >{{ p.name }}</span
+                    :href="p.armory"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{ p.name }}</a
                   >
                 </div>
               </div>
@@ -393,10 +402,17 @@ function rosterSize(boss) {
   .player {
     font-size: 0.8em;
     font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.15s;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     &::after {
       content: ',';
       color: rgba(255, 255, 255, 0.12);
+      text-decoration: none;
     }
 
     &:last-of-type::after {
