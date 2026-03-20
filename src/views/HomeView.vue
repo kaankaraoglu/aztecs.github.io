@@ -2,10 +2,7 @@
   <div class="home-view">
     <h1 class="welcome-heading">Welcome to Aztecs!</h1>
     <div class="content-wrapper">
-      <RaiderIOWidget />
-      <div class="top-boxes">
-        <RaidProgressionBox v-for="raid in raids" :key="raid.name" :raid="raid" class="info-box" />
-      </div>
+      <RaidProgressionBox :raids="raids" :summary="summary" class="info-box" />
       <FadingDivider />
       <div class="latest-achievement">
         <p class="achievement-name">{{ latestKill.raidName }}</p>
@@ -62,9 +59,8 @@ import { kills } from '@/data/kills.js'
 import { useRaiderIO } from '@/composables/useRaiderIO.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
-import RaiderIOWidget from '@/components/RaiderIOWidget.vue'
 
-const { raids } = useRaiderIO()
+const { raids, summary } = useRaiderIO()
 const latestKill = kills[0]
 </script>
 
@@ -90,24 +86,6 @@ const latestKill = kills[0]
     }
     @media (max-width: 400px) {
       font-size: 1.8em;
-    }
-  }
-
-  .top-boxes {
-    display: flex;
-    gap: 1.125rem;
-    align-items: stretch;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  .top-boxes .info-box {
-    flex: 1 1 250px;
-    min-width: 0;
-    text-align: left;
-  }
-  @media (max-width: 900px) {
-    .top-boxes {
-      flex-direction: column;
     }
   }
 

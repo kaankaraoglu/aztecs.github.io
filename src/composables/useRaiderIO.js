@@ -34,6 +34,7 @@ const RAID_INSTANCES = [
 /**
  * @typedef {{ name: string, normal: boolean, heroic: boolean }} Boss
  * @typedef {{ name: string, bosses: Boss[] }} Raid
+ * @typedef {{ total: number, normal: number, heroic: number, mythic: number }} ProgressSummary
  */
 
 function getCached() {
@@ -113,15 +114,33 @@ function buildRaids(staticRaid, normalKills, heroicKills) {
  * Composable that provides live raid progression data from Raider.IO
  * with exact per-boss kill data. Falls back to progression.js if unavailable.
  */
+/** @param {Raid[]} raids @returns {ProgressSummary} */
+function computeSummary(raids) {
+  const allBosses = raids.flatMap((r) => r.bosses)
+  return {
+    total: allBosses.length,
+    normal: allBosses.filter((b) => b.normal).length,
+    heroic: allBosses.filter((b) => b.heroic).length,
+    mythic: 0,
+  }
+}
+
+/**
+ * Composable that provides live raid progression data from Raider.IO
+ * with exact per-boss kill data. Falls back to progression.js if unavailable.
+ */
 export function useRaiderIO() {
   /** @type {import('vue').Ref<Raid[]>} */
   const raids = ref(fallbackRaids)
+  /** @type {import('vue').Ref<ProgressSummary>} */
+  const summary = ref(computeSummary(fallbackRaids))
   const loading = ref(true)
 
   async function fetchProgression() {
     const cached = getCached()
     if (cached) {
       raids.value = cached
+      summary.value = computeSummary(cached)
       loading.value = false
       return
     }
@@ -147,6 +166,7 @@ export function useRaiderIO() {
 
       const built = buildRaids(currentRaid, normalKills, heroicKills)
       raids.value = built
+      summary.value = computeSummary(built)
       setCache(built)
     } catch {
       // Keep fallback data
@@ -157,5 +177,5 @@ export function useRaiderIO() {
 
   onMounted(fetchProgression)
 
-  return { raids, loading }
+  return { raids, summary, loading }
 }
