@@ -28,7 +28,20 @@
       <h3 class="instance-name">{{ raid.name }}</h3>
       <div class="boss-list">
         <div v-for="boss in raid.bosses" :key="boss.name" class="boss-row">
-          <span class="boss-name">{{ boss.name }}</span>
+          <div class="boss-info">
+            <span class="boss-name">{{ boss.name }}</span>
+            <span v-if="boss.killedAt || boss.pulls || boss.bestPercent != null" class="boss-meta">
+              <span v-if="boss.killedAt" class="meta-item killed-date">{{
+                formatDate(boss.killedAt)
+              }}</span>
+              <span v-if="boss.pulls" class="meta-item pull-count"
+                >{{ boss.pulls }} pull{{ boss.pulls !== 1 ? 's' : '' }}</span
+              >
+              <span v-if="boss.bestPercent != null" class="meta-item best-pct"
+                >Best: {{ boss.bestPercent.toFixed(1) }}%</span
+              >
+            </span>
+          </div>
           <span class="boss-status">
             <span :class="['pip', { killed: boss.normal }]" title="Normal">N</span>
             <span :class="['pip', { killed: boss.heroic }]" title="Heroic">HC</span>
@@ -62,6 +75,11 @@ const props = defineProps({
 
 function pct(killed) {
   return props.summary.total > 0 ? `${(killed / props.summary.total) * 100}%` : '0%'
+}
+
+function formatDate(isoString) {
+  const d = new Date(isoString)
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 }
 </script>
 
@@ -176,13 +194,21 @@ function pct(killed) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.4rem 0.65rem;
+    gap: 0.5rem;
+    padding: 0.45rem 0.65rem;
     background: rgba(255, 255, 255, 0.03);
     transition: background 0.15s;
 
     &:hover {
       background: rgba(255, 255, 255, 0.06);
     }
+  }
+
+  .boss-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
   }
 
   .boss-name {
@@ -192,6 +218,27 @@ function pct(killed) {
     @media (max-width: 600px) {
       font-size: 0.8em;
     }
+  }
+
+  .boss-meta {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 0.65em;
+    opacity: 0.4;
+
+    @media (max-width: 600px) {
+      gap: 0.35rem;
+      font-size: 0.6em;
+    }
+  }
+
+  .meta-item {
+    white-space: nowrap;
+  }
+
+  .best-pct {
+    color: $color-yellow;
+    opacity: 1;
   }
 
   .boss-status {
