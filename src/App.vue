@@ -53,7 +53,7 @@ html {
 
 /* Unified content width utility */
 .content-wrapper {
-  max-width: 80rem;
+  max-width: 100rem;
   margin: 0 auto;
   padding: 0 2rem 2.5rem;
   width: 100%;
