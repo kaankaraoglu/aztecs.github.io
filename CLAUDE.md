@@ -28,17 +28,14 @@ Pre-commit hook runs lint-staged (Prettier + ESLint) on staged files.
 
 ### Data flow for raid progression
 
-Two systems provide raid data, with a fallback chain:
+Primary source is **Warcraft Logs**, fetched at build time:
 
-1. **`useRaiderIO` composable** (`src/composables/useRaiderIO.js`) — fetches live per-boss kill data from Raider.IO's public API at runtime. Uses `sessionStorage` with 1-hour TTL. Consumed by `HomeView` and `RaidingView`.
-2. **`src/data/progression.js`** — static fallback data, used when the API is unavailable.
+1. **`scripts/fetch-wcl-data.js`** runs as `prebuild` npm script. Authenticates with WCL OAuth2 (`WCL_CLIENT_ID`/`WCL_CLIENT_SECRET` env vars), fetches zone encounters and guild reports, writes `src/data/wcl-progression.json`. Per boss: kill status per difficulty, kill date, pull count, best %, and full kill roster with player names/classes.
+2. **`useRaiderIO` composable** (`src/composables/useRaiderIO.js`) reads the WCL JSON. Falls back to `src/data/progression.js` if WCL data is empty.
 
-The composable hits two Raider.IO endpoints:
+**When a new raid tier launches**, update `CURRENT_ZONE_ID` and `RAID_INSTANCE_ENCOUNTERS` in `scripts/fetch-wcl-data.js`. The zone ID can be found via the WCL GraphQL API: `{ worldData { expansion(id: N) { zones { id name } } } }`.
 
-- `raiding/static-data?expansion_id=11` for boss names
-- `raiding/raid-rankings?raid=...&difficulty=...&region=eu&realm=al-akir` (paginated) for exact per-boss kills
-
-A `RAID_INSTANCES` mapping in the composable groups encounter slugs into raid instance names. **This mapping must be updated manually when a new raid tier launches.**
+Data freshness depends on deploy frequency — trigger a deploy after raid nights to refresh.
 
 ### Data flow for kill cards
 

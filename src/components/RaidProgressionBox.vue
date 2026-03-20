@@ -60,6 +60,12 @@
               <span class="boss-status">
                 <span :class="['pip', { killed: boss.normal }]" title="Normal">N</span>
                 <span :class="['pip', { killed: boss.heroic }]" title="Heroic">HC</span>
+                <span
+                  v-if="summary.mythic > 0"
+                  :class="['pip', { killed: boss.mythic }]"
+                  title="Mythic"
+                  >M</span
+                >
               </span>
             </div>
           </div>
