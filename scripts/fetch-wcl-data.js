@@ -26,6 +26,7 @@ const EMPTY_OUTPUT = {
   zone: null,
   raids: [],
   summary: { total: 0, normal: 0, heroic: 0, mythic: 0 },
+  latestReport: null,
 }
 
 const CLASS_MAP = {
@@ -280,7 +281,12 @@ async function fetchProgression(token) {
     mythic: allBosses.filter((b) => b.mythic).length,
   }
 
-  return { zone: zone.name, raids, summary }
+  // Latest report link (reports are returned most recent first)
+  const latestReport = reports[0]?.code
+    ? `https://www.warcraftlogs.com/reports/${reports[0].code}`
+    : null
+
+  return { zone: zone.name, raids, summary, latestReport }
 }
 
 async function main() {
