@@ -1,39 +1,41 @@
 <template>
-  <div class="raid-progression-box">
-    <div v-if="summary.normal > 0 || summary.heroic > 0" class="progress-bars">
-      <span v-if="summary.normal > 0" class="bar normal">
-        <span class="bar-fill" :style="{ width: pct(summary.normal) }"></span>
-        <span class="bar-text">{{ summary.normal }}/{{ summary.total }} N</span>
-      </span>
-      <span v-if="summary.heroic > 0" class="bar heroic">
-        <span class="bar-fill" :style="{ width: pct(summary.heroic) }"></span>
-        <span class="bar-text">{{ summary.heroic }}/{{ summary.total }} HC</span>
-      </span>
-      <span v-if="summary.mythic > 0" class="bar mythic">
-        <span class="bar-fill" :style="{ width: pct(summary.mythic) }"></span>
-        <span class="bar-text">{{ summary.mythic }}/{{ summary.total }} M</span>
-      </span>
+  <div class="raid-progression">
+    <div v-if="summary.normal > 0 || summary.heroic > 0 || summary.mythic > 0" class="summary">
+      <div v-if="summary.normal > 0" class="summary-pill normal">
+        <span class="summary-count">{{ summary.normal }}/{{ summary.total }}</span>
+        <span class="summary-label">Normal</span>
+        <span class="summary-track"
+          ><span class="summary-fill" :style="{ width: pct(summary.normal) }"></span
+        ></span>
+      </div>
+      <div v-if="summary.heroic > 0" class="summary-pill heroic">
+        <span class="summary-count">{{ summary.heroic }}/{{ summary.total }}</span>
+        <span class="summary-label">Heroic</span>
+        <span class="summary-track"
+          ><span class="summary-fill" :style="{ width: pct(summary.heroic) }"></span
+        ></span>
+      </div>
+      <div v-if="summary.mythic > 0" class="summary-pill mythic">
+        <span class="summary-count">{{ summary.mythic }}/{{ summary.total }}</span>
+        <span class="summary-label">Mythic</span>
+        <span class="summary-track"
+          ><span class="summary-fill" :style="{ width: pct(summary.mythic) }"></span
+        ></span>
+      </div>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th class="accent-color">Boss</th>
-          <th class="quality-rare difficulty">N</th>
-          <th class="quality-epic difficulty">HC</th>
-        </tr>
-      </thead>
-      <tbody v-for="raid in raids" :key="raid.name">
-        <tr class="instance-header">
-          <td :colspan="3">{{ raid.name }}</td>
-        </tr>
-        <tr v-for="boss in raid.bosses" :key="boss.name">
-          <td class="boss-name">{{ boss.name }}</td>
-          <td class="killed-or-not">{{ killMark(boss.normal) }}</td>
-          <td class="killed-or-not">{{ killMark(boss.heroic) }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-for="raid in raids" :key="raid.name" class="instance">
+      <h3 class="instance-name">{{ raid.name }}</h3>
+      <div class="boss-list">
+        <div v-for="boss in raid.bosses" :key="boss.name" class="boss-row">
+          <span class="boss-name">{{ boss.name }}</span>
+          <span class="boss-status">
+            <span :class="['pip', { killed: boss.normal }]" title="Normal">N</span>
+            <span :class="['pip', { killed: boss.heroic }]" title="Heroic">HC</span>
+          </span>
+        </div>
+      </div>
+    </div>
 
     <a
       class="raiderio-link"
@@ -41,14 +43,12 @@
       target="_blank"
       rel="noopener noreferrer"
     >
-      View on Raider.IO
+      raider.io/aztecs
     </a>
   </div>
 </template>
 
 <script setup>
-import { killMark } from '@/data/progression.js'
-
 const props = defineProps({
   raids: {
     type: Array,
@@ -68,100 +68,171 @@ function pct(killed) {
 <style lang="scss" scoped>
 @use '@/assets/styles/_variables.scss' as *;
 
-.raid-progression-box {
+.raid-progression {
   text-align: left;
 
-  .progress-bars {
+  /* ── Summary pills ── */
+  .summary {
     display: flex;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
   }
 
-  .bar {
-    position: relative;
+  .summary-pill {
     flex: 1;
-    height: 1.6rem;
-    border-radius: 6px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.06);
-    min-width: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 
-    .bar-fill {
-      position: absolute;
-      inset: 0;
-      border-radius: 6px;
-      transition: width 0.6s ease;
-    }
-
-    .bar-text {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      font-size: 0.8em;
-      font-weight: 700;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    .summary-count {
+      font-size: 1.3em;
+      font-weight: 800;
+      line-height: 1;
     }
 
-    &.normal .bar-fill {
-      background: rgba($quality-rare, 0.4);
+    .summary-label {
+      font-size: 0.7em;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.45;
     }
-    &.heroic .bar-fill {
-      background: rgba($quality-epic, 0.4);
+
+    .summary-track {
+      width: 100%;
+      height: 3px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      margin-top: 0.2rem;
+
+      .summary-fill {
+        display: block;
+        height: 100%;
+        border-radius: 2px;
+        transition: width 0.6s ease;
+      }
     }
-    &.mythic .bar-fill {
-      background: rgba($quality-legendary, 0.4);
+
+    &.normal {
+      .summary-count {
+        color: $quality-rare;
+      }
+      .summary-fill {
+        background: $quality-rare;
+      }
+    }
+    &.heroic {
+      .summary-count {
+        color: $quality-epic;
+      }
+      .summary-fill {
+        background: $quality-epic;
+      }
+    }
+    &.mythic {
+      .summary-count {
+        color: $quality-legendary;
+      }
+      .summary-fill {
+        background: $quality-legendary;
+      }
     }
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
+  /* ── Raid instances ── */
+  .instance {
+    &:not(:last-of-type) {
+      margin-bottom: 0.75rem;
+    }
   }
 
-  .instance-header td {
-    color: $accent-color;
+  .instance-name {
+    margin: 0 0 0.35rem;
+    font-size: 0.75em;
     font-weight: 700;
-    font-size: 0.85em;
-    padding: 0.6rem 0 0.2rem;
-    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $accent-color;
+    opacity: 0.7;
   }
 
-  table tr .boss-name {
-    font-size: 0.95em;
-    padding: 0.15rem 0;
-    @media (max-width: 700px) {
-      font-size: 0.75em;
+  .boss-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .boss-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0.65rem;
+    background: rgba(255, 255, 255, 0.03);
+    transition: background 0.15s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
     }
   }
 
-  table tr .difficulty {
-    font-size: 1.15em;
-    text-align: center;
+  .boss-name {
+    font-size: 0.9em;
+    font-weight: 500;
+
+    @media (max-width: 600px) {
+      font-size: 0.8em;
+    }
   }
 
-  table tr .killed-or-not {
-    font-size: 0.7em;
-    text-align: center;
+  .boss-status {
+    display: flex;
+    gap: 0.3rem;
+    flex-shrink: 0;
   }
 
-  table th:first-child {
-    text-align: left;
+  .pip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.65rem;
+    height: 1.35rem;
+    border-radius: 4px;
+    font-size: 0.6em;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.2);
+    transition:
+      background 0.2s,
+      color 0.2s;
+
+    &.killed {
+      background: rgba($quality-uncommon, 0.15);
+      color: $quality-uncommon;
+    }
   }
 
+  /* ── Footer link ── */
   .raiderio-link {
     display: inline-block;
     margin-top: 0.75rem;
-    font-size: 0.75em;
+    font-size: 0.7em;
     color: $accent-color;
-    opacity: 0.5;
+    opacity: 0.35;
     text-decoration: none;
     transition: opacity 0.2s;
 
     &:hover {
-      opacity: 1;
+      opacity: 0.8;
     }
   }
 }
