@@ -125,10 +125,6 @@ function computeSummary(raids) {
   }
 }
 
-/**
- * Composable that provides live raid progression data from Raider.IO
- * with exact per-boss kill data. Falls back to progression.js if unavailable.
- */
 export function useRaiderIO() {
   /** @type {import('vue').Ref<Raid[]>} */
   const raids = ref(fallbackRaids)
