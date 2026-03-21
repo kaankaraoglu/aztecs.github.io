@@ -104,7 +104,7 @@ Three "award" cards on the home page showing fun stats derived from WCL data for
 ### Stat Definitions
 
 - **Most Deaths:** Player with highest total death count across all boss fights (kills and wipes) in current zone reports
-- **Iron Raider:** Player who appeared in the most boss kill rosters while having 0 deaths across all fights they participated in. Minimum 3 kills attended to qualify.
+- **Iron Raider:** Player with 0 deaths across ALL fights (kills and wipes) who appeared in the most boss kill fights. Determined by: (1) collect all player names from Deaths tables across all reports — these players are disqualified, (2) from remaining players, count how many kill fights each appeared in via playerDetails, (3) player with highest kill count wins. Minimum 3 kills to qualify.
 - **Biggest Hit:** Highest single damage event by a player across all fights. Extracted from DamageDone table sorted by amount descending.
 
 ### Component
