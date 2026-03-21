@@ -1,11 +1,13 @@
 <template>
+  <div class="noise-overlay" aria-hidden="true" />
+  <EmberParticles />
   <div class="gradient-line"></div>
 
   <HeaderView />
 
   <main>
     <RouterView v-slot="{ Component }">
-      <Transition name="fade" mode="out-in">
+      <Transition name="page" mode="out-in">
         <component :is="Component" />
       </Transition>
     </RouterView>
@@ -17,22 +19,62 @@
 <script setup>
 import FooterView from '@/components/FooterView.vue'
 import HeaderView from '@/components/HeaderView.vue'
+import EmberParticles from '@/components/EmberParticles.vue'
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/variables' as *;
+@use '@/assets/styles/tokens' as *;
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
 .gradient-line {
-  top: 0;
+  background: linear-gradient(
+    90deg,
+    $color-red,
+    $color-orange,
+    $color-yellow,
+    $color-light-orange,
+    $color-light-yellow,
+    $color-red
+  );
+  background-size: 200% 100%;
   height: 5px;
-  background: linear-gradient(to right, #f54545, #fe691e, #ff8a05, #ffa203, #f5bd25);
+  animation: shimmer-gradient 8s linear infinite;
+}
+
+@keyframes shimmer-gradient {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@include reduced-motion {
+  .gradient-line {
+    animation: none;
+  }
 }
 </style>
 
 <style lang="scss">
-@use '@/assets/styles/_variables.scss' as *;
+@use '@/assets/styles/variables' as *;
+@use '@/assets/styles/tokens' as *;
 
 html {
-  color: whitesmoke;
-  background-color: $background-color;
+  color: $color-text-primary;
+  background-color: $surface-0;
   font-family: 'Cal Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -51,28 +93,81 @@ html {
   }
 }
 
-/* Unified content width utility */
 .content-wrapper {
   max-width: 100rem;
   margin: 0 auto;
-  padding: 0 2rem 2.5rem;
+  padding: 0 $space-8 $space-10;
   width: 100%;
   box-sizing: border-box;
 
-  @media (max-width: 900px) {
-    padding: 0 1.5rem 2.2rem;
+  @include tablet {
+    padding: 0 $space-6 $space-8;
   }
-  @media (max-width: 600px) {
-    padding: 0 1rem 2rem;
+
+  @include mobile {
+    padding: 0 $space-4 $space-8;
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
+.page-enter-active {
+  transition:
+    opacity $duration-normal $ease-out,
+    transform $duration-normal $ease-out;
 }
-.fade-enter-from,
-.fade-leave-to {
+.page-leave-active {
+  transition: opacity $duration-fast $ease-default;
+}
+.page-enter-from {
   opacity: 0;
+  transform: translateY(12px);
+}
+.page-leave-to {
+  opacity: 0;
+}
+
+@include reduced-motion {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity $duration-slow $ease-out,
+    transform $duration-slow $ease-out;
+
+  &.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-stagger > .reveal {
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      transition-delay: #{($i - 1) * 100}ms;
+    }
+  }
+}
+
+@include reduced-motion {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid $accent-color;
+  outline-offset: 3px;
+  border-radius: $radius-sm;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="kill-card-view">
-    <div class="card">
+    <div ref="cardRef" class="card" :style="tiltStyle">
       <div class="image-container">
         <div class="image-top-overlay">
           <span id="raid-name" class="raid-name">{{ raidName }}</span>
@@ -81,6 +81,10 @@
 <script setup>
 import { ref } from 'vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
+import { useTiltEffect } from '@/composables/useTiltEffect'
+
+const cardRef = ref(null)
+const { tiltStyle } = useTiltEffect(cardRef)
 
 defineProps({
   raidName: {
@@ -117,33 +121,32 @@ const lightboxOpen = ref(false)
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/styles/tokens' as *;
+
 .kill-card-view {
   display: flex;
   justify-content: center;
   padding: 1rem;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  @include mobile {
+    padding: 0;
+  }
 
   .card {
     width: 100%;
-    max-width: 95vw;
+    max-width: 100%;
     background-color: #000;
-    border-radius: 5px;
+    border-radius: $radius-md;
     overflow: hidden;
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition:
-      box-shadow 0.3s ease,
-      transform 0.3s ease;
+      transform $duration-normal $ease-out,
+      box-shadow $duration-normal $ease-default;
     &:hover {
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-      transform: translateY(-2px);
-    }
-
-    @media (min-width: 768px) {
-      max-width: 66vw;
-    }
-
-    @media (min-width: 1200px) {
-      max-width: 55vw;
     }
 
     .image-container {
@@ -160,11 +163,7 @@ const lightboxOpen = ref(false)
         height: 100%;
         object-fit: cover;
         display: block;
-        border-radius: 5px 5px 0 0;
-
-        @media (max-width: 640px) {
-          display: none;
-        }
+        border-radius: $radius-md $radius-md 0 0;
       }
 
       .image-top-overlay {
@@ -179,7 +178,7 @@ const lightboxOpen = ref(false)
         color: white;
         font-weight: 600;
         font-size: 0.9rem;
-        border-radius: 5px 5px 0 0;
+        border-radius: $radius-md $radius-md 0 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -202,10 +201,6 @@ const lightboxOpen = ref(false)
         text-decoration: none;
         color: inherit;
         z-index: 1;
-
-        @media (max-width: 640px) {
-          display: none; /* image hidden on small screens, keep existing mobile link button */
-        }
       }
 
       .enlarge-indicator {
@@ -224,8 +219,8 @@ const lightboxOpen = ref(false)
         backdrop-filter: blur(4px);
         opacity: 0.55;
         transition:
-          opacity 0.25s ease,
-          transform 0.25s ease;
+          opacity $duration-normal $ease-default,
+          transform $duration-normal $ease-default;
         pointer-events: none;
         z-index: 4; /* raise above overlay (2) */
       }
@@ -242,7 +237,7 @@ const lightboxOpen = ref(false)
 
       .image-overlay {
         width: 100%;
-        padding: 0.625rem 0.875rem;
+        padding: $space-3 $space-3;
         backdrop-filter: blur(10px);
         background: rgba(0, 0, 0, 0.4);
         color: white;
@@ -253,7 +248,7 @@ const lightboxOpen = ref(false)
         @media (min-width: 641px) {
           position: absolute;
           bottom: 0;
-          border-radius: 0 0 5px 5px;
+          border-radius: 0 0 $radius-md $radius-md;
           max-height: 100%;
           overflow-y: auto;
 
@@ -289,28 +284,6 @@ const lightboxOpen = ref(false)
 
         .show-image-button {
           display: none;
-
-          @media (max-width: 640px) {
-            display: block;
-            margin-bottom: 0.75rem;
-            text-align: left;
-            padding-left: 2px;
-
-            a {
-              display: inline-block;
-              padding: 0.375rem 0.75rem;
-              font-size: 0.85rem;
-              background-color: #333;
-              color: #fff;
-              text-decoration: none;
-              border-radius: 4px;
-              transition: background-color 0.2s;
-
-              &:hover {
-                background-color: #555;
-              }
-            }
-          }
         }
 
         .roster {
@@ -331,6 +304,35 @@ const lightboxOpen = ref(false)
         }
       }
     }
+  }
+}
+
+@media (max-width: 640px) {
+  .kill-card-view .image-container {
+    aspect-ratio: 16 / 9;
+  }
+
+  .kill-card-view .raid-image {
+    display: block;
+  }
+
+  .kill-card-view .image-anchor {
+    display: block;
+    cursor: zoom-in;
+  }
+
+  .kill-card-view .image-overlay {
+    position: static;
+    backdrop-filter: none;
+    background: none;
+  }
+
+  .kill-card-view .show-image-button {
+    display: none;
+  }
+
+  .kill-card-view .enlarge-indicator {
+    display: none;
   }
 }
 </style>

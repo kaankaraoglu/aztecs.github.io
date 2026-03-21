@@ -1,8 +1,19 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import RaidProgressionBox from '../RaidProgressionBox.vue'
 
+const mockObserve = vi.fn()
+const mockDisconnect = vi.fn()
+
+vi.stubGlobal(
+  'IntersectionObserver',
+  vi.fn(() => ({ observe: mockObserve, disconnect: mockDisconnect, unobserve: vi.fn() })),
+)
+
 describe('RaidProgressionBox', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
   const mockRaids = [
     {
       name: 'Test Raid',

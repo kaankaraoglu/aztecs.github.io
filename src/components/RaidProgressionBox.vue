@@ -1,134 +1,179 @@
 <template>
   <div class="raid-progression">
-    <div v-if="summary.normal > 0 || summary.heroic > 0 || summary.mythic > 0" class="summary">
-      <div v-if="summary.normal > 0" class="summary-pill normal">
-        <span class="summary-count">{{ summary.normal }}/{{ summary.total }}</span>
-        <span class="summary-label">Normal</span>
-        <span class="summary-track"
-          ><span class="summary-fill" :style="{ width: pct(summary.normal) }"></span
-        ></span>
+    <template v-if="!raids.length">
+      <div class="skeleton-pills">
+        <SkeletonLoader width="120px" height="3.5rem" />
+        <SkeletonLoader width="120px" height="3.5rem" />
+        <SkeletonLoader width="120px" height="3.5rem" />
       </div>
-      <div v-if="summary.heroic > 0" class="summary-pill heroic">
-        <span class="summary-count">{{ summary.heroic }}/{{ summary.total }}</span>
-        <span class="summary-label">Heroic</span>
-        <span class="summary-track"
-          ><span class="summary-fill" :style="{ width: pct(summary.heroic) }"></span
-        ></span>
+      <SkeletonLoader width="100%" height="2px" />
+      <div class="skeleton-bosses">
+        <SkeletonLoader v-for="i in 5" :key="i" width="100%" height="2.2rem" />
       </div>
-      <div v-if="summary.mythic > 0" class="summary-pill mythic">
-        <span class="summary-count">{{ summary.mythic }}/{{ summary.total }}</span>
-        <span class="summary-label">Mythic</span>
-        <span class="summary-track"
-          ><span class="summary-fill" :style="{ width: pct(summary.mythic) }"></span
-        ></span>
+    </template>
+    <template v-else>
+      <div
+        v-if="summary.normal > 0 || summary.heroic > 0 || summary.mythic > 0"
+        ref="progressRef"
+        class="summary"
+      >
+        <div v-if="summary.normal > 0" class="summary-pill normal">
+          <span class="summary-count">{{ summary.normal }}/{{ summary.total }}</span>
+          <span class="summary-label">Normal</span>
+          <span class="summary-track"
+            ><span
+              class="summary-fill"
+              :class="{ animate: isVisible }"
+              :style="{ '--progress': pct(summary.normal) }"
+            ></span
+          ></span>
+        </div>
+        <div v-if="summary.heroic > 0" class="summary-pill heroic">
+          <span class="summary-count">{{ summary.heroic }}/{{ summary.total }}</span>
+          <span class="summary-label">Heroic</span>
+          <span class="summary-track"
+            ><span
+              class="summary-fill"
+              :class="{ animate: isVisible }"
+              :style="{ '--progress': pct(summary.heroic) }"
+            ></span
+          ></span>
+        </div>
+        <div v-if="summary.mythic > 0" class="summary-pill mythic">
+          <span class="summary-count">{{ summary.mythic }}/{{ summary.total }}</span>
+          <span class="summary-label">Mythic</span>
+          <span class="summary-track"
+            ><span
+              class="summary-fill"
+              :class="{ animate: isVisible }"
+              :style="{ '--progress': pct(summary.mythic) }"
+            ></span
+          ></span>
+        </div>
       </div>
-    </div>
 
-    <div class="instances">
-      <div v-for="raid in raids" :key="raid.name" class="instance">
-        <h3 class="instance-name">{{ raid.name }}</h3>
-        <div class="boss-list">
-          <div
-            v-for="boss in raid.bosses"
-            :key="boss.name"
-            :class="[
-              'boss-entry',
-              { expandable: hasRoster(boss), killed: boss.normal || boss.heroic || boss.mythic },
-            ]"
-          >
-            <div class="boss-row" @click="toggle(boss.name)">
-              <span class="boss-status">
-                <span :class="['pip', { active: boss.normal }]">N</span>
-                <span :class="['pip', { active: boss.heroic }]">HC</span>
-                <span v-if="summary.mythic > 0" :class="['pip', { active: boss.mythic }]">M</span>
-              </span>
-              <span class="boss-name">{{ boss.name }}</span>
-              <span class="boss-meta">
-                <template v-for="(item, i) in metaItems(boss)" :key="i">
-                  <span v-if="i > 0" class="meta-sep">|</span>
-                  <span>{{ item }}</span>
-                </template>
-                <span
-                  v-if="hasRoster(boss)"
-                  class="expand-caret"
-                  :class="{ open: expanded[boss.name] }"
-                  >&#9662;</span
+      <div class="instances">
+        <div
+          v-for="raid in raids"
+          :key="raid.name"
+          class="instance difficulty-section"
+          :data-difficulty="highestDifficulty(raid)"
+        >
+          <h3 class="instance-name">{{ raid.name }}</h3>
+          <div class="boss-list">
+            <div
+              v-for="boss in raid.bosses"
+              :key="boss.name"
+              :class="[
+                'boss-entry',
+                {
+                  expandable: hasRoster(boss),
+                  killed: boss.normal || boss.heroic || boss.mythic,
+                  'in-progress': !boss.normal && !boss.heroic && !boss.mythic && boss.pulls > 0,
+                },
+              ]"
+            >
+              <div class="boss-row" @click="toggle(boss.name)">
+                <span class="boss-status">
+                  <span :class="['pip', { active: boss.normal }]">N</span>
+                  <span :class="['pip', { active: boss.heroic }]">HC</span>
+                  <span v-if="summary.mythic > 0" :class="['pip', { active: boss.mythic }]">M</span>
+                </span>
+                <span class="boss-name">{{ boss.name }}</span>
+                <span class="boss-meta">
+                  <template v-for="(item, i) in metaItems(boss)" :key="i">
+                    <span v-if="i > 0" class="meta-sep">|</span>
+                    <span>{{ item }}</span>
+                  </template>
+                  <span
+                    v-if="hasRoster(boss)"
+                    class="expand-caret"
+                    :class="{ open: expanded[boss.name] }"
+                    >&#9662;</span
+                  >
+                </span>
+              </div>
+              <div class="roster-wrapper" :class="{ expanded: expanded[boss.name] }">
+                <div
+                  v-show="expanded[boss.name] && hasRoster(boss)"
+                  class="roster-inner"
+                  :aria-hidden="!expanded[boss.name]"
                 >
-              </span>
-            </div>
-            <Transition name="roster">
-              <div v-if="expanded[boss.name] && hasRoster(boss)" class="roster-panel">
-                <div v-if="boss.roster.tanks?.length" class="role-group">
-                  <RoleIcon role="tank" />
-                  <a
-                    v-for="p in boss.roster.tanks"
-                    :key="p.name"
-                    :class="['player', p.class]"
-                    :title="playerTooltip(p)"
-                    :href="p.armory"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >{{ p.name }}</a
-                  >
-                </div>
-                <div v-if="boss.roster.healers?.length" class="role-group">
-                  <RoleIcon role="healer" />
-                  <a
-                    v-for="p in boss.roster.healers"
-                    :key="p.name"
-                    :class="['player', p.class]"
-                    :title="playerTooltip(p)"
-                    :href="p.armory"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >{{ p.name }}</a
-                  >
-                </div>
-                <div v-if="boss.roster.dps?.length" class="role-group">
-                  <RoleIcon role="dps" />
-                  <a
-                    v-for="p in boss.roster.dps"
-                    :key="p.name"
-                    :class="['player', p.class]"
-                    :title="playerTooltip(p)"
-                    :href="p.armory"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >{{ p.name }}</a
-                  >
+                  <div v-if="expanded[boss.name] && hasRoster(boss)" class="roster-panel">
+                    <div v-if="boss.roster?.tanks?.length" class="role-group">
+                      <RoleIcon role="tank" />
+                      <a
+                        v-for="p in boss.roster.tanks"
+                        :key="p.name"
+                        :class="['player', p.class]"
+                        :title="playerTooltip(p)"
+                        :href="p.armory"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >{{ p.name }}</a
+                      >
+                    </div>
+                    <div v-if="boss.roster?.healers?.length" class="role-group">
+                      <RoleIcon role="healer" />
+                      <a
+                        v-for="p in boss.roster.healers"
+                        :key="p.name"
+                        :class="['player', p.class]"
+                        :title="playerTooltip(p)"
+                        :href="p.armory"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >{{ p.name }}</a
+                      >
+                    </div>
+                    <div v-if="boss.roster?.dps?.length" class="role-group">
+                      <RoleIcon role="dps" />
+                      <a
+                        v-for="p in boss.roster.dps"
+                        :key="p.name"
+                        :class="['player', p.class]"
+                        :title="playerTooltip(p)"
+                        :href="p.armory"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >{{ p.name }}</a
+                      >
+                    </div>
+                  </div>
                 </div>
               </div>
-            </Transition>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="footer-links">
-      <a
-        v-if="latestReport"
-        class="footer-link"
-        :href="latestReport"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Latest Log
-      </a>
-      <a
-        class="footer-link"
-        href="https://raider.io/guilds/eu/alakir/Aztecs"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Raider.IO
-      </a>
-    </div>
+      <div class="footer-links">
+        <a
+          v-if="latestReport"
+          class="footer-link"
+          :href="latestReport"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Latest Log
+        </a>
+        <a
+          class="footer-link"
+          href="https://raider.io/guilds/eu/alakir/Aztecs"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Raider.IO
+        </a>
+      </div>
+    </template>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref, onMounted, onUnmounted } from 'vue'
 import RoleIcon from '@/components/icons/RoleIcon.vue'
+import SkeletonLoader from '@/components/SkeletonLoader.vue'
 
 const props = defineProps({
   raids: {
@@ -144,6 +189,25 @@ const props = defineProps({
     default: null,
   },
 })
+
+const progressRef = ref(null)
+const isVisible = ref(false)
+let progressObserver = null
+
+onMounted(() => {
+  progressObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        isVisible.value = true
+        progressObserver.disconnect()
+      }
+    },
+    { threshold: 0.1 },
+  )
+  if (progressRef.value) progressObserver.observe(progressRef.value)
+})
+
+onUnmounted(() => progressObserver?.disconnect())
 
 const expanded = reactive({})
 
@@ -201,18 +265,41 @@ function rosterSize(boss) {
   const r = boss.roster
   return (r?.tanks?.length || 0) + (r?.healers?.length || 0) + (r?.dps?.length || 0)
 }
+
+function highestDifficulty(raid) {
+  if (raid.bosses.some((b) => b.mythic)) return 'mythic'
+  if (raid.bosses.some((b) => b.heroic)) return 'heroic'
+  if (raid.bosses.some((b) => b.normal)) return 'normal'
+  return 'normal'
+}
 </script>
 
 <style lang="scss" scoped>
 @use '@/assets/styles/_variables.scss' as *;
+@use '@/assets/styles/tokens' as *;
 
 .raid-progression {
   text-align: left;
+  min-width: 0;
+  overflow: hidden;
+
+  /* ── Skeleton ── */
+  .skeleton-pills {
+    display: flex;
+    gap: $space-2;
+    margin-bottom: $space-4;
+  }
+
+  .skeleton-bosses {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
 
   /* ── Summary ── */
   .summary {
     display: flex;
-    gap: 0.5rem;
+    gap: $space-2;
     margin-bottom: 1rem;
 
     @media (max-width: 500px) {
@@ -226,10 +313,10 @@ function rosterSize(boss) {
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0.35rem;
-    padding: 0.55rem 0.85rem;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: $space-2 $space-3;
+    border-radius: $radius-md;
+    background: $surface-1;
+    border: 1px solid $color-border;
 
     .summary-count {
       font-size: 1.5em;
@@ -255,7 +342,12 @@ function rosterSize(boss) {
         display: block;
         height: 100%;
         border-radius: 1px;
-        transition: width 0.6s ease;
+        width: 0;
+        transition: width 1s $ease-out;
+
+        &.animate {
+          width: var(--progress);
+        }
       }
     }
 
@@ -288,12 +380,32 @@ function rosterSize(boss) {
   /* ── Instances grid ── */
   .instances {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
     gap: 0.75rem;
 
-    @media (max-width: 600px) {
+    @include mobile {
       grid-template-columns: 1fr;
-      gap: 0.5rem;
+      gap: $space-2;
+    }
+  }
+
+  .difficulty-section {
+    border-left: 3px solid var(--difficulty-color);
+    padding-left: $space-4;
+    margin-bottom: $space-4;
+
+    @include mobile {
+      padding-left: $space-2;
+    }
+
+    &[data-difficulty='normal'] {
+      --difficulty-color: #{$quality-rare};
+    }
+    &[data-difficulty='heroic'] {
+      --difficulty-color: #{$quality-epic};
+    }
+    &[data-difficulty='mythic'] {
+      --difficulty-color: #{$quality-legendary};
     }
   }
 
@@ -304,6 +416,7 @@ function rosterSize(boss) {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: $accent-color;
+    text-shadow: 0 0 20px rgba($accent-color, 0.3);
     opacity: 0.6;
     padding-left: 0.15rem;
   }
@@ -312,25 +425,39 @@ function rosterSize(boss) {
     display: flex;
     flex-direction: column;
     gap: 1px;
-    border-radius: 6px;
+    border-radius: $radius-md;
     overflow: hidden;
   }
 
   /* ── Boss rows ── */
   .boss-entry {
-    background: rgba(255, 255, 255, 0.025);
-    transition: background 0.12s;
+    background: $surface-2;
+    transition: background $duration-fast;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: $surface-3;
     }
 
     &.expandable .boss-row {
       cursor: pointer;
     }
 
-    &:not(.killed) {
+    &:not(.killed):not(.in-progress) {
       opacity: 0.55;
+    }
+
+    &.killed {
+      background: rgba($quality-uncommon, 0.06);
+      &:hover {
+        background: rgba($quality-uncommon, 0.1);
+      }
+    }
+
+    &.in-progress {
+      background: rgba($color-light-orange, 0.06);
+      &:hover {
+        background: rgba($color-light-orange, 0.1);
+      }
     }
   }
 
@@ -354,14 +481,14 @@ function rosterSize(boss) {
     justify-content: center;
     width: 1.7rem;
     height: 1.3rem;
-    border-radius: 4px;
+    border-radius: $radius-sm;
     font-size: 0.65em;
     font-weight: 700;
     background: rgba(255, 255, 255, 0.03);
     color: rgba(255, 255, 255, 0.15);
     transition:
-      background 0.15s,
-      color 0.15s;
+      background $duration-fast,
+      color $duration-fast;
 
     &.active {
       background: rgba($quality-uncommon, 0.15);
@@ -378,7 +505,7 @@ function rosterSize(boss) {
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @media (max-width: 600px) {
+    @include mobile {
       font-size: 0.9em;
     }
   }
@@ -389,6 +516,12 @@ function rosterSize(boss) {
     gap: 0.4rem;
     flex-shrink: 0;
     font-size: 0.75em;
+
+    @include mobile {
+      flex-shrink: 1;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
   }
 
   .meta-sep {
@@ -413,6 +546,10 @@ function rosterSize(boss) {
     gap: 0.25rem;
     padding: 0.3rem 0.6rem 0.5rem 3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
+
+    @include mobile {
+      padding-left: 1.5rem;
+    }
   }
 
   .role-group {
@@ -443,24 +580,18 @@ function rosterSize(boss) {
     }
   }
 
-  .roster-enter-active,
-  .roster-leave-active {
-    transition:
-      max-height 0.2s ease,
-      opacity 0.15s ease;
+  .roster-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows $duration-normal $ease-out;
+
+    &.expanded {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  .roster-inner {
     overflow: hidden;
-  }
-
-  .roster-enter-from,
-  .roster-leave-to {
-    max-height: 0;
-    opacity: 0;
-  }
-
-  .roster-enter-to,
-  .roster-leave-from {
-    max-height: 10rem;
-    opacity: 1;
   }
 
   /* ── Footer ── */
@@ -477,14 +608,21 @@ function rosterSize(boss) {
     text-decoration: none;
     padding: 0.35rem 0.85rem;
     border: 1px solid rgba($accent-color, 0.3);
-    border-radius: 6px;
+    border-radius: $radius-md;
     transition:
-      background 0.15s,
-      border-color 0.15s;
+      background $duration-fast,
+      border-color $duration-fast;
 
     &:hover {
       background: rgba($accent-color, 0.1);
       border-color: rgba($accent-color, 0.6);
+    }
+  }
+
+  @include reduced-motion {
+    .summary-fill {
+      transition: none;
+      width: var(--progress);
     }
   }
 }

@@ -20,6 +20,7 @@
           >Achievements</RouterLink
         >
         <RouterLink class="nav-link" to="/raiding" @click="menuOpen = false">Raiding</RouterLink>
+        <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
         <DiscordIcon @click="openDiscordInvite" />
       </div>
@@ -98,6 +99,7 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
+@use '@/assets/styles/tokens' as *;
 
 .header-view {
   .logo-wrapper {
@@ -106,8 +108,9 @@ onBeforeUnmount(() => {
 
     .logo {
       height: 14em;
-      margin-top: 1rem;
-      @media (max-width: 600px) {
+      margin-top: $space-4;
+      transition: height $duration-normal $ease-default;
+      @include mobile {
         height: 8em;
       }
     }
@@ -122,7 +125,7 @@ onBeforeUnmount(() => {
       &:focus-visible {
         outline: 2px solid $accent-color;
         outline-offset: 4px;
-        border-radius: 4px;
+        border-radius: $radius-sm;
       }
     }
   }
@@ -140,8 +143,8 @@ onBeforeUnmount(() => {
     transform: rotate(-8deg);
     transform-origin: center center;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-    transition: opacity 0.5s ease;
-    @media (max-width: 600px) {
+    transition: opacity $duration-slow $ease-default;
+    @include mobile {
       font-size: 0.75em;
       right: -1rem;
       bottom: 0.25rem;
@@ -150,10 +153,18 @@ onBeforeUnmount(() => {
 
   .router-link-active {
     color: $accent-color !important;
-    transition: color 0.3s ease;
+    transition:
+      color $duration-normal $ease-default,
+      text-shadow $duration-normal $ease-default;
 
     &:hover {
-      color: $accent-color-hover !important;
+      text-shadow: 0 0 12px rgba($accent-color, 0.6);
+    }
+
+    &::after {
+      opacity: 1;
+      transform: scaleX(1);
+      box-shadow: 0 0 8px rgba($accent-color, 0.4);
     }
   }
 
@@ -161,9 +172,11 @@ onBeforeUnmount(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2rem 0;
-    @media (max-width: 600px) {
-      margin: 1rem 0;
+    margin: $space-8 0 0;
+    padding-bottom: $space-12;
+    @include mobile {
+      margin: $space-4 0 0;
+      padding-bottom: $space-8;
     }
 
     .nav-header {
@@ -181,7 +194,7 @@ onBeforeUnmount(() => {
       flex-direction: column;
       gap: 4px;
       cursor: pointer;
-      padding: 0.5rem;
+      padding: $space-2;
 
       span {
         display: block;
@@ -189,8 +202,8 @@ onBeforeUnmount(() => {
         height: 3px;
         background: white;
         transition:
-          transform 0.3s ease,
-          opacity 0.3s ease;
+          transform $duration-normal $ease-default,
+          opacity $duration-normal $ease-default;
       }
 
       &.open span:nth-child(1) {
@@ -212,17 +225,42 @@ onBeforeUnmount(() => {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1.875rem;
+      gap: $space-8;
 
       .nav-link {
         text-decoration: none;
         color: #fff;
         font-weight: 800;
         font-size: 1.2em;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -$space-1;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: $accent-color;
+          border-radius: 1px;
+          opacity: 0;
+          transform: scaleX(0);
+          transition:
+            opacity $duration-normal $ease-default,
+            transform $duration-normal $ease-default;
+        }
 
         &:hover {
-          color: $accent-color-hover;
-          transition: color 0.3s ease;
+          color: $accent-color;
+          text-shadow: 0 0 12px rgba($accent-color, 0.6);
+          transition:
+            color $duration-normal $ease-default,
+            text-shadow $duration-normal $ease-default;
+        }
+
+        &:hover::after {
+          opacity: 0.4;
+          transform: scaleX(1);
         }
       }
 
@@ -238,12 +276,16 @@ onBeforeUnmount(() => {
         }
 
         .nav-link {
-          padding: 0.5rem 0;
+          padding: $space-2 0;
         }
 
         .nav-link.router-link-active {
           border-left: 3px solid $accent-color;
-          padding-left: 0.5rem;
+          padding-left: $space-2;
+        }
+
+        .nav-link::after {
+          display: none;
         }
       }
     }
