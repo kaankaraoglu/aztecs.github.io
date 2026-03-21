@@ -87,14 +87,19 @@ async function graphql(token, query) {
 }
 
 /**
- * Fetches deaths table for a report.
- * Returns array of { name, type, total } entries.
+ * Fetches deaths table for specific boss fights in a report.
+ * @param {string} token
+ * @param {string} code
+ * @param {number[]} fightIDs - only boss encounter fight IDs
+ * Returns array of death event entries.
  */
-async function fetchDeaths(token, code) {
+async function fetchDeaths(token, code, fightIDs) {
+  if (fightIDs.length === 0) return []
+
   const query = `{
     reportData {
       report(code: "${code}") {
-        table(dataType: Deaths, startTime: 0, endTime: 999999999999)
+        table(dataType: Deaths, fightIDs: [${fightIDs.join(',')}])
       }
     }
   }`
@@ -108,14 +113,19 @@ async function fetchDeaths(token, code) {
 }
 
 /**
- * Fetches damage done table for a report.
+ * Fetches damage done table for specific boss fights in a report.
+ * @param {string} token
+ * @param {string} code
+ * @param {number[]} fightIDs - only boss encounter fight IDs
  * Returns array of { name, type, total } entries.
  */
-async function fetchDamageDone(token, code) {
+async function fetchDamageDone(token, code, fightIDs) {
+  if (fightIDs.length === 0) return []
+
   const query = `{
     reportData {
       report(code: "${code}") {
-        table(dataType: DamageDone, startTime: 0, endTime: 999999999999)
+        table(dataType: DamageDone, fightIDs: [${fightIDs.join(',')}])
       }
     }
   }`
@@ -206,12 +216,14 @@ async function fetchStats(token) {
     await Promise.all(
       batch.map(async (report) => {
         const code = report.code
-        const killFights = (report.fights || []).filter((f) => f.encounterID > 0 && f.kill === true)
+        const bossFights = (report.fights || []).filter((f) => f.encounterID > 0)
+        const bossFightIDs = bossFights.map((f) => f.id)
+        const killFights = bossFights.filter((f) => f.kill === true)
 
-        // Fetch deaths and damage done in parallel
+        // Fetch deaths and damage done in parallel (scoped to boss fights only)
         const [deathEntries, damageEntries] = await Promise.all([
-          fetchDeaths(token, code),
-          fetchDamageDone(token, code),
+          fetchDeaths(token, code, bossFightIDs),
+          fetchDamageDone(token, code, bossFightIDs),
         ])
 
         // Accumulate deaths — each entry is one death event, count per player
