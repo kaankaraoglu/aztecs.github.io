@@ -1,28 +1,34 @@
 @use './variables' as *;
+@use './tokens' as *;
 
 .info-box {
-  border: 1px dashed $accent-color;
-  border-radius: 20px;
-  padding: 1.5rem 1.625rem;
-  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  padding: $space-6 $space-6;
+  background: $surface-1;
   box-sizing: border-box;
-  transition: background 0.3s ease;
+  transition:
+    background $duration-normal $ease-default,
+    border-color $duration-normal $ease-default;
   &:hover {
-    background: rgba($color-yellow, 0.05);
+    background: $surface-accent-hover;
+    border-color: $color-border-hover;
   }
-  @media (max-width: 600px) {
-    padding: 1.125rem 1rem;
-    border-radius: 14px;
+  @include mobile {
+    padding: $space-4 $space-4;
+    border-radius: $radius-lg;
   }
 }
 
 .info-box--no-hover {
   &:hover {
-    background: rgba(255, 255, 255, 0.02);
+    background: $surface-1;
+    border-color: $color-border;
   }
 }
 
 .info-box-heading {
   color: $accent-color;
   margin-top: 0;
+  text-shadow: 0 0 20px rgba($accent-color, 0.3);
 }
