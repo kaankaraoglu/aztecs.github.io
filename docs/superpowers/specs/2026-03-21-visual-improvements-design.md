@@ -2,7 +2,11 @@
 
 Comprehensive visual overhaul of the Aztecs guild website across 6 phases: foundation tokens, quick visual wins, immersion & animation, component upgrades, layout overhauls, and hero polish.
 
+> **Note on numbering:** Items retain their original brainstorm IDs (1-25) for traceability. Within each phase, they are grouped by theme, not sequential order.
+
 ## Phase 1 — Foundation & Design Tokens
+
+Items: 1, 2, 3, 4, 5, 22, 23
 
 ### 1. Unified Spacing Scale
 
@@ -72,6 +76,11 @@ Migrate: boss pips → `$radius-sm`, buttons/pills → `$radius-md`, cards → `
     @content;
   }
 }
+@mixin mobile-sm {
+  @media (max-width: 400px) {
+    @content;
+  }
+}
 @mixin tablet {
   @media (max-width: 900px) {
     @content;
@@ -84,7 +93,20 @@ Migrate: boss pips → `$radius-sm`, buttons/pills → `$radius-md`, cards → `
 }
 ```
 
-Replace all raw `@media (max-width: Npx)` with the named mixin. Header hamburger breakpoint (768px) stays as-is since it's a one-off nav-specific breakpoint.
+**Breakpoint migration plan:**
+
+| Current value | Mixin target          | Notes                             |
+| ------------- | --------------------- | --------------------------------- |
+| 400px         | `@include mobile-sm`  | HomeView heading                  |
+| 500px         | raw `@media`          | One-off for summary pills         |
+| 600px         | `@include mobile`     | Primary mobile breakpoint         |
+| 640px         | raw `@media`          | One-off for KillCard image hide   |
+| 700px         | `@include tablet`     | Round up from 700→900 or keep raw |
+| 768px         | raw `@media`          | Header hamburger, keep as-is      |
+| 900px         | `@include tablet`     | Content padding                   |
+| 1200px        | `@include desktop-sm` | Welcome heading, KillCard widths  |
+
+One-off breakpoints (500px, 640px, 768px) remain as raw `@media` queries. Named mixins cover the 4 primary breakpoints.
 
 ### 22. Layered Surface Colors
 
@@ -93,12 +115,14 @@ $surface-0: #111; // page background
 $surface-1: #161616; // card/section backgrounds
 $surface-2: #1c1c1c; // elevated elements, hover states
 $surface-3: #222; // active/pressed states
+$surface-accent-hover: rgba($color-yellow, 0.05); // warm accent tint for interactive hover
 ```
 
 - `.info-box` background → `$surface-1` instead of `rgba(255, 255, 255, 0.02)`
-- `.info-box:hover` background → `$surface-2`
+- `.info-box:hover` background → `$surface-accent-hover` (preserves warm tint from current design)
 - Boss entry rows → `$surface-1`
 - Even table rows → `$surface-1`
+- Non-interactive elevated elements → `$surface-2`
 - Replace scattered `rgba(255, 255, 255, 0.03-0.06)` values
 
 ### 23. Semantic Color Tokens
@@ -115,22 +139,25 @@ Use in: footer text (currently raw `0.6 opacity`), meta information, secondary l
 
 ## Phase 2 — Quick Visual Wins
 
+Items: 12, 13, 18, 19, 20
+
 ### 12. Noise Texture Background
 
-Add a subtle CSS noise overlay to the body background using an inline SVG filter or a tiny (64×64) repeating noise PNG at very low opacity (~0.03). Applied via `::after` pseudo-element on `#app` or body so it doesn't interfere with content stacking.
+Add a subtle CSS noise overlay using a dedicated overlay div in `App.vue` (not a pseudo-element on body, since body is a flex container and pseudo-elements become flex items):
+
+```html
+<!-- In App.vue template, first child of #app -->
+<div class="noise-overlay" aria-hidden="true" />
+```
 
 ```scss
-body {
-  background-color: $surface-0;
-  &::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url('data:image/svg+xml,...'); // tiny noise pattern
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 0;
-  }
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: url('data:image/svg+xml,...'); // tiny noise pattern
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
 }
 ```
 
@@ -150,10 +177,10 @@ Transform the static 5px gradient bar into a shimmering accent:
     $color-red
   );
   background-size: 200% 100%;
-  animation: shimmer 8s linear infinite;
+  animation: shimmer-gradient 8s linear infinite;
 }
 
-@keyframes shimmer {
+@keyframes shimmer-gradient {
   0% {
     background-position: 0% 0;
   }
@@ -233,31 +260,56 @@ Apply to: nav links, buttons, kill card clickable areas, boss rows, lightbox con
 
 ## Phase 3 — Immersion & Animation
 
+Items: 6, 7, 9, 11
+
 ### 6. Scroll-Triggered Fade-In Animations
 
-Create a `useScrollReveal` composable using IntersectionObserver:
+Create a `useScrollReveal` composable using IntersectionObserver. The composable accepts a container ref to scope observation (avoids querying the entire DOM):
 
 ```js
 // src/composables/useScrollReveal.js
-export function useScrollReveal() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed')
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
-  )
+import { onMounted, onUnmounted } from 'vue'
+
+export function useScrollReveal(containerRef) {
+  let observer
 
   onMounted(() => {
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+    )
+
+    const container = containerRef.value ?? document.body
+    container.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
   })
 
-  onUnmounted(() => observer.disconnect())
+  onUnmounted(() => observer?.disconnect())
 }
+```
+
+Usage in a view:
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { useScrollReveal } from '@/composables/useScrollReveal'
+
+const sectionRef = ref(null)
+useScrollReveal(sectionRef)
+</script>
+
+<template>
+  <div ref="sectionRef">
+    <div class="info-box reveal">...</div>
+  </div>
+</template>
 ```
 
 CSS:
@@ -279,11 +331,18 @@ CSS:
 
 Apply `.reveal` class to: info boxes, kill cards, progression box sections, home page sections. Stagger siblings with `transition-delay` increments (e.g., `.reveal:nth-child(2) { transition-delay: 100ms; }`).
 
-Respects `prefers-reduced-motion` — disable animations for users who prefer reduced motion.
-
 ### 7. Animated Progression Bars
 
-The progress bar fill in `RaidProgressionBox.vue` should animate from 0% to actual width on mount/reveal:
+The progress bar fill in `RaidProgressionBox.vue` should animate from 0% to actual width on mount/reveal. Refactor the current inline `width` style to use a CSS custom property:
+
+```html
+<!-- Template change -->
+<div
+  class="progress-fill"
+  :class="{ animate: isVisible }"
+  :style="{ '--progress': pct(summary.normal) }"
+/>
+```
 
 ```scss
 .progress-fill {
@@ -291,12 +350,12 @@ The progress bar fill in `RaidProgressionBox.vue` should animate from 0% to actu
   transition: width 1s $ease-out;
 
   &.animate {
-    width: var(--progress); // set via inline style
+    width: var(--progress);
   }
 }
 ```
 
-Trigger the `.animate` class via IntersectionObserver (reuse `useScrollReveal` pattern) or on component mount. The bar sweeps from left to right over 1 second.
+Trigger `isVisible` via IntersectionObserver (reuse `useScrollReveal` pattern or a local observer). The bar sweeps from left to right over 1 second.
 
 ### 9. Glowing Accent Effects
 
@@ -313,7 +372,7 @@ Add subtle glow to key accent elements:
   box-shadow: 0 0 12px rgba($accent-color, 0.15);
 }
 
-// Active nav (enhances item 19)
+// Active nav (enhances the indicator from item 19)
 .router-link-active::after {
   box-shadow: 0 0 8px rgba($accent-color, 0.4);
 }
@@ -323,7 +382,10 @@ Subtle bloom — visible on dark backgrounds without being garish.
 
 ### 11. Page Transition Upgrades
 
-Replace the basic opacity fade with a slide-fade:
+Replace the basic opacity fade with a slide-fade. Requires coordinated changes:
+
+1. **`App.vue` template:** Rename `<Transition name="fade">` to `<Transition name="page">`
+2. **`App.vue` styles:** Replace `.fade-*` classes with `.page-*` classes:
 
 ```scss
 .page-enter-active {
@@ -343,27 +405,33 @@ Replace the basic opacity fade with a slide-fade:
 }
 ```
 
-New page slides up slightly as it fades in. Old page simply fades out (no movement to avoid layout shift). Rename the Vue transition from `fade` to `page`.
+New page slides up slightly as it fades in. Old page simply fades out (no movement to avoid layout shift).
 
 ---
 
 ## Phase 4 — Component Upgrades
 
+Items: 14, 15, 17, 24, 25
+
 ### 14. Sticky Header with Scroll Effect
 
-Make header stick on scroll with a backdrop blur:
+Make header stick on scroll with a backdrop blur. Use `position: sticky` — this keeps the header in flow (no body padding needed). The gradient bar above the header in `App.vue` will scroll away naturally while the header sticks.
 
 ```js
 // In HeaderView.vue
 const isScrolled = ref(false)
-onMounted(() => {
-  window.addEventListener(
-    'scroll',
-    () => {
-      isScrolled.value = window.scrollY > 50
-    },
-    { passive: true },
-  )
+let rafId = null
+function onScroll() {
+  if (rafId) return
+  rafId = requestAnimationFrame(() => {
+    isScrolled.value = window.scrollY > 50
+    rafId = null
+  })
+}
+onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
+onUnmounted(() => {
+  window.removeEventListener('scroll', onScroll)
+  if (rafId) cancelAnimationFrame(rafId)
 })
 ```
 
@@ -384,9 +452,7 @@ onMounted(() => {
 }
 ```
 
-On scroll past 50px: background becomes semi-transparent with blur, subtle bottom border appears. Logo shrinks slightly (14em → 10em) with a smooth transition to save vertical space.
-
-Body needs top padding equal to header height to prevent content jump when position becomes sticky.
+On scroll past 50px: background becomes semi-transparent with blur, subtle bottom border appears. Logo shrinks slightly (14em → 10em) with a smooth transition. The scroll listener is throttled via `requestAnimationFrame` to avoid firing on every pixel.
 
 ### 15. Better Visual Hierarchy on Home
 
@@ -459,23 +525,25 @@ Expand the footer from just copyright to a proper closing section:
 │                 Achievements   [Raider.IO] │
 │                 Contact                    │
 │                                            │
-│  © 2025 Aztecs - Al'Akir (EU)             │
+│  © <dynamic year> Aztecs - Al'Akir (EU)   │
 └────────────────────────────────────────────┘
 ```
 
 - Background: `$surface-1` to visually separate from content
 - Three-column layout on desktop, stacked on mobile
 - Small logo, nav links, and social/external links (Discord, Warcraft Logs, Raider.IO)
-- Copyright stays at bottom
+- Copyright stays at bottom (year is dynamic via `new Date().getFullYear()`, not hardcoded)
 - Subtle top border or gradient fade transition into the footer
 
 ---
 
 ## Phase 5 — Layout Overhauls
 
+Items: 16, 21
+
 ### 16. Enhanced Kill Card Gallery
 
-Replace the vertical list on Achievements with a responsive grid/timeline layout:
+Replace the vertical list on Achievements with a responsive grid layout. KillCard's existing `max-width` rules must be removed and replaced with `width: 100%` so cards fill their grid cell:
 
 ```scss
 .achievements-grid {
@@ -487,9 +555,14 @@ Replace the vertical list on Achievements with a responsive grid/timeline layout
     grid-template-columns: 1fr;
   }
 }
+
+// KillCard migration
+.kill-card {
+  width: 100%; // replaces max-width: 55vw/66vw/95vw
+}
 ```
 
-Cards in a 2-column grid on wide screens, single column on tablet/mobile. Each card is a self-contained unit — no change to KillCard internals, just the container layout.
+Cards in a 2-column grid on wide screens, single column on tablet/mobile. Each card is a self-contained unit — minimal changes to KillCard internals.
 
 Optional enhancement: Add a subtle vertical timeline line on the left side connecting cards chronologically (CSS `::before` on the container).
 
@@ -517,10 +590,10 @@ Create a `SkeletonLoader.vue` component:
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
-  animation: shimmer 1.5s infinite;
+  animation: shimmer-skeleton 1.5s infinite;
 }
 
-@keyframes shimmer {
+@keyframes shimmer-skeleton {
   0% {
     transform: translateX(-100%);
   }
@@ -530,11 +603,15 @@ Create a `SkeletonLoader.vue` component:
 }
 ```
 
+Note: Uses `shimmer-skeleton` keyframe name to avoid collision with `shimmer-gradient` from item 13.
+
 Use in `RaidProgressionBox.vue` — show skeleton rows matching boss entry dimensions while data loads. Show 2-3 skeleton pills for the summary area.
 
 ---
 
 ## Phase 6 — Hero & Interactive Polish
+
+Items: 8, 10
 
 ### 8. Hero Section with Background Atmosphere
 
@@ -552,37 +629,56 @@ A very dark, subtle radial gradient overlay (dark center fading to slightly ligh
 
 ### 10. Kill Card Hover Parallax
 
-Add a 3D tilt effect on desktop hover:
+Add a 3D tilt effect on desktop hover. The composable returns reactive style bindings instead of mutating the DOM directly (per project preference for side-effect-free functions):
 
 ```js
 // src/composables/useTiltEffect.js
+import { ref, onMounted, onUnmounted } from 'vue'
+
 export function useTiltEffect(elementRef, { maxTilt = 8, scale = 1.02 } = {}) {
+  const tiltStyle = ref({})
+
   function handleMouseMove(e) {
     const rect = elementRef.value.getBoundingClientRect()
     const x = (e.clientX - rect.left) / rect.width - 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5
-
-    elementRef.value.style.transform = `perspective(800px) rotateY(${x * maxTilt}deg) rotateX(${-y * maxTilt}deg) scale(${scale})`
+    tiltStyle.value = {
+      transform: `perspective(800px) rotateY(${x * maxTilt}deg) rotateX(${-y * maxTilt}deg) scale(${scale})`,
+      willChange: 'transform',
+    }
   }
 
   function handleMouseLeave() {
-    elementRef.value.style.transform = ''
+    tiltStyle.value = { willChange: 'auto' }
   }
-  // attach/detach in onMounted/onUnmounted
+
+  onMounted(() => {
+    const el = elementRef.value
+    el.addEventListener('mousemove', handleMouseMove)
+    el.addEventListener('mouseleave', handleMouseLeave)
+  })
+
+  onUnmounted(() => {
+    const el = elementRef.value
+    el?.removeEventListener('mousemove', handleMouseMove)
+    el?.removeEventListener('mouseleave', handleMouseLeave)
+  })
+
+  return { tiltStyle }
 }
 ```
+
+Usage: `<div ref="cardRef" :style="tiltStyle">`. The `will-change` property is toggled on/off with hover to avoid permanent GPU memory allocation across many cards on the Achievements page.
 
 ```scss
 .kill-card {
   transition: transform $duration-normal $ease-out;
-  will-change: transform;
 }
 ```
 
 - Max 8° tilt, subtle 1.02x scale on hover
 - Image inside shifts slightly opposite direction for depth
-- Only on desktop (no hover on touch devices)
-- `will-change: transform` for GPU acceleration
+- Only on desktop (disabled on touch via `@media (hover: hover)` check)
 - Smooth return to flat on mouse leave
 
 ---
@@ -591,7 +687,37 @@ export function useTiltEffect(elementRef, { maxTilt = 8, scale = 1.02 } = {}) {
 
 ### Accessibility
 
-- All animations respect `prefers-reduced-motion: reduce` — disable transforms, reduce durations to near-zero
+All animations respect `prefers-reduced-motion`:
+
+```scss
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Applied globally
+@include reduced-motion {
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .shimmer-gradient,
+  .shimmer-skeleton,
+  .gradient-bar {
+    animation: none;
+  }
+  .progress-fill {
+    transition: none;
+  }
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+}
+```
+
 - Focus states (item 20) are visible and consistent
 - Color contrast ratios maintained — new surface colors tested against text colors
 - Glow effects are decorative, not conveying information
@@ -601,8 +727,16 @@ export function useTiltEffect(elementRef, { maxTilt = 8, scale = 1.02 } = {}) {
 - No JS libraries added — all animations are CSS or lightweight vanilla JS
 - IntersectionObserver for scroll reveals (no scroll event listeners for animations)
 - Canvas particles (item 8) pause when page not visible
-- `will-change` used sparingly and only on elements that animate frequently
+- `will-change` toggled on/off with hover, not applied permanently
 - Noise texture is tiny inline SVG, not an external asset
+- Scroll listener in sticky header is throttled via `requestAnimationFrame`
+
+### Testing
+
+- Existing vitest tests must pass after each phase
+- No new visual regression tests required (project doesn't use them)
+- CI zero-warning ESLint check must continue to pass
+- Manual verification of responsive behavior at each breakpoint after phases that touch layout
 
 ### Migration Strategy
 
