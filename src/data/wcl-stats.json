@@ -1,0 +1,22 @@
+{
+  "zone": "Midnight Season 1",
+  "stats": {
+    "mostDeaths": {
+      "name": "Rhysanatic",
+      "class": "warlock",
+      "count": 47
+    },
+    "ironRaider": {
+      "name": "Valorite",
+      "class": "death-knight",
+      "killsAttended": 18
+    },
+    "biggestHit": {
+      "name": "Snyxx",
+      "class": "mage",
+      "amount": 14520000,
+      "ability": "Pyroblast",
+      "boss": "Crown of the Cosmos"
+    }
+  }
+}
