@@ -43,9 +43,16 @@ Data freshness depends on deploy frequency — trigger a deploy after raid night
 
 ### Styling
 
+- **Design tokens**: `src/assets/styles/_tokens.scss` — spacing scale, surface colors, border colors, text colors, transition timing, border radius, breakpoint mixins (`@include mobile`, `@include tablet`, etc.), and `@include reduced-motion`. All components import this via `@use '@/assets/styles/tokens' as *`.
 - Global SCSS variables and WoW class colors: `src/assets/styles/_variables.scss`
 - Shared card pattern: `src/assets/styles/_info-box.scss` (imported via `@use` in views that need it)
 - WoW class colors (`.death-knight`, `.paladin`, etc.) and item quality colors (`.quality-epic`, `.quality-legendary`, etc.) are global classes defined in `_variables.scss`, used via dynamic `:class` bindings on player names
+
+### Composables
+
+- **`useProgression`** (`src/composables/useProgression.js`) — reads WCL JSON, falls back to static data
+- **`useScrollReveal`** (`src/composables/useScrollReveal.js`) — IntersectionObserver-based scroll fade-in. Accepts a container ref, observes `.reveal` elements within it
+- **`useTiltEffect`** (`src/composables/useTiltEffect.js`) — 3D tilt hover effect for cards. Returns reactive `tiltStyle` to bind via `:style`
 
 ### Firebase
 

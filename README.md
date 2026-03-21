@@ -28,6 +28,7 @@ Raiding, Mythic+, and good times. The site features live raid progression pulled
 - **Scheduled deploys** — auto-deploys after raid nights (Wed/Sun) to keep progression fresh
 - **Kill archive** — screenshot cards with date, roster, and class-colored player names
 - **Splash text** — rotating guild inside jokes on the header
+- **Ambient effects** — floating ember particles, scroll-reveal animations, glowing accents
 
 ## Getting Started
 
@@ -62,11 +63,11 @@ WCL credentials are optional for local dev (progression falls back to static dat
 
 ```
 src/
-├── components/         # Reusable components (HeaderView, KillCard, etc.)
-├── composables/        # useRaiderIO — reads WCL build-time data
+├── components/         # Reusable components (HeaderView, KillCard, EmberParticles, etc.)
+├── composables/        # useProgression, useScrollReveal, useTiltEffect
 ├── data/               # Static kills, progression fallback, WCL JSON
-├── views/              # Route-level pages (Home, Raiding, Achievements, Contact)
-├── assets/styles/      # SCSS variables, shared partials
+├── views/              # Route-level pages (Home, Raiding, Achievements, About, Contact)
+├── assets/styles/      # SCSS variables, design tokens, shared partials
 └── router/             # Vue Router with per-route titles
 scripts/
 └── fetch-wcl-data.js   # Build-time WCL fetcher (runs as prebuild)
@@ -76,8 +77,8 @@ scripts/
 
 ```
 Build time:  WCL API  →  fetch-wcl-data.js  →  wcl-progression.json
-Runtime:     wcl-progression.json  →  useRaiderIO()  →  RaidProgressionBox
-Fallback:    progression.js (static)  →  useRaiderIO()  (if WCL data empty)
+Runtime:     wcl-progression.json  →  useProgression()  →  RaidProgressionBox
+Fallback:    progression.js (static)  →  useProgression()  (if WCL data empty)
 ```
 
 ## CI/CD
