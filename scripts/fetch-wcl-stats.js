@@ -220,11 +220,8 @@ async function fetchStats(token) {
         const bossFightIDs = bossFights.map((f) => f.id)
         const killFights = bossFights.filter((f) => f.kill === true)
 
-        // Fetch deaths and damage done in parallel (scoped to boss fights only)
-        const [deathEntries, damageEntries] = await Promise.all([
-          fetchDeaths(token, code, bossFightIDs),
-          fetchDamageDone(token, code, bossFightIDs),
-        ])
+        // Fetch deaths scoped to all boss fights
+        const deathEntries = await fetchDeaths(token, code, bossFightIDs)
 
         // Accumulate deaths — each entry is one death event, count per player
         for (const entry of deathEntries) {
@@ -239,18 +236,21 @@ async function fetchStats(token) {
           disqualifiedFromIron.add(entry.name)
         }
 
-        // Track biggest hit (highest total damage in a single report per player)
-        for (const entry of damageEntries) {
-          const total = entry.total ?? entry.amount ?? 0
-          if (!entry.name || total === 0) continue
-          if (!biggestHitEntry || total > biggestHitEntry.total) {
-            const topAbility = entry.abilities?.[0]?.name || entry.gear?.[0]?.name || null
-            biggestHitEntry = {
-              name: entry.name,
-              type: entry.type || '',
-              total,
-              ability: topAbility,
-              reportCode: code,
+        // Track biggest hit — query damage per individual boss fight
+        // so we get highest single-fight damage, not summed across all fights
+        for (const fight of bossFights) {
+          const fightDamage = await fetchDamageDone(token, code, [fight.id])
+          for (const entry of fightDamage) {
+            const total = entry.total ?? entry.amount ?? 0
+            if (!entry.name || total === 0) continue
+            if (!biggestHitEntry || total > biggestHitEntry.total) {
+              biggestHitEntry = {
+                name: entry.name,
+                type: entry.type || '',
+                total,
+                reportCode: code,
+                bossName: fight.name,
+              }
             }
           }
         }
@@ -263,11 +263,8 @@ async function fetchStats(token) {
             if (existing) {
               existing.count++
             } else {
-              // We don't know the class yet; will resolve later from deathsByName or damage entries
-              const classType =
-                damageEntries.find((e) => e.name === name)?.type ||
-                deathEntries.find((e) => e.name === name)?.type ||
-                ''
+              // Resolve class from accumulated data
+              const classType = deathsByName.get(name)?.type || ''
               killAttendanceByName.set(name, { type: classType, count: 1 })
             }
           }
@@ -309,7 +306,7 @@ async function fetchStats(token) {
       name: biggestHitEntry.name,
       class: CLASS_MAP[biggestHitEntry.type] || biggestHitEntry.type.toLowerCase() || null,
       amount: biggestHitEntry.total,
-      ability: biggestHitEntry.ability || null,
+      boss: biggestHitEntry.bossName || null,
       report: `https://www.warcraftlogs.com/reports/${biggestHitEntry.reportCode}`,
     }
   }
