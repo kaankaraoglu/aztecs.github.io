@@ -91,13 +91,13 @@ useScrollReveal(containerRef)
   font-weight: 500;
 }
 
-// Fade-only reveal — no transform
-:global(.reveal) {
+// Fade-only reveal — no transform (scoped to this view only)
+.in-memoriam-view :deep(.reveal) {
   opacity: 0;
   transition: opacity 0.6s ease;
 }
 
-:global(.reveal.revealed) {
+.in-memoriam-view :deep(.reveal.revealed) {
   opacity: 1;
 }
 </style>
