@@ -2,10 +2,14 @@
   <div ref="containerRef" class="raid-history-view content-wrapper">
     <h1 class="page-heading">Raid History</h1>
 
-    <div v-for="(tiers, expansion) in groupedTiers" :key="expansion" class="expansion-section">
+    <div
+      v-for="(tiers, expansion) in groupedTiers"
+      :key="expansion"
+      class="expansion-box info-box info-box--no-hover reveal"
+    >
       <h2 class="expansion-heading">{{ expansion }}</h2>
       <div class="tier-grid">
-        <div v-for="tier in tiers" :key="tier.tier" class="info-box tier-card reveal">
+        <div v-for="tier in tiers" :key="tier.tier" class="tier-card reveal">
           <div class="tier-header">
             <h3 class="tier-name">{{ tier.tier }}</h3>
             <span v-if="tier.season" class="tier-season">{{ tier.season }}</span>
@@ -97,20 +101,19 @@ function progressBadgeClass(progress) {
   }
 }
 
-.expansion-section {
-  margin-bottom: $space-10;
+.expansion-box {
+  margin-bottom: $space-8;
   text-align: left;
 }
 
 .expansion-heading {
-  color: $color-text-muted;
-  font-size: 1.1em;
+  color: $accent-color;
+  font-size: 1.2em;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin: 0 0 $space-4;
-  padding-bottom: $space-2;
-  border-bottom: 1px solid $color-border;
+  text-shadow: 0 0 12px rgba($accent-color, 0.2);
 }
 
 .tier-grid {
@@ -127,6 +130,18 @@ function progressBadgeClass(progress) {
   display: flex;
   flex-direction: column;
   gap: $space-3;
+  background: $surface-2;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  padding: $space-4;
+  transition:
+    background $duration-normal $ease-default,
+    border-color $duration-normal $ease-default;
+
+  &:hover {
+    background: $surface-3;
+    border-color: $color-border-hover;
+  }
 }
 
 .tier-header {
