@@ -15,10 +15,12 @@ A Mythic+ leaderboard displayed on the home page alongside the raid progression 
 
 - **New script:** `scripts/fetch-rio-data.js`
 - **API:** Raider.IO public endpoints (no auth required)
-  - Guild profile with M+ score data for members
-  - Per-dungeon best keys derived from member runs
+  - `GET /api/v1/guilds/profile?region=eu&realm=al-akir&name=Aztecs&fields=members` — returns guild members with `mythic_plus_scores_by_season` (includes `scores.all`, class, name, realm)
+  - Per-member best runs are included in the guild members response when using `fields=members`
+  - Per-dungeon bests derived by iterating members and tracking highest key per dungeon
 - **Output:** `src/data/rio-mythicplus.json`
-- **Prebuild:** `node scripts/fetch-wcl-data.js && node scripts/fetch-rio-data.js`
+- **Prebuild:** Update `package.json` prebuild to: `node scripts/fetch-wcl-data.js && node scripts/fetch-rio-data.js`
+- **Batching:** Raider.IO guild members endpoint returns all members in one call (no pagination needed for guilds under 500 members)
 
 ### JSON Shape
 
@@ -71,12 +73,14 @@ Three "award" cards on the home page showing fun stats derived from WCL data for
 
 - **New script:** `scripts/fetch-wcl-stats.js`
 - **Auth:** Reuses `WCL_CLIENT_ID` / `WCL_CLIENT_SECRET` env vars
-- **WCL GraphQL queries:**
-  - `table(dataType: Deaths)` per report — aggregates deaths per player
-  - `table(dataType: DamageDone)` per report — finds highest single-hit damage
-  - Iron Raider derived from players with 0 deaths across all attended reports
+- **WCL GraphQL queries per report:**
+  - `table(dataType: Deaths, fightIDs: [...])` — returns deaths per player with count
+  - `table(dataType: DamageDone, viewBy: Source)` — returns damage events; filter for highest single-hit
+  - Iron Raider: players appearing in kill rosters with 0 entries in the Deaths table
+- **Batching:** Process reports in batches of 3 (2 queries per report = 6 calls/batch) to stay within WCL rate limit (~120 calls/min). Reuse the same OAuth token from `getToken()` pattern in existing script.
+- **Scope:** Current zone only (same `CURRENT_ZONE_ID` / `GUILD_ID` as fetch-wcl-data.js)
 - **Output:** `src/data/wcl-stats.json`
-- **Prebuild:** `node scripts/fetch-wcl-data.js && node scripts/fetch-rio-data.js && node scripts/fetch-wcl-stats.js`
+- **Prebuild:** Update to: `node scripts/fetch-wcl-data.js && node scripts/fetch-rio-data.js && node scripts/fetch-wcl-stats.js`
 
 ### JSON Shape
 
@@ -85,7 +89,7 @@ Three "award" cards on the home page showing fun stats derived from WCL data for
   "zone": "The Voidspire / The Dreamrift / March on Quel'Danas",
   "stats": {
     "mostDeaths": { "name": "Rhysanatic", "class": "warlock", "count": 47 },
-    "ironRaider": { "name": "Valorite", "class": "death-knight", "raidsAttended": 12 },
+    "ironRaider": { "name": "Valorite", "class": "death-knight", "killsAttended": 12 },
     "biggestHit": {
       "name": "Snyxx",
       "class": "mage",
@@ -97,11 +101,18 @@ Three "award" cards on the home page showing fun stats derived from WCL data for
 }
 ```
 
+### Stat Definitions
+
+- **Most Deaths:** Player with highest total death count across all boss fights (kills and wipes) in current zone reports
+- **Iron Raider:** Player who appeared in the most boss kill rosters while having 0 deaths across all fights they participated in. Minimum 3 kills attended to qualify.
+- **Biggest Hit:** Highest single damage event by a player across all fights. Extracted from DamageDone table sorted by amount descending.
+
 ### Component
 
-- **`RaidStatsBox.vue`** — 3 compact award cards in a row
+- **`RaidStatsBox.vue`** — 3 compact award cards in a row (stacks vertically on mobile)
 - Each card: label ("Most Deaths", "Iron Raider", "Biggest Hit"), player name in class color, stat value
-- Styled consistently with info-box pattern
+- Damage amounts formatted human-readable (e.g., "4.5M")
+- Styled consistently with info-box pattern, responsive grid matching existing breakpoints
 
 ### Placement
 
@@ -121,9 +132,14 @@ A historical timeline of past raid tiers grouped by expansion, showing progressi
 
 ### Data
 
-- **One-time script:** Fetches historical zone/report data from WCL to populate the static file
-- **Static file:** `src/data/tier-history.js` — hand-curated from WCL one-time fetch output, sorted newest-first
+- **One-time script:** `scripts/fetch-wcl-history.js` (NOT run at build time, run manually once)
+  - Uses WCL GraphQL: `worldData { expansion(id: N) { zones { id name encounters { id name } } } }` for each expansion ID (1–5)
+  - For each zone found, queries `reportData.reports(guildID, zoneID, limit: 5)` to check if the guild raided there
+  - For zones with reports, queries fights to determine kill counts per difficulty
+  - Outputs raw JSON to stdout; implementer curates into static file
+- **Static file:** `src/data/tier-history.js` — curated from one-time script output, sorted newest-first
 - Current tier excluded (already shown live via progression box)
+- Expansion names are hardcoded strings in the data file (not dynamically resolved)
 
 ### Data Shape
 
@@ -203,4 +219,7 @@ export const memorials = [
 - All build-time scripts follow the existing `fetch-wcl-data.js` pattern: write JSON, log summary, graceful empty fallback
 - All components use `<script setup>`, scoped SCSS, existing design tokens
 - All new pages use `useScrollReveal` composable
-- No TypeScript — JSDoc annotations where needed
+- No TypeScript — JSDoc annotations for all new data types
+- Player objects use consistent shape: `{ name, class }` minimum, with `class` in kebab-case matching `CLASS_MAP` in fetch-wcl-data.js
+- New home page sections use `FadingDivider` between them and `.reveal` class for scroll animations
+- Responsive breakpoints follow existing `@include tablet` / `@include mobile` pattern from tokens
