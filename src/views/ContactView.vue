@@ -16,11 +16,11 @@
         <tbody>
           <tr>
             <th scope="row" class="quality-legendary">Guild Master/Figurehead</th>
-            <td class="monk">Phing</td>
+            <td class="druid">Phruity</td>
           </tr>
           <tr>
             <th scope="row" class="quality-epic">Officer</th>
-            <td class="paladin">Valorite</td>
+            <td class="death-knight">Valorite</td>
           </tr>
           <tr>
             <th scope="row" class="quality-epic">Achievement Officer</th>
@@ -48,7 +48,7 @@
           </tr>
           <tr>
             <th scope="row" class="quality-epic">Sympathy Hire</th>
-            <td class="warlock">Rhysanatic</td>
+            <td class="death-knight">Rhysbroo</td>
           </tr>
         </tbody>
       </table>
