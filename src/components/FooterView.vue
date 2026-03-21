@@ -10,6 +10,8 @@
           <RouterLink to="/">Home</RouterLink>
           <RouterLink to="/raiding">Raiding</RouterLink>
           <RouterLink to="/achievements">Achievements</RouterLink>
+          <RouterLink to="/history">History</RouterLink>
+          <RouterLink to="/in-memoriam">In Memoriam</RouterLink>
           <RouterLink to="/about">About</RouterLink>
           <RouterLink to="/contact">Contact</RouterLink>
         </nav>

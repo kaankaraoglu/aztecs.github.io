@@ -5,6 +5,8 @@ const ContactView = () => import('@/views/ContactView.vue')
 const RaidingView = () => import('@/views/RaidingView.vue')
 const AchievementsView = () => import('@/views/AchievementsView.vue')
 const AboutView = () => import('@/views/AboutView.vue')
+const RaidHistoryView = () => import('@/views/RaidHistoryView.vue')
+const InMemoriamView = () => import('@/views/InMemoriamView.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +21,8 @@ const router = createRouter({
     },
     { path: '/about', component: AboutView, meta: { title: 'Aztecs - About Us' } },
     { path: '/wow-kills', redirect: '/achievements' },
+    { path: '/history', component: RaidHistoryView, meta: { title: 'Aztecs - Raid History' } },
+    { path: '/in-memoriam', component: InMemoriamView, meta: { title: 'Aztecs - In Memoriam' } },
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
