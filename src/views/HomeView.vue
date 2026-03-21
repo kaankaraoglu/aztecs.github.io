@@ -7,6 +7,9 @@
       </p>
     </section>
     <div class="content-wrapper">
+      <p class="section-label">TIER STATS</p>
+      <RaidStatsBox class="reveal" />
+      <FadingDivider />
       <div class="top-boxes">
         <RaidProgressionBox
           :raids="raids"
@@ -16,9 +19,6 @@
         />
         <MythicPlusBox class="reveal" />
       </div>
-      <FadingDivider />
-      <p class="section-label">TIER STATS</p>
-      <RaidStatsBox class="reveal" />
       <FadingDivider />
       <p class="section-label">LATEST ACHIEVEMENTS</p>
       <div class="latest-achievements">
