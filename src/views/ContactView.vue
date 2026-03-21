@@ -1,6 +1,6 @@
 <template>
-  <div class="contact-view content-wrapper">
-    <div class="contact-box">
+  <div ref="containerRef" class="contact-view content-wrapper">
+    <div class="contact-box reveal">
       <h1 class="contact-heading">Contact & Guild Roster</h1>
       <p class="contact-info">
         Reach out to any of the online officers or veterans in-game or on Discord for an invite to
@@ -56,33 +56,45 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import { useScrollReveal } from '@/composables/useScrollReveal.js'
+
+const containerRef = ref(null)
+useScrollReveal(containerRef)
+</script>
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
 @use '@/assets/styles/_info-box.scss';
+@use '@/assets/styles/tokens' as *;
 
 .contact-view {
+  position: relative;
+  z-index: 10;
   display: flex;
   justify-content: center;
   padding: 2rem 2rem 4rem;
   max-width: 64rem;
   box-sizing: border-box;
-  @media (max-width: 600px) {
+  @include mobile {
     padding: 1rem 1rem 3rem;
   }
 }
 
 .contact-box {
-  border: 1px dashed $accent-color;
-  border-radius: 20px;
-  padding: 2.5rem 3.125rem;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  padding: $space-10 $space-12;
   max-width: 780px; // restore previous card width
   width: 100%;
-  background: rgba(255, 255, 255, 0.02);
-  transition: background 0.3s ease;
+  background: $surface-1;
+  transition:
+    background $duration-normal $ease-default,
+    border-color $duration-normal $ease-default;
   &:hover {
-    background: rgba(#ff8a05, 0.05);
+    background: $surface-accent-hover;
+    border-color: $color-border-hover;
   }
   display: flex;
   flex-direction: column;
@@ -90,10 +102,10 @@
   box-sizing: border-box;
   margin: 0 auto; // center inside custom width
 
-  @media (max-width: 900px) {
+  @include tablet {
     padding: 1.875rem;
   }
-  @media (max-width: 600px) {
+  @include mobile {
     padding: 1.5625rem 1.25rem;
   }
 }
@@ -103,8 +115,9 @@
   font-size: 2.2em;
   font-weight: 800;
   color: $accent-color;
+  text-shadow: 0 0 20px rgba($accent-color, 0.3);
   text-align: center;
-  @media (max-width: 600px) {
+  @include mobile {
     font-size: 1.6em;
   }
 }
@@ -115,7 +128,7 @@
   font-weight: 500;
   margin: 0 0 1.5rem;
   text-align: center;
-  @media (max-width: 600px) {
+  @include mobile {
     font-size: 1.05em;
   }
 }
@@ -124,7 +137,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 1.05em;
-  @media (max-width: 480px) {
+  @include mobile-sm {
     font-size: 0.9em;
   }
 
@@ -143,12 +156,12 @@
   }
 
   tbody tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.03);
+    background: $surface-1;
   }
   tbody tr {
-    transition: background 0.2s ease;
+    transition: background $duration-fast $ease-default;
     &:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: $surface-2;
     }
   }
 }

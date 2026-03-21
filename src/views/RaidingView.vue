@@ -1,104 +1,94 @@
 <template>
-  <div class="raiding-view content-wrapper">
-    <section class="progression">
-      <RaidProgressionBox
-        :raids="raids"
-        :summary="summary"
-        :latest-report="latestReport"
-        class="info-box info-box--no-hover"
-      />
-    </section>
+  <div ref="containerRef" class="raiding-view content-wrapper">
+    <div class="side-by-side">
+      <section class="schedule info-box reveal">
+        <h2 class="info-box-heading">Raid Schedule</h2>
+        <ul>
+          <li>Wednesdays 20:00 - 22:00 ST</li>
+          <li>Sundays 19:00 - 22:00 ST</li>
+        </ul>
+        <p class="note">Holiday adjustments are announced in advance.</p>
+      </section>
 
-    <FadingDivider />
+      <section class="loot-section reveal">
+        <div class="info-box loot-rules">
+          <h2 class="info-box-heading">Loot Rules</h2>
+          <ol class="loot-rules-list">
+            <li>One loot specialisation per raid (DO NOT switch roles mid-raid)</li>
+            <li>
+              Your loot spec must match your sign up role in the
+              <a
+                href="https://discord.com/channels/150712806054821889/784846321332781076"
+                target="_blank"
+                rel="noopener noreferrer"
+                >#raidcalendar</a
+              >
+              unless you've been asked to switch by an officer, in which case it can be either but
+              rule #1 still applies.
+            </li>
+            <li>
+              During the progression raids, we are gearing up your main raid spec, not M+ spec. This
+              applies until we go into farming mode, where everything becomes free for all including
+              off-spec and transmogs.
+            </li>
+          </ol>
+          <p>Feel free to talk to any of the officers if you have any questions or objections.</p>
+        </div>
+      </section>
 
-    <section class="loot-section">
-      <div class="info-box loot-rules">
-        <h2 class="info-box-heading">Loot Rules</h2>
-        <ol class="loot-rules-list">
-          <li>One loot specialisation per raid (DO NOT switch roles mid-raid)</li>
+      <section class="requirements info-box reveal">
+        <h2 class="info-box-heading">Requirements & Expectations</h2>
+        <ul class="raid-requirements">
           <li>
-            Your loot spec must match your sign up role in the
+            Sign up for raids on Discord
             <a
               href="https://discord.com/channels/150712806054821889/784846321332781076"
               target="_blank"
               rel="noopener noreferrer"
               >#raidcalendar</a
             >
-            unless you've been asked to switch by an officer, in which case it can be either but
-            rule #1 still applies.
+            channel. If you don't have access, talk to an officer in game or ask in Discord.
           </li>
           <li>
-            During the progression raids, we are gearing up your main raid spec, not M+ spec. This
-            applies until we go into farming mode, where everything becomes free for all including
-            off-spec and transmogs.
+            During progression raids, we require everyone to:
+            <ul>
+              <li>Have a reasonable item level (+-10 of group average)</li>
+              <li>
+                Have your gear enchanted (We understand some enchants may be expensive for people
+                who don't play much, so we can help. Just ask in Discord or guild chat.)
+              </li>
+              <li>
+                It is <b>NOT MANDATORY</b> but we appreciate if you are active on comms during the
+                raids.
+              </li>
+            </ul>
           </li>
-        </ol>
-        <p>Feel free to talk to any of the officers if you have any questions or objections.</p>
-      </div>
-    </section>
-
-    <FadingDivider />
-
-    <section class="requirements info-box">
-      <h2 class="info-box-heading">Requirements & Expectations</h2>
-      <ul class="raid-requirements">
-        <li>
-          Sign up for raids on Discord
-          <a
-            href="https://discord.com/channels/150712806054821889/784846321332781076"
-            target="_blank"
-            rel="noopener noreferrer"
-            >#raidcalendar</a
-          >
-          channel. If you don't have access, talk to an officer in game or ask in Discord.
-        </li>
-        <li>
-          During progression raids, we require everyone to:
-          <ul>
-            <li>Have a reasonable item level (+-10 of group average)</li>
-            <li>
-              Have your gear enchanted (We understand some enchants may be expensive for people who
-              don't play much, so we can help. Just ask in Discord or guild chat.)
-            </li>
-            <li>
-              It is <b>NOT MANDATORY</b> but we appreciate if you are active on comms during the
-              raids.
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-
-    <FadingDivider />
-
-    <section class="schedule info-box">
-      <h2 class="info-box-heading">Raid Schedule</h2>
-      <ul>
-        <li>Wednesdays 20:00 - 22:00 ST</li>
-        <li>Sundays 19:00 - 22:00 ST</li>
-      </ul>
-      <p class="note">Holiday adjustments are announced in advance.</p>
-    </section>
+        </ul>
+      </section>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { useProgression } from '@/composables/useProgression.js'
-import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
-import FadingDivider from '@/components/FadingDivider.vue'
+import { ref } from 'vue'
+import { useScrollReveal } from '@/composables/useScrollReveal.js'
 
-const { raids, summary, latestReport } = useProgression()
+const containerRef = ref(null)
+useScrollReveal(containerRef)
 </script>
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
 @use '@/assets/styles/_info-box.scss';
+@use '@/assets/styles/tokens' as *;
 @use 'sass:color';
 
 .raiding-view {
+  position: relative;
+  z-index: 10;
   margin: 0 auto;
   text-align: left;
-  background-color: $background-color;
+  background-color: transparent;
 
   p,
   li {
@@ -107,13 +97,36 @@ const { raids, summary, latestReport } = useProgression()
   }
 
   .info-box {
-    padding: 1.875rem;
-    margin: 0.625rem 0 1.875rem;
+    padding: $space-8;
+    margin: $space-2 0 $space-8;
     display: flex;
     flex-direction: column;
   }
   .progression {
     min-width: 0;
+  }
+
+  .side-by-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: $space-6;
+    align-items: stretch;
+
+    > * {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info-box {
+      flex: 1;
+    }
+
+    @include desktop-sm {
+      grid-template-columns: 1fr 1fr;
+    }
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
   }
 
   ul {
@@ -161,7 +174,7 @@ const { raids, summary, latestReport } = useProgression()
     color: $color-yellow;
   }
   a:hover {
-    color: $accent-color-hover;
+    text-shadow: 0 0 12px rgba($accent-color, 0.6);
   }
 
   .requirements {
