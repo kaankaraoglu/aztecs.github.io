@@ -214,14 +214,14 @@ async function fetchStats(token) {
           fetchDamageDone(token, code),
         ])
 
-        // Accumulate deaths
+        // Accumulate deaths — each entry is one death event, count per player
         for (const entry of deathEntries) {
-          if (!entry.name || entry.total == null) continue
+          if (!entry.name) continue
           const existing = deathsByName.get(entry.name)
           if (existing) {
-            existing.total += entry.total
+            existing.total++
           } else {
-            deathsByName.set(entry.name, { type: entry.type || '', total: entry.total })
+            deathsByName.set(entry.name, { type: entry.type || '', total: 1 })
           }
           // Anyone who appears in a deaths table is disqualified from Iron Raider
           disqualifiedFromIron.add(entry.name)
@@ -229,12 +229,16 @@ async function fetchStats(token) {
 
         // Track biggest hit (highest total damage in a single report per player)
         for (const entry of damageEntries) {
-          if (!entry.name || entry.total == null) continue
-          if (!biggestHitEntry || entry.total > biggestHitEntry.total) {
+          const total = entry.total ?? entry.amount ?? 0
+          if (!entry.name || total === 0) continue
+          if (!biggestHitEntry || total > biggestHitEntry.total) {
+            // Try to get top ability from nested gear/abilities if available
+            const topAbility = entry.abilities?.[0]?.name || entry.gear?.[0]?.name || null
             biggestHitEntry = {
               name: entry.name,
               type: entry.type || '',
-              total: entry.total,
+              total,
+              ability: topAbility,
               reportCode: code,
             }
           }
@@ -294,6 +298,7 @@ async function fetchStats(token) {
       name: biggestHitEntry.name,
       class: CLASS_MAP[biggestHitEntry.type] || biggestHitEntry.type.toLowerCase() || null,
       amount: biggestHitEntry.total,
+      ability: biggestHitEntry.ability || null,
     }
   }
 
