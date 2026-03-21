@@ -1,21 +1,31 @@
 <template>
-  <div v-if="hasData" class="raid-stats-grid">
-    <div v-if="stats.mostDeaths" class="info-box info-box--no-hover stat-card">
+  <div class="raid-stats-grid">
+    <div class="info-box info-box--no-hover stat-card">
       <p class="stat-label">Most Deaths</p>
-      <p :class="['stat-name', stats.mostDeaths.class]">{{ stats.mostDeaths.name }}</p>
-      <p class="stat-value">{{ stats.mostDeaths.count }} deaths</p>
+      <template v-if="stats.mostDeaths">
+        <p :class="['stat-name', stats.mostDeaths.class]">{{ stats.mostDeaths.name }}</p>
+        <p class="stat-value">{{ stats.mostDeaths.count }} deaths</p>
+      </template>
+      <p v-else class="stat-empty">No data yet.</p>
     </div>
-    <div v-if="stats.ironRaider" class="info-box info-box--no-hover stat-card">
+    <div class="info-box info-box--no-hover stat-card">
       <p class="stat-label">Iron Raider</p>
-      <p :class="['stat-name', stats.ironRaider.class]">{{ stats.ironRaider.name }}</p>
-      <p class="stat-value">{{ stats.ironRaider.killsAttended }} kills attended</p>
+      <template v-if="stats.ironRaider">
+        <p :class="['stat-name', stats.ironRaider.class]">{{ stats.ironRaider.name }}</p>
+        <p class="stat-value">{{ stats.ironRaider.killsAttended }} kills attended</p>
+      </template>
+      <p v-else class="stat-empty">No data yet.</p>
     </div>
-    <div v-if="stats.biggestHit" class="info-box info-box--no-hover stat-card">
+    <div class="info-box info-box--no-hover stat-card">
       <p class="stat-label">Biggest Hit</p>
-      <p :class="['stat-name', stats.biggestHit.class]">{{ stats.biggestHit.name }}</p>
-      <p class="stat-value">
-        {{ formatDamage(stats.biggestHit.amount) }} — {{ stats.biggestHit.ability }}
-      </p>
+      <template v-if="stats.biggestHit">
+        <p :class="['stat-name', stats.biggestHit.class]">{{ stats.biggestHit.name }}</p>
+        <p class="stat-value">
+          {{ formatDamage(stats.biggestHit.amount)
+          }}<template v-if="stats.biggestHit.ability"> — {{ stats.biggestHit.ability }}</template>
+        </p>
+      </template>
+      <p v-else class="stat-empty">No data yet.</p>
     </div>
   </div>
 </template>
@@ -23,7 +33,7 @@
 <script setup>
 import { useRaidStats } from '@/composables/useRaidStats.js'
 
-const { stats, hasData } = useRaidStats()
+const { stats } = useRaidStats()
 
 /**
  * @param {number} n
@@ -78,5 +88,11 @@ function formatDamage(n) {
   margin: 0;
   font-size: 0.9em;
   color: $color-text-muted;
+}
+
+.stat-empty {
+  margin: 0;
+  font-size: 0.9em;
+  color: $color-text-subtle;
 }
 </style>
