@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/fetch-wcl-data.js",
+    "prebuild": "node scripts/fetch-wcl-data.js && node scripts/fetch-rio-data.js",
     "build": "vite build",
     "postbuild": "cp dist/index.html dist/404.html || copy dist/index.html dist/404.html",
     "preview": "vite preview",
