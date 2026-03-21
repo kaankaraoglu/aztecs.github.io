@@ -10,7 +10,7 @@ let intersectionCallback
 
 vi.stubGlobal(
   'IntersectionObserver',
-  vi.fn(function (callback) {
+  vi.fn((callback) => {
     intersectionCallback = callback
     return {
       observe: mockObserve,
