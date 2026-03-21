@@ -69,9 +69,11 @@
                 {
                   expandable: hasRoster(boss),
                   killed: boss.normal || boss.heroic || boss.mythic,
-                  'in-progress': !boss.normal && !boss.heroic && !boss.mythic && boss.pulls > 0,
+                  'in-progress':
+                    !boss.normal && !boss.heroic && !boss.mythic && boss.bestPercent != null,
                 },
               ]"
+              :style="bossBarStyle(boss)"
             >
               <div class="boss-row" @click="toggle(boss.name)">
                 <span class="boss-status">
@@ -249,6 +251,16 @@ const CLASS_DISPLAY = {
   warrior: 'Warrior',
 }
 
+function bossBarStyle(boss) {
+  if (boss.normal || boss.heroic || boss.mythic) {
+    return { '--bar-width': '100%' }
+  }
+  if (boss.bestPercent != null) {
+    return { '--bar-width': `${100 - boss.bestPercent}%` }
+  }
+  return { '--bar-width': '0%' }
+}
+
 function playerTooltip(player) {
   if (player.name.toLowerCase() === 'mxk') {
     return `The worst ${CLASS_DISPLAY[player.class] || player.class} ever`
@@ -383,7 +395,7 @@ function highestDifficulty(raid) {
     grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
     gap: 0.75rem;
 
-    @include mobile {
+    @media (max-width: 700px) {
       grid-template-columns: 1fr;
       gap: $space-2;
     }
@@ -431,8 +443,27 @@ function highestDifficulty(raid) {
 
   /* ── Boss rows ── */
   .boss-entry {
+    position: relative;
     background: $surface-2;
     transition: background $duration-fast;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: var(--bar-width, 0%);
+      border-radius: inherit;
+      transition: width 0.5s ease;
+      pointer-events: none;
+    }
+
+    &.killed::before {
+      background: rgba($quality-uncommon, 0.08);
+    }
+
+    &.in-progress::before {
+      background: rgba($color-yellow, 0.1);
+    }
 
     &:hover {
       background: $surface-3;
@@ -445,34 +476,32 @@ function highestDifficulty(raid) {
     &:not(.killed):not(.in-progress) {
       opacity: 0.55;
     }
-
-    &.killed {
-      background: rgba($quality-uncommon, 0.06);
-      &:hover {
-        background: rgba($quality-uncommon, 0.1);
-      }
-    }
-
-    &.in-progress {
-      background: rgba($color-light-orange, 0.06);
-      &:hover {
-        background: rgba($color-light-orange, 0.1);
-      }
-    }
   }
 
   .boss-row {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.4rem 0.6rem;
     min-height: 2.2rem;
+
+    @media (max-width: 700px) {
+      flex-wrap: wrap;
+      gap: 0.2rem 0.5rem;
+      padding: 0.35rem 0.5rem;
+      min-height: unset;
+    }
   }
 
   .boss-status {
     display: flex;
     gap: 3px;
     flex-shrink: 0;
+
+    @media (max-width: 700px) {
+      order: -1;
+    }
   }
 
   .pip {
@@ -494,6 +523,12 @@ function highestDifficulty(raid) {
       background: rgba($quality-uncommon, 0.15);
       color: $quality-uncommon;
     }
+
+    @media (max-width: 700px) {
+      width: 1.5rem;
+      height: 1.1rem;
+      font-size: 0.6em;
+    }
   }
 
   .boss-name {
@@ -505,8 +540,9 @@ function highestDifficulty(raid) {
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @include mobile {
+    @media (max-width: 700px) {
       font-size: 0.9em;
+      flex-basis: 0;
     }
   }
 
@@ -517,10 +553,11 @@ function highestDifficulty(raid) {
     flex-shrink: 0;
     font-size: 0.75em;
 
-    @include mobile {
-      flex-shrink: 1;
-      flex-wrap: wrap;
-      min-width: 0;
+    @media (max-width: 700px) {
+      width: 100%;
+      font-size: 0.7em;
+      opacity: 0.5;
+      padding-left: calc(1.5rem * 2 + 3px + 0.5rem);
     }
   }
 
@@ -547,8 +584,8 @@ function highestDifficulty(raid) {
     padding: 0.3rem 0.6rem 0.5rem 3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
 
-    @include mobile {
-      padding-left: 1.5rem;
+    @media (max-width: 700px) {
+      padding-left: 0.5rem;
     }
   }
 
@@ -597,6 +634,7 @@ function highestDifficulty(raid) {
   /* ── Footer ── */
   .footer-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.85rem;
   }
