@@ -1,7 +1,7 @@
 <template>
   <div v-if="hasData" class="info-box info-box--no-hover mythic-plus-box">
     <section class="mp-section">
-      <h3 class="mp-section-title">Top Runners</h3>
+      <h3 class="mp-section-title">Mythic+</h3>
       <ol class="runners-list">
         <li
           v-for="(runner, index) in topRunners.slice(0, 10)"
@@ -50,6 +50,7 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
   display: flex;
   flex-direction: column;
   gap: $space-6;
+  text-align: left;
 }
 
 .mp-section {
@@ -154,6 +155,8 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
 .dungeon-cell {
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: $space-2;
   padding: $space-2 $space-3;
   background: $surface-2;

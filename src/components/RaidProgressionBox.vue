@@ -12,6 +12,7 @@
       </div>
     </template>
     <template v-else>
+      <h3 class="box-title">Raids</h3>
       <div
         v-if="summary.normal > 0 || summary.heroic > 0 || summary.mythic > 0"
         ref="progressRef"
@@ -295,6 +296,17 @@ function highestDifficulty(raid) {
   min-width: 0;
   overflow: hidden;
 
+  .box-title {
+    margin: 0 0 0.75rem;
+    font-size: 0.8em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $accent-color;
+    text-shadow: 0 0 20px rgba($accent-color, 0.3);
+    opacity: 0.6;
+  }
+
   /* ── Skeleton ── */
   .skeleton-pills {
     display: flex;
@@ -389,19 +401,15 @@ function highestDifficulty(raid) {
     }
   }
 
-  /* ── Instances grid ── */
+  /* ── Instances list ── */
   .instances {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 0.75rem;
-
-    @media (max-width: 700px) {
-      grid-template-columns: 1fr;
-      gap: $space-2;
-    }
   }
 
   .difficulty-section {
+    break-inside: avoid;
     border-left: 3px solid var(--difficulty-color);
     padding-left: $space-4;
     margin-bottom: $space-4;

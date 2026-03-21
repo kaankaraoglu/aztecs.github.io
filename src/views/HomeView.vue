@@ -7,17 +7,15 @@
       </p>
     </section>
     <div class="content-wrapper">
-      <RaidProgressionBox
-        :raids="raids"
-        :summary="summary"
-        :latest-report="latestReport"
-        class="info-box info-box--no-hover"
-      />
-      <template v-if="hasMpData">
-        <FadingDivider />
-        <p class="section-label">MYTHIC+</p>
-        <MythicPlusBox class="reveal" />
-      </template>
+      <div class="top-boxes">
+        <RaidProgressionBox
+          :raids="raids"
+          :summary="summary"
+          :latest-report="latestReport"
+          class="info-box info-box--no-hover"
+        />
+        <MythicPlusBox v-if="hasMpData" class="reveal" />
+      </div>
       <template v-if="hasStatsData">
         <FadingDivider />
         <p class="section-label">TIER STATS</p>
@@ -118,6 +116,17 @@ const lightboxSrc = ref('')
 
     @include mobile {
       font-size: 1em;
+    }
+  }
+
+  .top-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $space-6;
+    align-items: stretch;
+
+    @include tablet {
+      grid-template-columns: 1fr;
     }
   }
 
