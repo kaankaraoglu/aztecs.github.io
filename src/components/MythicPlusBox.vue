@@ -1,37 +1,40 @@
 <template>
-  <div v-if="hasData" class="info-box info-box--no-hover mythic-plus-box">
-    <section class="mp-section">
-      <h3 class="mp-section-title">Mythic+</h3>
-      <ol class="runners-list">
-        <li
-          v-for="(runner, index) in topRunners.slice(0, 10)"
-          :key="runner.name"
-          class="runner-entry"
-        >
-          <span class="runner-rank">{{ index + 1 }}</span>
-          <span :class="['runner-name', runner.class]">{{ runner.name }}</span>
-          <span class="runner-score">{{ runner.score }}</span>
-          <span v-if="runner.topKeys && runner.topKeys.length" class="runner-keys">
-            <span v-for="(key, ki) in runner.topKeys.slice(0, 2)" :key="ki" class="runner-key">{{
-              key
-            }}</span>
-          </span>
-        </li>
-      </ol>
-    </section>
+  <div class="info-box info-box--no-hover mythic-plus-box">
+    <h3 class="mp-section-title">Mythic+</h3>
+    <template v-if="hasData">
+      <section class="mp-section">
+        <ol class="runners-list">
+          <li
+            v-for="(runner, index) in topRunners.slice(0, 10)"
+            :key="runner.name"
+            class="runner-entry"
+          >
+            <span class="runner-rank">{{ index + 1 }}</span>
+            <span :class="['runner-name', runner.class]">{{ runner.name }}</span>
+            <span class="runner-score">{{ runner.score }}</span>
+            <span v-if="runner.topKeys && runner.topKeys.length" class="runner-keys">
+              <span v-for="(key, ki) in runner.topKeys.slice(0, 2)" :key="ki" class="runner-key">{{
+                key
+              }}</span>
+            </span>
+          </li>
+        </ol>
+      </section>
 
-    <section class="mp-section">
-      <h3 class="mp-section-title">Dungeon Bests</h3>
-      <div class="dungeon-grid">
-        <div v-for="best in dungeonBests" :key="best.dungeon" class="dungeon-cell">
-          <span class="dungeon-name">{{ best.dungeon }}</span>
-          <span class="dungeon-level">+{{ best.level }}</span>
-          <span :class="['dungeon-timed', best.timed ? 'timed--yes' : 'timed--no']">
-            {{ best.timed ? '✓' : '✗' }}
-          </span>
+      <section class="mp-section">
+        <h3 class="mp-section-title">Dungeon Bests</h3>
+        <div class="dungeon-grid">
+          <div v-for="best in dungeonBests" :key="best.dungeon" class="dungeon-cell">
+            <span class="dungeon-name">{{ best.dungeon }}</span>
+            <span class="dungeon-level">+{{ best.level }}</span>
+            <span :class="['dungeon-timed', best.timed ? 'timed--yes' : 'timed--no']">
+              {{ best.timed ? '✓' : '✗' }}
+            </span>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </template>
+    <p v-else class="mp-empty">No M+ data yet this season.</p>
   </div>
 </template>
 
@@ -51,6 +54,12 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
   flex-direction: column;
   gap: $space-6;
   text-align: left;
+}
+
+.mp-empty {
+  color: $color-text-subtle;
+  font-size: 0.95em;
+  margin: $space-4 0 0;
 }
 
 .mp-section {

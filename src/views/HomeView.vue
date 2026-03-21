@@ -14,7 +14,7 @@
           :latest-report="latestReport"
           class="info-box info-box--no-hover"
         />
-        <MythicPlusBox v-if="hasMpData" class="reveal" />
+        <MythicPlusBox class="reveal" />
       </div>
       <template v-if="hasStatsData">
         <FadingDivider />
@@ -48,7 +48,6 @@
 import { ref } from 'vue'
 import { kills } from '@/data/kills.js'
 import { useProgression } from '@/composables/useProgression.js'
-import { useMythicPlus } from '@/composables/useMythicPlus.js'
 import { useRaidStats } from '@/composables/useRaidStats.js'
 import { useScrollReveal } from '@/composables/useScrollReveal.js'
 import FadingDivider from '@/components/FadingDivider.vue'
@@ -61,7 +60,6 @@ const containerRef = ref(null)
 useScrollReveal(containerRef)
 
 const { raids, summary, latestReport } = useProgression()
-const { hasData: hasMpData } = useMythicPlus()
 const { hasData: hasStatsData } = useRaidStats()
 const latestKills = kills.slice(0, 2)
 const lightboxSrc = ref('')
