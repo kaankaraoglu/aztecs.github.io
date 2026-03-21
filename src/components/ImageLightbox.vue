@@ -31,6 +31,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/styles/tokens' as *;
+
 .lightbox-overlay {
   position: fixed;
   inset: 0;
@@ -45,7 +47,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
   max-width: 90vw;
   max-height: 90vh;
   object-fit: contain;
-  border-radius: 4px;
+  border-radius: $radius-sm;
 }
 
 .lightbox-close {
@@ -59,7 +61,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
   cursor: pointer;
   line-height: 1;
   opacity: 0.7;
-  transition: opacity 0.2s;
+  transition: opacity $duration-fast $ease-default;
 
   &:hover {
     opacity: 1;
@@ -68,7 +70,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
 .lightbox-enter-active,
 .lightbox-leave-active {
-  transition: opacity 0.25s ease;
+  transition: opacity $duration-normal $ease-default;
 }
 
 .lightbox-enter-from,
