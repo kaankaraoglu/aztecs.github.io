@@ -4,7 +4,11 @@
  * - Top 10 runners by M+ score with their top keys
  * - Best key level per dungeon across all guild members
  *
- * No authentication required.
+ * Two-phase fetch:
+ * 1. Guild members endpoint → list of character names/realms
+ * 2. Individual character profiles → M+ scores and best runs
+ *
+ * No authentication required (public API).
  * Usage: node scripts/fetch-rio-data.js
  */
 
@@ -12,99 +16,142 @@ import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
-const RIO_URL =
+const GUILD_URL =
   'https://raider.io/api/v1/guilds/profile?region=eu&realm=al-akir&name=Aztecs&fields=members'
+const CHAR_URL = 'https://raider.io/api/v1/characters/profile'
+const CHAR_FIELDS = 'mythic_plus_scores_by_season:current,mythic_plus_best_runs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'rio-mythicplus.json')
 
 const EMPTY_OUTPUT = { season: null, topRunners: [], dungeonBests: [] }
 
-/**
- * @param {string} className
- * @returns {string}
- */
+const BATCH_SIZE = 5
+const BATCH_DELAY_MS = 300
+
 function toKebabClass(className) {
   return className.toLowerCase().replace(/\s+/g, '-')
 }
 
-/**
- * @param {{ dungeon: string, mythic_level: number, num_keystone_upgrades: number, score: number }[]} runs
- * @returns {string[]}
- */
 function formatTopKeys(runs) {
   if (!runs || runs.length === 0) return []
-  return runs.slice(0, 2).map((run) => `+${run.mythic_level} ${run.dungeon}`)
+  return runs
+    .slice()
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 2)
+    .map((run) => `+${run.mythic_level} ${run.short_name || run.dungeon}`)
 }
 
-async function fetchRioData() {
-  const res = await fetch(RIO_URL)
-  if (!res.ok) throw new Error(`Raider.IO request failed: ${res.status}`)
+async function fetchJson(url) {
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`)
   return res.json()
+}
+
+async function fetchCharacterProfile(name, realm) {
+  const realmSlug = realm.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')
+  const url = `${CHAR_URL}?region=eu&realm=${realmSlug}&name=${encodeURIComponent(name)}&fields=${CHAR_FIELDS}`
+  return fetchJson(url)
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 async function main() {
   try {
-    const data = await fetchRioData()
+    // Phase 1: Get guild member list
+    const guildData = await fetchJson(GUILD_URL)
+    const members = guildData.members || []
 
-    /** @type {Array<{ character: { name: string, class: string, mythic_plus_scores_by_season: Array<{ season: string, scores: { all: number } }>, mythic_plus_best_runs: Array<{ dungeon: string, mythic_level: number, num_keystone_upgrades: number, score: number }> } }>} */
-    const members = data.members || []
+    if (members.length === 0) {
+      console.warn('[rio] No guild members found')
+      writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
+      return
+    }
 
-    // Determine season name from first member that has scores
-    let season = 'TWW Season 2'
-    for (const member of members) {
-      const seasons = member.character?.mythic_plus_scores_by_season
-      if (seasons && seasons.length > 0) {
+    // Deduplicate by character name (guild may have alts)
+    const seen = new Set()
+    const uniqueMembers = members.filter((m) => {
+      const key = `${m.character.name}-${m.character.realm?.slug || 'al-akir'}`
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
+
+    console.log(`[rio] Found ${uniqueMembers.length} unique guild members, fetching M+ profiles...`)
+
+    // Phase 2: Fetch individual character profiles in batches
+    const profiles = []
+
+    for (let i = 0; i < uniqueMembers.length; i += BATCH_SIZE) {
+      const batch = uniqueMembers.slice(i, i + BATCH_SIZE)
+      const results = await Promise.allSettled(
+        batch.map((m) =>
+          fetchCharacterProfile(m.character.name, m.character.realm?.name || "Al'Akir"),
+        ),
+      )
+
+      for (const result of results) {
+        if (result.status === 'fulfilled') {
+          profiles.push(result.value)
+        }
+      }
+
+      // Rate-limit between batches
+      if (i + BATCH_SIZE < uniqueMembers.length) {
+        await sleep(BATCH_DELAY_MS)
+      }
+    }
+
+    // Determine season name
+    let season = null
+    for (const profile of profiles) {
+      const seasons = profile.mythic_plus_scores_by_season
+      if (seasons && seasons.length > 0 && seasons[0].season) {
         season = seasons[0].season
         break
       }
     }
 
-    // Filter members with M+ scores > 0
-    const scoredMembers = members
-      .map((member) => {
-        const char = member.character
-        if (!char) return null
-
-        const seasons = char.mythic_plus_scores_by_season
-        const score = seasons && seasons.length > 0 ? seasons[0].scores.all : 0
+    // Build top runners
+    const scoredMembers = profiles
+      .map((profile) => {
+        const seasons = profile.mythic_plus_scores_by_season
+        const score = seasons && seasons.length > 0 ? seasons[0].scores?.all || 0 : 0
 
         if (score <= 0) return null
 
         return {
-          name: char.name,
-          class: toKebabClass(char.class),
-          score,
-          topKeys: formatTopKeys(char.mythic_plus_best_runs),
+          name: profile.name,
+          class: toKebabClass(profile.class),
+          score: Math.round(score),
+          topKeys: formatTopKeys(profile.mythic_plus_best_runs),
         }
       })
       .filter(Boolean)
 
-    // Sort by score descending, take top 10
     const topRunners = scoredMembers
       .slice()
       .sort((a, b) => b.score - a.score)
       .slice(0, 10)
 
-    // Find highest key per dungeon across all members
+    // Build dungeon bests
     /** @type {Map<string, { dungeon: string, level: number, timed: boolean, team: string[] }>} */
     const dungeonMap = new Map()
 
-    for (const member of members) {
-      const char = member.character
-      if (!char) continue
-
-      const runs = char.mythic_plus_best_runs || []
+    for (const profile of profiles) {
+      const runs = profile.mythic_plus_best_runs || []
       for (const run of runs) {
-        const existing = dungeonMap.get(run.dungeon)
+        const key = run.short_name || run.dungeon
+        const existing = dungeonMap.get(key)
         if (!existing || run.mythic_level > existing.level) {
-          dungeonMap.set(run.dungeon, {
+          const team = (run.roster || []).map((r) => r.character?.name).filter(Boolean)
+          dungeonMap.set(key, {
             dungeon: run.dungeon,
             level: run.mythic_level,
             timed: run.num_keystone_upgrades > 0,
-            team: run.roster
-              ? run.roster.map((r) => r.character?.name).filter(Boolean)
-              : [char.name],
+            team: team.length > 0 ? team : [profile.name],
           })
         }
       }
