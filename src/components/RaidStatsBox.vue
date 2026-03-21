@@ -24,6 +24,14 @@
           {{ formatDamage(stats.biggestHit.amount)
           }}<template v-if="stats.biggestHit.ability"> — {{ stats.biggestHit.ability }}</template>
         </p>
+        <a
+          v-if="stats.biggestHit.report"
+          class="stat-link"
+          :href="stats.biggestHit.report"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View Log</a
+        >
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </div>
@@ -94,5 +102,17 @@ function formatDamage(n) {
   margin: 0;
   font-size: 0.9em;
   color: $color-text-subtle;
+}
+
+.stat-link {
+  font-size: 0.8em;
+  font-weight: 600;
+  color: $accent-color;
+  text-decoration: none;
+  transition: color $duration-fast $ease-default;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 </style>
