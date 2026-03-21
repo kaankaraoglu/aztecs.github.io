@@ -18,6 +18,11 @@
         <p class="section-label">MYTHIC+</p>
         <MythicPlusBox class="reveal" />
       </template>
+      <template v-if="hasStatsData">
+        <FadingDivider />
+        <p class="section-label">TIER STATS</p>
+        <RaidStatsBox class="reveal" />
+      </template>
       <FadingDivider />
       <p class="section-label">LATEST ACHIEVEMENTS</p>
       <div class="latest-achievements">
@@ -46,10 +51,12 @@ import { ref } from 'vue'
 import { kills } from '@/data/kills.js'
 import { useProgression } from '@/composables/useProgression.js'
 import { useMythicPlus } from '@/composables/useMythicPlus.js'
+import { useRaidStats } from '@/composables/useRaidStats.js'
 import { useScrollReveal } from '@/composables/useScrollReveal.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import MythicPlusBox from '@/components/MythicPlusBox.vue'
+import RaidStatsBox from '@/components/RaidStatsBox.vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
 
 const containerRef = ref(null)
@@ -57,6 +64,7 @@ useScrollReveal(containerRef)
 
 const { raids, summary, latestReport } = useProgression()
 const { hasData: hasMpData } = useMythicPlus()
+const { hasData: hasStatsData } = useRaidStats()
 const latestKills = kills.slice(0, 2)
 const lightboxSrc = ref('')
 </script>
