@@ -310,6 +310,7 @@ async function fetchStats(token) {
       class: CLASS_MAP[biggestHitEntry.type] || biggestHitEntry.type.toLowerCase() || null,
       amount: biggestHitEntry.total,
       ability: biggestHitEntry.ability || null,
+      report: `https://www.warcraftlogs.com/reports/${biggestHitEntry.reportCode}`,
     }
   }
 
