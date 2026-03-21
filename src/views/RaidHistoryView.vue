@@ -2,10 +2,14 @@
   <div ref="containerRef" class="raid-history-view content-wrapper">
     <h1 class="page-heading">Raid History</h1>
 
-    <div v-for="(tiers, expansion) in groupedTiers" :key="expansion" class="expansion-section">
+    <div
+      v-for="(tiers, expansion) in groupedTiers"
+      :key="expansion"
+      class="info-box info-box--no-hover expansion-box reveal"
+    >
       <h2 class="expansion-heading">{{ expansion }}</h2>
-      <div class="tier-grid">
-        <div v-for="tier in tiers" :key="tier.tier" class="info-box tier-card reveal">
+      <div class="tier-list">
+        <div v-for="tier in tiers" :key="tier.tier" class="tier-row">
           <div class="tier-header">
             <h3 class="tier-name">{{ tier.tier }}</h3>
             <span v-if="tier.season" class="tier-season">{{ tier.season }}</span>
@@ -97,36 +101,37 @@ function progressBadgeClass(progress) {
   }
 }
 
-.expansion-section {
-  margin-bottom: $space-10;
+.expansion-box {
+  margin-bottom: $space-6;
   text-align: left;
 }
 
 .expansion-heading {
-  color: $color-text-muted;
-  font-size: 1.1em;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  color: $accent-color;
+  text-shadow: 0 0 20px rgba($accent-color, 0.3);
+  font-size: 1.2em;
+  font-weight: 800;
   margin: 0 0 $space-4;
-  padding-bottom: $space-2;
-  border-bottom: 1px solid $color-border;
 }
 
-.tier-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: $space-4;
-
-  @include mobile {
-    grid-template-columns: 1fr;
-  }
-}
-
-.tier-card {
+.tier-list {
   display: flex;
   flex-direction: column;
-  gap: $space-3;
+  gap: 1px;
+  border-radius: $radius-md;
+  overflow: hidden;
+}
+
+.tier-row {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  background: $surface-2;
+
+  @include mobile {
+    padding: $space-3;
+  }
 }
 
 .tier-header {
