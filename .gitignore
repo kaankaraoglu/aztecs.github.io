@@ -19,6 +19,7 @@ pnpm-debug.log*
 .idea
 .vscode
 .claude/worktrees
+.superpowers
 *.suo
 *.ntvs*
 *.njsproj
