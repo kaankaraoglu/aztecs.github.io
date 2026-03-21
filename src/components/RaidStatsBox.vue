@@ -17,7 +17,7 @@
       <p v-else class="stat-empty">No data yet.</p>
     </div>
     <div class="info-box info-box--no-hover stat-card">
-      <p class="stat-label">Biggest Hit</p>
+      <p class="stat-label">Highest DPS</p>
       <template v-if="stats.biggestHit">
         <p :class="['stat-name', stats.biggestHit.class]">{{ stats.biggestHit.name }}</p>
         <p class="stat-value">
