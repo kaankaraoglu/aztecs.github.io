@@ -21,8 +21,7 @@
       <template v-if="stats.biggestHit">
         <p :class="['stat-name', stats.biggestHit.class]">{{ stats.biggestHit.name }}</p>
         <p class="stat-value">
-          {{ formatDamage(stats.biggestHit.amount)
-          }}<template v-if="stats.biggestHit.ability"> — {{ stats.biggestHit.ability }}</template>
+          {{ formatDamage(stats.biggestHit.amount) }} on {{ stats.biggestHit.boss || 'a boss' }}
         </p>
         <a
           v-if="stats.biggestHit.report"
