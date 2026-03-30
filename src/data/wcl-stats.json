@@ -17,6 +17,7 @@
       "amount": 14520000,
       "ability": "Pyroblast",
       "boss": "Crown of the Cosmos"
-    }
+    },
+    "bestHealer": null
   }
 }
