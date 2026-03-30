@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     margin: $space-8 0 0;
-    padding-bottom: $space-12;
+    padding-bottom: $space-4;
     @include mobile {
       margin: $space-4 0 0;
       padding-bottom: $space-8;
