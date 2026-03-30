@@ -166,8 +166,11 @@ async function fetchHealingDone(token, code, fightIDs) {
 }
 
 /**
- * Fetches playerDetails for a specific fight to collect participant names.
- * Returns a Set of player names.
+ * Fetches playerDetails for a specific fight to collect participant names and classes.
+ * @param {string} token
+ * @param {string} code
+ * @param {number} fightId
+ * @returns {Promise<Map<string, string>>} Map of player name → WCL class type
  */
 async function fetchFightParticipants(token, code, fightId) {
   const query = `{
@@ -180,19 +183,20 @@ async function fetchFightParticipants(token, code, fightId) {
 
   const result = await graphql(token, query)
   const raw = result.data?.reportData?.report?.playerDetails
-  if (!raw) return new Set()
+  if (!raw) return new Map()
 
   const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
   const pd = parsed?.data?.playerDetails
-  if (!pd) return new Set()
+  if (!pd) return new Map()
 
-  const names = new Set()
+  /** @type {Map<string, string>} */
+  const players = new Map()
   for (const role of ['tanks', 'healers', 'dps']) {
     for (const player of pd[role] || []) {
-      names.add(player.name)
+      players.set(player.name, player.type || '')
     }
   }
-  return names
+  return players
 }
 
 async function fetchStats(token) {
@@ -250,11 +254,15 @@ async function fetchStats(token) {
         const bossFightIDs = bossFights.map((f) => f.id)
         const killFights = bossFights.filter((f) => f.kill === true)
 
-        // Fetch deaths scoped to all boss fights
-        const deathEntries = await fetchDeaths(token, code, bossFightIDs)
+        // Fetch deaths for all boss fights (Most Deaths) and kill fights only (Iron Raider)
+        const killFightIDs = killFights.map((f) => f.id)
+        const [allDeathEntries, killDeathEntries] = await Promise.all([
+          fetchDeaths(token, code, bossFightIDs),
+          fetchDeaths(token, code, killFightIDs),
+        ])
 
-        // Accumulate deaths — each entry is one death event, count per player
-        for (const entry of deathEntries) {
+        // Accumulate deaths across all boss attempts for "Most Deaths"
+        for (const entry of allDeathEntries) {
           if (!entry.name) continue
           const existing = deathsByName.get(entry.name)
           if (existing) {
@@ -262,7 +270,11 @@ async function fetchStats(token) {
           } else {
             deathsByName.set(entry.name, { type: entry.type || '', total: 1 })
           }
-          // Anyone who appears in a deaths table is disqualified from Iron Raider
+        }
+
+        // Only disqualify from Iron Raider if the player died on a kill
+        for (const entry of killDeathEntries) {
+          if (!entry.name) continue
           disqualifiedFromIron.add(entry.name)
         }
 
@@ -306,13 +318,11 @@ async function fetchStats(token) {
         // Fetch participants for each kill fight (Iron Raider tracking)
         for (const fight of killFights) {
           const participants = await fetchFightParticipants(token, code, fight.id)
-          for (const name of participants) {
+          for (const [name, classType] of participants) {
             const existing = killAttendanceByName.get(name)
             if (existing) {
               existing.count++
             } else {
-              // Resolve class from accumulated data
-              const classType = deathsByName.get(name)?.type || ''
               killAttendanceByName.set(name, { type: classType, count: 1 })
             }
           }
