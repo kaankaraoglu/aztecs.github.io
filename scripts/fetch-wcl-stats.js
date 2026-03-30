@@ -28,6 +28,7 @@ const EMPTY_OUTPUT = {
     mostDeaths: null,
     ironRaider: null,
     biggestHit: null,
+    bestHealer: null,
   },
 }
 
@@ -139,6 +140,32 @@ async function fetchDamageDone(token, code, fightIDs) {
 }
 
 /**
+ * Fetches healing done table for specific boss fights in a report.
+ * @param {string} token
+ * @param {string} code
+ * @param {number[]} fightIDs - only boss encounter fight IDs
+ * @returns {Promise<Array<{ name: string, type: string, total: number }>>}
+ */
+async function fetchHealingDone(token, code, fightIDs) {
+  if (fightIDs.length === 0) return []
+
+  const query = `{
+    reportData {
+      report(code: "${code}") {
+        table(dataType: Healing, fightIDs: [${fightIDs.join(',')}])
+      }
+    }
+  }`
+
+  const result = await graphql(token, query)
+  const raw = result.data?.reportData?.report?.table
+  if (!raw) return []
+
+  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
+  return parsed?.data?.entries || []
+}
+
+/**
  * Fetches playerDetails for a specific fight to collect participant names.
  * Returns a Set of player names.
  */
@@ -205,8 +232,11 @@ async function fetchStats(token) {
   /** @type {Map<string, { type: string, count: number }>} */
   const killAttendanceByName = new Map()
 
-  /** @type {{ name: string, type: string, total: number, reportCode: string } | null} */
+  /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
   let biggestHitEntry = null
+
+  /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
+  let bestHealerEntry = null
 
   const BATCH_SIZE = 3
 
@@ -236,15 +266,33 @@ async function fetchStats(token) {
           disqualifiedFromIron.add(entry.name)
         }
 
-        // Track biggest hit — query damage per individual boss fight
-        // so we get highest single-fight damage, not summed across all fights
+        // Track biggest hit and best healer — query per individual boss fight
+        // so we get highest single-fight values, not summed across all fights
         for (const fight of bossFights) {
-          const fightDamage = await fetchDamageDone(token, code, [fight.id])
+          const [fightDamage, fightHealing] = await Promise.all([
+            fetchDamageDone(token, code, [fight.id]),
+            fetchHealingDone(token, code, [fight.id]),
+          ])
+
           for (const entry of fightDamage) {
             const total = entry.total ?? entry.amount ?? 0
             if (!entry.name || total === 0) continue
             if (!biggestHitEntry || total > biggestHitEntry.total) {
               biggestHitEntry = {
+                name: entry.name,
+                type: entry.type || '',
+                total,
+                reportCode: code,
+                bossName: fight.name,
+              }
+            }
+          }
+
+          for (const entry of fightHealing) {
+            const total = entry.total ?? entry.amount ?? 0
+            if (!entry.name || total === 0) continue
+            if (!bestHealerEntry || total > bestHealerEntry.total) {
+              bestHealerEntry = {
                 name: entry.name,
                 type: entry.type || '',
                 total,
@@ -311,12 +359,25 @@ async function fetchStats(token) {
     }
   }
 
+  // --- Best Healer ---
+  let bestHealer = null
+  if (bestHealerEntry) {
+    bestHealer = {
+      name: bestHealerEntry.name,
+      class: CLASS_MAP[bestHealerEntry.type] || bestHealerEntry.type.toLowerCase() || null,
+      amount: bestHealerEntry.total,
+      boss: bestHealerEntry.bossName || null,
+      report: `https://www.warcraftlogs.com/reports/${bestHealerEntry.reportCode}`,
+    }
+  }
+
   return {
     zone: zoneName,
     stats: {
       mostDeaths,
       ironRaider,
       biggestHit,
+      bestHealer,
     },
   }
 }
@@ -335,7 +396,8 @@ async function main() {
     console.log(
       `[wcl-stats] Wrote stats: mostDeaths=${data.stats.mostDeaths?.name ?? 'none'}, ` +
         `ironRaider=${data.stats.ironRaider?.name ?? 'none'}, ` +
-        `biggestHit=${data.stats.biggestHit?.name ?? 'none'}`,
+        `biggestHit=${data.stats.biggestHit?.name ?? 'none'}, ` +
+        `bestHealer=${data.stats.bestHealer?.name ?? 'none'}`,
     )
   } catch (err) {
     console.warn(`[wcl-stats] Failed to fetch stats: ${err.message}`)

@@ -21,12 +21,30 @@
       <template v-if="stats.biggestHit">
         <p :class="['stat-name', stats.biggestHit.class]">{{ stats.biggestHit.name }}</p>
         <p class="stat-value">
-          {{ formatDamage(stats.biggestHit.amount) }} on {{ stats.biggestHit.boss || 'a boss' }}
+          {{ formatNumber(stats.biggestHit.amount) }} on {{ stats.biggestHit.boss || 'a boss' }}
         </p>
         <a
           v-if="stats.biggestHit.report"
           class="stat-link"
           :href="stats.biggestHit.report"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View Log</a
+        >
+      </template>
+      <p v-else class="stat-empty">No data yet.</p>
+    </div>
+    <div class="info-box info-box--no-hover stat-card">
+      <p class="stat-label">Best Healer</p>
+      <template v-if="stats.bestHealer">
+        <p :class="['stat-name', stats.bestHealer.class]">{{ stats.bestHealer.name }}</p>
+        <p class="stat-value">
+          {{ formatNumber(stats.bestHealer.amount) }} on {{ stats.bestHealer.boss || 'a boss' }}
+        </p>
+        <a
+          v-if="stats.bestHealer.report"
+          class="stat-link"
+          :href="stats.bestHealer.report"
           target="_blank"
           rel="noopener noreferrer"
           >View Log</a
@@ -46,7 +64,7 @@ const { stats } = useRaidStats()
  * @param {number} n
  * @returns {string}
  */
-function formatDamage(n) {
+function formatNumber(n) {
   return n >= 1_000_000
     ? (n / 1_000_000).toFixed(1) + 'M'
     : n >= 1_000
@@ -62,7 +80,7 @@ function formatDamage(n) {
 
 .raid-stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: $space-4;
 
   @include tablet {
