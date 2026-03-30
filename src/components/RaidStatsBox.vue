@@ -9,7 +9,26 @@
       <p v-else class="stat-empty">No data yet.</p>
     </div>
     <div class="info-box info-box--no-hover stat-card">
-      <p class="stat-label">Iron Raider</p>
+      <p class="stat-label">
+        Iron Raider
+        <span class="info-icon-wrapper">
+          <svg
+            class="info-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            width="14"
+            height="14"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span class="info-tooltip">Most boss kills attended without dying on any of them</span>
+        </span>
+      </p>
       <template v-if="stats.ironRaider">
         <p :class="['stat-name', stats.ironRaider.class]">{{ stats.ironRaider.name }}</p>
         <p class="stat-value">{{ stats.ironRaider.killsAttended }} kills attended</p>
@@ -91,6 +110,8 @@ function formatNumber(n) {
 .stat-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: $space-2;
 }
 
@@ -101,6 +122,55 @@ function formatNumber(n) {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: $color-text-subtle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+}
+
+.info-icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.info-icon {
+  opacity: 0.5;
+  cursor: help;
+  transition: opacity $duration-fast $ease-default;
+
+  .info-icon-wrapper:hover & {
+    opacity: 1;
+    color: $accent-color;
+  }
+}
+
+.info-tooltip {
+  position: absolute;
+  bottom: calc(100% + $space-2);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 200px;
+  padding: $space-2 $space-3;
+  background: $surface-2;
+  border: 1px solid $color-border-accent;
+  border-radius: $radius-md;
+  color: $color-text-muted;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.4;
+  white-space: normal;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity $duration-normal $ease-default;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  .info-icon-wrapper:hover & {
+    opacity: 1;
+  }
 }
 
 .stat-name {
