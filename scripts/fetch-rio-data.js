@@ -26,8 +26,8 @@ const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'rio-mythicplus.json')
 
 const EMPTY_OUTPUT = { season: null, topRunners: [], dungeonBests: [] }
 
-const BATCH_SIZE = 5
-const BATCH_DELAY_MS = 300
+const BATCH_SIZE = 50
+const BATCH_DELAY_MS = 100
 
 function toKebabClass(className) {
   return className.toLowerCase().replace(/\s+/g, '-')
