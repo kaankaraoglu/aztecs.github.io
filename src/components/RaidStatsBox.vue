@@ -36,16 +36,19 @@
       <p v-else class="stat-empty">No data yet.</p>
     </div>
     <div class="info-box info-box--no-hover stat-card">
-      <p class="stat-label">Highest DPS</p>
-      <template v-if="stats.biggestHit">
-        <p :class="['stat-name', stats.biggestHit.class]">{{ stats.biggestHit.name }}</p>
+      <p class="stat-label">Highest Damage Done</p>
+      <template v-if="stats.highestDamageDone">
+        <p :class="['stat-name', stats.highestDamageDone.class]">
+          {{ stats.highestDamageDone.name }}
+        </p>
         <p class="stat-value">
-          {{ formatNumber(stats.biggestHit.amount) }} on {{ stats.biggestHit.boss || 'a boss' }}
+          {{ formatNumber(stats.highestDamageDone.amount) }} on
+          {{ stats.highestDamageDone.boss || 'a boss' }}
         </p>
         <a
-          v-if="stats.biggestHit.report"
+          v-if="stats.highestDamageDone.report"
           class="stat-link"
-          :href="stats.biggestHit.report"
+          :href="stats.highestDamageDone.report"
           target="_blank"
           rel="noopener noreferrer"
           >View Log</a
