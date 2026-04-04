@@ -38,7 +38,7 @@ function formatTopKeys(runs) {
   return runs
     .slice()
     .sort((a, b) => b.score - a.score)
-    .slice(0, 2)
+    .slice(0, 5)
     .map((run) => `+${run.mythic_level} ${run.short_name || run.dungeon}`)
 }
 
