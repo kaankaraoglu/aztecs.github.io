@@ -76,8 +76,11 @@
     </div>
     <div class="info-box info-box--no-hover stat-card">
       <p class="stat-label">Highest Avoidable Damage Taken</p>
-      <p class="stat-name">Peavy, Proto &amp; Madhouse</p>
-      <p class="stat-value">by miles</p>
+      <p class="stat-name">
+        <span class="warrior">Peavy</span>, <span class="evoker">Proto</span> &amp;
+        <span class="death-knight">Madhouse</span>
+      </p>
+      <p class="stat-subtitle">by miles</p>
     </div>
   </div>
 </template>
@@ -191,6 +194,13 @@ function formatNumber(n) {
   margin: 0;
   font-size: 0.9em;
   color: $color-text-muted;
+}
+
+.stat-subtitle {
+  margin: 0;
+  font-size: 0.7em;
+  font-style: italic;
+  color: $color-text-subtle;
 }
 
 .stat-empty {
