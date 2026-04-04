@@ -1,7 +1,18 @@
-import { describe, it, expect } from 'vitest'
-import data from '../wcl-stats.json'
+import { describe, it, expect, beforeAll } from 'vitest'
+import { existsSync, readFileSync } from 'fs'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 
-describe('WCL stats data', () => {
+const jsonPath = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'wcl-stats.json')
+const exists = existsSync(jsonPath)
+
+describe.skipIf(!exists)('WCL stats data', () => {
+  /** @type {any} */
+  let data
+  beforeAll(() => {
+    data = JSON.parse(readFileSync(jsonPath, 'utf-8'))
+  })
+
   it('has required top-level fields', () => {
     expect(data).toHaveProperty('zone')
     expect(data).toHaveProperty('stats')

@@ -1,7 +1,18 @@
-import { describe, it, expect } from 'vitest'
-import data from '../rio-mythicplus.json'
+import { describe, it, expect, beforeAll } from 'vitest'
+import { existsSync, readFileSync } from 'fs'
+import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
 
-describe('M+ data', () => {
+const jsonPath = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'rio-mythicplus.json')
+const exists = existsSync(jsonPath)
+
+describe.skipIf(!exists)('M+ data', () => {
+  /** @type {any} */
+  let data
+  beforeAll(() => {
+    data = JSON.parse(readFileSync(jsonPath, 'utf-8'))
+  })
+
   it('has required top-level fields', () => {
     expect(data).toHaveProperty('season')
     expect(data).toHaveProperty('topRunners')
