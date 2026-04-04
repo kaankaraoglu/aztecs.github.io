@@ -79,22 +79,37 @@ async function main() {
       return true
     })
 
-    console.log(`[rio] Found ${uniqueMembers.length} unique guild members, fetching M+ profiles...`)
+    const totalBatches = Math.ceil(uniqueMembers.length / BATCH_SIZE)
+    console.log(
+      `[rio] Found ${uniqueMembers.length} unique guild members, fetching M+ profiles in ${totalBatches} batches of ${BATCH_SIZE}...`,
+    )
 
     // Phase 2: Fetch individual character profiles in batches
     const profiles = []
+    let succeeded = 0
+    let failed = 0
 
     for (let i = 0; i < uniqueMembers.length; i += BATCH_SIZE) {
+      const batchIndex = Math.floor(i / BATCH_SIZE) + 1
       const batch = uniqueMembers.slice(i, i + BATCH_SIZE)
+      const batchNames = batch.map((m) => m.character.name).join(', ')
+      console.log(`[rio]   Batch ${batchIndex}/${totalBatches}: ${batchNames}`)
+
       const results = await Promise.allSettled(
         batch.map((m) =>
           fetchCharacterProfile(m.character.name, m.character.realm?.name || "Al'Akir"),
         ),
       )
 
-      for (const result of results) {
+      for (let j = 0; j < results.length; j++) {
+        const result = results[j]
+        const charName = batch[j].character.name
         if (result.status === 'fulfilled') {
+          succeeded++
           profiles.push(result.value)
+        } else {
+          failed++
+          console.warn(`[rio]     ✗ ${charName}: ${result.reason?.message || 'unknown error'}`)
         }
       }
 
@@ -103,6 +118,8 @@ async function main() {
         await sleep(BATCH_DELAY_MS)
       }
     }
+
+    console.log(`[rio] Profile fetch complete: ${succeeded} succeeded, ${failed} failed`)
 
     // Determine season name
     let season = null
