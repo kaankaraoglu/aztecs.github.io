@@ -242,9 +242,6 @@ async function fetchStats(token) {
   /** @type {Map<string, { type: string, total: number }>} */
   const deathsByName = new Map()
 
-  /** @type {Set<string>} */
-  const disqualifiedFromIron = new Set()
-
   /** @type {Map<string, { type: string, count: number }>} */
   const killAttendanceByName = new Map()
 
@@ -266,14 +263,10 @@ async function fetchStats(token) {
         const bossFightIDs = bossFights.map((f) => f.id)
         const killFights = bossFights.filter((f) => f.kill === true)
 
-        // Fetch deaths for all boss fights (Most Deaths) and kill fights only (Iron Raider)
-        const killFightIDs = killFights.map((f) => f.id)
-        const [allDeathEntries, killDeathEntries] = await Promise.all([
-          fetchDeaths(token, code, bossFightIDs),
-          fetchDeaths(token, code, killFightIDs),
-        ])
+        // Fetch deaths for all boss fights (Most Deaths + Iron Raider)
+        const allDeathEntries = await fetchDeaths(token, code, bossFightIDs)
 
-        // Accumulate deaths across all boss attempts for "Most Deaths"
+        // Accumulate deaths across all boss attempts
         for (const entry of allDeathEntries) {
           if (!entry.name) continue
           const existing = deathsByName.get(entry.name)
@@ -282,12 +275,6 @@ async function fetchStats(token) {
           } else {
             deathsByName.set(entry.name, { type: entry.type || '', total: 1 })
           }
-        }
-
-        // Only disqualify from Iron Raider if the player died on a kill
-        for (const entry of killDeathEntries) {
-          if (!entry.name) continue
-          disqualifiedFromIron.add(entry.name)
         }
 
         // Track biggest hit and best healer — query per individual boss fight
@@ -354,19 +341,23 @@ async function fetchStats(token) {
   }
 
   // --- Iron Raider ---
-  // Eligible: not in disqualifiedFromIron, not a Holy Priest, attended ≥50% of max attendance
+  // Fewest deaths among regular raiders (≥25% of max attendance), excluding Holy Priests
   let maxAttendance = 0
   for (const { count } of killAttendanceByName.values()) {
     if (count > maxAttendance) maxAttendance = count
   }
-  const minKillsForIron = Math.ceil(maxAttendance * 0.5)
+  const minKillsForIron = Math.ceil(maxAttendance * 0.25)
   let ironRaider = null
-  let ironRaiderKills = Math.max(minKillsForIron - 1, 0)
+  let ironRaiderDeaths = Infinity
   for (const [name, { type, spec, count }] of killAttendanceByName) {
-    if (disqualifiedFromIron.has(name)) continue
     if (type === 'Priest' && spec === 'Holy') continue
-    if (count > ironRaiderKills) {
-      ironRaiderKills = count
+    if (count < minKillsForIron) continue
+    const deaths = deathsByName.get(name)?.total ?? 0
+    if (
+      deaths < ironRaiderDeaths ||
+      (deaths === ironRaiderDeaths && count > (ironRaider?.killsAttended ?? 0))
+    ) {
+      ironRaiderDeaths = deaths
       ironRaider = {
         name,
         class: CLASS_MAP[type] || type.toLowerCase() || null,
