@@ -13,6 +13,9 @@
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+import { loadEnv } from './load-env.js'
+
+loadEnv()
 
 const GUILD_ID = 18606
 const CURRENT_ZONE_ID = 46 // VS / DR / MQD (Midnight Season 1)
@@ -94,7 +97,9 @@ async function graphql(token, query, retries = 3) {
 
     if (res.status >= 500 && attempt < retries) {
       const delay = 1000 * 2 ** (attempt - 1)
-      console.warn(`[wcl-data] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`)
+      console.warn(
+        `[wcl-data] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`,
+      )
       await new Promise((r) => setTimeout(r, delay))
       continue
     }

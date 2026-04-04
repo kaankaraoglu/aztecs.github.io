@@ -13,6 +13,9 @@
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+import { loadEnv } from './load-env.js'
+
+loadEnv()
 
 const GUILD_ID = 18606
 const CURRENT_ZONE_ID = 46 // VS / DR / MQD (Midnight Season 1)
@@ -341,12 +344,12 @@ async function fetchStats(token) {
   }
 
   // --- Iron Raider ---
-  // Fewest deaths among regular raiders (≥25% of max attendance), excluding Holy Priests
+  // Fewest deaths among regular raiders (≥60% of max attendance), excluding Holy Priests
   let maxAttendance = 0
   for (const { count } of killAttendanceByName.values()) {
     if (count > maxAttendance) maxAttendance = count
   }
-  const minKillsForIron = Math.ceil(maxAttendance * 0.25)
+  const minKillsForIron = Math.ceil(maxAttendance * 0.6)
   let ironRaider = null
   let ironRaiderDeaths = Infinity
   for (const [name, { type, spec, count }] of killAttendanceByName) {
