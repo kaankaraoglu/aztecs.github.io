@@ -84,7 +84,9 @@ async function graphql(token, query, retries = 3) {
 
     if (res.status >= 500 && attempt < retries) {
       const delay = 1000 * 2 ** (attempt - 1)
-      console.warn(`[wcl-stats] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`)
+      console.warn(
+        `[wcl-stats] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`,
+      )
       await new Promise((r) => setTimeout(r, delay))
       continue
     }
@@ -246,6 +248,8 @@ async function fetchStats(token) {
   /** @type {Map<string, { type: string, count: number }>} */
   const killAttendanceByName = new Map()
 
+  let totalKillFights = 0
+
   /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
   let biggestHitEntry = null
 
@@ -263,6 +267,7 @@ async function fetchStats(token) {
         const bossFights = (report.fights || []).filter((f) => f.encounterID > 0)
         const bossFightIDs = bossFights.map((f) => f.id)
         const killFights = bossFights.filter((f) => f.kill === true)
+        totalKillFights += killFights.length
 
         // Fetch deaths for all boss fights (Most Deaths) and kill fights only (Iron Raider)
         const killFightIDs = killFights.map((f) => f.id)
@@ -352,9 +357,10 @@ async function fetchStats(token) {
   }
 
   // --- Iron Raider ---
-  // Eligible: not in disqualifiedFromIron, not a Holy Priest, minimum 3 kills attended
+  // Eligible: not in disqualifiedFromIron, not a Holy Priest, attended ≥50% of kills
+  const minKillsForIron = Math.ceil(totalKillFights * 0.5)
   let ironRaider = null
-  let ironRaiderKills = 2 // minimum threshold - 1 so first valid candidate wins
+  let ironRaiderKills = Math.max(minKillsForIron - 1, 0)
   for (const [name, { type, spec, count }] of killAttendanceByName) {
     if (disqualifiedFromIron.has(name)) continue
     if (type === 'Priest' && spec === 'Holy') continue
