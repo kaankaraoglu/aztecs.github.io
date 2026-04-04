@@ -7,6 +7,10 @@
  * Usage: node scripts/fetch-wcl-history.js
  */
 
+import { loadEnv } from './load-env.js'
+
+loadEnv()
+
 const GUILD_ID = 18606
 const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
 const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
@@ -50,7 +54,9 @@ async function graphql(token, query, retries = 3) {
 
     if (res.status >= 500 && attempt < retries) {
       const delay = 1000 * 2 ** (attempt - 1)
-      console.warn(`[wcl-history] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`)
+      console.warn(
+        `[wcl-history] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`,
+      )
       await new Promise((r) => setTimeout(r, delay))
       continue
     }

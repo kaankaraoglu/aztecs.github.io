@@ -13,6 +13,9 @@
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+import { loadEnv } from './load-env.js'
+
+loadEnv()
 
 const GUILD_ID = 18606
 const CURRENT_ZONE_ID = 46 // VS / DR / MQD (Midnight Season 1)
