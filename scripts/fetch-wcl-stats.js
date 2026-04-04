@@ -4,7 +4,7 @@
  * Writes to src/data/wcl-stats.json with:
  * - Most Deaths: player with the highest total deaths across all reports
  * - Iron Raider: player who attended the most kills without ever dying
- * - Biggest Hit: highest single-report damage total by any one player
+ * - Highest Damage Done: highest single-report damage total by any one player
  *
  * Requires WCL_CLIENT_ID and WCL_CLIENT_SECRET env vars.
  * Usage: node scripts/fetch-wcl-stats.js
@@ -30,7 +30,7 @@ const EMPTY_OUTPUT = {
   stats: {
     mostDeaths: null,
     ironRaider: null,
-    biggestHit: null,
+    highestDamageDone: null,
     bestHealer: null,
   },
 }
@@ -249,7 +249,7 @@ async function fetchStats(token) {
   const killAttendanceByName = new Map()
 
   /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
-  let biggestHitEntry = null
+  let highestDamageDoneEntry = null
 
   /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
   let bestHealerEntry = null
@@ -280,7 +280,7 @@ async function fetchStats(token) {
           }
         }
 
-        // Track biggest hit and best healer — query per individual boss fight
+        // Track highest damage done and best healer — query per individual boss fight
         // so we get highest single-fight values, not summed across all fights
         for (const fight of bossFights) {
           const [fightDamage, fightHealing] = await Promise.all([
@@ -291,8 +291,8 @@ async function fetchStats(token) {
           for (const entry of fightDamage) {
             const total = entry.total ?? entry.amount ?? 0
             if (!entry.name || total === 0) continue
-            if (!biggestHitEntry || total > biggestHitEntry.total) {
-              biggestHitEntry = {
+            if (!highestDamageDoneEntry || total > highestDamageDoneEntry.total) {
+              highestDamageDoneEntry = {
                 name: entry.name,
                 type: entry.type || '',
                 total,
@@ -369,15 +369,16 @@ async function fetchStats(token) {
     }
   }
 
-  // --- Biggest Hit ---
-  let biggestHit = null
-  if (biggestHitEntry) {
-    biggestHit = {
-      name: biggestHitEntry.name,
-      class: CLASS_MAP[biggestHitEntry.type] || biggestHitEntry.type.toLowerCase() || null,
-      amount: biggestHitEntry.total,
-      boss: biggestHitEntry.bossName || null,
-      report: `https://www.warcraftlogs.com/reports/${biggestHitEntry.reportCode}`,
+  // --- Highest Damage Done ---
+  let highestDamageDone = null
+  if (highestDamageDoneEntry) {
+    highestDamageDone = {
+      name: highestDamageDoneEntry.name,
+      class:
+        CLASS_MAP[highestDamageDoneEntry.type] || highestDamageDoneEntry.type.toLowerCase() || null,
+      amount: highestDamageDoneEntry.total,
+      boss: highestDamageDoneEntry.bossName || null,
+      report: `https://www.warcraftlogs.com/reports/${highestDamageDoneEntry.reportCode}`,
     }
   }
 
@@ -398,7 +399,7 @@ async function fetchStats(token) {
     stats: {
       mostDeaths,
       ironRaider,
-      biggestHit,
+      highestDamageDone,
       bestHealer,
     },
   }
@@ -418,7 +419,7 @@ async function main() {
     console.log(
       `[wcl-stats] Wrote stats: mostDeaths=${data.stats.mostDeaths?.name ?? 'none'}, ` +
         `ironRaider=${data.stats.ironRaider?.name ?? 'none'}, ` +
-        `biggestHit=${data.stats.biggestHit?.name ?? 'none'}, ` +
+        `highestDamageDone=${data.stats.highestDamageDone?.name ?? 'none'}, ` +
         `bestHealer=${data.stats.bestHealer?.name ?? 'none'}`,
     )
   } catch (err) {

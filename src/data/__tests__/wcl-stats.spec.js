@@ -7,7 +7,7 @@ describe('WCL stats data', () => {
     expect(data).toHaveProperty('stats')
     expect(data.stats).toHaveProperty('mostDeaths')
     expect(data.stats).toHaveProperty('ironRaider')
-    expect(data.stats).toHaveProperty('biggestHit')
+    expect(data.stats).toHaveProperty('highestDamageDone')
   })
 
   it('mostDeaths has name, class, and count when present', () => {
@@ -18,11 +18,11 @@ describe('WCL stats data', () => {
     }
   })
 
-  it('biggestHit has name, class, amount, ability, and boss when present', () => {
-    if (data.stats.biggestHit) {
-      expect(data.stats.biggestHit).toHaveProperty('name')
-      expect(data.stats.biggestHit).toHaveProperty('amount')
-      expect(data.stats.biggestHit).toHaveProperty('ability')
+  it('highestDamageDone has name, class, amount, and boss when present', () => {
+    if (data.stats.highestDamageDone) {
+      expect(data.stats.highestDamageDone).toHaveProperty('name')
+      expect(data.stats.highestDamageDone).toHaveProperty('amount')
+      expect(data.stats.highestDamageDone).toHaveProperty('boss')
     }
   })
 })
