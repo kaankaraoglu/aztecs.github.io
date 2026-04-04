@@ -13,7 +13,7 @@
             <span :class="['runner-name', runner.class]">{{ runner.name }}</span>
             <span class="runner-score">{{ runner.score }}</span>
             <span v-if="runner.topKeys && runner.topKeys.length" class="runner-keys">
-              <span v-for="(key, ki) in runner.topKeys.slice(0, 2)" :key="ki" class="runner-key">{{
+              <span v-for="(key, ki) in runner.topKeys" :key="ki" class="runner-key">{{
                 key
               }}</span>
             </span>
@@ -98,8 +98,6 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
   padding: $space-2 $space-3;
   background: $surface-2;
   min-height: 2.2rem;
-  flex-wrap: wrap;
-
   @include mobile {
     gap: $space-2;
     padding: $space-2;
@@ -132,12 +130,19 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
 .runner-keys {
   display: flex;
   gap: $space-2;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-left: auto;
+  overflow-x: auto;
+  max-width: 60%;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   @include mobile {
     margin-left: 0;
-    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -148,6 +153,8 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
   border: 1px solid $color-border;
   border-radius: $radius-sm;
   padding: 0.1rem $space-2;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* ── Dungeon Grid ── */
