@@ -179,7 +179,7 @@ async function fetchHealingDone(token, code, fightIDs) {
  * @param {string} token
  * @param {string} code
  * @param {number} fightId
- * @returns {Promise<Map<string, string>>} Map of player name → WCL class type
+ * @returns {Promise<Map<string, {type: string, spec: string}>>} Map of player name → class/spec info
  */
 async function fetchFightParticipants(token, code, fightId) {
   const query = `{
@@ -198,11 +198,12 @@ async function fetchFightParticipants(token, code, fightId) {
   const pd = parsed?.data?.playerDetails
   if (!pd) return new Map()
 
-  /** @type {Map<string, string>} */
+  /** @type {Map<string, {type: string, spec: string}>} */
   const players = new Map()
   for (const role of ['tanks', 'healers', 'dps']) {
     for (const player of pd[role] || []) {
-      players.set(player.name, player.type || '')
+      const spec = player.specs?.[0]?.spec || ''
+      players.set(player.name, { type: player.type || '', spec })
     }
   }
   return players
@@ -327,12 +328,12 @@ async function fetchStats(token) {
         // Fetch participants for each kill fight (Iron Raider tracking)
         for (const fight of killFights) {
           const participants = await fetchFightParticipants(token, code, fight.id)
-          for (const [name, classType] of participants) {
+          for (const [name, { type: classType, spec }] of participants) {
             const existing = killAttendanceByName.get(name)
             if (existing) {
               existing.count++
             } else {
-              killAttendanceByName.set(name, { type: classType, count: 1 })
+              killAttendanceByName.set(name, { type: classType, spec, count: 1 })
             }
           }
         }
@@ -351,11 +352,12 @@ async function fetchStats(token) {
   }
 
   // --- Iron Raider ---
-  // Eligible: not in disqualifiedFromIron, minimum 3 kills attended
+  // Eligible: not in disqualifiedFromIron, not a Holy Priest, minimum 3 kills attended
   let ironRaider = null
   let ironRaiderKills = 2 // minimum threshold - 1 so first valid candidate wins
-  for (const [name, { type, count }] of killAttendanceByName) {
+  for (const [name, { type, spec, count }] of killAttendanceByName) {
     if (disqualifiedFromIron.has(name)) continue
+    if (type === 'Priest' && spec === 'Holy') continue
     if (count > ironRaiderKills) {
       ironRaiderKills = count
       ironRaider = {
