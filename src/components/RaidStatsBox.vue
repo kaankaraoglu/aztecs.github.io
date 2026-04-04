@@ -74,6 +74,12 @@
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </div>
+    <div class="info-box info-box--no-hover stat-card">
+      <p class="stat-label">Highest Avoidable Damage Taken</p>
+      <p class="stat-name"><span class="warrior">Peavy</span>, <span class="evoker">Proto</span></p>
+      <p class="stat-name death-knight">Madhouse</p>
+      <p class="stat-subtitle">by miles</p>
+    </div>
   </div>
 </template>
 
@@ -102,7 +108,7 @@ function formatNumber(n) {
 
 .raid-stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: $space-4;
 
   @include tablet {
@@ -186,6 +192,13 @@ function formatNumber(n) {
   margin: 0;
   font-size: 0.9em;
   color: $color-text-muted;
+}
+
+.stat-subtitle {
+  margin: 0;
+  font-size: 0.7em;
+  font-style: italic;
+  color: $color-text-subtle;
 }
 
 .stat-empty {
