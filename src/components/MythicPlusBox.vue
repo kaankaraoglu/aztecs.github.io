@@ -92,15 +92,18 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
 }
 
 .runner-entry {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.2rem minmax(6rem, auto) auto 1fr;
   align-items: center;
   gap: $space-3;
   padding: $space-2 $space-3;
   background: $surface-2;
   min-height: 2.2rem;
+
   @include mobile {
     gap: $space-2;
     padding: $space-2;
+    grid-template-columns: 1.2rem 1fr auto auto;
   }
 }
 
@@ -108,41 +111,30 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
   font-size: 0.75em;
   font-weight: 700;
   color: $color-text-subtle;
-  width: 1.2rem;
   text-align: right;
-  flex-shrink: 0;
 }
 
 .runner-name {
   font-size: 1em;
   font-weight: 600;
-  flex: 0 0 auto;
-  min-width: 6rem;
 }
 
 .runner-score {
   font-size: 0.85em;
   font-weight: 700;
   color: $accent-color;
-  flex: 0 0 auto;
 }
 
 .runner-keys {
   display: flex;
   gap: $space-2;
   flex-wrap: nowrap;
-  margin-left: auto;
+  justify-content: flex-end;
   overflow-x: auto;
-  max-width: 60%;
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
-  }
-
-  @include mobile {
-    margin-left: 0;
-    max-width: 100%;
   }
 }
 
