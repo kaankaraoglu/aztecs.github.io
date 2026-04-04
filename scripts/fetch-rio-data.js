@@ -48,10 +48,20 @@ async function fetchJson(url) {
   return res.json()
 }
 
-async function fetchCharacterProfile(name, realm) {
-  const realmSlug = realm.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '')
+/**
+ * Fetch a character profile from Raider.IO.
+ * @param {string} name
+ * @param {string} realmSlug – pre-extracted slug from the guild API profile_url
+ * @returns {Promise<object | null>} profile data, or null if the character is not tracked (HTTP 400)
+ */
+async function fetchCharacterProfile(name, realmSlug) {
   const url = `${CHAR_URL}?region=eu&realm=${realmSlug}&name=${encodeURIComponent(name)}&fields=${CHAR_FIELDS}`
-  return fetchJson(url)
+  const res = await fetch(url)
+
+  if (res.status === 400) return null // character not tracked by RIO (e.g. low-level alt)
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+
+  return res.json()
 }
 
 function sleep(ms) {
@@ -87,6 +97,7 @@ async function main() {
     // Phase 2: Fetch individual character profiles in batches
     const profiles = []
     let succeeded = 0
+    let skipped = 0
     let failed = 0
 
     for (let i = 0; i < uniqueMembers.length; i += BATCH_SIZE) {
@@ -96,17 +107,21 @@ async function main() {
       console.log(`[rio]   Batch ${batchIndex}/${totalBatches}: ${batchNames}`)
 
       const results = await Promise.allSettled(
-        batch.map((m) =>
-          fetchCharacterProfile(m.character.name, m.character.realm?.name || "Al'Akir"),
-        ),
+        batch.map((m) => {
+          // Extract realm slug from the profile_url provided by the guild API
+          const slug = m.character.profile_url.split('/')[5]
+          return fetchCharacterProfile(m.character.name, slug)
+        }),
       )
 
       for (let j = 0; j < results.length; j++) {
         const result = results[j]
         const charName = batch[j].character.name
-        if (result.status === 'fulfilled') {
+        if (result.status === 'fulfilled' && result.value !== null) {
           succeeded++
           profiles.push(result.value)
+        } else if (result.status === 'fulfilled' && result.value === null) {
+          skipped++
         } else {
           failed++
           console.warn(`[rio]     ✗ ${charName}: ${result.reason?.message || 'unknown error'}`)
@@ -119,7 +134,9 @@ async function main() {
       }
     }
 
-    console.log(`[rio] Profile fetch complete: ${succeeded} succeeded, ${failed} failed`)
+    console.log(
+      `[rio] Profile fetch complete: ${succeeded} succeeded, ${skipped} skipped (not on RIO), ${failed} failed`,
+    )
 
     // Determine season name
     let season = null
