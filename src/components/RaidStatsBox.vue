@@ -80,6 +80,11 @@
       <p class="stat-name death-knight">Madhouse</p>
       <p class="stat-subtitle">by miles</p>
     </div>
+    <div class="info-box info-box--no-hover stat-card">
+      <p class="stat-label">Frontpage Material</p>
+      <p class="stat-name warrior">Agro</p>
+      <p class="stat-subtitle">because he asked</p>
+    </div>
   </div>
 </template>
 
@@ -108,7 +113,7 @@ function formatNumber(n) {
 
 .raid-stats-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: $space-4;
 
   @include tablet {
