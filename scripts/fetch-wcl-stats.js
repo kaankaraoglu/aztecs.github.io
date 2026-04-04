@@ -71,20 +71,29 @@ async function getToken() {
   return (await res.json()).access_token
 }
 
-async function graphql(token, query) {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ query }),
-  })
+async function graphql(token, query, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    })
 
-  if (!res.ok) throw new Error(`GraphQL request failed: ${res.status}`)
-  const data = await res.json()
-  if (data.errors?.length) throw new Error(data.errors[0].message)
-  return data
+    if (res.status >= 500 && attempt < retries) {
+      const delay = 1000 * 2 ** (attempt - 1)
+      console.warn(`[wcl-stats] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`)
+      await new Promise((r) => setTimeout(r, delay))
+      continue
+    }
+
+    if (!res.ok) throw new Error(`GraphQL request failed: ${res.status}`)
+    const data = await res.json()
+    if (data.errors?.length) throw new Error(data.errors[0].message)
+    return data
+  }
 }
 
 /**
@@ -243,7 +252,7 @@ async function fetchStats(token) {
   /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
   let bestHealerEntry = null
 
-  const BATCH_SIZE = 3
+  const BATCH_SIZE = 2
 
   for (let i = 0; i < reports.length; i += BATCH_SIZE) {
     const batch = reports.slice(i, i + BATCH_SIZE)
