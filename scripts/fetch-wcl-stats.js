@@ -1,4 +1,3 @@
-/* global process */
 /**
  * Build-time script that fetches fun raid stats from Warcraft Logs.
  * Writes to src/data/wcl-stats.json with:
@@ -14,13 +13,11 @@ import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadEnv } from './load-env.js'
+import { GUILD_ID, CURRENT_ZONE_ID, CLASS_MAP, getToken, graphql } from './wcl-api.js'
 
 loadEnv()
 
-const GUILD_ID = 18606
-const CURRENT_ZONE_ID = 46 // VS / DR / MQD (Midnight Season 1)
-const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
-const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
+const LOG_PREFIX = '[wcl-stats]'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'wcl-stats.json')
@@ -33,72 +30,6 @@ const EMPTY_OUTPUT = {
     highestDamageDone: null,
     bestHealer: null,
   },
-}
-
-const CLASS_MAP = {
-  DeathKnight: 'death-knight',
-  DemonHunter: 'demon-hunter',
-  Druid: 'druid',
-  Evoker: 'evoker',
-  Hunter: 'hunter',
-  Mage: 'mage',
-  Monk: 'monk',
-  Paladin: 'paladin',
-  Priest: 'priest',
-  Rogue: 'rogue',
-  Shaman: 'shaman',
-  Warlock: 'warlock',
-  Warrior: 'warrior',
-}
-
-async function getToken() {
-  const clientId = process.env.WCL_CLIENT_ID
-  const clientSecret = process.env.WCL_CLIENT_SECRET
-
-  if (!clientId || !clientSecret) {
-    console.warn('[wcl-stats] WCL_CLIENT_ID or WCL_CLIENT_SECRET not set, skipping')
-    return null
-  }
-
-  const res = await fetch(TOKEN_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`,
-  })
-
-  if (!res.ok) {
-    console.warn(`[wcl-stats] Token request failed: ${res.status}`)
-    return null
-  }
-
-  return (await res.json()).access_token
-}
-
-async function graphql(token, query, retries = 3) {
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-    })
-
-    if (res.status >= 500 && attempt < retries) {
-      const delay = 1000 * 2 ** (attempt - 1)
-      console.warn(
-        `[wcl-stats] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`,
-      )
-      await new Promise((r) => setTimeout(r, delay))
-      continue
-    }
-
-    if (!res.ok) throw new Error(`GraphQL request failed: ${res.status}`)
-    const data = await res.json()
-    if (data.errors?.length) throw new Error(data.errors[0].message)
-    return data
-  }
 }
 
 /**
@@ -119,7 +50,7 @@ async function fetchDeaths(token, code, fightIDs) {
     }
   }`
 
-  const result = await graphql(token, query)
+  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
   const raw = result.data?.reportData?.report?.table
   if (!raw) return []
 
@@ -145,7 +76,7 @@ async function fetchDamageDone(token, code, fightIDs) {
     }
   }`
 
-  const result = await graphql(token, query)
+  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
   const raw = result.data?.reportData?.report?.table
   if (!raw) return []
 
@@ -171,7 +102,7 @@ async function fetchHealingDone(token, code, fightIDs) {
     }
   }`
 
-  const result = await graphql(token, query)
+  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
   const raw = result.data?.reportData?.report?.table
   if (!raw) return []
 
@@ -195,7 +126,7 @@ async function fetchFightParticipants(token, code, fightId) {
     }
   }`
 
-  const result = await graphql(token, query)
+  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
   const raw = result.data?.reportData?.report?.playerDetails
   if (!raw) return new Map()
 
@@ -237,7 +168,7 @@ async function fetchStats(token) {
     }
   }`
 
-  const reportsResult = await graphql(token, reportsQuery)
+  const reportsResult = await graphql(token, reportsQuery, { logPrefix: LOG_PREFIX })
   const zoneName = reportsResult.data?.worldData?.zone?.name || null
   const reports = reportsResult.data?.reportData?.reports?.data || []
 
@@ -406,10 +337,10 @@ async function fetchStats(token) {
 }
 
 async function main() {
-  const token = await getToken()
+  const token = await getToken(LOG_PREFIX)
   if (!token) {
     writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
-    console.log('[wcl-stats] Wrote empty stats (no credentials)')
+    console.log(`${LOG_PREFIX} Wrote empty stats (no credentials)`)
     return
   }
 
@@ -417,13 +348,13 @@ async function main() {
     const data = await fetchStats(token)
     writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2) + '\n')
     console.log(
-      `[wcl-stats] Wrote stats: mostDeaths=${data.stats.mostDeaths?.name ?? 'none'}, ` +
+      `${LOG_PREFIX} Wrote stats: mostDeaths=${data.stats.mostDeaths?.name ?? 'none'}, ` +
         `ironRaider=${data.stats.ironRaider?.name ?? 'none'}, ` +
         `highestDamageDone=${data.stats.highestDamageDone?.name ?? 'none'}, ` +
         `bestHealer=${data.stats.bestHealer?.name ?? 'none'}`,
     )
   } catch (err) {
-    console.warn(`[wcl-stats] Failed to fetch stats: ${err.message}`)
+    console.warn(`${LOG_PREFIX} Failed to fetch stats: ${err.message}`)
     writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
   }
 }
