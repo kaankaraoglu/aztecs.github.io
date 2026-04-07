@@ -1,5 +1,8 @@
 # TODO — Code Improvements & Feature Ideas
 
+## Instructions
+- For all below items, create a new branch on top of up-to-date main branch, commit and create a PR when done.
+
 ## Code Quality
 
 - [ ] **Extract shared WCL utilities** — `CLASS_MAP`, `getToken()`, and `graphql()` are duplicated across `scripts/fetch-wcl-data.js`, `fetch-wcl-stats.js`, and `fetch-wcl-history.js`. Extract to a shared `scripts/wcl-api.js` module.
