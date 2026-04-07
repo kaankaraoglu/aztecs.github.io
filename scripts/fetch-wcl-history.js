@@ -7,51 +7,15 @@
  * Usage: node scripts/fetch-wcl-history.js
  */
 
-const GUILD_ID = 18606
-const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
-const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
+import { loadEnv } from './load-env.js'
+import { GUILD_ID, getToken, graphql } from './wcl-api.js'
+
+loadEnv()
+
+const LOG_PREFIX = '[wcl-history]'
 
 /** Difficulty IDs as returned by WCL. */
 const DIFF = { NORMAL: 3, HEROIC: 4, MYTHIC: 5 }
-
-async function getToken() {
-  const clientId = process.env.WCL_CLIENT_ID
-  const clientSecret = process.env.WCL_CLIENT_SECRET
-
-  if (!clientId || !clientSecret) {
-    console.error('[wcl-history] WCL_CLIENT_ID or WCL_CLIENT_SECRET not set, aborting')
-    return null
-  }
-
-  const res = await fetch(TOKEN_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`,
-  })
-
-  if (!res.ok) {
-    console.error(`[wcl-history] Token request failed: ${res.status}`)
-    return null
-  }
-
-  return (await res.json()).access_token
-}
-
-async function graphql(token, query) {
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ query }),
-  })
-
-  if (!res.ok) throw new Error(`GraphQL request failed: ${res.status}`)
-  const data = await res.json()
-  if (data.errors?.length) throw new Error(data.errors[0].message)
-  return data
-}
 
 /**
  * Fetches all expansions (IDs 1–5) and returns a flat list of zones with their encounters.
@@ -83,7 +47,7 @@ async function fetchAllZones(token) {
         }`
 
         try {
-          const result = await graphql(token, query)
+          const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
           const expansion = result.data?.worldData?.expansion
           if (!expansion) return []
 
@@ -94,7 +58,7 @@ async function fetchAllZones(token) {
             encounters: zone.encounters || [],
           }))
         } catch (err) {
-          console.error(`[wcl-history] Failed to fetch expansion ${expansionId}: ${err.message}`)
+          console.error(`${LOG_PREFIX} Failed to fetch expansion ${expansionId}: ${err.message}`)
           return []
         }
       }),
@@ -146,7 +110,7 @@ async function fetchZoneHistory(token, expansionName, zoneId, zoneName, encounte
     }
   }`
 
-  const result = await graphql(token, query)
+  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
   const reports = result.data?.reportData?.reports?.data || []
 
   if (reports.length === 0) return null
@@ -192,12 +156,12 @@ async function fetchZoneHistory(token, expansionName, zoneId, zoneName, encounte
 }
 
 async function main() {
-  const token = await getToken()
+  const token = await getToken(LOG_PREFIX)
   if (!token) process.exit(1)
 
-  console.error('[wcl-history] Fetching expansion and zone data...')
+  console.error(`${LOG_PREFIX} Fetching expansion and zone data...`)
   const allZones = await fetchAllZones(token)
-  console.error(`[wcl-history] Found ${allZones.length} zones across all expansions`)
+  console.error(`${LOG_PREFIX} Found ${allZones.length} zones across all expansions`)
 
   /** @type {ZoneResult[]} */
   const output = []
@@ -212,7 +176,7 @@ async function main() {
           return await fetchZoneHistory(token, expansionName, zoneId, zoneName, encounters)
         } catch (err) {
           console.error(
-            `[wcl-history] Failed to fetch zone ${zoneName} (${zoneId}): ${err.message}`,
+            `${LOG_PREFIX} Failed to fetch zone ${zoneName} (${zoneId}): ${err.message}`,
           )
           return null
         }
@@ -221,13 +185,13 @@ async function main() {
 
     for (const result of results) {
       if (result !== null) {
-        console.error(`[wcl-history] Zone with kills: ${result.zone} (${result.expansion})`)
+        console.error(`${LOG_PREFIX} Zone with kills: ${result.zone} (${result.expansion})`)
         output.push(result)
       }
     }
   }
 
-  console.error(`[wcl-history] Done. Found ${output.length} zones with guild kills.`)
+  console.error(`${LOG_PREFIX} Done. Found ${output.length} zones with guild kills.`)
   console.log(JSON.stringify(output, null, 2))
 }
 

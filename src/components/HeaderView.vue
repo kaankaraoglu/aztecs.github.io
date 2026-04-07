@@ -58,6 +58,7 @@ const splashMessages = [
   'Proud on you',
   'Damit Delmos!',
   "My wife is home, let's kill the bitch!",
+  'Do you have a weapon equipped?',
 ]
 
 const currentSplash = ref('')
@@ -174,7 +175,7 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     margin: $space-8 0 0;
-    padding-bottom: $space-12;
+    padding-bottom: $space-4;
     @include mobile {
       margin: $space-4 0 0;
       padding-bottom: $space-8;

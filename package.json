@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "fetch-data": "node scripts/fetch-wcl-data.js && node scripts/fetch-rio-data.js && node scripts/fetch-wcl-stats.js",
+    "predev": "npm run fetch-data",
     "dev": "vite",
-    "prebuild": "node scripts/fetch-wcl-data.js && node scripts/fetch-rio-data.js && node scripts/fetch-wcl-stats.js",
+    "prebuild": "npm run fetch-data",
     "build": "vite build",
     "postbuild": "cp dist/index.html dist/404.html || copy dist/index.html dist/404.html",
     "preview": "vite preview",
@@ -17,7 +19,7 @@
   },
   "dependencies": {
     "firebase": "^12.3.0",
-    "vue": "^3.5.22",
+    "vue": "^3.5.31",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
