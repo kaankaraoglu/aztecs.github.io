@@ -1,4 +1,3 @@
-/* global process */
 /**
  * Build-time script that fetches full raid progression from Warcraft Logs.
  * Writes to src/data/wcl-progression.json with per-boss data including:
@@ -14,13 +13,11 @@ import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadEnv } from './load-env.js'
+import { GUILD_ID, CURRENT_ZONE_ID, CLASS_MAP, getToken, graphql } from './wcl-api.js'
 
 loadEnv()
 
-const GUILD_ID = 18606
-const CURRENT_ZONE_ID = 46 // VS / DR / MQD (Midnight Season 1)
-const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
-const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
+const LOG_PREFIX = '[wcl]'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'wcl-progression.json')
@@ -30,22 +27,6 @@ const EMPTY_OUTPUT = {
   raids: [],
   summary: { total: 0, normal: 0, heroic: 0, mythic: 0 },
   latestReport: null,
-}
-
-const CLASS_MAP = {
-  DeathKnight: 'death-knight',
-  DemonHunter: 'demon-hunter',
-  Druid: 'druid',
-  Evoker: 'evoker',
-  Hunter: 'hunter',
-  Mage: 'mage',
-  Monk: 'monk',
-  Paladin: 'paladin',
-  Priest: 'priest',
-  Rogue: 'rogue',
-  Shaman: 'shaman',
-  Warlock: 'warlock',
-  Warrior: 'warrior',
 }
 
 const RAID_INSTANCE_ENCOUNTERS = {
@@ -59,56 +40,6 @@ const RAID_INSTANCE_ENCOUNTERS = {
   ],
   'The Dreamrift': ['Chimaerus, the Undreamt God'],
   "March on Quel'Danas": ["Belo'ren, Child of Al'ar", 'Midnight Falls'],
-}
-
-async function getToken() {
-  const clientId = process.env.WCL_CLIENT_ID
-  const clientSecret = process.env.WCL_CLIENT_SECRET
-
-  if (!clientId || !clientSecret) {
-    console.warn('[wcl] WCL_CLIENT_ID or WCL_CLIENT_SECRET not set, skipping')
-    return null
-  }
-
-  const res = await fetch(TOKEN_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`,
-  })
-
-  if (!res.ok) {
-    console.warn(`[wcl] Token request failed: ${res.status}`)
-    return null
-  }
-
-  return (await res.json()).access_token
-}
-
-async function graphql(token, query, retries = 3) {
-  for (let attempt = 1; attempt <= retries; attempt++) {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ query }),
-    })
-
-    if (res.status >= 500 && attempt < retries) {
-      const delay = 1000 * 2 ** (attempt - 1)
-      console.warn(
-        `[wcl-data] GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`,
-      )
-      await new Promise((r) => setTimeout(r, delay))
-      continue
-    }
-
-    if (!res.ok) throw new Error(`GraphQL request failed: ${res.status}`)
-    const data = await res.json()
-    if (data.errors?.length) throw new Error(data.errors[0].message)
-    return data
-  }
 }
 
 const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }
@@ -307,10 +238,10 @@ async function fetchProgression(token) {
 }
 
 async function main() {
-  const token = await getToken()
+  const token = await getToken(LOG_PREFIX)
   if (!token) {
     writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
-    console.log('[wcl] Wrote empty progression (no credentials)')
+    console.log(`${LOG_PREFIX} Wrote empty progression (no credentials)`)
     return
   }
 
@@ -322,12 +253,12 @@ async function main() {
 
     writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2) + '\n')
     console.log(
-      `[wcl] Wrote progression: ${killed}/${bosses.length} bosses killed, ` +
+      `${LOG_PREFIX} Wrote progression: ${killed}/${bosses.length} bosses killed, ` +
         `${rosterCount} rosters, ` +
         `${data.summary.normal}N ${data.summary.heroic}HC ${data.summary.mythic}M`,
     )
   } catch (err) {
-    console.warn(`[wcl] Failed to fetch progression: ${err.message}`)
+    console.warn(`${LOG_PREFIX} Failed to fetch progression: ${err.message}`)
     writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
   }
 }
