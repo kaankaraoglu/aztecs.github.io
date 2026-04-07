@@ -33,39 +33,7 @@
             <a :href="imageUrl" target="_blank" rel="noopener noreferrer"> Show Image </a>
           </div>
 
-          <div class="roster">
-            <template v-if="tanks && tanks.length > 0">
-              <span>Tanks: </span>
-              <div class="names">
-                <span v-for="(tank, index) in tanks" :key="'tank-' + index" :class="tank.class">
-                  {{ tank.name }}<span v-if="index < tanks.length - 1">,</span>
-                </span>
-              </div>
-              <br />
-            </template>
-            <template v-if="healers && healers.length > 0">
-              <span>Healers: </span>
-              <div class="names">
-                <span
-                  v-for="(healer, index) in healers"
-                  :key="'healer-' + index"
-                  :class="healer.class"
-                >
-                  {{ healer.name }}
-                  <span v-if="index < healers.length - 1">,</span>
-                </span>
-              </div>
-              <br />
-            </template>
-            <template v-if="dds && dds.length > 0">
-              <span>DDs: </span>
-              <div class="names">
-                <span v-for="(dd, index) in dds" :key="'dd-' + index" :class="dd.class">
-                  {{ dd.name }}<span v-if="index < dds.length - 1">,</span>
-                </span>
-              </div>
-            </template>
-          </div>
+          <RosterList class="roster" :tanks="tanks" :healers="healers" :dps="dds" />
         </div>
       </div>
     </div>
@@ -81,6 +49,7 @@
 <script setup>
 import { ref } from 'vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
+import RosterList from '@/components/RosterList.vue'
 import { useTiltEffect } from '@/composables/useTiltEffect'
 
 const cardRef = ref(null)
@@ -288,19 +257,7 @@ const lightboxOpen = ref(false)
 
         .roster {
           margin-top: 0.375rem;
-
-          span {
-            font-weight: 600;
-          }
-
-          .names {
-            display: inline;
-            font-weight: normal;
-
-            span {
-              margin-right: 4px;
-            }
-          }
+          font-size: 0.85rem;
         }
       }
     }

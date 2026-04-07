@@ -102,47 +102,16 @@
                   class="roster-inner"
                   :aria-hidden="!expanded[boss.name]"
                 >
-                  <div v-if="expanded[boss.name] && hasRoster(boss)" class="roster-panel">
-                    <div v-if="boss.roster?.tanks?.length" class="role-group">
-                      <RoleIcon role="tank" />
-                      <a
-                        v-for="p in boss.roster.tanks"
-                        :key="p.name"
-                        :class="['player', p.class]"
-                        :title="playerTooltip(p)"
-                        :href="p.armory"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >{{ p.name }}</a
-                      >
-                    </div>
-                    <div v-if="boss.roster?.healers?.length" class="role-group">
-                      <RoleIcon role="healer" />
-                      <a
-                        v-for="p in boss.roster.healers"
-                        :key="p.name"
-                        :class="['player', p.class]"
-                        :title="playerTooltip(p)"
-                        :href="p.armory"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >{{ p.name }}</a
-                      >
-                    </div>
-                    <div v-if="boss.roster?.dps?.length" class="role-group">
-                      <RoleIcon role="dps" />
-                      <a
-                        v-for="p in boss.roster.dps"
-                        :key="p.name"
-                        :class="['player', p.class]"
-                        :title="playerTooltip(p)"
-                        :href="p.armory"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >{{ p.name }}</a
-                      >
-                    </div>
-                  </div>
+                  <RosterList
+                    v-if="expanded[boss.name] && hasRoster(boss)"
+                    class="roster-panel"
+                    :tanks="boss.roster?.tanks"
+                    :healers="boss.roster?.healers"
+                    :dps="boss.roster?.dps"
+                    :linked="true"
+                    :show-icons="true"
+                    :tooltip-fn="playerTooltip"
+                  />
                 </div>
               </div>
             </div>
@@ -175,7 +144,7 @@
 
 <script setup>
 import { reactive, ref, onMounted, onUnmounted } from 'vue'
-import RoleIcon from '@/components/icons/RoleIcon.vue'
+import RosterList from '@/components/RosterList.vue'
 import SkeletonLoader from '@/components/SkeletonLoader.vue'
 
 const props = defineProps({
@@ -597,32 +566,9 @@ function highestDifficulty(raid) {
     }
   }
 
-  .role-group {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.15rem 0.35rem;
-  }
-
-  .player {
+  .roster-panel :deep(.player) {
     font-size: 0.8em;
-    font-weight: 600;
-    text-decoration: none;
     transition: opacity 0.15s;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    &::after {
-      content: ',';
-      color: rgba(255, 255, 255, 0.12);
-      text-decoration: none;
-    }
-
-    &:last-of-type::after {
-      content: '';
-    }
   }
 
   .roster-wrapper {
