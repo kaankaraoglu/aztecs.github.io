@@ -3,6 +3,11 @@ node_modules
 /dist
 
 
+# Fetched data (regenerated at build time)
+src/data/wcl-progression.json
+src/data/wcl-stats.json
+src/data/rio-mythicplus.json
+
 # local env files
 .env
 .env.local
@@ -20,6 +25,7 @@ pnpm-debug.log*
 .vscode
 .claude/worktrees
 .superpowers
+docs/superpowers
 *.suo
 *.ntvs*
 *.njsproj
