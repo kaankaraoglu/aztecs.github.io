@@ -3,14 +3,18 @@
     <Transition name="lightbox">
       <div v-if="open" class="lightbox-overlay" @click.self="$emit('close')">
         <button class="lightbox-close" @click="$emit('close')" aria-label="Close">&times;</button>
-        <img :src="src" :alt="alt" class="lightbox-image" />
+        <div v-if="imageError" class="lightbox-error">
+          <span class="lightbox-error-icon">&#x26A0;</span>
+          <p>Image failed to load</p>
+        </div>
+        <img v-else :src="src" :alt="alt" class="lightbox-image" @error="imageError = true" />
       </div>
     </Transition>
   </Teleport>
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   open: { type: Boolean, required: true },
@@ -19,6 +23,15 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close'])
+
+const imageError = ref(false)
+
+watch(
+  () => props.src,
+  () => {
+    imageError.value = false
+  },
+)
 
 function onKeydown(e) {
   if (e.key === 'Escape' && props.open) {
@@ -48,6 +61,24 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
   max-height: 90vh;
   object-fit: contain;
   border-radius: $radius-sm;
+}
+
+.lightbox-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+.lightbox-error-icon {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .lightbox-close {
