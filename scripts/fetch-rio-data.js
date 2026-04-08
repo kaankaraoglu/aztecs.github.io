@@ -26,14 +26,7 @@ const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'rio-mythicplus.json')
 
 const EMPTY_OUTPUT = { season: null, topRunners: [], dungeonBests: [], lastUpdated: null }
 
-/**
- * Guild rank threshold — only fetch M+ profiles for members at or below this rank.
- * In most WoW guilds: 0 = GM, 1-3 = officers/raiders, 4-5 = trial/social raider.
- * Ranks 6+ are typically alts/socials who won't appear in M+ leaderboards.
- */
-const MAX_GUILD_RANK = 5
-
-const BATCH_SIZE = 5
+const BATCH_SIZE = 10
 const BATCH_DELAY_MS = 1500
 
 const MAX_RETRIES = 3
@@ -102,21 +95,14 @@ async function main() {
       return
     }
 
-    // Filter by rank and deduplicate by character name (guild may have alts)
+    // Deduplicate by character name (guild may have alts)
     const seen = new Set()
-    const uniqueMembers = members
-      .filter((m) => m.rank <= MAX_GUILD_RANK)
-      .filter((m) => {
-        const key = `${m.character.name}-${m.character.realm?.slug || 'al-akir'}`
-        if (seen.has(key)) return false
-        seen.add(key)
-        return true
-      })
-
-    const skippedByRank = members.length - members.filter((m) => m.rank <= MAX_GUILD_RANK).length
-    if (skippedByRank > 0) {
-      console.log(`[rio] Skipped ${skippedByRank} members with rank > ${MAX_GUILD_RANK}`)
-    }
+    const uniqueMembers = members.filter((m) => {
+      const key = `${m.character.name}-${m.character.realm?.slug || 'al-akir'}`
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
 
     const totalBatches = Math.ceil(uniqueMembers.length / BATCH_SIZE)
     console.log(
