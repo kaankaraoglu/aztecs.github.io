@@ -12,6 +12,7 @@ export function useMythicPlus() {
     season: mpData.season,
     topRunners: mpData.topRunners,
     dungeonBests: mpData.dungeonBests,
+    lastUpdated: mpData.lastUpdated || null,
     hasData,
   }
 }
