@@ -1,15 +1,16 @@
 # TODO — Code Improvements & Feature Ideas
 
 ## Instructions
+
 - For all below items, create a new branch on top of up-to-date main branch, commit and create a PR when done.
 
 ## Code Quality
 
 - [x] **Extract shared WCL utilities** — `CLASS_MAP`, `getToken()`, and `graphql()` are duplicated across `scripts/fetch-wcl-data.js`, `fetch-wcl-stats.js`, and `fetch-wcl-history.js`. Extract to a shared `scripts/wcl-api.js` module.
 - [x] **Extract shared roster component** — Player name rendering with class-colored spans is duplicated in `KillCard.vue` and `RaidProgressionBox.vue`. Create a reusable `RosterList.vue` component.
-- [ ] **Add timeout to build-time fetch scripts** — `fetch-wcl-data.js` and `fetch-wcl-stats.js` parallel fetches have no timeout; could hang indefinitely on slow API responses.
-- [ ] **Image load error handling in ImageLightbox** — No fallback UI if the lightbox image fails to load.
-- [ ] **Canvas error handling in EmberParticles** — No guard if `getContext('2d')` returns null.
+- [x] **Add timeout to build-time fetch scripts** — `fetch-wcl-data.js` and `fetch-wcl-stats.js` parallel fetches have no timeout; could hang indefinitely on slow API responses.
+- [x] **Image load error handling in ImageLightbox** — No fallback UI if the lightbox image fails to load.
+- [x] **Canvas error handling in EmberParticles** — No guard if `getContext('2d')` returns null.
 
 ## Test Coverage
 
