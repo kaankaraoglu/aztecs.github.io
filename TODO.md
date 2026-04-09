@@ -42,4 +42,4 @@ Current coverage: ~23% of components/composables tested.
 - [ ] **M+ runner sorting** — Allow sorting leaderboard by score or name
 - [ ] **Service worker / offline support** — Cache static assets for offline browsing
 - [ ] **Custom Firebase event tracking** — Track user interactions beyond page views (e.g., boss expand, lightbox open)
-- [ ] **Agro stat box** — Currently on `feat/agro-stat-box` branch, integrate when ready
+- [ ] In the raid progression box color the progress bars the same color as the normal and heroic texts and overlap the background to show the progress for both difficulties.
