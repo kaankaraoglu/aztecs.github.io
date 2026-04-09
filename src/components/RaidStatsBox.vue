@@ -63,8 +63,8 @@
           {{ stats.highestDamageDoneMplus.name }}
         </p>
         <p class="stat-value">
-          {{ formatNumber(stats.highestDamageDoneMplus.amount) }} in
-          {{ stats.highestDamageDoneMplus.dungeon || 'a dungeon' }}
+          {{ formatNumber(stats.highestDamageDoneMplus.amount) }} on
+          {{ stats.highestDamageDoneMplus.boss || 'a boss' }}
         </p>
         <a
           v-if="stats.highestDamageDoneMplus.report"

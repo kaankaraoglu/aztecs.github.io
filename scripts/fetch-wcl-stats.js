@@ -4,7 +4,7 @@
  * - Most Deaths: player with the highest total deaths across all reports
  * - Iron Raider: player who attended the most kills without ever dying
  * - Highest Damage Done: highest single-report damage total by any one player
- * - Highest Damage Done in M+: highest single-dungeon-run damage total by any one player
+ * - Highest Damage Done in M+: highest single-encounter damage total by any one player in M+
  *
  * Requires WCL_CLIENT_ID and WCL_CLIENT_SECRET env vars.
  * Usage: node scripts/fetch-wcl-stats.js
@@ -155,9 +155,9 @@ async function fetchFightParticipants(token, code, fightId) {
 }
 
 /**
- * Fetches M+ reports and finds the highest total damage done in a single dungeon run.
+ * Fetches M+ reports and finds the highest single-encounter damage done.
  * @param {string} token
- * @returns {Promise<{ name: string, type: string, total: number, reportCode: string, dungeonName: string } | null>}
+ * @returns {Promise<{ name: string, type: string, total: number, reportCode: string, bossName: string } | null>}
  */
 async function fetchMplusHighestDamage(token) {
   const reportsQuery = `{
@@ -165,7 +165,6 @@ async function fetchMplusHighestDamage(token) {
       reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_MPLUS_ZONE_ID}, limit: 50) {
         data {
           code
-          title
           fights {
             id
             name
@@ -179,7 +178,7 @@ async function fetchMplusHighestDamage(token) {
   const reportsResult = await graphql(token, reportsQuery, { logPrefix: LOG_PREFIX })
   const reports = reportsResult.data?.reportData?.reports?.data || []
 
-  /** @type {{ name: string, type: string, total: number, reportCode: string, dungeonName: string } | null} */
+  /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
   let highest = null
 
   const BATCH_SIZE = 2
@@ -190,23 +189,22 @@ async function fetchMplusHighestDamage(token) {
     await Promise.all(
       batch.map(async (report) => {
         const code = report.code
-        const allFightIDs = (report.fights || []).map((f) => f.id)
-        if (allFightIDs.length === 0) return
+        const bossFights = (report.fights || []).filter((f) => f.encounterID > 0)
 
-        const dungeonName = report.title || 'a dungeon'
+        for (const fight of bossFights) {
+          const entries = await fetchDamageDone(token, code, [fight.id])
 
-        const entries = await fetchDamageDone(token, code, allFightIDs)
-
-        for (const entry of entries) {
-          const total = entry.total ?? entry.amount ?? 0
-          if (!entry.name || total === 0) continue
-          if (!highest || total > highest.total) {
-            highest = {
-              name: entry.name,
-              type: entry.type || '',
-              total,
-              reportCode: code,
-              dungeonName,
+          for (const entry of entries) {
+            const total = entry.total ?? entry.amount ?? 0
+            if (!entry.name || total === 0) continue
+            if (!highest || total > highest.total) {
+              highest = {
+                name: entry.name,
+                type: entry.type || '',
+                total,
+                reportCode: code,
+                bossName: fight.name,
+              }
             }
           }
         }
@@ -405,7 +403,7 @@ async function fetchStats(token) {
       name: mplusEntry.name,
       class: CLASS_MAP[mplusEntry.type] || mplusEntry.type.toLowerCase() || null,
       amount: mplusEntry.total,
-      dungeon: mplusEntry.dungeonName || null,
+      boss: mplusEntry.bossName || null,
       report: `https://www.warcraftlogs.com/reports/${mplusEntry.reportCode}`,
     }
   }
