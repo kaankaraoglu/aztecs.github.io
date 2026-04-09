@@ -3,8 +3,10 @@
  * Writes to src/data/wcl-stats.json with:
  * - Most Deaths: player with the highest total deaths across all reports
  * - Iron Raider: player who attended the most kills without ever dying
- * - Highest Damage Done: highest single-report damage total by any one player
+ * - Highest Damage Done in Raid: highest single-fight damage total by any one player in raid
  * - Highest Damage Done in M+: highest single-encounter damage total by any one player in M+
+ * - Best Healer in Raid: highest single-fight healing total by any one player in raid
+ * - Best Healer in M+: highest single-encounter healing total by any one player in M+
  *
  * Requires WCL_CLIENT_ID and WCL_CLIENT_SECRET env vars.
  * Usage: node scripts/fetch-wcl-stats.js
@@ -38,6 +40,7 @@ const EMPTY_OUTPUT = {
     highestDamageDone: null,
     highestDamageDoneMplus: null,
     bestHealer: null,
+    bestHealerMplus: null,
   },
 }
 
@@ -154,77 +157,21 @@ async function fetchFightParticipants(token, code, fightId) {
   return players
 }
 
-/**
- * Fetches M+ reports and finds the highest single-encounter damage done.
- * @param {string} token
- * @returns {Promise<{ name: string, type: string, total: number, reportCode: string, bossName: string } | null>}
- */
-async function fetchMplusHighestDamage(token) {
-  const reportsQuery = `{
-    reportData {
-      reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_MPLUS_ZONE_ID}, limit: 50) {
-        data {
-          code
-          fights {
-            id
-            name
-            encounterID
-          }
-        }
-      }
-    }
-  }`
-
-  const reportsResult = await graphql(token, reportsQuery, { logPrefix: LOG_PREFIX })
-  const reports = reportsResult.data?.reportData?.reports?.data || []
-
-  /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
-  let highest = null
-
-  const BATCH_SIZE = 2
-
-  for (let i = 0; i < reports.length; i += BATCH_SIZE) {
-    const batch = reports.slice(i, i + BATCH_SIZE)
-
-    await Promise.all(
-      batch.map(async (report) => {
-        const code = report.code
-        const bossFights = (report.fights || []).filter((f) => f.encounterID > 0)
-
-        for (const fight of bossFights) {
-          const entries = await fetchDamageDone(token, code, [fight.id])
-
-          for (const entry of entries) {
-            const total = entry.total ?? entry.amount ?? 0
-            if (!entry.name || total === 0) continue
-            if (!highest || total > highest.total) {
-              highest = {
-                name: entry.name,
-                type: entry.type || '',
-                total,
-                reportCode: code,
-                bossName: fight.name,
-              }
-            }
-          }
-        }
-      }),
-    )
-  }
-
-  return highest
-}
-
 async function fetchStats(token) {
-  // Fetch zone name and all reports with fight metadata
+  // Fetch zone info (name + encounter IDs) for both raid and M+ zones,
+  // plus all reports for each zone, in a single GraphQL call.
   const reportsQuery = `{
     worldData {
-      zone(id: ${CURRENT_ZONE_ID}) {
+      raidZone: zone(id: ${CURRENT_ZONE_ID}) {
         name
+        encounters { id }
+      }
+      mplusZone: zone(id: ${CURRENT_MPLUS_ZONE_ID}) {
+        encounters { id }
       }
     }
     reportData {
-      reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: 50) {
+      raidReports: reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: 50) {
         data {
           code
           fights {
@@ -235,14 +182,36 @@ async function fetchStats(token) {
           }
         }
       }
+      mplusReports: reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_MPLUS_ZONE_ID}, limit: 50) {
+        data {
+          code
+          fights {
+            id
+            name
+            encounterID
+          }
+        }
+      }
     }
   }`
 
   const reportsResult = await graphql(token, reportsQuery, { logPrefix: LOG_PREFIX })
-  const zoneName = reportsResult.data?.worldData?.zone?.name || null
-  const reports = reportsResult.data?.reportData?.reports?.data || []
+  const zoneName = reportsResult.data?.worldData?.raidZone?.name || null
 
-  // Accumulators
+  // Build encounter ID sets for filtering fights in mixed reports
+  /** @type {Set<number>} */
+  const raidEncounterIDs = new Set(
+    (reportsResult.data?.worldData?.raidZone?.encounters || []).map((e) => e.id),
+  )
+  /** @type {Set<number>} */
+  const mplusEncounterIDs = new Set(
+    (reportsResult.data?.worldData?.mplusZone?.encounters || []).map((e) => e.id),
+  )
+
+  const raidReports = reportsResult.data?.reportData?.raidReports?.data || []
+  const mplusReports = reportsResult.data?.reportData?.mplusReports?.data || []
+
+  // ── Raid accumulators ──
   /** @type {Map<string, { type: string, total: number }>} */
   const deathsByName = new Map()
 
@@ -255,15 +224,26 @@ async function fetchStats(token) {
   /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
   let bestHealerEntry = null
 
+  // ── M+ accumulators ──
+  /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
+  let highestDamageDoneMplusEntry = null
+
+  /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
+  let bestHealerMplusEntry = null
+
   const BATCH_SIZE = 2
 
-  for (let i = 0; i < reports.length; i += BATCH_SIZE) {
-    const batch = reports.slice(i, i + BATCH_SIZE)
+  // ── Process raid reports ──
+  for (let i = 0; i < raidReports.length; i += BATCH_SIZE) {
+    const batch = raidReports.slice(i, i + BATCH_SIZE)
 
     await Promise.all(
       batch.map(async (report) => {
         const code = report.code
-        const bossFights = (report.fights || []).filter((f) => f.encounterID > 0)
+        // Filter to only fights that belong to the raid zone
+        const bossFights = (report.fights || []).filter(
+          (f) => f.encounterID > 0 && raidEncounterIDs.has(f.encounterID),
+        )
         const bossFightIDs = bossFights.map((f) => f.id)
         const killFights = bossFights.filter((f) => f.kill === true)
 
@@ -334,6 +314,56 @@ async function fetchStats(token) {
     )
   }
 
+  // ── Process M+ reports ──
+  for (let i = 0; i < mplusReports.length; i += BATCH_SIZE) {
+    const batch = mplusReports.slice(i, i + BATCH_SIZE)
+
+    await Promise.all(
+      batch.map(async (report) => {
+        const code = report.code
+        // Filter to only fights that belong to the M+ zone
+        const bossFights = (report.fights || []).filter(
+          (f) => f.encounterID > 0 && mplusEncounterIDs.has(f.encounterID),
+        )
+
+        for (const fight of bossFights) {
+          const [fightDamage, fightHealing] = await Promise.all([
+            fetchDamageDone(token, code, [fight.id]),
+            fetchHealingDone(token, code, [fight.id]),
+          ])
+
+          for (const entry of fightDamage) {
+            const total = entry.total ?? entry.amount ?? 0
+            if (!entry.name || total === 0) continue
+            if (!highestDamageDoneMplusEntry || total > highestDamageDoneMplusEntry.total) {
+              highestDamageDoneMplusEntry = {
+                name: entry.name,
+                type: entry.type || '',
+                total,
+                reportCode: code,
+                bossName: fight.name,
+              }
+            }
+          }
+
+          for (const entry of fightHealing) {
+            const total = entry.total ?? entry.amount ?? 0
+            if (!entry.name || total === 0) continue
+            if (!bestHealerMplusEntry || total > bestHealerMplusEntry.total) {
+              bestHealerMplusEntry = {
+                name: entry.name,
+                type: entry.type || '',
+                total,
+                reportCode: code,
+                bossName: fight.name,
+              }
+            }
+          }
+        }
+      }),
+    )
+  }
+
   // --- Most Deaths ---
   let mostDeaths = null
   let mostDeathsCount = 0
@@ -396,15 +426,30 @@ async function fetchStats(token) {
   }
 
   // --- Highest Damage Done in M+ ---
-  const mplusEntry = await fetchMplusHighestDamage(token)
   let highestDamageDoneMplus = null
-  if (mplusEntry) {
+  if (highestDamageDoneMplusEntry) {
     highestDamageDoneMplus = {
-      name: mplusEntry.name,
-      class: CLASS_MAP[mplusEntry.type] || mplusEntry.type.toLowerCase() || null,
-      amount: mplusEntry.total,
-      boss: mplusEntry.bossName || null,
-      report: `https://www.warcraftlogs.com/reports/${mplusEntry.reportCode}`,
+      name: highestDamageDoneMplusEntry.name,
+      class:
+        CLASS_MAP[highestDamageDoneMplusEntry.type] ||
+        highestDamageDoneMplusEntry.type.toLowerCase() ||
+        null,
+      amount: highestDamageDoneMplusEntry.total,
+      boss: highestDamageDoneMplusEntry.bossName || null,
+      report: `https://www.warcraftlogs.com/reports/${highestDamageDoneMplusEntry.reportCode}`,
+    }
+  }
+
+  // --- Best Healer in M+ ---
+  let bestHealerMplus = null
+  if (bestHealerMplusEntry) {
+    bestHealerMplus = {
+      name: bestHealerMplusEntry.name,
+      class:
+        CLASS_MAP[bestHealerMplusEntry.type] || bestHealerMplusEntry.type.toLowerCase() || null,
+      amount: bestHealerMplusEntry.total,
+      boss: bestHealerMplusEntry.bossName || null,
+      report: `https://www.warcraftlogs.com/reports/${bestHealerMplusEntry.reportCode}`,
     }
   }
 
@@ -416,6 +461,7 @@ async function fetchStats(token) {
       highestDamageDone,
       highestDamageDoneMplus,
       bestHealer,
+      bestHealerMplus,
     },
   }
 }
@@ -436,7 +482,8 @@ async function main() {
         `ironRaider=${data.stats.ironRaider?.name ?? 'none'}, ` +
         `highestDamageDone=${data.stats.highestDamageDone?.name ?? 'none'}, ` +
         `highestDamageDoneMplus=${data.stats.highestDamageDoneMplus?.name ?? 'none'}, ` +
-        `bestHealer=${data.stats.bestHealer?.name ?? 'none'}`,
+        `bestHealer=${data.stats.bestHealer?.name ?? 'none'}, ` +
+        `bestHealerMplus=${data.stats.bestHealerMplus?.name ?? 'none'}`,
     )
   } catch (err) {
     console.warn(`${LOG_PREFIX} Failed to fetch stats: ${err.message}`)
