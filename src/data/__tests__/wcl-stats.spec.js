@@ -20,6 +20,7 @@ describe.skipIf(!exists)('WCL stats data', () => {
     expect(data.stats).toHaveProperty('ironRaider')
     expect(data.stats).toHaveProperty('highestDamageDone')
     expect(data.stats).toHaveProperty('highestDamageDoneMplus')
+    expect(data.stats).toHaveProperty('bestHealerMplus')
   })
 
   it('mostDeaths has name, class, and count when present', () => {
@@ -43,6 +44,14 @@ describe.skipIf(!exists)('WCL stats data', () => {
       expect(data.stats.highestDamageDoneMplus).toHaveProperty('name')
       expect(data.stats.highestDamageDoneMplus).toHaveProperty('amount')
       expect(data.stats.highestDamageDoneMplus).toHaveProperty('boss')
+    }
+  })
+
+  it('bestHealerMplus has name, class, amount, and boss when present', () => {
+    if (data.stats.bestHealerMplus) {
+      expect(data.stats.bestHealerMplus).toHaveProperty('name')
+      expect(data.stats.bestHealerMplus).toHaveProperty('amount')
+      expect(data.stats.bestHealerMplus).toHaveProperty('boss')
     }
   })
 })
