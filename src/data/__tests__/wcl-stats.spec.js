@@ -38,11 +38,11 @@ describe.skipIf(!exists)('WCL stats data', () => {
     }
   })
 
-  it('highestDamageDoneMplus has name, class, amount, and dungeon when present', () => {
+  it('highestDamageDoneMplus has name, class, amount, and boss when present', () => {
     if (data.stats.highestDamageDoneMplus) {
       expect(data.stats.highestDamageDoneMplus).toHaveProperty('name')
       expect(data.stats.highestDamageDoneMplus).toHaveProperty('amount')
-      expect(data.stats.highestDamageDoneMplus).toHaveProperty('dungeon')
+      expect(data.stats.highestDamageDoneMplus).toHaveProperty('boss')
     }
   })
 })
