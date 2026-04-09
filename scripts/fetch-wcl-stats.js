@@ -4,6 +4,7 @@
  * - Most Deaths: player with the highest total deaths across all reports
  * - Iron Raider: player who attended the most kills without ever dying
  * - Highest Damage Done: highest single-report damage total by any one player
+ * - Highest Damage Done in M+: highest single-dungeon-run damage total by any one player
  *
  * Requires WCL_CLIENT_ID and WCL_CLIENT_SECRET env vars.
  * Usage: node scripts/fetch-wcl-stats.js
@@ -13,7 +14,14 @@ import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadEnv } from './load-env.js'
-import { GUILD_ID, CURRENT_ZONE_ID, CLASS_MAP, getToken, graphql } from './wcl-api.js'
+import {
+  GUILD_ID,
+  CURRENT_ZONE_ID,
+  CURRENT_MPLUS_ZONE_ID,
+  CLASS_MAP,
+  getToken,
+  graphql,
+} from './wcl-api.js'
 
 loadEnv()
 
@@ -28,6 +36,7 @@ const EMPTY_OUTPUT = {
     mostDeaths: null,
     ironRaider: null,
     highestDamageDone: null,
+    highestDamageDoneMplus: null,
     bestHealer: null,
   },
 }
@@ -143,6 +152,70 @@ async function fetchFightParticipants(token, code, fightId) {
     }
   }
   return players
+}
+
+/**
+ * Fetches M+ reports and finds the highest total damage done in a single dungeon run.
+ * @param {string} token
+ * @returns {Promise<{ name: string, type: string, total: number, reportCode: string, dungeonName: string } | null>}
+ */
+async function fetchMplusHighestDamage(token) {
+  const reportsQuery = `{
+    reportData {
+      reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_MPLUS_ZONE_ID}, limit: 50) {
+        data {
+          code
+          fights {
+            id
+            name
+            encounterID
+          }
+        }
+      }
+    }
+  }`
+
+  const reportsResult = await graphql(token, reportsQuery, { logPrefix: LOG_PREFIX })
+  const reports = reportsResult.data?.reportData?.reports?.data || []
+
+  /** @type {{ name: string, type: string, total: number, reportCode: string, dungeonName: string } | null} */
+  let highest = null
+
+  const BATCH_SIZE = 2
+
+  for (let i = 0; i < reports.length; i += BATCH_SIZE) {
+    const batch = reports.slice(i, i + BATCH_SIZE)
+
+    await Promise.all(
+      batch.map(async (report) => {
+        const code = report.code
+        const allFightIDs = (report.fights || []).map((f) => f.id)
+        if (allFightIDs.length === 0) return
+
+        // Derive dungeon name from the first boss encounter in the report
+        const firstBoss = (report.fights || []).find((f) => f.encounterID > 0)
+        const dungeonName = firstBoss?.name || 'a dungeon'
+
+        const entries = await fetchDamageDone(token, code, allFightIDs)
+
+        for (const entry of entries) {
+          const total = entry.total ?? entry.amount ?? 0
+          if (!entry.name || total === 0) continue
+          if (!highest || total > highest.total) {
+            highest = {
+              name: entry.name,
+              type: entry.type || '',
+              total,
+              reportCode: code,
+              dungeonName,
+            }
+          }
+        }
+      }),
+    )
+  }
+
+  return highest
 }
 
 async function fetchStats(token) {
@@ -325,12 +398,26 @@ async function fetchStats(token) {
     }
   }
 
+  // --- Highest Damage Done in M+ ---
+  const mplusEntry = await fetchMplusHighestDamage(token)
+  let highestDamageDoneMplus = null
+  if (mplusEntry) {
+    highestDamageDoneMplus = {
+      name: mplusEntry.name,
+      class: CLASS_MAP[mplusEntry.type] || mplusEntry.type.toLowerCase() || null,
+      amount: mplusEntry.total,
+      dungeon: mplusEntry.dungeonName || null,
+      report: `https://www.warcraftlogs.com/reports/${mplusEntry.reportCode}`,
+    }
+  }
+
   return {
     zone: zoneName,
     stats: {
       mostDeaths,
       ironRaider,
       highestDamageDone,
+      highestDamageDoneMplus,
       bestHealer,
     },
   }
@@ -351,6 +438,7 @@ async function main() {
       `${LOG_PREFIX} Wrote stats: mostDeaths=${data.stats.mostDeaths?.name ?? 'none'}, ` +
         `ironRaider=${data.stats.ironRaider?.name ?? 'none'}, ` +
         `highestDamageDone=${data.stats.highestDamageDone?.name ?? 'none'}, ` +
+        `highestDamageDoneMplus=${data.stats.highestDamageDoneMplus?.name ?? 'none'}, ` +
         `bestHealer=${data.stats.bestHealer?.name ?? 'none'}`,
     )
   } catch (err) {
