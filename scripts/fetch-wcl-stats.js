@@ -165,6 +165,7 @@ async function fetchMplusHighestDamage(token) {
       reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_MPLUS_ZONE_ID}, limit: 50) {
         data {
           code
+          title
           fights {
             id
             name
@@ -192,9 +193,7 @@ async function fetchMplusHighestDamage(token) {
         const allFightIDs = (report.fights || []).map((f) => f.id)
         if (allFightIDs.length === 0) return
 
-        // Derive dungeon name from the first boss encounter in the report
-        const firstBoss = (report.fights || []).find((f) => f.encounterID > 0)
-        const dungeonName = firstBoss?.name || 'a dungeon'
+        const dungeonName = report.title || 'a dungeon'
 
         const entries = await fetchDamageDone(token, code, allFightIDs)
 

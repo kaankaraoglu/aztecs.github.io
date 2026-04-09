@@ -8,7 +8,7 @@
 
 const GUILD_ID = 18606
 const CURRENT_ZONE_ID = 46 // VS / DR / MQD (Midnight Season 1)
-const CURRENT_MPLUS_ZONE_ID = 43 // The War Within Season 2 M+
+const CURRENT_MPLUS_ZONE_ID = 47 // Midnight Season 1 M+
 const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
 const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
 
