@@ -74,8 +74,14 @@
                     !boss.normal && !boss.heroic && !boss.mythic && boss.bestPercent != null,
                 },
               ]"
-              :style="bossBarStyle(boss)"
             >
+              <span
+                v-for="bar in difficultyBars(boss)"
+                :key="bar.difficulty"
+                class="difficulty-bar"
+                :class="bar.difficulty"
+                :style="{ width: bar.width }"
+              ></span>
               <div class="boss-row" @click="toggle(boss.name)">
                 <span class="boss-status">
                   <span :class="['pip', { active: boss.normal }]">N</span>
@@ -221,14 +227,22 @@ const CLASS_DISPLAY = {
   warrior: 'Warrior',
 }
 
-function bossBarStyle(boss) {
-  if (boss.normal || boss.heroic || boss.mythic) {
-    return { '--bar-width': '100%' }
+function difficultyBars(boss) {
+  const bars = []
+  const difficulties = ['normal', 'heroic', 'mythic']
+  for (const diff of difficulties) {
+    if (boss[diff]) {
+      bars.push({ difficulty: diff, width: '100%' })
+    }
   }
+  // Show progress bar for the next unkilled difficulty above highest kill
   if (boss.bestPercent != null) {
-    return { '--bar-width': `${100 - boss.bestPercent}%` }
+    const nextDiff = difficulties.find((d) => !boss[d])
+    if (nextDiff) {
+      bars.push({ difficulty: nextDiff, width: `${boss.bestPercent}%` })
+    }
   }
-  return { '--bar-width': '0%' }
+  return bars
 }
 
 function playerTooltip(player) {
@@ -424,22 +438,22 @@ function highestDifficulty(raid) {
     background: $surface-2;
     transition: background $duration-fast;
 
-    &::before {
-      content: '';
+    .difficulty-bar {
       position: absolute;
       inset: 0;
-      width: var(--bar-width, 0%);
       border-radius: inherit;
       transition: width 0.5s ease;
       pointer-events: none;
-    }
 
-    &.killed::before {
-      background: rgba($quality-uncommon, 0.08);
-    }
-
-    &.in-progress::before {
-      background: rgba($color-yellow, 0.1);
+      &.normal {
+        background: rgba($quality-rare, 0.18);
+      }
+      &.heroic {
+        background: rgba($quality-epic, 0.25);
+      }
+      &.mythic {
+        background: rgba($quality-legendary, 0.18);
+      }
     }
 
     &:hover {
