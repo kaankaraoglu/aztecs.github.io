@@ -19,7 +19,7 @@
         <RouterLink class="nav-link" to="/achievements" @click="menuOpen = false"
           >Achievements</RouterLink
         >
-        <RouterLink class="nav-link" to="/history" @click="menuOpen = false">History</RouterLink>
+        <!-- <RouterLink class="nav-link" to="/history" @click="menuOpen = false">History</RouterLink> -->
         <RouterLink class="nav-link" to="/raiding" @click="menuOpen = false">Raiding</RouterLink>
         <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
