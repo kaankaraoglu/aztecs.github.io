@@ -16,7 +16,7 @@
 
 Current coverage: ~23% of components/composables tested.
 
-- [ ] **Composables** — Add tests for `useMythicPlus`, `useProgression`, `useRaidStats`, `useTiltEffect`
+- [x] **Composables** — Add tests for `useMythicPlus`, `useProgression`, `useRaidStats`, `useTiltEffect`
 - [ ] **Components** — Add tests for `KillCard`, `ImageLightbox`, `MythicPlusBox`, `RaidStatsBox`, `SkeletonLoader`, `HeaderView`, `FooterView`
 - [ ] **Views** — Add at least smoke-render tests for all 8 view components
 - [ ] **Router** — Test route definitions and lazy-loading
