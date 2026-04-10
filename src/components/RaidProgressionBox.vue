@@ -239,7 +239,7 @@ function difficultyBars(boss) {
   if (boss.bestPercent != null) {
     const nextDiff = difficulties.find((d) => !boss[d])
     if (nextDiff) {
-      bars.push({ difficulty: nextDiff, width: `${100 - boss.bestPercent}%` })
+      bars.push({ difficulty: nextDiff, width: `${boss.bestPercent}%` })
     }
   }
   return bars
@@ -449,7 +449,7 @@ function highestDifficulty(raid) {
         background: rgba($quality-rare, 0.18);
       }
       &.heroic {
-        background: rgba($quality-epic, 0.18);
+        background: rgba($quality-epic, 0.25);
       }
       &.mythic {
         background: rgba($quality-legendary, 0.18);
