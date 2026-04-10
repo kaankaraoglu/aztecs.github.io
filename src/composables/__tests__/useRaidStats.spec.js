@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
+/** Shared mock — mutated in-place between tests */
 const mockStatsData = {
   zone: 'Test Zone',
   stats: {
@@ -14,10 +15,10 @@ const mockStatsData = {
 
 vi.mock('@/data/wcl-stats.json', () => ({ default: mockStatsData }))
 
+const { useRaidStats } = await import('../useRaidStats')
+
 describe('useRaidStats', () => {
   beforeEach(() => {
-    vi.resetModules()
-    // Reset all stats to null
     mockStatsData.zone = 'Test Zone'
     mockStatsData.stats.mostDeaths = null
     mockStatsData.stats.ironRaider = null
@@ -27,31 +28,26 @@ describe('useRaidStats', () => {
     mockStatsData.stats.bestHealerMplus = null
   })
 
-  it('returns zone and stats from data', async () => {
+  it('returns zone and stats from data', () => {
     mockStatsData.stats.mostDeaths = { name: 'Tank', class: 'warrior', count: 42 }
-    const { useRaidStats } = await import('../useRaidStats')
     const result = useRaidStats()
 
     expect(result.zone).toBe('Test Zone')
     expect(result.stats.mostDeaths).toEqual({ name: 'Tank', class: 'warrior', count: 42 })
   })
 
-  it('sets hasData to false when all stats are null', async () => {
-    const { useRaidStats } = await import('../useRaidStats')
+  it('sets hasData to false when all stats are null', () => {
     const result = useRaidStats()
-
     expect(result.hasData).toBe(false)
   })
 
-  it('sets hasData to true when at least one stat is present', async () => {
+  it('sets hasData to true when at least one stat is present', () => {
     mockStatsData.stats.ironRaider = { name: 'Survivor', class: 'paladin', killsAttended: 30 }
-    const { useRaidStats } = await import('../useRaidStats')
     const result = useRaidStats()
-
     expect(result.hasData).toBe(true)
   })
 
-  it('detects hasData for each individual stat field', async () => {
+  it('detects hasData for each individual stat field', () => {
     const statFields = [
       ['mostDeaths', { name: 'A', class: 'warrior', count: 1 }],
       ['ironRaider', { name: 'B', class: 'paladin', killsAttended: 1 }],
@@ -68,11 +64,7 @@ describe('useRaidStats', () => {
       }
       mockStatsData.stats[field] = value
 
-      vi.resetModules()
-      vi.mock('@/data/wcl-stats.json', () => ({ default: mockStatsData }))
-      const { useRaidStats } = await import('../useRaidStats')
       const result = useRaidStats()
-
       expect(result.hasData, `hasData should be true when ${field} is set`).toBe(true)
     }
   })
