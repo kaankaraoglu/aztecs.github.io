@@ -229,11 +229,18 @@ const CLASS_DISPLAY = {
 
 function difficultyBars(boss) {
   const bars = []
-  if (boss.normal) bars.push({ difficulty: 'normal', width: '100%' })
-  if (boss.heroic) bars.push({ difficulty: 'heroic', width: '100%' })
-  if (boss.mythic) bars.push({ difficulty: 'mythic', width: '100%' })
-  if (bars.length === 0 && boss.bestPercent != null) {
-    bars.push({ difficulty: 'in-progress', width: `${100 - boss.bestPercent}%` })
+  const difficulties = ['normal', 'heroic', 'mythic']
+  for (const diff of difficulties) {
+    if (boss[diff]) {
+      bars.push({ difficulty: diff, width: '100%' })
+    }
+  }
+  // Show progress bar for the next unkilled difficulty above highest kill
+  if (boss.bestPercent != null) {
+    const nextDiff = difficulties.find((d) => !boss[d])
+    if (nextDiff) {
+      bars.push({ difficulty: nextDiff, width: `${100 - boss.bestPercent}%` })
+    }
   }
   return bars
 }
@@ -439,16 +446,13 @@ function highestDifficulty(raid) {
       pointer-events: none;
 
       &.normal {
-        background: rgba($quality-rare, 0.12);
+        background: rgba($quality-rare, 0.18);
       }
       &.heroic {
-        background: rgba($quality-epic, 0.12);
+        background: rgba($quality-epic, 0.18);
       }
       &.mythic {
-        background: rgba($quality-legendary, 0.12);
-      }
-      &.in-progress {
-        background: rgba($color-yellow, 0.1);
+        background: rgba($quality-legendary, 0.18);
       }
     }
 
