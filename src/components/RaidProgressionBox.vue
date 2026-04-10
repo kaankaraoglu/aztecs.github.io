@@ -74,8 +74,14 @@
                     !boss.normal && !boss.heroic && !boss.mythic && boss.bestPercent != null,
                 },
               ]"
-              :style="bossBarStyle(boss)"
             >
+              <span
+                v-for="bar in difficultyBars(boss)"
+                :key="bar.difficulty"
+                class="difficulty-bar"
+                :class="bar.difficulty"
+                :style="{ width: bar.width }"
+              ></span>
               <div class="boss-row" @click="toggle(boss.name)">
                 <span class="boss-status">
                   <span :class="['pip', { active: boss.normal }]">N</span>
@@ -221,14 +227,15 @@ const CLASS_DISPLAY = {
   warrior: 'Warrior',
 }
 
-function bossBarStyle(boss) {
-  if (boss.normal || boss.heroic || boss.mythic) {
-    return { '--bar-width': '100%' }
+function difficultyBars(boss) {
+  const bars = []
+  if (boss.normal) bars.push({ difficulty: 'normal', width: '100%' })
+  if (boss.heroic) bars.push({ difficulty: 'heroic', width: '100%' })
+  if (boss.mythic) bars.push({ difficulty: 'mythic', width: '100%' })
+  if (bars.length === 0 && boss.bestPercent != null) {
+    bars.push({ difficulty: 'in-progress', width: `${100 - boss.bestPercent}%` })
   }
-  if (boss.bestPercent != null) {
-    return { '--bar-width': `${100 - boss.bestPercent}%` }
-  }
-  return { '--bar-width': '0%' }
+  return bars
 }
 
 function playerTooltip(player) {
@@ -424,22 +431,25 @@ function highestDifficulty(raid) {
     background: $surface-2;
     transition: background $duration-fast;
 
-    &::before {
-      content: '';
+    .difficulty-bar {
       position: absolute;
       inset: 0;
-      width: var(--bar-width, 0%);
       border-radius: inherit;
       transition: width 0.5s ease;
       pointer-events: none;
-    }
 
-    &.killed::before {
-      background: rgba($quality-uncommon, 0.08);
-    }
-
-    &.in-progress::before {
-      background: rgba($color-yellow, 0.1);
+      &.normal {
+        background: rgba($quality-rare, 0.12);
+      }
+      &.heroic {
+        background: rgba($quality-epic, 0.12);
+      }
+      &.mythic {
+        background: rgba($quality-legendary, 0.12);
+      }
+      &.in-progress {
+        background: rgba($color-yellow, 0.1);
+      }
     }
 
     &:hover {
