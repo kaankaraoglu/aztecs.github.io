@@ -8,8 +8,12 @@
 
 const GUILD_ID = 18606
 const CURRENT_ZONE_ID = 46 // VS / DR / MQD (Midnight Season 1)
+const CURRENT_MPLUS_ZONE_ID = 47 // Midnight Season 1 M+
 const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
 const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
+
+/** Default timeout for individual fetch requests (30 seconds). */
+const REQUEST_TIMEOUT_MS = 30_000
 
 /**
  * Maps WCL class names to the CSS class names used for styling.
@@ -50,6 +54,7 @@ async function getToken(logPrefix = '[wcl]') {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`,
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   })
 
   if (!res.ok) {
@@ -77,6 +82,7 @@ async function graphql(token, query, { retries = 3, logPrefix = '[wcl]' } = {}) 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ query }),
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     })
 
     if (res.status >= 500 && attempt < retries) {
@@ -95,4 +101,4 @@ async function graphql(token, query, { retries = 3, logPrefix = '[wcl]' } = {}) 
   }
 }
 
-export { GUILD_ID, CURRENT_ZONE_ID, CLASS_MAP, getToken, graphql }
+export { GUILD_ID, CURRENT_ZONE_ID, CURRENT_MPLUS_ZONE_ID, CLASS_MAP, getToken, graphql }

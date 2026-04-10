@@ -36,7 +36,7 @@
       <p v-else class="stat-empty">No data yet.</p>
     </div>
     <div class="info-box info-box--no-hover stat-card">
-      <p class="stat-label">Highest Damage Done</p>
+      <p class="stat-label">Highest Damage Done in Raid</p>
       <template v-if="stats.highestDamageDone">
         <p :class="['stat-name', stats.highestDamageDone.class]">
           {{ stats.highestDamageDone.name }}
@@ -57,7 +57,28 @@
       <p v-else class="stat-empty">No data yet.</p>
     </div>
     <div class="info-box info-box--no-hover stat-card">
-      <p class="stat-label">Best Healer</p>
+      <p class="stat-label">Highest Damage Done in M+</p>
+      <template v-if="stats.highestDamageDoneMplus">
+        <p :class="['stat-name', stats.highestDamageDoneMplus.class]">
+          {{ stats.highestDamageDoneMplus.name }}
+        </p>
+        <p class="stat-value">
+          {{ formatNumber(stats.highestDamageDoneMplus.amount) }} on
+          {{ stats.highestDamageDoneMplus.boss || 'a boss' }}
+        </p>
+        <a
+          v-if="stats.highestDamageDoneMplus.report"
+          class="stat-link"
+          :href="stats.highestDamageDoneMplus.report"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View Log</a
+        >
+      </template>
+      <p v-else class="stat-empty">No data yet.</p>
+    </div>
+    <div class="info-box info-box--no-hover stat-card">
+      <p class="stat-label">Best Healer in Raid</p>
       <template v-if="stats.bestHealer">
         <p :class="['stat-name', stats.bestHealer.class]">{{ stats.bestHealer.name }}</p>
         <p class="stat-value">
@@ -67,6 +88,27 @@
           v-if="stats.bestHealer.report"
           class="stat-link"
           :href="stats.bestHealer.report"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View Log</a
+        >
+      </template>
+      <p v-else class="stat-empty">No data yet.</p>
+    </div>
+    <div class="info-box info-box--no-hover stat-card">
+      <p class="stat-label">Best Healer in M+</p>
+      <template v-if="stats.bestHealerMplus">
+        <p :class="['stat-name', stats.bestHealerMplus.class]">
+          {{ stats.bestHealerMplus.name }}
+        </p>
+        <p class="stat-value">
+          {{ formatNumber(stats.bestHealerMplus.amount) }} on
+          {{ stats.bestHealerMplus.boss || 'a boss' }}
+        </p>
+        <a
+          v-if="stats.bestHealerMplus.report"
+          class="stat-link"
+          :href="stats.bestHealerMplus.report"
           target="_blank"
           rel="noopener noreferrer"
           >View Log</a
@@ -113,10 +155,18 @@ function formatNumber(n) {
 
 .raid-stats-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: $space-4;
 
+  @include desktop-sm {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile {
     grid-template-columns: 1fr;
   }
 }

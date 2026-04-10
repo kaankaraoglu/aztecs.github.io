@@ -24,10 +24,13 @@ const CHAR_FIELDS = 'mythic_plus_scores_by_season:current,mythic_plus_best_runs'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'rio-mythicplus.json')
 
-const EMPTY_OUTPUT = { season: null, topRunners: [], dungeonBests: [] }
+const EMPTY_OUTPUT = { season: null, topRunners: [], dungeonBests: [], lastUpdated: null }
 
-const BATCH_SIZE = 50
-const BATCH_DELAY_MS = 100
+const BATCH_SIZE = 10
+const BATCH_DELAY_MS = 1500
+
+const MAX_RETRIES = 3
+const RETRY_BASE_DELAY_MS = 5000
 
 function toKebabClass(className) {
   return className.toLowerCase().replace(/\s+/g, '-')
@@ -48,19 +51,32 @@ async function fetchJson(url) {
 }
 
 /**
- * Fetch a character profile from Raider.IO.
+ * Fetch a character profile from Raider.IO with retry logic for rate limiting.
  * @param {string} name
  * @param {string} realmSlug – pre-extracted slug from the guild API profile_url
  * @returns {Promise<object | null>} profile data, or null if the character is not tracked (HTTP 400)
  */
 async function fetchCharacterProfile(name, realmSlug) {
   const url = `${CHAR_URL}?region=eu&realm=${realmSlug}&name=${encodeURIComponent(name)}&fields=${CHAR_FIELDS}`
-  const res = await fetch(url)
 
-  if (res.status === 400) return null // character not tracked by RIO (e.g. low-level alt)
-  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    const res = await fetch(url)
 
-  return res.json()
+    if (res.status === 400) return null // character not tracked by RIO (e.g. low-level alt)
+
+    if (res.status === 429) {
+      if (attempt === MAX_RETRIES) throw new Error('HTTP 429 (rate limited, retries exhausted)')
+      const delay = RETRY_BASE_DELAY_MS * 2 ** attempt
+      console.warn(`[rio]     ⏳ ${name}: rate limited, retrying in ${delay / 1000}s...`)
+      await sleep(delay)
+      continue
+    }
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return res.json()
+  }
+
+  return null
 }
 
 function sleep(ms) {
@@ -192,7 +208,7 @@ async function main() {
 
     const dungeonBests = [...dungeonMap.values()].sort((a, b) => b.level - a.level)
 
-    const output = { season, topRunners, dungeonBests }
+    const output = { season, topRunners, dungeonBests, lastUpdated: new Date().toISOString() }
 
     writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2) + '\n')
     console.log(

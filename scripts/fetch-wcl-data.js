@@ -110,11 +110,17 @@ async function fetchProgression(token) {
     }
   }`
 
+  console.log(`${LOG_PREFIX} Fetching zone info and reports for zone ${CURRENT_ZONE_ID}...`)
   const result = await graphql(token, query)
   const zone = result.data?.worldData?.zone
   const reports = result.data?.reportData?.reports?.data || []
 
   if (!zone) throw new Error('Zone not found')
+
+  const totalFights = reports.reduce((sum, r) => sum + (r.fights?.length || 0), 0)
+  console.log(
+    `${LOG_PREFIX} Zone: ${zone.name}, ${reports.length} reports, ${totalFights} total fights`,
+  )
 
   // Build per-boss data across all reports
   // Key: "bossName|difficulty"
@@ -161,15 +167,30 @@ async function fetchProgression(token) {
     }
   }
 
+  const bossCount = new Set([...bossData.values()].map((e) => e.name)).size
+  const killedCount = [...bossData.values()].filter((e) => e.killed).length
+  console.log(
+    `${LOG_PREFIX} Processed ${reports.length} reports: ${bossCount} bosses tracked, ${killedCount} difficulty kills found`,
+  )
+
   // Phase 2: fetch playerDetails for each kill (role-grouped roster)
   const killEntries = [...bossData.values()].filter((e) => e.killed && e.killReportCode)
 
   // Fetch rosters in parallel (bounded to avoid rate limits)
   const BATCH_SIZE = 5
   const rosterMap = new Map()
+  const totalBatches = Math.ceil(killEntries.length / BATCH_SIZE)
+
+  console.log(
+    `${LOG_PREFIX} Fetching rosters for ${killEntries.length} kills in ${totalBatches} batches...`,
+  )
 
   for (let i = 0; i < killEntries.length; i += BATCH_SIZE) {
+    const batchIndex = Math.floor(i / BATCH_SIZE) + 1
     const batch = killEntries.slice(i, i + BATCH_SIZE)
+    const batchNames = batch.map((e) => `${e.name} (${e.difficulty})`).join(', ')
+    console.log(`${LOG_PREFIX}   Batch ${batchIndex}/${totalBatches}: ${batchNames}`)
+
     const results = await Promise.all(
       batch.map(async (entry) => {
         const key = `${entry.name}|${entry.difficulty}`
@@ -181,6 +202,8 @@ async function fetchProgression(token) {
       if (roster) rosterMap.set(key, roster)
     }
   }
+
+  console.log(`${LOG_PREFIX} Fetched ${rosterMap.size}/${killEntries.length} rosters successfully`)
 
   // Build output grouped by raid instance
   const raids = Object.entries(RAID_INSTANCE_ENCOUNTERS).map(([instanceName, bossNames]) => ({

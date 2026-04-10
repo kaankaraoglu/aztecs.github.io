@@ -33,15 +33,30 @@
           </div>
         </div>
       </section>
+      <p v-if="formattedUpdated" class="mp-updated">Updated {{ formattedUpdated }}</p>
     </template>
     <p v-else class="mp-empty">No M+ data yet this season.</p>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useMythicPlus } from '@/composables/useMythicPlus'
 
-const { topRunners, dungeonBests, hasData } = useMythicPlus()
+const { topRunners, dungeonBests, lastUpdated, hasData } = useMythicPlus()
+
+const formattedUpdated = computed(() => {
+  if (!lastUpdated) return null
+  const date = new Date(lastUpdated)
+  if (Number.isNaN(date.getTime())) return null
+  return date.toLocaleString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+})
 </script>
 
 <style lang="scss" scoped>
@@ -60,6 +75,14 @@ const { topRunners, dungeonBests, hasData } = useMythicPlus()
   color: $color-text-subtle;
   font-size: 0.95em;
   margin: $space-4 0 0;
+}
+
+.mp-updated {
+  margin: $space-2 0 0;
+  font-size: 0.7em;
+  color: $color-text-muted;
+  text-align: right;
+  opacity: 0.6;
 }
 
 .mp-section {
