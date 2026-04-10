@@ -32,6 +32,31 @@ const LOG_PREFIX = '[wcl-stats]'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'wcl-stats.json')
 
+const RIO_GUILD_URL =
+  'https://raider.io/api/v1/guilds/profile?region=eu&realm=al-akir&name=Aztecs&fields=members'
+
+/**
+ * Fetches the current Aztecs guild roster from Raider.IO.
+ * Returns a Set of character names that are in the guild.
+ * @returns {Promise<Set<string>>}
+ */
+async function fetchGuildRoster() {
+  try {
+    const res = await fetch(RIO_GUILD_URL, { signal: AbortSignal.timeout(15_000) })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    const data = await res.json()
+    const members = data.members || []
+    const names = new Set(members.map((m) => m.character.name))
+    console.log(`${LOG_PREFIX} Fetched guild roster: ${names.size} members from Raider.IO`)
+    return names
+  } catch (err) {
+    console.warn(`${LOG_PREFIX} Failed to fetch guild roster: ${err.message}`)
+    // Return empty set — if roster fetch fails, skip guild filtering
+    // (better to show potentially non-guild members than show nothing)
+    return new Set()
+  }
+}
+
 const EMPTY_OUTPUT = {
   zone: null,
   stats: {
@@ -157,7 +182,12 @@ async function fetchFightParticipants(token, code, fightId) {
   return players
 }
 
-async function fetchStats(token) {
+/**
+ * @param {string} token
+ * @param {Set<string>} guildMembers - set of guild member names for filtering
+ */
+async function fetchStats(token, guildMembers) {
+  const filterByGuild = guildMembers.size > 0
   // Fetch zone info (name + encounter IDs) for both raid and M+ zones,
   // plus all reports for each zone, in a single GraphQL call.
   const reportsQuery = `{
@@ -250,9 +280,10 @@ async function fetchStats(token) {
         // Fetch deaths for all boss fights (Most Deaths + Iron Raider)
         const allDeathEntries = await fetchDeaths(token, code, bossFightIDs)
 
-        // Accumulate deaths across all boss attempts
+        // Accumulate deaths across all boss attempts (guild members only)
         for (const entry of allDeathEntries) {
           if (!entry.name) continue
+          if (filterByGuild && !guildMembers.has(entry.name)) continue
           const existing = deathsByName.get(entry.name)
           if (existing) {
             existing.total++
@@ -272,6 +303,7 @@ async function fetchStats(token) {
           for (const entry of fightDamage) {
             const total = entry.total ?? entry.amount ?? 0
             if (!entry.name || total === 0) continue
+            if (filterByGuild && !guildMembers.has(entry.name)) continue
             if (!highestDamageDoneEntry || total > highestDamageDoneEntry.total) {
               highestDamageDoneEntry = {
                 name: entry.name,
@@ -286,6 +318,7 @@ async function fetchStats(token) {
           for (const entry of fightHealing) {
             const total = entry.total ?? entry.amount ?? 0
             if (!entry.name || total === 0) continue
+            if (filterByGuild && !guildMembers.has(entry.name)) continue
             if (!bestHealerEntry || total > bestHealerEntry.total) {
               bestHealerEntry = {
                 name: entry.name,
@@ -302,6 +335,7 @@ async function fetchStats(token) {
         for (const fight of killFights) {
           const participants = await fetchFightParticipants(token, code, fight.id)
           for (const [name, { type: classType, spec }] of participants) {
+            if (filterByGuild && !guildMembers.has(name)) continue
             const existing = killAttendanceByName.get(name)
             if (existing) {
               existing.count++
@@ -335,6 +369,7 @@ async function fetchStats(token) {
           for (const entry of fightDamage) {
             const total = entry.total ?? entry.amount ?? 0
             if (!entry.name || total === 0) continue
+            if (filterByGuild && !guildMembers.has(entry.name)) continue
             if (!highestDamageDoneMplusEntry || total > highestDamageDoneMplusEntry.total) {
               highestDamageDoneMplusEntry = {
                 name: entry.name,
@@ -349,6 +384,7 @@ async function fetchStats(token) {
           for (const entry of fightHealing) {
             const total = entry.total ?? entry.amount ?? 0
             if (!entry.name || total === 0) continue
+            if (filterByGuild && !guildMembers.has(entry.name)) continue
             if (!bestHealerMplusEntry || total > bestHealerMplusEntry.total) {
               bestHealerMplusEntry = {
                 name: entry.name,
@@ -475,7 +511,8 @@ async function main() {
   }
 
   try {
-    const data = await fetchStats(token)
+    const guildMembers = await fetchGuildRoster()
+    const data = await fetchStats(token, guildMembers)
     writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2) + '\n')
     console.log(
       `${LOG_PREFIX} Wrote stats: mostDeaths=${data.stats.mostDeaths?.name ?? 'none'}, ` +
