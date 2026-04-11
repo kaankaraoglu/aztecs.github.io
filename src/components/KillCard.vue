@@ -10,13 +10,7 @@
           class="image-anchor"
           :href="imageUrl"
           :aria-label="`Open full image for ${raidName}`"
-          @click.prevent="
-            lightboxOpen = true
-            trackEvent('select_content', {
-              content_type: 'kill_screenshot',
-              item_id: props.raidName,
-            })
-          "
+          @click.prevent="openLightbox"
         >
           <img class="raid-image" :src="imageUrl" :alt="`${raidName} screenshot`" loading="lazy" />
           <div class="enlarge-indicator" aria-hidden="true">🔍</div>
@@ -95,6 +89,11 @@ const props = defineProps({
 })
 
 const lightboxOpen = ref(false)
+
+function openLightbox() {
+  lightboxOpen.value = true
+  trackEvent('select_content', { content_type: 'kill_screenshot', item_id: props.raidName })
+}
 </script>
 
 <style scoped lang="scss">

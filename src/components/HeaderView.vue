@@ -9,13 +9,7 @@
 
     <nav class="nav">
       <div class="nav-header">
-        <div
-          :class="['hamburger', { open: menuOpen }]"
-          @click="
-            menuOpen = !menuOpen
-            trackEvent('menu_toggle', { state: menuOpen ? 'open' : 'close' })
-          "
-        >
+        <div :class="['hamburger', { open: menuOpen }]" @click="toggleMenu">
           <span></span><span></span><span></span>
         </div>
       </div>
@@ -97,6 +91,11 @@ function openDiscordInvite() {
   trackEvent('click', { link_type: 'discord_invite' })
   const discordInviteUrl = 'https://discord.gg/GfmnD24VHa'
   window.open(discordInviteUrl, '_blank')
+}
+
+function toggleMenu() {
+  menuOpen.value = !menuOpen.value
+  trackEvent('menu_toggle', { state: menuOpen.value ? 'open' : 'close' })
 }
 
 onMounted(() => {
