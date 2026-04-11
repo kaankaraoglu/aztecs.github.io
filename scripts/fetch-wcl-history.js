@@ -1,4 +1,3 @@
-/* global process */
 /**
  * One-time manual script that fetches historical raid data from Warcraft Logs.
  * Outputs a JSON array to stdout summarising guild kill data per zone per expansion.

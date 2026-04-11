@@ -10,7 +10,7 @@
           class="image-anchor"
           :href="imageUrl"
           :aria-label="`Open full image for ${raidName}`"
-          @click.prevent="lightboxOpen = true"
+          @click.prevent="openLightbox"
         >
           <img class="raid-image" :src="imageUrl" :alt="`${raidName} screenshot`" loading="lazy" />
           <div class="enlarge-indicator" aria-hidden="true">🔍</div>
@@ -51,11 +51,13 @@ import { ref } from 'vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
 import RosterList from '@/components/RosterList.vue'
 import { useTiltEffect } from '@/composables/useTiltEffect'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const cardRef = ref(null)
 const { tiltStyle } = useTiltEffect(cardRef)
+const { trackEvent } = useAnalytics()
 
-defineProps({
+const props = defineProps({
   raidName: {
     type: String,
     required: true,
@@ -87,6 +89,11 @@ defineProps({
 })
 
 const lightboxOpen = ref(false)
+
+function openLightbox() {
+  lightboxOpen.value = true
+  trackEvent('select_content', { content_type: 'kill_screenshot', item_id: props.raidName })
+}
 </script>
 
 <style scoped lang="scss">
