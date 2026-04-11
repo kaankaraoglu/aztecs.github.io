@@ -132,6 +132,13 @@
           :href="latestReport"
           target="_blank"
           rel="noopener noreferrer"
+          @click="
+            trackEvent('click', {
+              link_type: 'external',
+              link_url: latestReport,
+              link_text: 'Latest Log',
+            })
+          "
         >
           Latest Log
         </a>
@@ -140,6 +147,13 @@
           href="https://raider.io/guilds/eu/alakir/Aztecs"
           target="_blank"
           rel="noopener noreferrer"
+          @click="
+            trackEvent('click', {
+              link_type: 'external',
+              link_url: 'https://raider.io/guilds/eu/alakir/Aztecs',
+              link_text: 'Raider.IO',
+            })
+          "
         >
           Raider.IO
         </a>
@@ -152,6 +166,9 @@
 import { reactive, ref, onMounted, onUnmounted } from 'vue'
 import RosterList from '@/components/RosterList.vue'
 import SkeletonLoader from '@/components/SkeletonLoader.vue'
+import { useAnalytics } from '@/composables/useAnalytics'
+
+const { trackEvent } = useAnalytics()
 
 const props = defineProps({
   raids: {
@@ -191,6 +208,9 @@ const expanded = reactive({})
 
 function toggle(bossName) {
   expanded[bossName] = !expanded[bossName]
+  if (expanded[bossName]) {
+    trackEvent('select_content', { content_type: 'boss_roster', item_id: bossName })
+  }
 }
 
 function pct(killed) {

@@ -26,6 +26,13 @@ const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'rio-mythicplus.json')
 
 const EMPTY_OUTPUT = { season: null, topRunners: [], dungeonBests: [], lastUpdated: null }
 
+// Skip when explicitly opted out (e.g. CI pre-merge checks)
+if (process.env.SKIP_RIO_FETCH) {
+  writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
+  console.log('[rio] SKIP_RIO_FETCH set, skipping RIO fetch (wrote empty M+ data)')
+  process.exit(0)
+}
+
 const BATCH_SIZE = 10
 const BATCH_DELAY_MS = 1500
 

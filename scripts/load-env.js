@@ -1,4 +1,3 @@
-/* global process */
 /**
  * Lightweight .env file loader for build scripts.
  *
