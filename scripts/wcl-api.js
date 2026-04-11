@@ -1,4 +1,3 @@
-/* global process */
 /**
  * Shared Warcraft Logs API utilities used by all WCL build-time scripts.
  *
