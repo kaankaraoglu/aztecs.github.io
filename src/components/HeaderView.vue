@@ -62,6 +62,7 @@ const splashMessages = [
   'Damit Delmos!',
   "My wife is home, let's kill the bitch!",
   'Do you have a weapon equipped?',
+  'We don\'t want "kind", we want pumpers! -Samaar',
 ]
 
 const currentSplash = ref('')
