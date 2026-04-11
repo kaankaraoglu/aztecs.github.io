@@ -32,8 +32,10 @@ jobs:
           VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
         run: npm run build
 
-      - name: Create CNAME
-        run: echo "aztecs.se" > dist/CNAME
+      - name: Create CNAME and .nojekyll
+        run: |
+          echo "aztecs.se" > dist/CNAME
+          touch dist/.nojekyll
 
       - name: Deploy to gh-pages
         run: |
