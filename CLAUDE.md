@@ -58,3 +58,4 @@ PRs trigger `ci.yml` which runs lint, test, and build as 3 parallel jobs. Push t
 ### Custom Instructions
 
 Always check before you push to a branch to see if it is already merged or not. If so, open a new branch and PR.
+Always open links with Firefox.
