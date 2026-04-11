@@ -5,10 +5,20 @@ import { firebaseApp } from './firebase'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import { useAnalytics } from '@/composables/useAnalytics'
 
 const app = createApp(App)
 app.use(router)
 app.mount('#app')
+
+const { trackEvent } = useAnalytics()
+
+router.afterEach((to) => {
+  trackEvent('page_view', {
+    page_title: to.meta.title || 'Aztecs',
+    page_path: to.path,
+  })
+})
 
 if (
   import.meta.env.PROD &&
