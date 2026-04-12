@@ -126,7 +126,7 @@ function openLightbox() {
       width: 100%;
       background-color: #111;
 
-      @media (min-width: 641px) {
+      @include mobile-lg-up {
         aspect-ratio: 16 / 9;
       }
 
@@ -155,11 +155,11 @@ function openLightbox() {
         overflow: hidden;
         text-overflow: ellipsis;
 
-        @media (min-width: 641px) {
+        @include mobile-lg-up {
           text-align: center;
         }
 
-        @media (max-width: 640px) {
+        @include mobile-lg {
           text-align: left;
         }
       }
@@ -217,7 +217,7 @@ function openLightbox() {
         text-align: left;
         z-index: 2; /* ensure roster text sits above .image-anchor (z-index:1) */
 
-        @media (min-width: 641px) {
+        @include mobile-lg-up {
           position: absolute;
           bottom: 0;
           border-radius: 0 0 $radius-md $radius-md;
@@ -263,7 +263,7 @@ function openLightbox() {
   }
 }
 
-@media (max-width: 640px) {
+@include mobile-lg {
   .kill-card-view .image-container {
     aspect-ratio: 16 / 9;
   }

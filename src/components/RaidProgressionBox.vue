@@ -329,7 +329,7 @@ function highestDifficulty(raid) {
     gap: $space-2;
     margin-bottom: 1rem;
 
-    @media (max-width: 500px) {
+    @include mobile-md {
       flex-direction: column;
     }
   }
@@ -497,7 +497,7 @@ function highestDifficulty(raid) {
     padding: 0.4rem 0.6rem;
     min-height: 2.2rem;
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       flex-wrap: wrap;
       gap: 0.2rem 0.5rem;
       padding: 0.35rem 0.5rem;
@@ -510,7 +510,7 @@ function highestDifficulty(raid) {
     gap: 3px;
     flex-shrink: 0;
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       order: -1;
     }
   }
@@ -535,7 +535,7 @@ function highestDifficulty(raid) {
       color: $quality-uncommon;
     }
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       width: 1.5rem;
       height: 1.1rem;
       font-size: 0.6em;
@@ -551,7 +551,7 @@ function highestDifficulty(raid) {
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       font-size: 0.9em;
       flex-basis: 0;
     }
@@ -564,7 +564,7 @@ function highestDifficulty(raid) {
     flex-shrink: 0;
     font-size: 0.75em;
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       width: 100%;
       font-size: 0.7em;
       opacity: 0.5;
@@ -595,7 +595,7 @@ function highestDifficulty(raid) {
     padding: 0.3rem 0.6rem 0.5rem 3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       padding-left: 0.5rem;
     }
   }
