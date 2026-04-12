@@ -29,10 +29,6 @@
             </template>
           </div>
 
-          <div class="show-image-button">
-            <a :href="imageUrl" target="_blank" rel="noopener noreferrer"> Show Image </a>
-          </div>
-
           <RosterList class="roster" :tanks="tanks" :healers="healers" :dps="dds" />
         </div>
       </div>
@@ -258,10 +254,6 @@ function openLightbox() {
           }
         }
 
-        .show-image-button {
-          display: none;
-        }
-
         .roster {
           margin-top: 0.375rem;
           font-size: 0.85rem;
@@ -289,10 +281,6 @@ function openLightbox() {
     position: static;
     backdrop-filter: none;
     background: none;
-  }
-
-  .kill-card-view .show-image-button {
-    display: none;
   }
 
   .kill-card-view .enlarge-indicator {
