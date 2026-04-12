@@ -59,13 +59,11 @@ describe('useProgression', () => {
     expect(latestReport).toBe('https://warcraftlogs.com/reports/abc123')
   })
 
-  it('returns Vue refs for raids, summary, and loading', () => {
-    const { raids, summary, loading } = useProgression()
+  it('returns Vue refs for raids and summary', () => {
+    const { raids, summary } = useProgression()
 
     expect(isRef(raids)).toBe(true)
     expect(isRef(summary)).toBe(true)
-    expect(isRef(loading)).toBe(true)
-    expect(loading.value).toBe(false)
   })
 
   it('returns null latestReport when WCL data has no report', () => {
