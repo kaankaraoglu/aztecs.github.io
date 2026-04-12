@@ -193,7 +193,7 @@ onBeforeUnmount(() => {
     .nav-header {
       display: none;
 
-      @media (max-width: 768px) {
+      @include tablet-md {
         display: flex;
         width: 100%;
         justify-content: center;
@@ -227,7 +227,7 @@ onBeforeUnmount(() => {
         transform: translateY(-7px) rotate(-45deg);
       }
 
-      @media (max-width: 768px) {
+      @include tablet-md {
         display: flex;
       }
     }
@@ -275,7 +275,7 @@ onBeforeUnmount(() => {
         }
       }
 
-      @media (max-width: 768px) {
+      @include tablet-md {
         flex-direction: column;
         width: 100%;
         margin-top: 0.5rem;
