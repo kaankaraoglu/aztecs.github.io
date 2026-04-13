@@ -392,7 +392,7 @@ function highestDifficulty(raid) {
   .skeleton-bosses {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: $space-1;
   }
 
   /* ── Progress section ── */
