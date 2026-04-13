@@ -27,40 +27,40 @@
       <div
         v-if="summary.normal > 0 || summary.heroic > 0 || summary.mythic > 0"
         ref="progressRef"
-        class="summary"
+        class="progress-section"
       >
-        <div v-if="summary.normal > 0" class="summary-pill normal">
-          <span class="summary-count">{{ summary.normal }}/{{ summary.total }}</span>
-          <span class="summary-label">Normal</span>
-          <span class="summary-track"
-            ><span
-              class="summary-fill"
+        <div v-if="summary.normal > 0" class="progress-row progress-row--normal">
+          <span class="progress-label">Normal</span>
+          <span class="progress-count">{{ summary.normal }}/{{ summary.total }}</span>
+          <div class="progress-track">
+            <div
+              class="progress-fill"
               :class="{ animate: isVisible }"
               :style="{ '--progress': pct(summary.normal) }"
-            ></span
-          ></span>
+            ></div>
+          </div>
         </div>
-        <div v-if="summary.heroic > 0" class="summary-pill heroic">
-          <span class="summary-count">{{ summary.heroic }}/{{ summary.total }}</span>
-          <span class="summary-label">Heroic</span>
-          <span class="summary-track"
-            ><span
-              class="summary-fill"
+        <div v-if="summary.heroic > 0" class="progress-row progress-row--heroic">
+          <span class="progress-label">Heroic</span>
+          <span class="progress-count">{{ summary.heroic }}/{{ summary.total }}</span>
+          <div class="progress-track">
+            <div
+              class="progress-fill"
               :class="{ animate: isVisible }"
               :style="{ '--progress': pct(summary.heroic) }"
-            ></span
-          ></span>
+            ></div>
+          </div>
         </div>
-        <div v-if="summary.mythic > 0" class="summary-pill mythic">
-          <span class="summary-count">{{ summary.mythic }}/{{ summary.total }}</span>
-          <span class="summary-label">Mythic</span>
-          <span class="summary-track"
-            ><span
-              class="summary-fill"
+        <div v-if="summary.mythic > 0" class="progress-row progress-row--mythic">
+          <span class="progress-label">Mythic</span>
+          <span class="progress-count">{{ summary.mythic }}/{{ summary.total }}</span>
+          <div class="progress-track">
+            <div
+              class="progress-fill"
               :class="{ animate: isVisible }"
               :style="{ '--progress': pct(summary.mythic) }"
-            ></span
-          ></span>
+            ></div>
+          </div>
         </div>
       </div>
 
@@ -420,84 +420,120 @@ function highestDifficulty(raid) {
     gap: 1px;
   }
 
-  /* ── Summary ── */
-  .summary {
-    display: flex;
-    gap: $space-2;
-    margin-bottom: 1rem;
+  /* ── Progress section ── */
+  .progress-section {
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(255, 255, 255, 0.22);
+    border-radius: $radius-md;
+    padding: $space-3 $space-4;
+    margin-bottom: $space-4;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
 
-    @include mobile-md {
-      flex-direction: column;
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+
+    &:not(:last-child) {
+      margin-bottom: 0.38rem;
     }
   }
 
-  .summary-pill {
+  .progress-label {
+    font-size: 0.58em;
+    text-transform: uppercase;
+    font-weight: 700;
+    width: 2.8rem;
+    flex-shrink: 0;
+  }
+
+  .progress-count {
+    font-size: 0.65em;
+    font-weight: 800;
+    width: 1.8rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .progress-track {
     flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.35rem;
-    padding: $space-2 $space-3;
-    border-radius: $radius-md;
-    background: $surface-1;
-    border: 1px solid $color-border;
+    height: 3px;
+    border-radius: 2px;
+  }
 
-    .summary-count {
-      font-size: 1.5em;
-      font-weight: 800;
-      line-height: 1;
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    width: 0;
+    transition: width 1s $ease-out;
+
+    &.animate {
+      width: var(--progress);
+    }
+  }
+
+  .progress-row--normal {
+    .progress-label,
+    .progress-count {
+      color: #4da6ff;
     }
 
-    .summary-label {
-      font-size: 0.8em;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      opacity: 0.4;
+    .progress-count {
+      text-shadow: 0 0 8px rgba(77, 166, 255, 0.6);
     }
 
-    .summary-track {
-      width: 100%;
-      height: 2px;
-      border-radius: 1px;
-      background: rgba(255, 255, 255, 0.06);
-      margin-top: 0.15rem;
-
-      .summary-fill {
-        display: block;
-        height: 100%;
-        border-radius: 1px;
-        width: 0;
-        transition: width 1s $ease-out;
-
-        &.animate {
-          width: var(--progress);
-        }
-      }
+    .progress-track {
+      background: rgba(77, 166, 255, 0.15);
     }
 
-    &.normal {
-      .summary-count {
-        color: $quality-rare;
-      }
-      .summary-fill {
-        background: $quality-rare;
-      }
+    .progress-fill {
+      background: #4da6ff;
+      box-shadow: 0 0 7px rgba(77, 166, 255, 0.65);
+      transition-delay: 0ms;
     }
-    &.heroic {
-      .summary-count {
-        color: $quality-epic;
-      }
-      .summary-fill {
-        background: $quality-epic;
-      }
+  }
+
+  .progress-row--heroic {
+    .progress-label,
+    .progress-count {
+      color: #c060ff;
     }
-    &.mythic {
-      .summary-count {
-        color: $quality-legendary;
-      }
-      .summary-fill {
-        background: $quality-legendary;
-      }
+
+    .progress-count {
+      text-shadow: 0 0 8px rgba(192, 96, 255, 0.7);
+    }
+
+    .progress-track {
+      background: rgba(192, 96, 255, 0.15);
+    }
+
+    .progress-fill {
+      background: #c060ff;
+      box-shadow: 0 0 7px rgba(192, 96, 255, 0.7);
+      transition-delay: 150ms;
+    }
+  }
+
+  .progress-row--mythic {
+    .progress-label,
+    .progress-count {
+      color: $quality-legendary;
+    }
+
+    .progress-count {
+      text-shadow: 0 0 8px rgba(255, 128, 0, 0.6);
+    }
+
+    .progress-track {
+      background: rgba(255, 128, 0, 0.15);
+    }
+
+    .progress-fill {
+      background: $quality-legendary;
+      box-shadow: 0 0 7px rgba(255, 128, 0, 0.65);
+      transition-delay: 300ms;
     }
   }
 
@@ -743,7 +779,7 @@ function highestDifficulty(raid) {
   }
 
   @include reduced-motion {
-    .summary-fill {
+    .progress-fill {
       transition: none;
       width: var(--progress);
     }
