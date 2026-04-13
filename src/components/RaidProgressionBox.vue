@@ -86,13 +86,6 @@
                 },
               ]"
             >
-              <span
-                v-for="bar in difficultyBars(boss)"
-                :key="bar.difficulty"
-                class="difficulty-bar"
-                :class="bar.difficulty"
-                :style="{ width: bar.width }"
-              ></span>
               <div class="boss-row" @click="toggle(boss.name)">
                 <span class="boss-status">
                   <span :class="['pip', { active: boss.normal }]">N</span>
@@ -272,24 +265,6 @@ const CLASS_DISPLAY = {
   shaman: 'Shaman',
   warlock: 'Warlock',
   warrior: 'Warrior',
-}
-
-function difficultyBars(boss) {
-  const bars = []
-  const difficulties = ['normal', 'heroic', 'mythic']
-  for (const diff of difficulties) {
-    if (boss[diff]) {
-      bars.push({ difficulty: diff, width: '100%' })
-    }
-  }
-  // Show progress bar for the next unkilled difficulty above highest kill
-  if (boss.bestPercent != null) {
-    const nextDiff = difficulties.find((d) => !boss[d])
-    if (nextDiff) {
-      bars.push({ difficulty: nextDiff, width: `${boss.bestPercent}%` })
-    }
-  }
-  return bars
 }
 
 function playerTooltip(player) {
@@ -580,45 +555,46 @@ function highestDifficulty(raid) {
   .boss-list {
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    border-radius: $radius-md;
-    overflow: hidden;
+    gap: $space-1;
   }
 
   /* ── Boss rows ── */
   .boss-entry {
-    position: relative;
-    background: $surface-2;
-    transition: background $duration-fast;
+    border-radius: $radius-md;
+    transition:
+      background $duration-fast,
+      border-color $duration-fast;
 
-    .difficulty-bar {
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      transition: width 0.5s ease;
-      pointer-events: none;
+    &.killed {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-top-color: rgba(255, 255, 255, 0.22);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
-      &.normal {
-        background: rgba($quality-rare, 0.18);
-      }
-      &.heroic {
-        background: rgba($quality-epic, 0.25);
-      }
-      &.mythic {
-        background: rgba($quality-legendary, 0.18);
+      &:hover {
+        background: rgba(255, 255, 255, 0.11);
+        border-top-color: rgba(255, 255, 255, 0.28);
       }
     }
 
-    &:hover {
-      background: $surface-3;
+    &.in-progress {
+      background: rgba($quality-epic, 0.08);
+      border: 1px solid rgba($quality-epic, 0.28);
+      box-shadow: 0 2px 10px rgba($quality-epic, 0.08);
+
+      &:hover {
+        background: rgba($quality-epic, 0.12);
+      }
+    }
+
+    &:not(.killed):not(.in-progress) {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      opacity: 0.35;
     }
 
     &.expandable .boss-row {
       cursor: pointer;
-    }
-
-    &:not(.killed):not(.in-progress) {
-      opacity: 0.55;
     }
   }
 
@@ -657,15 +633,18 @@ function highestDifficulty(raid) {
     border-radius: $radius-sm;
     font-size: 0.65em;
     font-weight: 700;
-    background: rgba(255, 255, 255, 0.03);
-    color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.18);
+    border: 1px solid transparent;
     transition:
       background $duration-fast,
-      color $duration-fast;
+      color $duration-fast,
+      border-color $duration-fast;
 
     &.active {
-      background: rgba($quality-uncommon, 0.15);
+      background: rgba($quality-uncommon, 0.14);
       color: $quality-uncommon;
+      border-color: rgba($quality-uncommon, 0.28);
     }
 
     @include tablet-sm {
@@ -766,15 +745,17 @@ function highestDifficulty(raid) {
     color: $accent-color;
     text-decoration: none;
     padding: 0.35rem 0.85rem;
-    border: 1px solid rgba($accent-color, 0.3);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(255, 255, 255, 0.2);
     border-radius: $radius-md;
     transition:
       background $duration-fast,
       border-color $duration-fast;
 
     &:hover {
-      background: rgba($accent-color, 0.1);
-      border-color: rgba($accent-color, 0.6);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.18);
     }
   }
 
