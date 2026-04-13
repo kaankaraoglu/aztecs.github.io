@@ -12,7 +12,18 @@
       </div>
     </template>
     <template v-else>
-      <h3 class="box-title">Raids</h3>
+      <div class="raid-header">
+        <div class="raid-header-left">
+          <span class="raid-label">Raids</span>
+          <span class="raid-separator">·</span>
+          <span class="raid-name" :class="`header-difficulty-${highestDifficulty(raids[0])}`">
+            {{ raids[0].name }}
+          </span>
+        </div>
+        <div v-if="badgeDifficulty" class="raid-badge" :class="`badge-${badgeDifficulty}`">
+          {{ badgeText }}
+        </div>
+      </div>
       <div
         v-if="summary.normal > 0 || summary.heroic > 0 || summary.mythic > 0"
         ref="progressRef"
@@ -163,7 +174,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, onUnmounted } from 'vue'
+import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import RosterList from '@/components/RosterList.vue'
 import SkeletonLoader from '@/components/SkeletonLoader.vue'
 import { useAnalytics } from '@/composables/useAnalytics'
@@ -183,6 +194,21 @@ const props = defineProps({
     type: String,
     default: null,
   },
+})
+
+const badgeDifficulty = computed(() => {
+  if (props.summary.mythic > 0) return 'mythic'
+  if (props.summary.heroic > 0) return 'heroic'
+  if (props.summary.normal > 0) return 'normal'
+  return null
+})
+
+const badgeText = computed(() => {
+  const s = props.summary
+  if (s.mythic > 0) return `${s.mythic}/${s.total} M`
+  if (s.heroic > 0) return `${s.heroic}/${s.total} HC`
+  if (s.normal > 0) return `${s.normal}/${s.total} N`
+  return null
 })
 
 const progressRef = ref(null)
@@ -299,8 +325,22 @@ function highestDifficulty(raid) {
   min-width: 0;
   overflow: hidden;
 
-  .box-title {
-    margin: 0 0 0.75rem;
+  .raid-header {
+    display: flex;
+    align-items: baseline;
+    gap: $space-2;
+    margin-bottom: $space-3;
+  }
+
+  .raid-header-left {
+    display: flex;
+    align-items: baseline;
+    gap: $space-2;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .raid-label {
     font-size: 0.8em;
     font-weight: 700;
     text-transform: uppercase;
@@ -308,6 +348,62 @@ function highestDifficulty(raid) {
     color: $accent-color;
     text-shadow: 0 0 20px rgba($accent-color, 0.3);
     opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .raid-separator {
+    opacity: 0.25;
+    flex-shrink: 0;
+    font-size: 0.8em;
+  }
+
+  .raid-name {
+    font-size: 0.6em;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-difficulty-normal {
+    color: $quality-rare;
+  }
+  .header-difficulty-heroic {
+    color: $quality-epic;
+  }
+  .header-difficulty-mythic {
+    color: $quality-legendary;
+  }
+
+  .raid-badge {
+    margin-left: auto;
+    font-size: 0.58em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem;
+    border-radius: $radius-sm;
+    flex-shrink: 0;
+    line-height: 1.6;
+
+    &.badge-normal {
+      color: $quality-rare;
+      background: rgba($quality-rare, 0.15);
+      border: 1px solid rgba($quality-rare, 0.4);
+    }
+
+    &.badge-heroic {
+      color: $quality-epic;
+      background: rgba($quality-epic, 0.18);
+      border: 1px solid rgba($quality-epic, 0.42);
+    }
+
+    &.badge-mythic {
+      color: $quality-legendary;
+      background: rgba($quality-legendary, 0.15);
+      border: 1px solid rgba($quality-legendary, 0.4);
+      box-shadow: 0 0 10px rgba($quality-legendary, 0.2);
+    }
   }
 
   /* ── Skeleton ── */
