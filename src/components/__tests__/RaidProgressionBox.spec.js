@@ -94,7 +94,7 @@ describe('RaidProgressionBox', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: emptySummary },
     })
-    expect(wrapper.find('.summary').exists()).toBe(false)
+    expect(wrapper.find('.progress-section').exists()).toBe(false)
   })
 
   it('shows kill date and pull count', () => {

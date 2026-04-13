@@ -296,6 +296,11 @@ function highestDifficulty(raid) {
 @use '@/assets/styles/_variables.scss' as *;
 @use '@/assets/styles/tokens' as *;
 
+// Lightened difficulty colors for progress bars — slightly brighter than
+// $quality-rare/#4477ff and $quality-epic/#9900cc for readability on dark glass.
+$progress-normal: #4da6ff;
+$progress-heroic: #c060ff;
+
 .raid-progression {
   text-align: left;
   min-width: 0;
@@ -452,20 +457,20 @@ function highestDifficulty(raid) {
   .progress-row--normal {
     .progress-label,
     .progress-count {
-      color: #4da6ff;
+      color: $progress-normal;
     }
 
     .progress-count {
-      text-shadow: 0 0 8px rgba(77, 166, 255, 0.6);
+      text-shadow: 0 0 8px rgba($progress-normal, 0.6);
     }
 
     .progress-track {
-      background: rgba(77, 166, 255, 0.15);
+      background: rgba($progress-normal, 0.15);
     }
 
     .progress-fill {
-      background: #4da6ff;
-      box-shadow: 0 0 7px rgba(77, 166, 255, 0.65);
+      background: $progress-normal;
+      box-shadow: 0 0 7px rgba($progress-normal, 0.65);
       transition-delay: 0ms;
     }
   }
@@ -473,20 +478,20 @@ function highestDifficulty(raid) {
   .progress-row--heroic {
     .progress-label,
     .progress-count {
-      color: #c060ff;
+      color: $progress-heroic;
     }
 
     .progress-count {
-      text-shadow: 0 0 8px rgba(192, 96, 255, 0.7);
+      text-shadow: 0 0 8px rgba($progress-heroic, 0.7);
     }
 
     .progress-track {
-      background: rgba(192, 96, 255, 0.15);
+      background: rgba($progress-heroic, 0.15);
     }
 
     .progress-fill {
-      background: #c060ff;
-      box-shadow: 0 0 7px rgba(192, 96, 255, 0.7);
+      background: $progress-heroic;
+      box-shadow: 0 0 7px rgba($progress-heroic, 0.7);
       transition-delay: 150ms;
     }
   }
