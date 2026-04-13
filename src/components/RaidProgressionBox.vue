@@ -205,6 +205,7 @@ const badgeDifficulty = computed(() => {
 
 const badgeText = computed(() => {
   const s = props.summary
+  if (!s.total) return null
   if (s.mythic > 0) return `${s.mythic}/${s.total} M`
   if (s.heroic > 0) return `${s.heroic}/${s.total} HC`
   if (s.normal > 0) return `${s.normal}/${s.total} N`
