@@ -11,8 +11,8 @@
 - [x] **Remove dead `loading` ref** (`useProgression.js`) — The `loading` ref is initialized to `false` and never set to `true` (data is static JSON). Remove it or wire it to actual loading state.
 - [x] **Decide on `RaidHistoryView`** — The view is complete and polished but commented out in the router and nav. Either re-enable it at `/history` or delete the view, composable, and data file to avoid dead code.
 - [x] **Standardize breakpoint usage** — Several components use raw `@media (max-width: Npx)` at non-standard values (640px, 700px, 768px) instead of the mixins in `_tokens.scss`. Add named mixins for these breakpoints or refactor to use existing ones.
-- [ ] **Replace magic number spacing** — Views like `RaidingView` and `ContactView` use hardcoded rem values (`1.875rem`, `1.5625rem`) that should use spacing tokens from the design system.
-- [ ] **Singleton pattern for `useAnalytics`** — Each component calling `useAnalytics()` recreates the closure and calls `getAnalytics()` per event. Use a module-level singleton for the analytics instance.
+- [x] **Replace magic number spacing** — Views like `RaidingView` and `ContactView` use hardcoded rem values (`1.875rem`, `1.5625rem`) that should use spacing tokens from the design system.
+- [x] **Singleton pattern for `useAnalytics`** — Each component calling `useAnalytics()` recreates the closure and calls `getAnalytics()` per event. Use a module-level singleton for the analytics instance.
 
 ## Test Coverage
 
