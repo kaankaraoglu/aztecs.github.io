@@ -130,7 +130,7 @@ useScrollReveal(containerRef)
   }
 
   ul {
-    padding-left: 1.2rem;
+    padding-left: $space-5;
   }
   .note {
     font-style: italic;
@@ -138,21 +138,21 @@ useScrollReveal(containerRef)
   }
 
   .schedule {
-    margin-bottom: 1.875rem;
+    margin-bottom: $space-8;
   }
   .loot-rules {
     .loot-rules-list {
       margin: 0;
-      padding-left: 1.2rem;
+      padding-left: $space-5;
       li {
-        margin-bottom: 0.8rem;
+        margin-bottom: $space-3;
       }
     }
   }
   .raid-requirements {
     max-width: none;
     width: 100%;
-    padding-left: 1.2rem;
+    padding-left: $space-5;
     list-style: disc outside;
     word-break: normal;
     white-space: normal;
@@ -162,7 +162,7 @@ useScrollReveal(containerRef)
     ul {
       list-style: circle;
       margin-top: 0.5rem;
-      padding-left: 1.2rem;
+      padding-left: $space-5;
     }
   }
 
@@ -178,7 +178,7 @@ useScrollReveal(containerRef)
   }
 
   .requirements {
-    margin-bottom: 1.875rem;
+    margin-bottom: $space-8;
   }
 }
 </style>
