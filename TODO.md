@@ -16,8 +16,8 @@
 
 ## Test Coverage
 
-- [ ] **Views** — Add at least smoke-render tests for all 8 view components
-- [ ] **Router** — Test route definitions and lazy-loading
+- [x] **Views** — Add at least smoke-render tests for all 7 view components (RaidHistoryView was deleted)
+- [x] **Router** — Test route definitions and lazy-loading
 
 ## Accessibility (a11y)
 
