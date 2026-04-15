@@ -82,7 +82,16 @@
                 :class="bar.difficulty"
                 :style="{ width: bar.width }"
               ></span>
-              <div class="boss-row" @click="toggle(boss.name)">
+              <div
+                class="boss-row"
+                :tabindex="hasRoster(boss) ? 0 : undefined"
+                :role="hasRoster(boss) ? 'button' : undefined"
+                :aria-expanded="hasRoster(boss) ? String(!!expanded[boss.name]) : undefined"
+                :aria-label="hasRoster(boss) ? `${boss.name} kill roster` : undefined"
+                @click="toggle(boss.name)"
+                @keydown.enter.prevent="hasRoster(boss) && toggle(boss.name)"
+                @keydown.space.prevent="hasRoster(boss) && toggle(boss.name)"
+              >
                 <span class="boss-status">
                   <span :class="['pip', { active: boss.normal }]">N</span>
                   <span :class="['pip', { active: boss.heroic }]">HC</span>
@@ -329,7 +338,7 @@ function highestDifficulty(raid) {
     gap: $space-2;
     margin-bottom: 1rem;
 
-    @media (max-width: 500px) {
+    @include mobile-md {
       flex-direction: column;
     }
   }
@@ -497,7 +506,7 @@ function highestDifficulty(raid) {
     padding: 0.4rem 0.6rem;
     min-height: 2.2rem;
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       flex-wrap: wrap;
       gap: 0.2rem 0.5rem;
       padding: 0.35rem 0.5rem;
@@ -510,7 +519,7 @@ function highestDifficulty(raid) {
     gap: 3px;
     flex-shrink: 0;
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       order: -1;
     }
   }
@@ -535,7 +544,7 @@ function highestDifficulty(raid) {
       color: $quality-uncommon;
     }
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       width: 1.5rem;
       height: 1.1rem;
       font-size: 0.6em;
@@ -551,7 +560,7 @@ function highestDifficulty(raid) {
     overflow: hidden;
     text-overflow: ellipsis;
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       font-size: 0.9em;
       flex-basis: 0;
     }
@@ -564,7 +573,7 @@ function highestDifficulty(raid) {
     flex-shrink: 0;
     font-size: 0.75em;
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       width: 100%;
       font-size: 0.7em;
       opacity: 0.5;
@@ -595,7 +604,7 @@ function highestDifficulty(raid) {
     padding: 0.3rem 0.6rem 0.5rem 3rem;
     border-top: 1px solid rgba(255, 255, 255, 0.03);
 
-    @media (max-width: 700px) {
+    @include tablet-sm {
       padding-left: 0.5rem;
     }
   }

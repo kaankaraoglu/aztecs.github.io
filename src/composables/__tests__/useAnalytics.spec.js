@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { flushPromises } from '@vue/test-utils'
 
 let mockLogEvent = vi.fn()
 let mockGetAnalytics = vi.fn(() => 'mock-analytics-instance')
@@ -27,12 +28,14 @@ describe('useAnalytics', () => {
     expect(typeof result.trackEvent).toBe('function')
   })
 
-  it('calls getAnalytics with firebaseApp and logEvent with correct args in production', () => {
+  it('calls getAnalytics with firebaseApp and logEvent with correct args in production', async () => {
     const originalProd = import.meta.env.PROD
     import.meta.env.PROD = true
 
     const { trackEvent } = useAnalytics()
     trackEvent('select_content', { content_type: 'boss_roster', item_id: "Ky'veza" })
+
+    await flushPromises()
 
     expect(mockGetAnalytics).toHaveBeenCalledWith('mock-firebase-app')
     expect(mockLogEvent).toHaveBeenCalledWith('mock-analytics-instance', 'select_content', {
@@ -43,19 +46,21 @@ describe('useAnalytics', () => {
     import.meta.env.PROD = originalProd
   })
 
-  it('does not call logEvent when not in production', () => {
+  it('does not call logEvent when not in production', async () => {
     const originalProd = import.meta.env.PROD
     import.meta.env.PROD = false
 
     const { trackEvent } = useAnalytics()
     trackEvent('select_content', { content_type: 'boss_roster', item_id: 'Test' })
 
+    await flushPromises()
+
     expect(mockLogEvent).not.toHaveBeenCalled()
 
     import.meta.env.PROD = originalProd
   })
 
-  it('does not throw when getAnalytics throws', () => {
+  it('does not throw when getAnalytics throws', async () => {
     const originalProd = import.meta.env.PROD
     import.meta.env.PROD = true
     mockGetAnalytics = vi.fn(() => {
@@ -63,12 +68,14 @@ describe('useAnalytics', () => {
     })
 
     const { trackEvent } = useAnalytics()
-    expect(() => trackEvent('click', { link_type: 'discord_invite' })).not.toThrow()
+    trackEvent('click', { link_type: 'discord_invite' })
+
+    await flushPromises()
 
     import.meta.env.PROD = originalProd
   })
 
-  it('does not throw when logEvent throws', () => {
+  it('does not throw when logEvent throws', async () => {
     const originalProd = import.meta.env.PROD
     import.meta.env.PROD = true
     mockLogEvent = vi.fn(() => {
@@ -76,7 +83,9 @@ describe('useAnalytics', () => {
     })
 
     const { trackEvent } = useAnalytics()
-    expect(() => trackEvent('click', { link_type: 'external' })).not.toThrow()
+    trackEvent('click', { link_type: 'external' })
+
+    await flushPromises()
 
     import.meta.env.PROD = originalProd
   })

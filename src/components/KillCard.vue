@@ -29,10 +29,6 @@
             </template>
           </div>
 
-          <div class="show-image-button">
-            <a :href="imageUrl" target="_blank" rel="noopener noreferrer"> Show Image </a>
-          </div>
-
           <RosterList class="roster" :tanks="tanks" :healers="healers" :dps="dds" />
         </div>
       </div>
@@ -130,7 +126,7 @@ function openLightbox() {
       width: 100%;
       background-color: #111;
 
-      @media (min-width: 641px) {
+      @include mobile-lg-up {
         aspect-ratio: 16 / 9;
       }
 
@@ -159,11 +155,11 @@ function openLightbox() {
         overflow: hidden;
         text-overflow: ellipsis;
 
-        @media (min-width: 641px) {
+        @include mobile-lg-up {
           text-align: center;
         }
 
-        @media (max-width: 640px) {
+        @include mobile-lg {
           text-align: left;
         }
       }
@@ -221,7 +217,7 @@ function openLightbox() {
         text-align: left;
         z-index: 2; /* ensure roster text sits above .image-anchor (z-index:1) */
 
-        @media (min-width: 641px) {
+        @include mobile-lg-up {
           position: absolute;
           bottom: 0;
           border-radius: 0 0 $radius-md $radius-md;
@@ -258,10 +254,6 @@ function openLightbox() {
           }
         }
 
-        .show-image-button {
-          display: none;
-        }
-
         .roster {
           margin-top: 0.375rem;
           font-size: 0.85rem;
@@ -271,7 +263,7 @@ function openLightbox() {
   }
 }
 
-@media (max-width: 640px) {
+@include mobile-lg {
   .kill-card-view .image-container {
     aspect-ratio: 16 / 9;
   }
@@ -289,10 +281,6 @@ function openLightbox() {
     position: static;
     backdrop-filter: none;
     background: none;
-  }
-
-  .kill-card-view .show-image-button {
-    display: none;
   }
 
   .kill-card-view .enlarge-indicator {

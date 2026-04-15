@@ -72,7 +72,7 @@ const lightboxSrc = ref('')
   max-width: 100%;
 
   @include tablet {
-    padding: 0 1.2rem 2.5rem;
+    padding: 0 $space-5 $space-10;
   }
 
   .section-label {
@@ -142,7 +142,7 @@ const lightboxSrc = ref('')
     text-align: center;
     .achievement-name {
       font-size: 1.3em;
-      margin: 0 0 0.75rem;
+      margin: 0 0 $space-3;
       color: $color-yellow;
       @include mobile {
         font-size: 1.05em;

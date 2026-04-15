@@ -6,18 +6,29 @@
 
 ## Code Quality
 
-- [ ] **Lazy-import Firebase Analytics in `useAnalytics.js`** — The static `import { getAnalytics, logEvent } from 'firebase/analytics'` pulls the entire Analytics module into the main bundle, defeating the lazy-load in `main.js`. Use a dynamic `import()` inside `trackEvent()` guarded by `import.meta.env.PROD`.
-- [ ] **Remove dead `show-image-button`** (`KillCard.vue`) — The `.show-image-button` div is rendered but permanently `display: none` in all breakpoints. Remove the markup and CSS.
-- [ ] **Remove dead `loading` ref** (`useProgression.js`) — The `loading` ref is initialized to `false` and never set to `true` (data is static JSON). Remove it or wire it to actual loading state.
-- [ ] **Decide on `RaidHistoryView`** — The view is complete and polished but commented out in the router and nav. Either re-enable it at `/history` or delete the view, composable, and data file to avoid dead code.
-- [ ] **Standardize breakpoint usage** — Several components use raw `@media (max-width: Npx)` at non-standard values (640px, 700px, 768px) instead of the mixins in `_tokens.scss`. Add named mixins for these breakpoints or refactor to use existing ones.
-- [ ] **Replace magic number spacing** — Views like `RaidingView` and `ContactView` use hardcoded rem values (`1.875rem`, `1.5625rem`) that should use spacing tokens from the design system.
-- [ ] **Singleton pattern for `useAnalytics`** — Each component calling `useAnalytics()` recreates the closure and calls `getAnalytics()` per event. Use a module-level singleton for the analytics instance.
+- [x] **Lazy-import Firebase Analytics in `useAnalytics.js`** — The static `import { getAnalytics, logEvent } from 'firebase/analytics'` pulls the entire Analytics module into the main bundle, defeating the lazy-load in `main.js`. Use a dynamic `import()` inside `trackEvent()` guarded by `import.meta.env.PROD`.
+- [x] **Remove dead `show-image-button`** (`KillCard.vue`) — The `.show-image-button` div is rendered but permanently `display: none` in all breakpoints. Remove the markup and CSS.
+- [x] **Remove dead `loading` ref** (`useProgression.js`) — The `loading` ref is initialized to `false` and never set to `true` (data is static JSON). Remove it or wire it to actual loading state.
+- [x] **Decide on `RaidHistoryView`** — The view is complete and polished but commented out in the router and nav. Either re-enable it at `/history` or delete the view, composable, and data file to avoid dead code.
+- [x] **Standardize breakpoint usage** — Several components use raw `@media (max-width: Npx)` at non-standard values (640px, 700px, 768px) instead of the mixins in `_tokens.scss`. Add named mixins for these breakpoints or refactor to use existing ones.
+- [x] **Replace magic number spacing** — Views like `RaidingView` and `ContactView` use hardcoded rem values (`1.875rem`, `1.5625rem`) that should use spacing tokens from the design system.
+- [x] **Singleton pattern for `useAnalytics`** — Each component calling `useAnalytics()` recreates the closure and calls `getAnalytics()` per event. Use a module-level singleton for the analytics instance.
 
 ## Test Coverage
 
 - [x] **Views** — Add at least smoke-render tests for all 7 view components (RaidHistoryView was deleted)
 - [x] **Router** — Test route definitions and lazy-loading
+
+## Accessibility (a11y)
+
+- [x] **Hamburger menu** (`HeaderView.vue`) — Add `role="button"`, `aria-label`, and keyboard support (Enter/Space)
+- [x] **Boss expand** (`RaidProgressionBox.vue`) — Add `aria-expanded` attribute and keyboard support (Enter key to toggle)
+- [ ] **ImageLightbox** — Add `role="dialog"`, `aria-modal="true"`, focus trap, and scroll lock (`document.body.style.overflow = 'hidden'`)
+- [ ] **MythicPlusBox** — Add `aria-label` to timed/untimed checkmark symbols (currently reads as "check mark" / "cross mark" instead of "Timed" / "Not timed")
+- [ ] **KillCard roster** — Use semantic `<ul>/<li>` instead of flat `<span>` elements
+- [ ] **ContactView table** — Add `<caption>` for screen reader context
+- [ ] **KillCard images on HomeView** — Images have `cursor: zoom-in` and a click handler but no `role="button"` or keyboard event for lightbox access
+- [ ] **External links in FooterView** — Links opening in `target="_blank"` should warn assistive technology users (e.g., append " (opens in new tab)" or use `aria-label`)
 
 ## Performance
 

@@ -9,7 +9,16 @@
 
     <nav class="nav">
       <div class="nav-header">
-        <div :class="['hamburger', { open: menuOpen }]" @click="toggleMenu">
+        <div
+          :class="['hamburger', { open: menuOpen }]"
+          role="button"
+          tabindex="0"
+          :aria-label="menuOpen ? 'Close navigation menu' : 'Open navigation menu'"
+          :aria-expanded="String(menuOpen)"
+          @click="toggleMenu"
+          @keydown.enter.prevent="toggleMenu"
+          @keydown.space.prevent="toggleMenu"
+        >
           <span></span><span></span><span></span>
         </div>
       </div>
@@ -19,7 +28,6 @@
         <RouterLink class="nav-link" to="/achievements" @click="menuOpen = false"
           >Achievements</RouterLink
         >
-        <!-- <RouterLink class="nav-link" to="/history" @click="menuOpen = false">History</RouterLink> -->
         <RouterLink class="nav-link" to="/raiding" @click="menuOpen = false">Raiding</RouterLink>
         <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
@@ -62,6 +70,7 @@ const splashMessages = [
   'Damit Delmos!',
   "My wife is home, let's kill the bitch!",
   'Do you have a weapon equipped?',
+  'We don\'t want "kind", we want pumpers! -Samaar',
 ]
 
 const currentSplash = ref('')
@@ -193,7 +202,7 @@ onBeforeUnmount(() => {
     .nav-header {
       display: none;
 
-      @media (max-width: 768px) {
+      @include tablet-md {
         display: flex;
         width: 100%;
         justify-content: center;
@@ -227,7 +236,13 @@ onBeforeUnmount(() => {
         transform: translateY(-7px) rotate(-45deg);
       }
 
-      @media (max-width: 768px) {
+      &:focus-visible {
+        outline: 2px solid $accent-color;
+        outline-offset: 4px;
+        border-radius: $radius-sm;
+      }
+
+      @include tablet-md {
         display: flex;
       }
     }
@@ -275,7 +290,7 @@ onBeforeUnmount(() => {
         }
       }
 
-      @media (max-width: 768px) {
+      @include tablet-md {
         flex-direction: column;
         width: 100%;
         margin-top: 0.5rem;

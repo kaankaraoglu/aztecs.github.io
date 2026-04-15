@@ -46,13 +46,41 @@ $radius-lg: 16px;
 $radius-xl: 20px;
 
 // ── Breakpoint Mixins ──
+// mobile-first (min-width) variants
+@mixin mobile-lg-up {
+  @media (min-width: 641px) {
+    @content;
+  }
+}
+
+// desktop-first (max-width) variants
 @mixin mobile-sm {
   @media (max-width: 400px) {
     @content;
   }
 }
+@mixin mobile-md {
+  @media (max-width: 500px) {
+    @content;
+  }
+}
 @mixin mobile {
   @media (max-width: 600px) {
+    @content;
+  }
+}
+@mixin mobile-lg {
+  @media (max-width: 640px) {
+    @content;
+  }
+}
+@mixin tablet-sm {
+  @media (max-width: 700px) {
+    @content;
+  }
+}
+@mixin tablet-md {
+  @media (max-width: 768px) {
     @content;
   }
 }

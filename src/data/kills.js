@@ -22,9 +22,37 @@ import ulduarImage from '@/assets/images/kills/ulduar_2009_04_19.jpg'
 import obsidianSanctumImage from '@/assets/images/kills/obsidian_sanctum_2009_02_23.jpg'
 import manaforgeOmegaImage from '@/assets/images/kills/manaforge_omega_2025_09_17.jpg'
 import gloryOfTheOmegaRaiderImage from '@/assets/images/kills/glory_of_the_omega_raider_2025_09_21.jpg'
+import voidspireImage from '@/assets/images/kills/voidspire_2026_04_12.png'
 
 /** @type {Kill[]} */
 export const kills = [
+  {
+    raidName: 'Voidspire (Heroic)',
+    imageUrl: voidspireImage,
+    date: '2026-04-12 21:49',
+    tanks: [
+      { name: 'Phruity', class: 'druid' },
+      { name: 'Agro', class: 'warrior' },
+    ],
+    healers: [
+      { name: 'Blackmaira', class: 'paladin' },
+      { name: 'Samáar', class: 'priest' },
+      { name: 'Proto', class: 'evoker' },
+      { name: 'Éowyn', class: 'druid' },
+    ],
+    dds: [
+      { name: 'Aerioth', class: 'priest' },
+      { name: 'Valorite', class: 'death-knight' },
+      { name: 'Lilithh', class: 'warlock' },
+      { name: 'Frosteyes', class: 'death-knight' },
+      { name: 'Babasiru', class: 'evoker' },
+      { name: 'Mxk', class: 'warrior' },
+      { name: 'Daruni', class: 'druid' },
+      { name: 'Synthia', class: 'demon-hunter' },
+      { name: 'Aurielle', class: 'paladin' },
+      { name: 'Wablahigh', class: 'druid' },
+    ],
+  },
   {
     raidName: 'Glory of the Omega Raider',
     imageUrl: gloryOfTheOmegaRaiderImage,

@@ -103,10 +103,10 @@ useScrollReveal(containerRef)
   margin: 0 auto; // center inside custom width
 
   @include tablet {
-    padding: 1.875rem;
+    padding: $space-8;
   }
   @include mobile {
-    padding: 1.5625rem 1.25rem;
+    padding: $space-6 $space-5;
   }
 }
 
@@ -126,7 +126,7 @@ useScrollReveal(containerRef)
   font-size: 1.3em;
   line-height: 1.5;
   font-weight: 500;
-  margin: 0 0 1.5rem;
+  margin: 0 0 $space-6;
   text-align: center;
   @include mobile {
     font-size: 1.05em;
@@ -145,13 +145,13 @@ useScrollReveal(containerRef)
     color: $accent-color;
     font-weight: 800;
     text-align: left;
-    padding: 0.4rem 0.75rem;
+    padding: $space-2 $space-3;
   }
 
   tbody tr th,
   tbody tr td {
     font-weight: 700;
-    padding: 0.35rem 0.75rem;
+    padding: $space-1 $space-3;
     text-align: left; /* added to override global center alignment */
   }
 
