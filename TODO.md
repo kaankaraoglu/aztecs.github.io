@@ -63,3 +63,14 @@
 - [ ] **Search/filter** — Allow searching kills or bosses by name
 - [ ] **M+ runner sorting** — Allow sorting leaderboard by score or name
 - [ ] **Service worker / offline support** — Cache static assets for offline browsing
+
+## Accessibility (a11y)
+
+- [x] **Hamburger menu** (`HeaderView.vue`) — Add `role="button"`, `aria-label`, and keyboard support (Enter/Space)
+- [x] **Boss expand** (`RaidProgressionBox.vue`) — Add `aria-expanded` attribute and keyboard support (Enter key to toggle)
+- [ ] **ImageLightbox** — Add `role="dialog"`, `aria-modal="true"`, focus trap, and scroll lock (`document.body.style.overflow = 'hidden'`)
+- [ ] **MythicPlusBox** — Add `aria-label` to timed/untimed checkmark symbols (currently reads as "check mark" / "cross mark" instead of "Timed" / "Not timed")
+- [ ] **KillCard roster** — Use semantic `<ul>/<li>` instead of flat `<span>` elements
+- [ ] **ContactView table** — Add `<caption>` for screen reader context
+- [ ] **KillCard images on HomeView** — Images have `cursor: zoom-in` and a click handler but no `role="button"` or keyboard event for lightbox access
+- [ ] **External links in FooterView** — Links opening in `target="_blank"` should warn assistive technology users (e.g., append " (opens in new tab)" or use `aria-label`)
