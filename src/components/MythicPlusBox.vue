@@ -10,7 +10,13 @@
             class="runner-entry"
           >
             <span class="runner-rank">{{ index + 1 }}</span>
-            <span :class="['runner-name', runner.class]">{{ runner.name }}</span>
+            <a
+              :href="`https://worldofwarcraft.blizzard.com/en-gb/character/eu/${runner.realmSlug}/${runner.name.toLowerCase()}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              :class="['runner-name', runner.class]"
+              >{{ runner.name }}</a
+            >
             <span class="runner-score">{{ runner.score }}</span>
             <span v-if="runner.topKeys && runner.topKeys.length" class="runner-keys">
               <span v-for="(key, ki) in runner.topKeys" :key="ki" class="runner-key">{{
@@ -140,6 +146,11 @@ const formattedUpdated = computed(() => {
 .runner-name {
   font-size: 1em;
   font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .runner-score {
