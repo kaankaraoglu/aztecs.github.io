@@ -1,7 +1,7 @@
 import mpData from '@/data/rio-mythicplus.json'
 
 /**
- * @typedef {{ name: string, class: string, score: number, topKeys: string[] }} MpRunner
+ * @typedef {{ name: string, class: string, score: number, realmSlug: string, topKeys: string[] }} MpRunner
  * @typedef {{ dungeon: string, level: number, timed: boolean, team: string[] }} DungeonBest
  */
 

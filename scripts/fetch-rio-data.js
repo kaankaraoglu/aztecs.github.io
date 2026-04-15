@@ -111,6 +111,13 @@ async function main() {
       return true
     })
 
+    // Build a name → realmSlug map so Phase 2 profiles can be linked to the correct realm
+    const realmSlugByName = new Map()
+    for (const m of uniqueMembers) {
+      const slug = m.character.profile_url.split('/')[5]
+      realmSlugByName.set(m.character.name, slug)
+    }
+
     const totalBatches = Math.ceil(uniqueMembers.length / BATCH_SIZE)
     console.log(
       `[rio] Found ${uniqueMembers.length} unique guild members, fetching M+ profiles in ${totalBatches} batches of ${BATCH_SIZE}...`,
@@ -183,6 +190,7 @@ async function main() {
           class: toKebabClass(profile.class),
           score: Math.round(score),
           topKeys: formatTopKeys(profile.mythic_plus_best_runs),
+          realmSlug: realmSlugByName.get(profile.name) || 'al-akir',
         }
       })
       .filter(Boolean)
