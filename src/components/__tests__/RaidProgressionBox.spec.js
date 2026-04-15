@@ -112,6 +112,49 @@ describe('RaidProgressionBox', () => {
     expect(wrapper.text()).toContain('12.3%')
   })
 
+  it('gives expandable boss rows role=button, tabindex, and aria-expanded', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    const bossRows = wrapper.findAll('.boss-row')
+    // Boss 1 has a roster → should be interactive
+    expect(bossRows[0].attributes('role')).toBe('button')
+    expect(bossRows[0].attributes('tabindex')).toBe('0')
+    expect(bossRows[0].attributes('aria-expanded')).toBe('false')
+    // Boss 2 has no roster → should not be interactive
+    expect(bossRows[1].attributes('role')).toBeUndefined()
+    expect(bossRows[1].attributes('tabindex')).toBeUndefined()
+    expect(bossRows[1].attributes('aria-expanded')).toBeUndefined()
+  })
+
+  it('updates aria-expanded to true after toggle', async () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    const bossRow = wrapper.findAll('.boss-row')[0]
+    expect(bossRow.attributes('aria-expanded')).toBe('false')
+    await bossRow.trigger('click')
+    expect(bossRow.attributes('aria-expanded')).toBe('true')
+  })
+
+  it('expands roster on Enter keydown', async () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    expect(wrapper.find('.roster-panel').exists()).toBe(false)
+    await wrapper.findAll('.boss-row')[0].trigger('keydown.enter')
+    expect(wrapper.find('.roster-panel').exists()).toBe(true)
+  })
+
+  it('expands roster on Space keydown', async () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    expect(wrapper.find('.roster-panel').exists()).toBe(false)
+    await wrapper.findAll('.boss-row')[0].trigger('keydown.space')
+    expect(wrapper.find('.roster-panel').exists()).toBe(true)
+  })
+
   it('expands roster grouped by role on click', async () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
