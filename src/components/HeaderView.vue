@@ -9,7 +9,16 @@
 
     <nav class="nav">
       <div class="nav-header">
-        <div :class="['hamburger', { open: menuOpen }]" @click="toggleMenu">
+        <div
+          :class="['hamburger', { open: menuOpen }]"
+          role="button"
+          tabindex="0"
+          :aria-label="menuOpen ? 'Close navigation menu' : 'Open navigation menu'"
+          :aria-expanded="String(menuOpen)"
+          @click="toggleMenu"
+          @keydown.enter.prevent="toggleMenu"
+          @keydown.space.prevent="toggleMenu"
+        >
           <span></span><span></span><span></span>
         </div>
       </div>
@@ -225,6 +234,12 @@ onBeforeUnmount(() => {
       }
       &.open span:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
+      }
+
+      &:focus-visible {
+        outline: 2px solid $accent-color;
+        outline-offset: 4px;
+        border-radius: $radius-sm;
       }
 
       @include tablet-md {

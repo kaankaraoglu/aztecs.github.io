@@ -58,6 +58,40 @@ describe('HeaderView', () => {
     expect(hamburger.classes()).not.toContain('open')
   })
 
+  it('hamburger has correct ARIA attributes', async () => {
+    const wrapper = mountHeader()
+    const hamburger = wrapper.find('.hamburger')
+    expect(hamburger.attributes('role')).toBe('button')
+    expect(hamburger.attributes('tabindex')).toBe('0')
+    expect(hamburger.attributes('aria-label')).toBe('Open navigation menu')
+    expect(hamburger.attributes('aria-expanded')).toBe('false')
+
+    await hamburger.trigger('click')
+    expect(hamburger.attributes('aria-label')).toBe('Close navigation menu')
+    expect(hamburger.attributes('aria-expanded')).toBe('true')
+  })
+
+  it('hamburger toggles on Enter key', async () => {
+    const wrapper = mountHeader()
+    const hamburger = wrapper.find('.hamburger')
+    expect(hamburger.classes()).not.toContain('open')
+
+    await hamburger.trigger('keydown.enter')
+    expect(hamburger.classes()).toContain('open')
+
+    await hamburger.trigger('keydown.enter')
+    expect(hamburger.classes()).not.toContain('open')
+  })
+
+  it('hamburger toggles on Space key', async () => {
+    const wrapper = mountHeader()
+    const hamburger = wrapper.find('.hamburger')
+    expect(hamburger.classes()).not.toContain('open')
+
+    await hamburger.trigger('keydown.space')
+    expect(hamburger.classes()).toContain('open')
+  })
+
   it('sets a splash message on mount', async () => {
     const wrapper = mountHeader()
     await flushPromises()
