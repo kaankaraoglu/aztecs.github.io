@@ -9,8 +9,9 @@
         <a
           class="image-anchor"
           :href="imageUrl"
-          :aria-label="`Open full image for ${raidName}`"
+          :aria-label="`View full screenshot of ${raidName}`"
           @click.prevent="openLightbox"
+          @keydown.space.prevent="openLightbox"
         >
           <img class="raid-image" :src="imageUrl" :alt="`${raidName} screenshot`" loading="lazy" />
           <div class="enlarge-indicator" aria-hidden="true">🔍</div>

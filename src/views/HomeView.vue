@@ -27,8 +27,13 @@
           <img
             :src="kill.imageUrl"
             :alt="kill.raidName"
+            :aria-label="`View full screenshot of ${kill.raidName}`"
             class="achievement-image"
+            role="button"
+            tabindex="0"
             @click="lightboxSrc = kill.imageUrl"
+            @keydown.enter="lightboxSrc = kill.imageUrl"
+            @keydown.space.prevent="lightboxSrc = kill.imageUrl"
           />
         </div>
       </div>
