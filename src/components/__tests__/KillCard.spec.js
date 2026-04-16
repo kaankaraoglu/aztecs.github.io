@@ -46,7 +46,7 @@ describe('KillCard', () => {
       global: { stubs: { Teleport: true } },
     })
     expect(wrapper.find('.image-anchor').attributes('aria-label')).toBe(
-      'Open full image for Ragnaros Heroic',
+      'View full screenshot of Ragnaros Heroic',
     )
   })
 
