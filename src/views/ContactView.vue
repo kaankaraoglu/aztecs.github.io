@@ -7,6 +7,9 @@
         the guild.
       </p>
       <table class="table">
+        <caption class="sr-only">
+          Guild contacts and social links
+        </caption>
         <thead>
           <tr>
             <th scope="col">Rank</th>
@@ -131,6 +134,18 @@ useScrollReveal(containerRef)
   @include mobile {
     font-size: 1.05em;
   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .table {
