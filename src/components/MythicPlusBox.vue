@@ -33,7 +33,11 @@
           <div v-for="best in dungeonBests" :key="best.dungeon" class="dungeon-cell">
             <span class="dungeon-name">{{ best.dungeon }}</span>
             <span class="dungeon-level">+{{ best.level }}</span>
-            <span :class="['dungeon-timed', best.timed ? 'timed--yes' : 'timed--no']">
+            <span
+              :class="['dungeon-timed', best.timed ? 'timed--yes' : 'timed--no']"
+              :aria-label="best.timed ? 'Timed' : 'Not timed'"
+              role="img"
+            >
               {{ best.timed ? '✓' : '✗' }}
             </span>
           </div>
