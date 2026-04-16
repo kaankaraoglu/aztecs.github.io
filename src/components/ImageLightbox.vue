@@ -1,8 +1,18 @@
 <template>
   <Teleport to="body">
     <Transition name="lightbox">
-      <div v-if="open" class="lightbox-overlay" @click.self="$emit('close')">
-        <button class="lightbox-close" @click="$emit('close')" aria-label="Close">&times;</button>
+      <div
+        v-if="open"
+        ref="overlayRef"
+        class="lightbox-overlay"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="alt || 'Image lightbox'"
+        @click.self="$emit('close')"
+      >
+        <button class="lightbox-close" @click="$emit('close')" aria-label="Close lightbox">
+          &times;
+        </button>
         <div v-if="imageError" class="lightbox-error">
           <span class="lightbox-error-icon">&#x26A0;</span>
           <p>Image failed to load</p>
@@ -14,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, watch, nextTick, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   open: { type: Boolean, required: true },
@@ -25,6 +35,63 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const imageError = ref(false)
+const overlayRef = ref(null)
+
+/** @type {HTMLElement | null} */
+let previouslyFocused = null
+
+/** Selector for all focusable elements within the dialog. */
+const FOCUSABLE_SELECTORS = [
+  'a[href]',
+  'button:not([disabled])',
+  'input:not([disabled])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+].join(', ')
+
+/**
+ * Returns all focusable elements inside the overlay.
+ * @returns {HTMLElement[]}
+ */
+function getFocusableElements() {
+  if (!overlayRef.value) return []
+  return Array.from(overlayRef.value.querySelectorAll(FOCUSABLE_SELECTORS))
+}
+
+/**
+ * Trap Tab / Shift+Tab focus within the dialog and handle Escape.
+ * @param {KeyboardEvent} e
+ */
+function onKeydown(e) {
+  if (e.key === 'Escape' && props.open) {
+    emit('close')
+    return
+  }
+
+  if (e.key === 'Tab' && props.open) {
+    const focusable = getFocusableElements()
+    if (focusable.length === 0) {
+      e.preventDefault()
+      return
+    }
+
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+  }
+}
 
 watch(
   () => props.src,
@@ -33,14 +100,33 @@ watch(
   },
 )
 
-function onKeydown(e) {
-  if (e.key === 'Escape' && props.open) {
-    emit('close')
-  }
-}
+watch(
+  () => props.open,
+  async (isOpen) => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      previouslyFocused = /** @type {HTMLElement} */ (document.activeElement)
+      await nextTick()
+      const focusable = getFocusableElements()
+      if (focusable.length > 0) {
+        focusable[0].focus()
+      }
+    } else {
+      document.body.style.overflow = ''
+      if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+        previouslyFocused.focus()
+      }
+      previouslyFocused = null
+    }
+  },
+)
 
-onMounted(() => window.addEventListener('keydown', onKeydown))
-onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
+window.addEventListener('keydown', onKeydown)
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKeydown)
+  // Ensure scroll is restored if component is destroyed while open
+  document.body.style.overflow = ''
+})
 </script>
 
 <style scoped lang="scss">
