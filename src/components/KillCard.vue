@@ -13,7 +13,14 @@
           @click.prevent="openLightbox"
           @keydown.space.prevent="openLightbox"
         >
-          <img class="raid-image" :src="imageUrl" :alt="`${raidName} screenshot`" loading="lazy" />
+          <img
+            class="raid-image"
+            :src="imageUrl"
+            :alt="`${raidName} screenshot`"
+            width="1920"
+            height="1080"
+            loading="lazy"
+          />
           <div class="enlarge-indicator" aria-hidden="true">🔍</div>
         </a>
 

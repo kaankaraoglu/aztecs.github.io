@@ -15,14 +15,14 @@
  * }} Kill
  */
 
-import liberationOfUndermineImage from '@/assets/images/kills/liberation_of_undermine_2025_04_20.png'
+import liberationOfUndermineImage from '@/assets/images/kills/liberation_of_undermine_2025_04_20.webp'
 import gloryOfLiberationImage from '@/assets/images/kills/glory_of_the_liberation_of_undermine_raider_2025_04_27.jpg'
 import yoggSaronImage from '@/assets/images/kills/yoggsaron_2009_06_01.jpg'
 import ulduarImage from '@/assets/images/kills/ulduar_2009_04_19.jpg'
 import obsidianSanctumImage from '@/assets/images/kills/obsidian_sanctum_2009_02_23.jpg'
-import manaforgeOmegaImage from '@/assets/images/kills/manaforge_omega_2025_09_17.jpg'
-import gloryOfTheOmegaRaiderImage from '@/assets/images/kills/glory_of_the_omega_raider_2025_09_21.jpg'
-import voidspireImage from '@/assets/images/kills/voidspire_2026_04_12.png'
+import manaforgeOmegaImage from '@/assets/images/kills/manaforge_omega_2025_09_17.webp'
+import gloryOfTheOmegaRaiderImage from '@/assets/images/kills/glory_of_the_omega_raider_2025_09_21.webp'
+import voidspireImage from '@/assets/images/kills/voidspire_2026_04_12.webp'
 
 /** @type {Kill[]} */
 export const kills = [
