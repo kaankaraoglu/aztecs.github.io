@@ -4,8 +4,8 @@
       <RouterLink to="/" aria-label="Go to home" class="logo-home-link" @click="menuOpen = false">
         <img class="logo" alt="Aztecs logo" src="@/assets/images/logo.png" />
       </RouterLink>
-      <div class="splash-text" :style="{ opacity: splashVisible ? 1 : 0 }">{{ currentSplash }}</div>
     </div>
+    <div class="splash-text" :style="{ opacity: splashVisible ? 1 : 0 }">{{ currentSplash }}</div>
 
     <nav class="nav">
       <div class="nav-header">
@@ -170,9 +170,14 @@ onBeforeUnmount(() => {
 @use '@/assets/styles/tokens' as *;
 
 .header-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   .logo-wrapper {
     position: relative;
     display: inline-block;
+    line-height: 0;
 
     .logo {
       height: 14em;
@@ -203,10 +208,7 @@ onBeforeUnmount(() => {
   }
 
   .splash-text {
-    position: absolute;
-    left: 50%;
-    top: calc(100% + 0.75rem);
-    transform: translateX(-50%);
+    margin: $space-4 0;
     font-size: 1em;
     font-weight: bold;
     color: $color-yellow;
@@ -216,7 +218,7 @@ onBeforeUnmount(() => {
     transition: opacity $duration-slow $ease-default;
     @include mobile {
       font-size: 0.75em;
-      top: calc(100% + 0.5rem);
+      margin: $space-3 0;
     }
   }
 
@@ -235,10 +237,9 @@ onBeforeUnmount(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: $space-8 0 0;
+    margin: 0;
     padding-bottom: $space-4;
     @include mobile {
-      margin: $space-4 0 0;
       padding-bottom: $space-8;
     }
 

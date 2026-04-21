@@ -133,20 +133,9 @@ body {
   color: var(--t-text-primary);
 }
 
-/* Permanent stacked gradient behind everything. Unlike .bg-blobs (fixed),
-   this sits on <body> and scrolls with content, so glass cards always have
-   something to refract regardless of scroll position. */
-/* Dot-grid backdrop + soft cursor highlight (Linear / Vercel style).
-   A faint repeating dot grid tiles the entire page so glass cards have
-   real texture to refract when blurred. The cursor composable writes
-   --cursor-x / --cursor-y; we use those to brighten a narrow area
-   around the pointer via a masked overlay, not a huge moving blob —
-   the page still feels alive without a distracting gradient ball. */
-:root {
-  --cursor-x: 75%;
-  --cursor-y: 20%;
-}
-
+/* Static dot-grid backdrop (Linear / Vercel style). Tiles the body so
+   glass cards have real texture to refract when blurred. Low contrast
+   in both themes so it reads as texture, not pattern. */
 :root[data-theme='light'] body {
   background-color: var(--t-background);
   background-image: radial-gradient(circle at center, rgba(9, 9, 11, 0.12) 1px, transparent 1.5px);
@@ -163,36 +152,4 @@ body {
   );
   background-size: 22px 22px;
   background-attachment: fixed;
-}
-
-/* Cursor highlight — a small (~24vmin) soft light that tracks the pointer
-   at very low opacity, just enough to lift the dot grid where the mouse
-   is without painting a visible gradient blob. Positioned as a fixed
-   overlay on body::after so it doesn't scale the body background and
-   doesn't intercept pointer events. */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(
-    circle 24vmin at var(--cursor-x) var(--cursor-y),
-    var(--t-cursor-highlight, rgba(9, 9, 11, 0.08)),
-    transparent 70%
-  );
-  transition: opacity 300ms ease;
-}
-
-:root[data-theme='dark'] {
-  --t-cursor-highlight: rgba(255, 200, 140, 0.08);
-}
-:root[data-theme='light'] {
-  --t-cursor-highlight: rgba(9, 9, 11, 0.1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::after {
-    display: none;
-  }
 }
