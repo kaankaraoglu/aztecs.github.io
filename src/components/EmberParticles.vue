@@ -111,4 +111,10 @@ onUnmounted(() => {
   pointer-events: none;
   z-index: 5;
 }
+
+/* Brief: light mode is black/white only — the warm ember particles would
+   reintroduce brand color, so hide them when the light theme is active. */
+:root[data-theme='light'] .ember-canvas {
+  display: none;
+}
 </style>

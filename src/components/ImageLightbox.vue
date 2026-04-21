@@ -75,7 +75,7 @@ watch(
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(var(--t-text-primary-rgb), 0.6);
   font-size: 1rem;
 
   p {

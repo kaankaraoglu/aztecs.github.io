@@ -137,7 +137,7 @@ function linkAttrs(player) {
 /* Comma separators via CSS for linked variant */
 a.player::after {
   content: ',';
-  color: rgba(255, 255, 255, 0.12);
+  color: rgba(var(--t-text-primary-rgb), 0.12);
   text-decoration: none;
 }
 

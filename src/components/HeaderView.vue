@@ -32,6 +32,47 @@
         <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
         <DiscordIcon @click="openDiscordInvite" />
+        <button
+          type="button"
+          class="theme-toggle"
+          :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`"
+          :aria-pressed="theme === 'light'"
+          @click="onToggleTheme"
+        >
+          <svg
+            v-if="theme === 'dark'"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="20"
+            height="20"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+            />
+          </svg>
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="20"
+            height="20"
+            aria-hidden="true"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
       </div>
     </nav>
   </div>
@@ -41,8 +82,15 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import DiscordIcon from '@/components/icons/DiscordIcon.vue'
 import { useAnalytics } from '@/composables/useAnalytics'
+import { useTheme } from '@/composables/useTheme'
 
 const { trackEvent } = useAnalytics()
+const { theme, toggleTheme } = useTheme()
+
+function onToggleTheme() {
+  toggleTheme()
+  trackEvent('theme_toggle', { state: theme.value })
+}
 
 function shuffleArray(arr) {
   const shuffled = [...arr]
@@ -135,6 +183,10 @@ onBeforeUnmount(() => {
       }
     }
 
+    .logo {
+      filter: var(--t-logo-filter, none);
+    }
+
     .logo-home-link {
       display: inline-block;
       line-height: 0; /* remove extra inline spacing */
@@ -178,13 +230,13 @@ onBeforeUnmount(() => {
       text-shadow $duration-normal $ease-default;
 
     &:hover {
-      text-shadow: 0 0 12px rgba($accent-color, 0.6);
+      text-shadow: 0 0 12px rgba(var(--t-accent-rgb), 0.6);
     }
 
     &::after {
       opacity: 1;
       transform: scaleX(1);
-      box-shadow: 0 0 8px rgba($accent-color, 0.4);
+      box-shadow: 0 0 8px rgba(var(--t-accent-rgb), 0.4);
     }
   }
 
@@ -209,6 +261,33 @@ onBeforeUnmount(() => {
       }
     }
 
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: $space-2;
+      background: transparent;
+      border: 1px solid $color-border;
+      border-radius: $radius-md;
+      color: $color-text-primary;
+      cursor: pointer;
+      transition:
+        background $duration-fast $ease-default,
+        border-color $duration-fast $ease-default,
+        color $duration-fast $ease-default;
+
+      &:hover {
+        background: $surface-accent-hover;
+        border-color: $color-border-hover;
+        color: $accent-color;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $accent-color;
+        outline-offset: 2px;
+      }
+    }
+
     .hamburger {
       display: none;
       flex-direction: column;
@@ -220,7 +299,7 @@ onBeforeUnmount(() => {
         display: block;
         width: 24px;
         height: 3px;
-        background: white;
+        background: $color-text-primary;
         transition:
           transform $duration-normal $ease-default,
           opacity $duration-normal $ease-default;
@@ -255,7 +334,7 @@ onBeforeUnmount(() => {
 
       .nav-link {
         text-decoration: none;
-        color: #fff;
+        color: $color-text-primary;
         font-weight: 800;
         font-size: 1.2em;
         position: relative;
@@ -278,7 +357,7 @@ onBeforeUnmount(() => {
 
         &:hover {
           color: $accent-color;
-          text-shadow: 0 0 12px rgba($accent-color, 0.6);
+          text-shadow: 0 0 12px rgba(var(--t-accent-rgb), 0.6);
           transition:
             color $duration-normal $ease-default,
             text-shadow $duration-normal $ease-default;

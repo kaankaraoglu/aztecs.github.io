@@ -108,7 +108,7 @@ const formattedUpdated = computed(() => {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: $accent-color;
-  text-shadow: 0 0 20px rgba($accent-color, 0.3);
+  text-shadow: 0 0 20px rgba(var(--t-accent-rgb), 0.3);
 }
 
 /* ── Top Runners ── */

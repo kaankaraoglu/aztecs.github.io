@@ -23,7 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: var(--t-text-primary);
 
   &::before {
     content: '';
@@ -32,7 +32,7 @@
   }
 
   &:hover {
-    color: #7289da;
+    color: var(--t-accent);
   }
 }
 

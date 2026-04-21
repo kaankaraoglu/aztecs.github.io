@@ -194,7 +194,7 @@ function openLightbox() {
         justify-content: center;
         font-size: 0.9rem;
         background: rgba(0, 0, 0, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(var(--t-text-primary-rgb), 0.15);
         border-radius: 6px;
         backdrop-filter: blur(4px);
         opacity: 0.55;

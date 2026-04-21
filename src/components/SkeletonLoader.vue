@@ -26,7 +26,12 @@ defineProps({
 .skeleton-shimmer {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(var(--t-text-primary-rgb), 0.04),
+    transparent
+  );
   animation: shimmer-skeleton 1.5s infinite;
 }
 

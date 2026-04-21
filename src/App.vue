@@ -52,6 +52,14 @@ import EmberParticles from '@/components/EmberParticles.vue'
   animation: shimmer-gradient 8s linear infinite;
 }
 
+:root[data-theme='light'] .gradient-line {
+  /* Brief: light mode uses only black/white. Replace brand gradient with
+     a neutral grayscale shimmer so the top edge remains an identifying
+     element without reintroducing color. */
+  background: linear-gradient(90deg, #09090b, #3f3f46, #71717a, #a1a1aa, #3f3f46, #09090b);
+  background-size: 200% 100%;
+}
+
 @keyframes shimmer-gradient {
   0% {
     background-position: 0% 0;

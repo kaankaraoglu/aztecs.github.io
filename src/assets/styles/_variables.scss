@@ -9,19 +9,19 @@
 
 $color-red: #f54545;
 $color-orange: #fe691e;
-$color-yellow: #ff8a05;
+$color-yellow: var(--t-yellow);
 $color-light-orange: #ffa203;
 $color-light-yellow: #f5bd25;
 
-$text-color: #ffffff;
+$text-color: var(--t-text-primary);
 
 /*
   END OF COLOR PALLETTE
 */
 
-$accent-color: #ffa203;
-$accent-color-hover: #ffa203;
-$background-color: #111;
+$accent-color: var(--t-accent);
+$accent-color-hover: var(--t-accent-hover);
+$background-color: var(--t-background);
 
 .accent-color {
   color: $accent-color;
@@ -93,7 +93,7 @@ $color-hunter: #abd473;
 $color-mage: #69ccf0;
 $color-monk: #00ff96;
 $color-paladin: #f58cba;
-$color-priest: #ffffff;
+$color-priest: var(--t-class-priest);
 $color-rogue: #fff569;
 $color-shaman: #0070de;
 $color-warlock: #9482c9;

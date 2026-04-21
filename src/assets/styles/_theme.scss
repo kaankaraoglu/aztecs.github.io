@@ -1,0 +1,125 @@
+/*
+  Theme tokens
+  --------------------------------------------------------------
+  All colors that differ between light and dark mode live here as
+  CSS custom properties. The dark palette is the original Aztecs
+  look; the light palette is a black-and-white treatment inspired
+  by https://ui.shadcn.com/. WoW class colors and progress colors
+  are intentionally NOT themed — they're the same in both modes.
+*/
+
+:root,
+:root[data-theme='dark'] {
+  /* Surfaces */
+  --t-background: #111;
+  --t-surface-0: #111;
+  --t-surface-1: #161616;
+  --t-surface-2: #1c1c1c;
+  --t-surface-3: #222;
+  --t-surface-accent-hover: rgba(255, 138, 5, 0.05);
+
+  /* Text */
+  --t-text-primary: #ffffff;
+  --t-text-muted: rgba(255, 255, 255, 0.6);
+  --t-text-subtle: rgba(255, 255, 255, 0.4);
+
+  /* Accents — in dark these use the warm brand oranges */
+  --t-accent: #ffa203;
+  --t-accent-hover: #ffa203;
+  --t-accent-rgb: 255, 162, 3;
+  --t-yellow: #ff8a05;
+  --t-yellow-rgb: 255, 138, 5;
+  --t-text-primary-rgb: 255, 255, 255;
+  --t-text-inverse-rgb: 0, 0, 0;
+
+  /* Borders */
+  --t-border: rgba(255, 255, 255, 0.08);
+  --t-border-hover: rgba(255, 255, 255, 0.15);
+  --t-border-accent: rgba(255, 162, 3, 0.3);
+
+  /* Component-level */
+  --t-overlay-strong: rgba(0, 0, 0, 0.7);
+  --t-overlay-soft: rgba(0, 0, 0, 0.3);
+  --t-shadow-card: rgba(0, 0, 0, 0.2);
+  --t-shadow-card-hover: rgba(0, 0, 0, 0.4);
+
+  /* Global link/hover glow */
+  --t-accent-glow: rgba(255, 162, 3, 0.3);
+  --t-accent-glow-strong: rgba(255, 162, 3, 0.6);
+
+  /* Class-color override — priest is #fff which is invisible on light bg.
+     Kept identical to dark here. */
+  --t-class-priest: #ffffff;
+
+  /* The logo asset is a white glyph; no inversion needed on dark. */
+  --t-logo-filter: none;
+
+  /* Glass morphism tokens for lifted elements (cards, overlays).
+     Dark: slightly translucent dark surface over the ember/noise layers.
+     Each token combines a bg, a border, a blur radius, and a shadow that
+     components can wire up together. */
+  --glass-bg: rgba(22, 22, 22, 0.55);
+  --glass-bg-strong: rgba(28, 28, 28, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border-strong: rgba(255, 255, 255, 0.14);
+  --glass-blur: 14px;
+  --glass-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+}
+
+:root[data-theme='light'] {
+  /* Shadcn light palette (zinc) adapted to black/white only */
+  --t-background: #ffffff;
+  --t-surface-0: #ffffff;
+  --t-surface-1: #fafafa; /* zinc-50 */
+  --t-surface-2: #f4f4f5; /* zinc-100 */
+  --t-surface-3: #e4e4e7; /* zinc-200 */
+  --t-surface-accent-hover: rgba(0, 0, 0, 0.04);
+
+  --t-text-primary: #09090b; /* zinc-950 */
+  --t-text-muted: rgba(9, 9, 11, 0.72);
+  --t-text-subtle: rgba(9, 9, 11, 0.55);
+
+  /* "Accent" in light mode is simply black per the brief */
+  --t-accent: #09090b;
+  --t-accent-hover: #000000;
+  --t-accent-rgb: 9, 9, 11;
+  --t-yellow: #09090b;
+  --t-yellow-rgb: 9, 9, 11;
+  --t-text-primary-rgb: 9, 9, 11;
+  --t-text-inverse-rgb: 255, 255, 255;
+
+  --t-border: rgba(9, 9, 11, 0.12);
+  --t-border-hover: rgba(9, 9, 11, 0.25);
+  --t-border-accent: rgba(9, 9, 11, 0.4);
+
+  --t-overlay-strong: rgba(255, 255, 255, 0.85);
+  --t-overlay-soft: rgba(255, 255, 255, 0.6);
+  --t-shadow-card: rgba(9, 9, 11, 0.06);
+  --t-shadow-card-hover: rgba(9, 9, 11, 0.12);
+
+  /* Neutral glow — very subtle in light mode */
+  --t-accent-glow: rgba(9, 9, 11, 0.08);
+  --t-accent-glow-strong: rgba(9, 9, 11, 0.2);
+
+  /* Priest needs to be readable against white */
+  --t-class-priest: #09090b;
+
+  /* Invert the white logo PNG so it reads as black on light bg */
+  --t-logo-filter: invert(1);
+
+  /* Light-mode glass: near-white translucency with a hairline zinc border.
+     Blur remains useful when overlapping the gradient line and anything
+     scrolling behind the card. */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg-strong: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(9, 9, 11, 0.1);
+  --glass-border-strong: rgba(9, 9, 11, 0.16);
+  --glass-blur: 14px;
+  --glass-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 8px 24px -12px rgba(9, 9, 11, 0.12);
+}
+
+html,
+body {
+  background: var(--t-background);
+  color: var(--t-text-primary);
+}

@@ -311,7 +311,7 @@ function highestDifficulty(raid) {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: $accent-color;
-    text-shadow: 0 0 20px rgba($accent-color, 0.3);
+    text-shadow: 0 0 20px rgba(var(--t-accent-rgb), 0.3);
   }
 
   /* ── Skeleton ── */
@@ -366,7 +366,7 @@ function highestDifficulty(raid) {
       width: 100%;
       height: 2px;
       border-radius: 1px;
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(var(--t-text-primary-rgb), 0.06);
       margin-top: 0.15rem;
 
       .summary-fill {
@@ -443,7 +443,7 @@ function highestDifficulty(raid) {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: $accent-color;
-    text-shadow: 0 0 20px rgba($accent-color, 0.3);
+    text-shadow: 0 0 20px rgba(var(--t-accent-rgb), 0.3);
     padding-left: 0.15rem;
   }
 
@@ -527,8 +527,8 @@ function highestDifficulty(raid) {
     border-radius: $radius-sm;
     font-size: 0.65em;
     font-weight: 700;
-    background: rgba(255, 255, 255, 0.03);
-    color: rgba(255, 255, 255, 0.15);
+    background: rgba(var(--t-text-primary-rgb), 0.03);
+    color: rgba(var(--t-text-primary-rgb), 0.15);
     transition:
       background $duration-fast,
       color $duration-fast;
@@ -596,7 +596,7 @@ function highestDifficulty(raid) {
     flex-direction: column;
     gap: 0.25rem;
     padding: 0.3rem 0.6rem 0.5rem 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(var(--t-text-primary-rgb), 0.03);
 
     @include tablet-sm {
       padding-left: 0.5rem;
@@ -637,15 +637,15 @@ function highestDifficulty(raid) {
     color: $accent-color;
     text-decoration: none;
     padding: 0.9rem 0.85rem;
-    border: 1px solid rgba($accent-color, 0.3);
+    border: 1px solid rgba(var(--t-accent-rgb), 0.3);
     border-radius: $radius-md;
     transition:
       background $duration-fast,
       border-color $duration-fast;
 
     &:hover {
-      background: rgba($accent-color, 0.1);
-      border-color: rgba($accent-color, 0.6);
+      background: rgba(var(--t-accent-rgb), 0.1);
+      border-color: rgba(var(--t-accent-rgb), 0.6);
     }
   }
 

@@ -153,7 +153,7 @@ const lightboxSrc = ref('')
     .achievement-image {
       width: 100%;
       border-radius: $radius-lg;
-      border: 1px solid rgba($accent-color, 0.3);
+      border: 1px solid rgba(var(--t-accent-rgb), 0.3);
       cursor: zoom-in;
     }
   }

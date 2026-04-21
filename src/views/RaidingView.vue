@@ -81,7 +81,6 @@ useScrollReveal(containerRef)
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
 @use '@/assets/styles/tokens' as *;
-@use 'sass:color';
 
 .raiding-view {
   position: relative;
@@ -138,7 +137,8 @@ useScrollReveal(containerRef)
   }
   .note {
     font-style: italic;
-    color: color.adjust($accent-color, $lightness: 10%);
+    color: $accent-color;
+    opacity: 0.85;
   }
 
   .schedule {
@@ -178,7 +178,7 @@ useScrollReveal(containerRef)
     color: $color-yellow;
   }
   a:hover {
-    text-shadow: 0 0 12px rgba($accent-color, 0.6);
+    text-shadow: 0 0 12px rgba(var(--t-accent-rgb), 0.6);
   }
 
   .requirements {

@@ -11,13 +11,7 @@ const props = defineProps({
   },
 })
 
-const classes = computed(() =>
-  cn(
-    'bg-card text-card-foreground border rounded-[20px] p-6 box-border transition-colors max-[600px]:p-4 max-[600px]:rounded-2xl',
-    !props.noHover && 'hover:bg-accent/5 hover:border-accent/40',
-    props.class,
-  ),
-)
+const classes = computed(() => cn('info-box', !props.noHover && 'info-box--hoverable', props.class))
 </script>
 
 <template>
@@ -25,3 +19,33 @@ const classes = computed(() =>
     <slot />
   </div>
 </template>
+
+<style scoped lang="scss">
+.info-box {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  box-shadow: var(--glass-shadow);
+  padding: 1.5rem;
+  box-sizing: border-box;
+  transition:
+    background 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
+
+  @media (max-width: 600px) {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+}
+
+.info-box--hoverable:hover {
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-strong);
+  transform: translateY(-1px);
+}
+</style>
