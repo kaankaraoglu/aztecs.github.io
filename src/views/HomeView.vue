@@ -152,6 +152,8 @@ const lightboxSrc = ref('')
     }
     .achievement-image {
       width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
       border-radius: $radius-lg;
       border: 1px solid rgba(var(--t-accent-rgb), 0.3);
       cursor: zoom-in;
