@@ -1,7 +1,7 @@
 <template>
   <div class="noise-overlay" aria-hidden="true" />
   <EmberParticles />
-  <div class="gradient-line"></div>
+  <Progress :model-value="loadProgress" class="top-progress" />
 
   <HeaderView />
 
@@ -17,9 +17,41 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue'
 import FooterView from '@/components/FooterView.vue'
 import HeaderView from '@/components/HeaderView.vue'
 import EmberParticles from '@/components/EmberParticles.vue'
+import { Progress } from '@/components/ui/progress'
+
+/**
+ * Top-of-page page-load progress bar. Starts at 0, jumps to ~30 right away
+ * (so the user sees motion), then eases to 100 when the document is ready.
+ * Once complete it stays parked at 100 — the bar remains in place as a
+ * thin decorative line rather than disappearing.
+ */
+const loadProgress = ref(0)
+
+onMounted(() => {
+  // Ramp the bar up in a few steps so users see a loading progression
+  // even on fast connections. Once filled, the bar stays at 100 — it
+  // doubles as a decorative top border when the page is idle.
+  requestAnimationFrame(() => {
+    loadProgress.value = 35
+  })
+  setTimeout(() => {
+    loadProgress.value = 72
+  }, 180)
+  const finalize = () => {
+    loadProgress.value = 100
+  }
+  if (document.readyState === 'complete') {
+    setTimeout(finalize, 420)
+  } else {
+    window.addEventListener('load', () => setTimeout(finalize, 220), { once: true })
+    // Safety fallback if the load event is ever missed (cached SPA nav).
+    setTimeout(finalize, 1400)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -37,41 +69,30 @@ import EmberParticles from '@/components/EmberParticles.vue'
   background-size: 256px 256px;
 }
 
-.gradient-line {
-  background: linear-gradient(
-    90deg,
-    $color-red,
-    $color-orange,
-    $color-yellow,
-    $color-light-orange,
-    $color-light-yellow,
-    $color-red
-  );
-  background-size: 200% 100%;
-  height: 5px;
-  animation: shimmer-gradient 8s linear infinite;
-}
+/* Page-load progress bar, pinned to the very top of the viewport. Once it
+   finishes (filled at 100) it stays visible as a thin line so it reads
+   as both a loader during boot and a decorative top border afterward. */
+.top-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 40;
+  border-radius: 0;
 
-:root[data-theme='light'] .gradient-line {
-  /* Brief: light mode uses only black/white. Replace brand gradient with
-     a neutral grayscale shimmer so the top edge remains an identifying
-     element without reintroducing color. */
-  background: linear-gradient(90deg, #09090b, #3f3f46, #71717a, #a1a1aa, #3f3f46, #09090b);
-  background-size: 200% 100%;
-}
-
-@keyframes shimmer-gradient {
-  0% {
-    background-position: 0% 0;
+  // Override shadcn's default bg-primary/20 track — we want a subtle
+  // background tinted with the accent color, and a solid accent-colored
+  // fill that matches the site's theming in both light and dark.
+  :deep([data-slot='progress']),
+  &[data-slot='progress'] {
+    background: rgba(var(--t-accent-rgb), 0.18);
   }
-  100% {
-    background-position: 200% 0;
-  }
-}
 
-@include reduced-motion {
-  .gradient-line {
-    animation: none;
+  :deep([data-slot='progress-indicator']) {
+    background: $accent-color;
+    transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 </style>

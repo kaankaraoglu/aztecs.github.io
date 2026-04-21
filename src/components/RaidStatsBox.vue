@@ -11,23 +11,30 @@
     <InfoBox no-hover class="stat-card">
       <p class="stat-label">
         Iron Raider
-        <span class="info-icon-wrapper">
-          <svg
-            class="info-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            width="14"
-            height="14"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z"
-              clip-rule="evenodd"
-            />
-          </svg>
-          <span class="info-tooltip">Most boss kills attended without dying on any of them</span>
-        </span>
+        <HoverCard :open-delay="120" :close-delay="80">
+          <HoverCardTrigger as-child>
+            <button type="button" class="info-icon-wrapper" aria-label="What is Iron Raider?">
+              <svg
+                class="info-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                width="14"
+                height="14"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </HoverCardTrigger>
+          <HoverCardContent class="w-64 text-sm">
+            Most boss kills attended without dying on any of them.
+          </HoverCardContent>
+        </HoverCard>
       </p>
       <template v-if="stats.ironRaider">
         <p :class="['stat-name', stats.ironRaider.class]">{{ stats.ironRaider.name }}</p>
@@ -132,6 +139,7 @@
 
 <script setup>
 import InfoBox from '@/components/InfoBox.vue'
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { useRaidStats } from '@/composables/useRaidStats.js'
 
 const { stats } = useRaidStats()
@@ -193,47 +201,31 @@ function formatNumber(n) {
 }
 
 .info-icon-wrapper {
-  position: relative;
   display: inline-flex;
   align-items: center;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: help;
+
+  &:focus-visible {
+    outline: 2px solid $accent-color;
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
 }
 
 .info-icon {
   opacity: 0.5;
-  cursor: help;
-  transition: opacity $duration-fast $ease-default;
+  transition:
+    opacity $duration-fast $ease-default,
+    color $duration-fast $ease-default;
 
-  .info-icon-wrapper:hover & {
+  .info-icon-wrapper:hover &,
+  .info-icon-wrapper:focus-visible & {
     opacity: 1;
     color: $accent-color;
-  }
-}
-
-.info-tooltip {
-  position: absolute;
-  bottom: calc(100% + $space-2);
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: 200px;
-  padding: $space-2 $space-3;
-  background: $surface-2;
-  border: 1px solid $color-border-accent;
-  border-radius: $radius-md;
-  color: $color-text-muted;
-  font-size: 11px;
-  font-weight: 400;
-  text-transform: none;
-  letter-spacing: normal;
-  line-height: 1.4;
-  white-space: normal;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity $duration-normal $ease-default;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-
-  .info-icon-wrapper:hover & {
-    opacity: 1;
   }
 }
 
