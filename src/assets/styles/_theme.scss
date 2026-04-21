@@ -80,9 +80,13 @@
   --t-surface-3: #dcdce0;
   --t-surface-accent-hover: rgba(0, 0, 0, 0.04);
 
-  --t-text-primary: #09090b; /* zinc-950 */
-  --t-text-muted: rgba(9, 9, 11, 0.72);
-  --t-text-subtle: rgba(9, 9, 11, 0.55);
+  /* Match ui.shadcn.com: body copy is zinc-700 (softer than true black),
+     headings / strong text use --t-accent (zinc-950), and descriptions
+     use zinc-500. */
+  --t-text-primary: #3f3f46; /* zinc-700 */
+  --t-text-muted: #52525b; /* zinc-600 */
+  --t-text-subtle: #71717a; /* zinc-500 */
+  --t-text-primary-rgb: 63, 63, 70;
 
   /* "Accent" in light mode is simply black per the brief */
   --t-accent: #09090b;
@@ -90,7 +94,6 @@
   --t-accent-rgb: 9, 9, 11;
   --t-yellow: #09090b;
   --t-yellow-rgb: 9, 9, 11;
-  --t-text-primary-rgb: 9, 9, 11;
   --t-text-inverse-rgb: 255, 255, 255;
 
   --t-border: rgba(9, 9, 11, 0.12);
