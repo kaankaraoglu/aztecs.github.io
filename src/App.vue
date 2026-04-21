@@ -1,9 +1,4 @@
 <template>
-  <div class="bg-blobs" aria-hidden="true">
-    <span class="blob blob-a" />
-    <span class="blob blob-b" />
-    <span class="blob blob-c" />
-  </div>
   <div class="noise-overlay" aria-hidden="true" />
   <EmberParticles />
   <div class="gradient-line"></div>
@@ -40,83 +35,6 @@ import EmberParticles from '@/components/EmberParticles.vue'
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
-}
-
-/* Soft, slow-drifting gradient blobs sit behind everything so the
-   backdrop-filter on glass cards has something to refract — without
-   them the translucent cards on a flat bg look indistinguishable from
-   a solid fill. Strictly grayscale so light-mode stays black/white. */
-.bg-blobs {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    will-change: transform;
-  }
-
-  .blob-a {
-    width: 780px;
-    height: 780px;
-    top: -160px;
-    left: -120px;
-    background: radial-gradient(circle at 30% 30%, rgba(148, 148, 160, 0.9), transparent 65%);
-    animation: blob-drift-a 22s ease-in-out infinite alternate;
-  }
-
-  .blob-b {
-    width: 900px;
-    height: 900px;
-    top: 20%;
-    right: -220px;
-    background: radial-gradient(circle at 60% 40%, rgba(80, 80, 90, 0.75), transparent 68%);
-    animation: blob-drift-b 28s ease-in-out infinite alternate;
-  }
-
-  .blob-c {
-    width: 720px;
-    height: 720px;
-    bottom: -200px;
-    left: 30%;
-    background: radial-gradient(circle at 50% 50%, rgba(40, 40, 48, 0.65), transparent 70%);
-    animation: blob-drift-c 34s ease-in-out infinite alternate;
-  }
-}
-
-:root[data-theme='dark'] .bg-blobs .blob {
-  opacity: 0.55;
-}
-
-:root[data-theme='light'] .bg-blobs .blob {
-  mix-blend-mode: multiply;
-  opacity: 1;
-}
-
-@keyframes blob-drift-a {
-  to {
-    transform: translate3d(80px, 120px, 0) scale(1.1);
-  }
-}
-@keyframes blob-drift-b {
-  to {
-    transform: translate3d(-120px, 60px, 0) scale(1.15);
-  }
-}
-@keyframes blob-drift-c {
-  to {
-    transform: translate3d(60px, -80px, 0) scale(1.08);
-  }
-}
-
-@include reduced-motion {
-  .bg-blobs .blob {
-    animation: none;
-  }
 }
 
 .gradient-line {

@@ -68,7 +68,7 @@ const lightboxSrc = ref('')
 @use '@/assets/styles/_variables.scss' as *;
 @use '@/assets/styles/tokens' as *;
 .home-view {
-  background-color: $background-color;
+  background-color: transparent;
   margin: 0 auto;
   padding: 0 $space-8 $space-12;
   max-width: 100%;
