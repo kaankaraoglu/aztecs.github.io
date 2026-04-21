@@ -211,8 +211,8 @@ function openLightbox() {
       .image-overlay {
         width: 100%;
         padding: $space-3 $space-3;
-        backdrop-filter: blur(10px);
-        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(14px);
+        background: rgba(0, 0, 0, 0.7);
         color: white;
         font-size: 0.85rem;
         text-align: left;
