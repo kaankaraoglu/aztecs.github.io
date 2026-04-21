@@ -1,4 +1,6 @@
 <script setup>
+import { Skeleton } from '@/components/ui/skeleton'
+
 defineProps({
   width: { type: String, default: '100%' },
   height: { type: String, default: '1rem' },
@@ -6,9 +8,9 @@ defineProps({
 </script>
 
 <template>
-  <div class="skeleton" :style="{ width, height }">
+  <Skeleton class="skeleton" :style="{ width, height }">
     <div class="skeleton-shimmer" />
-  </div>
+  </Skeleton>
 </template>
 
 <style scoped lang="scss">
