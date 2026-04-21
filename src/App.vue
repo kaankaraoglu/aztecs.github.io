@@ -20,6 +20,9 @@
 import FooterView from '@/components/FooterView.vue'
 import HeaderView from '@/components/HeaderView.vue'
 import EmberParticles from '@/components/EmberParticles.vue'
+import { useCursorSpotlight } from '@/composables/useCursorSpotlight'
+
+useCursorSpotlight()
 </script>
 
 <style lang="scss" scoped>

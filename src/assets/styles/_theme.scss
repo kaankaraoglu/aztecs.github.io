@@ -136,17 +136,27 @@ body {
 /* Permanent stacked gradient behind everything. Unlike .bg-blobs (fixed),
    this sits on <body> and scrolls with content, so glass cards always have
    something to refract regardless of scroll position. */
-/* A viewport-sized repeating gradient field so every screenful of the
-   page has something for glass cards to blur against. Fixed attachment
-   means the gradient stays put while content scrolls, so translucent
-   cards visually "slide over" the pattern — the same interaction Apple's
-   liquid glass has against the wallpaper. */
+/* Cursor-tracked spotlight (navier.ai style). The useCursorSpotlight
+   composable updates --cursor-x / --cursor-y on :root as the pointer
+   moves; these radial gradients re-anchor to that point so the glass
+   cards always have a soft moving light source behind them. A second
+   ambient gradient keeps the far corners from being flat, and --cursor-*
+   defaults so the effect still reads on first paint / touch devices
+   where the composable is a no-op. */
+:root {
+  --cursor-x: 75%;
+  --cursor-y: 20%;
+}
+
 :root[data-theme='light'] body {
   background-image:
-    radial-gradient(circle 45vmin at 12% 18%, rgba(24, 24, 27, 0.28), transparent 65%),
-    radial-gradient(circle 50vmin at 88% 28%, rgba(50, 50, 58, 0.28), transparent 65%),
-    radial-gradient(circle 55vmin at 20% 78%, rgba(40, 40, 48, 0.26), transparent 65%),
-    radial-gradient(circle 50vmin at 82% 88%, rgba(24, 24, 27, 0.28), transparent 65%);
+    radial-gradient(
+      circle 60vmin at var(--cursor-x) var(--cursor-y),
+      rgba(24, 24, 27, 0.32),
+      transparent 60%
+    ),
+    radial-gradient(circle 55vmin at 10% 90%, rgba(40, 40, 48, 0.22), transparent 65%),
+    radial-gradient(circle 55vmin at 90% 100%, rgba(24, 24, 27, 0.22), transparent 65%);
   background-color: var(--t-background);
   background-repeat: no-repeat;
   background-size: 100% 100vh;
@@ -155,10 +165,13 @@ body {
 
 :root[data-theme='dark'] body {
   background-image:
-    radial-gradient(circle 45vmin at 10% 12%, rgba(255, 170, 80, 0.1), transparent 65%),
-    radial-gradient(circle 50vmin at 92% 28%, rgba(200, 80, 40, 0.08), transparent 65%),
-    radial-gradient(circle 55vmin at 20% 78%, rgba(255, 200, 120, 0.06), transparent 65%),
-    radial-gradient(circle 50vmin at 80% 90%, rgba(180, 60, 20, 0.08), transparent 65%);
+    radial-gradient(
+      circle 60vmin at var(--cursor-x) var(--cursor-y),
+      rgba(255, 170, 80, 0.14),
+      transparent 60%
+    ),
+    radial-gradient(circle 55vmin at 10% 90%, rgba(200, 80, 40, 0.08), transparent 65%),
+    radial-gradient(circle 55vmin at 90% 100%, rgba(255, 200, 120, 0.06), transparent 65%);
   background-color: var(--t-background);
   background-repeat: no-repeat;
   background-size: 100% 100vh;
