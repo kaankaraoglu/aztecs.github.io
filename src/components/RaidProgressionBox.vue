@@ -636,7 +636,7 @@ function highestDifficulty(raid) {
     font-weight: 600;
     color: $accent-color;
     text-decoration: none;
-    padding: 0.35rem 0.85rem;
+    padding: 0.9rem 0.85rem;
     border: 1px solid rgba($accent-color, 0.3);
     border-radius: $radius-md;
     transition:
