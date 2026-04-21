@@ -1,48 +1,48 @@
 <template>
   <div class="roster-list">
-    <div v-if="tanks?.length" class="role-group">
-      <RoleIcon v-if="showIcons" role="tank" />
-      <span v-else class="role-label">Tanks: </span>
-      <ul class="player-list" aria-label="Tanks">
-        <li v-for="(player, index) in tanks" :key="'tank-' + index" class="player-item">
-          <PlayerChip
-            :player="player"
-            :linked="linked"
-            :tooltip-fn="tooltipFn"
-            :needs-comma="!linked && index < tanks.length - 1"
-          />
+    <div v-for="group in renderedGroups" :key="group.role" class="role-group">
+      <RoleIcon v-if="showIcons" :role="group.role" />
+      <span v-else class="role-label">{{ group.label }}: </span>
+      <ul class="player-list" :aria-label="group.ariaLabel">
+        <li
+          v-for="(player, index) in group.players"
+          :key="`${group.role}-${index}`"
+          class="player-item"
+        >
+          <HoverCard v-if="tooltipFn" :open-delay="150" :close-delay="80">
+            <HoverCardTrigger as-child>
+              <a
+                v-if="linked"
+                :class="['player', player.class]"
+                :href="player.armory"
+                target="_blank"
+                rel="noopener noreferrer"
+                >{{ player.name }}</a
+              >
+              <span v-else :class="['player', player.class]"
+                >{{ player.name }}<span v-if="index < group.players.length - 1">,</span></span
+              >
+            </HoverCardTrigger>
+            <HoverCardContent class="w-auto text-sm px-3 py-1.5">{{
+              tooltipFn(player)
+            }}</HoverCardContent>
+          </HoverCard>
+          <template v-else>
+            <a
+              v-if="linked"
+              :class="['player', player.class]"
+              :href="player.armory"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ player.name }}</a
+            >
+            <span v-else :class="['player', player.class]"
+              >{{ player.name }}<span v-if="index < group.players.length - 1">,</span></span
+            >
+          </template>
         </li>
       </ul>
-      <br v-if="!showIcons" />
-    </div>
-    <div v-if="healers?.length" class="role-group">
-      <RoleIcon v-if="showIcons" role="healer" />
-      <span v-else class="role-label">Healers: </span>
-      <ul class="player-list" aria-label="Healers">
-        <li v-for="(player, index) in healers" :key="'healer-' + index" class="player-item">
-          <PlayerChip
-            :player="player"
-            :linked="linked"
-            :tooltip-fn="tooltipFn"
-            :needs-comma="!linked && index < healers.length - 1"
-          />
-        </li>
-      </ul>
-      <br v-if="!showIcons" />
-    </div>
-    <div v-if="dps?.length" class="role-group">
-      <RoleIcon v-if="showIcons" role="dps" />
-      <span v-else class="role-label">DDs: </span>
-      <ul class="player-list" aria-label="Damage dealers">
-        <li v-for="(player, index) in dps" :key="'dd-' + index" class="player-item">
-          <PlayerChip
-            :player="player"
-            :linked="linked"
-            :tooltip-fn="tooltipFn"
-            :needs-comma="!linked && index < dps.length - 1"
-          />
-        </li>
-      </ul>
+      <br v-if="!showIcons && !group.isLast" />
     </div>
   </div>
 </template>
@@ -56,7 +56,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
  * @typedef {{ name: string, class: string, armory?: string, spec?: string }} Player
  */
 
-defineProps({
+const props = defineProps({
   /** @type {import('vue').PropType<Player[]>} */
   tanks: { type: Array, default: () => [] },
   /** @type {import('vue').PropType<Player[]>} */
@@ -67,47 +67,26 @@ defineProps({
   linked: { type: Boolean, default: false },
   /** Show RoleIcon SVGs instead of text labels */
   showIcons: { type: Boolean, default: false },
-  /** Optional function to generate tooltip text for a player */
+  /** Optional function that returns tooltip text for a player */
   tooltipFn: { type: Function, default: null },
 })
 
 /**
- * Inline chip that wraps each player. When a tooltip is available the name
- * is wrapped in a shadcn HoverCard; otherwise we render the raw link/span
- * so we don't pay the HoverCard cost for every raider in a 20-man kill.
+ * Collapse props into an iterable list of { role, label, players } so the
+ * template can render all three groups with one v-for, and we don't get
+ * the "only v-for shows markers" edge case from the old triple-section
+ * layout.
  */
-const PlayerChip = {
-  name: 'PlayerChip',
-  props: {
-    player: { type: Object, required: true },
-    linked: { type: Boolean, default: false },
-    tooltipFn: { type: Function, default: null },
-    needsComma: { type: Boolean, default: false },
-  },
-  setup(props) {
-    const tooltip = computed(() => (props.tooltipFn ? props.tooltipFn(props.player) : null))
-    return { tooltip }
-  },
-  components: { HoverCard, HoverCardContent, HoverCardTrigger },
-  template: `
-    <HoverCard v-if="tooltip" :open-delay="150" :close-delay="80">
-      <HoverCardTrigger as-child>
-        <component
-          :is="linked ? 'a' : 'span'"
-          :class="['player', player.class]"
-          v-bind="linked ? { href: player.armory, target: '_blank', rel: 'noopener noreferrer' } : {}"
-        >{{ player.name }}<span v-if="needsComma">,</span></component>
-      </HoverCardTrigger>
-      <HoverCardContent class="w-auto text-sm px-3 py-1.5">{{ tooltip }}</HoverCardContent>
-    </HoverCard>
-    <component
-      v-else
-      :is="linked ? 'a' : 'span'"
-      :class="['player', player.class]"
-      v-bind="linked ? { href: player.armory, target: '_blank', rel: 'noopener noreferrer' } : {}"
-    >{{ player.name }}<span v-if="needsComma">,</span></component>
-  `,
-}
+const renderedGroups = computed(() => {
+  const groups = []
+  if (props.tanks?.length)
+    groups.push({ role: 'tank', label: 'Tanks', ariaLabel: 'Tanks', players: props.tanks })
+  if (props.healers?.length)
+    groups.push({ role: 'healer', label: 'Healers', ariaLabel: 'Healers', players: props.healers })
+  if (props.dps?.length)
+    groups.push({ role: 'dps', label: 'DDs', ariaLabel: 'Damage dealers', players: props.dps })
+  return groups.map((g, i) => ({ ...g, isLast: i === groups.length - 1 }))
+})
 </script>
 
 <style scoped lang="scss">
