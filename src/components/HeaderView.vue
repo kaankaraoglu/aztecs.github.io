@@ -32,6 +32,21 @@
         <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
         <DiscordIcon @click="openDiscordInvite" />
+        <AlertDialog v-model:open="flashbangOpen">
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>⚠️ Flashbang warning</AlertDialogTitle>
+              <AlertDialogDescription>
+                You're about to switch to light mode. Make sure you're not in a dark room, haven't
+                just woken up, and your eyes are ready. Proceed?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Take me back</AlertDialogCancel>
+              <AlertDialogAction @click="confirmSwitchToLight">I'm ready</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
         <button
           type="button"
           class="theme-toggle"
@@ -81,15 +96,39 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import DiscordIcon from '@/components/icons/DiscordIcon.vue'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { useAnalytics } from '@/composables/useAnalytics'
 import { useTheme } from '@/composables/useTheme'
 
 const { trackEvent } = useAnalytics()
-const { theme, toggleTheme } = useTheme()
+const { theme, setTheme, toggleTheme } = useTheme()
+
+const flashbangOpen = ref(false)
 
 function onToggleTheme() {
+  // Dark → light: show the (tongue-in-cheek) flashbang warning first.
+  // Light → dark: just flip, no need to interrupt.
+  if (theme.value === 'dark') {
+    flashbangOpen.value = true
+    return
+  }
   toggleTheme()
   trackEvent('theme_toggle', { state: theme.value })
+}
+
+function confirmSwitchToLight() {
+  setTheme('light')
+  flashbangOpen.value = false
+  trackEvent('theme_toggle', { state: 'light', confirmed_flashbang: true })
 }
 
 function shuffleArray(arr) {
@@ -222,17 +261,6 @@ onBeforeUnmount(() => {
     }
   }
 
-  .router-link-active {
-    color: $accent-color !important;
-    transition: color $duration-normal $ease-default;
-
-    &::after {
-      opacity: 1;
-      transform: scaleX(1);
-      box-shadow: 0 0 8px rgba(var(--t-accent-rgb), 0.4);
-    }
-  }
-
   .nav {
     display: flex;
     flex-direction: column;
@@ -357,6 +385,15 @@ onBeforeUnmount(() => {
         &:hover::after {
           opacity: 0.4;
           transform: scaleX(1);
+        }
+
+        &.router-link-active {
+          color: $accent-color;
+
+          &::after {
+            opacity: 1;
+            transform: scaleX(1);
+          }
         }
       }
 
