@@ -49,7 +49,6 @@ useScrollReveal(containerRef)
 
 <style scoped lang="scss">
 @use '@/assets/styles/variables' as *;
-@use '@/assets/styles/_info-box.scss';
 @use '@/assets/styles/tokens' as *;
 
 .about-view {

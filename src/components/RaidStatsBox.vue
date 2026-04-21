@@ -1,14 +1,14 @@
 <template>
   <div class="raid-stats-grid">
-    <div class="info-box info-box--no-hover stat-card">
+    <InfoBox no-hover class="stat-card">
       <p class="stat-label">Most Deaths</p>
       <template v-if="stats.mostDeaths">
         <p :class="['stat-name', stats.mostDeaths.class]">{{ stats.mostDeaths.name }}</p>
         <p class="stat-value">{{ stats.mostDeaths.count }} deaths</p>
       </template>
       <p v-else class="stat-empty">No data yet.</p>
-    </div>
-    <div class="info-box info-box--no-hover stat-card">
+    </InfoBox>
+    <InfoBox no-hover class="stat-card">
       <p class="stat-label">
         Iron Raider
         <span class="info-icon-wrapper">
@@ -34,8 +34,8 @@
         <p class="stat-value">{{ stats.ironRaider.killsAttended }} kills attended</p>
       </template>
       <p v-else class="stat-empty">No data yet.</p>
-    </div>
-    <div class="info-box info-box--no-hover stat-card">
+    </InfoBox>
+    <InfoBox no-hover class="stat-card">
       <p class="stat-label">Highest Damage Done in Raid</p>
       <template v-if="stats.highestDamageDone">
         <p :class="['stat-name', stats.highestDamageDone.class]">
@@ -55,8 +55,8 @@
         >
       </template>
       <p v-else class="stat-empty">No data yet.</p>
-    </div>
-    <div class="info-box info-box--no-hover stat-card">
+    </InfoBox>
+    <InfoBox no-hover class="stat-card">
       <p class="stat-label">Highest Damage Done in M+</p>
       <template v-if="stats.highestDamageDoneMplus">
         <p :class="['stat-name', stats.highestDamageDoneMplus.class]">
@@ -76,8 +76,8 @@
         >
       </template>
       <p v-else class="stat-empty">No data yet.</p>
-    </div>
-    <div class="info-box info-box--no-hover stat-card">
+    </InfoBox>
+    <InfoBox no-hover class="stat-card">
       <p class="stat-label">Best Healer in Raid</p>
       <template v-if="stats.bestHealer">
         <p :class="['stat-name', stats.bestHealer.class]">{{ stats.bestHealer.name }}</p>
@@ -94,8 +94,8 @@
         >
       </template>
       <p v-else class="stat-empty">No data yet.</p>
-    </div>
-    <div class="info-box info-box--no-hover stat-card">
+    </InfoBox>
+    <InfoBox no-hover class="stat-card">
       <p class="stat-label">Best Healer in M+</p>
       <template v-if="stats.bestHealerMplus">
         <p :class="['stat-name', stats.bestHealerMplus.class]">
@@ -115,22 +115,23 @@
         >
       </template>
       <p v-else class="stat-empty">No data yet.</p>
-    </div>
-    <div class="info-box info-box--no-hover stat-card">
+    </InfoBox>
+    <InfoBox no-hover class="stat-card">
       <p class="stat-label">Highest Avoidable Damage Taken</p>
       <p class="stat-name"><span class="warrior">Peavy</span>, <span class="evoker">Proto</span></p>
       <p class="stat-name death-knight">Madhouse</p>
       <p class="stat-subtitle">by miles</p>
-    </div>
-    <div class="info-box info-box--no-hover stat-card">
+    </InfoBox>
+    <InfoBox no-hover class="stat-card">
       <p class="stat-label">Frontpage Material</p>
       <p class="stat-name warrior">Agro</p>
       <p class="stat-subtitle">because he asked</p>
-    </div>
+    </InfoBox>
   </div>
 </template>
 
 <script setup>
+import InfoBox from '@/components/InfoBox.vue'
 import { useRaidStats } from '@/composables/useRaidStats.js'
 
 const { stats } = useRaidStats()
@@ -150,7 +151,6 @@ function formatNumber(n) {
 
 <style lang="scss" scoped>
 @use '@/assets/styles/_variables.scss' as *;
-@use '@/assets/styles/_info-box.scss';
 @use '@/assets/styles/tokens' as *;
 
 .raid-stats-grid {

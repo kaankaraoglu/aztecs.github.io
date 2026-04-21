@@ -1,17 +1,17 @@
 <template>
   <div ref="containerRef" class="raiding-view content-wrapper">
     <div class="side-by-side">
-      <section class="schedule info-box reveal">
+      <InfoBox class="schedule reveal">
         <h2 class="info-box-heading">Raid Schedule</h2>
         <ul>
           <li>Wednesdays 20:00 - 22:00 ST</li>
           <li>Sundays 19:00 - 22:00 ST</li>
         </ul>
         <p class="note">Holiday adjustments are announced in advance.</p>
-      </section>
+      </InfoBox>
 
       <section class="loot-section reveal">
-        <div class="info-box loot-rules">
+        <InfoBox class="loot-rules">
           <h2 class="info-box-heading">Loot Rules</h2>
           <ol class="loot-rules-list">
             <li>One loot specialisation per raid (DO NOT switch roles mid-raid)</li>
@@ -33,10 +33,10 @@
             </li>
           </ol>
           <p>Feel free to talk to any of the officers if you have any questions or objections.</p>
-        </div>
+        </InfoBox>
       </section>
 
-      <section class="requirements info-box reveal">
+      <InfoBox class="requirements reveal">
         <h2 class="info-box-heading">Requirements & Expectations</h2>
         <ul class="raid-requirements">
           <li>
@@ -64,13 +64,14 @@
             </ul>
           </li>
         </ul>
-      </section>
+      </InfoBox>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import InfoBox from '@/components/InfoBox.vue'
 import { useScrollReveal } from '@/composables/useScrollReveal.js'
 
 const containerRef = ref(null)
@@ -79,7 +80,6 @@ useScrollReveal(containerRef)
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
-@use '@/assets/styles/_info-box.scss';
 @use '@/assets/styles/tokens' as *;
 @use 'sass:color';
 
@@ -96,7 +96,9 @@ useScrollReveal(containerRef)
     line-height: 1.5;
   }
 
-  .info-box {
+  .schedule,
+  .loot-rules,
+  .requirements {
     padding: $space-8;
     margin: $space-2 0 $space-8;
     display: flex;
@@ -117,7 +119,9 @@ useScrollReveal(containerRef)
       flex-direction: column;
     }
 
-    .info-box {
+    .schedule,
+    .loot-rules,
+    .requirements {
       flex: 1;
     }
 

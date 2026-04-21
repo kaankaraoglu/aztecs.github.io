@@ -11,12 +11,9 @@
       <RaidStatsBox class="reveal" />
       <FadingDivider />
       <div class="top-boxes">
-        <RaidProgressionBox
-          :raids="raids"
-          :summary="summary"
-          :latest-report="latestReport"
-          class="info-box info-box--no-hover"
-        />
+        <InfoBox no-hover>
+          <RaidProgressionBox :raids="raids" :summary="summary" :latest-report="latestReport" />
+        </InfoBox>
         <MythicPlusBox class="reveal" />
       </div>
       <FadingDivider />
@@ -57,6 +54,7 @@ import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import MythicPlusBox from '@/components/MythicPlusBox.vue'
 import RaidStatsBox from '@/components/RaidStatsBox.vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
+import InfoBox from '@/components/InfoBox.vue'
 
 const containerRef = ref(null)
 useScrollReveal(containerRef)
@@ -68,7 +66,6 @@ const lightboxSrc = ref('')
 
 <style lang="scss" scoped>
 @use '@/assets/styles/_variables.scss' as *;
-@use '@/assets/styles/_info-box.scss';
 @use '@/assets/styles/tokens' as *;
 .home-view {
   background-color: $background-color;

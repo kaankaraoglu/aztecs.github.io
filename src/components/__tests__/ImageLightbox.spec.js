@@ -2,17 +2,33 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import ImageLightbox from '../ImageLightbox.vue'
 
+// Stub the shadcn Dialog primitives so we can assert on our own markup
+// without rendering Reka UI's portal/overlay tree in jsdom.
+const dialogStubs = {
+  Dialog: {
+    props: ['open'],
+    emits: ['update:open'],
+    template: '<div><slot v-if="open" /></div>',
+  },
+  DialogContent: {
+    template: '<div class="lightbox-overlay" v-bind="$attrs"><slot /></div>',
+    inheritAttrs: false,
+  },
+  DialogTitle: { template: '<h2><slot /></h2>' },
+  DialogDescription: { template: '<p><slot /></p>' },
+}
+
 describe('ImageLightbox', () => {
-  const stubs = { Teleport: true }
+  const global = { stubs: dialogStubs }
 
   beforeEach(() => {
     vi.clearAllMocks()
   })
 
-  it('does not render overlay when open is false', () => {
+  it('does not render content when open is false', () => {
     const wrapper = mount(ImageLightbox, {
       props: { open: false, src: 'test.jpg' },
-      global: { stubs },
+      global,
     })
     expect(wrapper.find('.lightbox-overlay').exists()).toBe(false)
   })
@@ -20,7 +36,7 @@ describe('ImageLightbox', () => {
   it('renders overlay, close button, and image when open', () => {
     const wrapper = mount(ImageLightbox, {
       props: { open: true, src: 'test.jpg', alt: 'Test image' },
-      global: { stubs },
+      global,
     })
     expect(wrapper.find('.lightbox-overlay').exists()).toBe(true)
     expect(wrapper.find('.lightbox-close').exists()).toBe(true)
@@ -33,52 +49,25 @@ describe('ImageLightbox', () => {
   it('emits close when close button is clicked', async () => {
     const wrapper = mount(ImageLightbox, {
       props: { open: true, src: 'test.jpg' },
-      global: { stubs },
+      global,
     })
     await wrapper.find('.lightbox-close').trigger('click')
-    expect(wrapper.emitted('close')).toHaveLength(1)
-  })
-
-  it('emits close when overlay background is clicked', async () => {
-    const wrapper = mount(ImageLightbox, {
-      props: { open: true, src: 'test.jpg' },
-      global: { stubs },
-    })
-    await wrapper.find('.lightbox-overlay').trigger('click')
     expect(wrapper.emitted('close')).toHaveLength(1)
   })
 
   it('does not emit close when image is clicked', async () => {
     const wrapper = mount(ImageLightbox, {
       props: { open: true, src: 'test.jpg' },
-      global: { stubs },
+      global,
     })
     await wrapper.find('.lightbox-image').trigger('click')
-    expect(wrapper.emitted('close')).toBeUndefined()
-  })
-
-  it('emits close on Escape key press', () => {
-    const wrapper = mount(ImageLightbox, {
-      props: { open: true, src: 'test.jpg' },
-      global: { stubs },
-    })
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
-    expect(wrapper.emitted('close')).toHaveLength(1)
-  })
-
-  it('does not emit close on Escape when closed', () => {
-    const wrapper = mount(ImageLightbox, {
-      props: { open: false, src: 'test.jpg' },
-      global: { stubs },
-    })
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
     expect(wrapper.emitted('close')).toBeUndefined()
   })
 
   it('shows error state when image fails to load', async () => {
     const wrapper = mount(ImageLightbox, {
       props: { open: true, src: 'bad.jpg' },
-      global: { stubs },
+      global,
     })
     await wrapper.find('.lightbox-image').trigger('error')
     expect(wrapper.find('.lightbox-error').exists()).toBe(true)
@@ -88,7 +77,7 @@ describe('ImageLightbox', () => {
   it('resets error state when src changes', async () => {
     const wrapper = mount(ImageLightbox, {
       props: { open: true, src: 'bad.jpg' },
-      global: { stubs },
+      global,
     })
     await wrapper.find('.lightbox-image').trigger('error')
     expect(wrapper.find('.lightbox-error').exists()).toBe(true)

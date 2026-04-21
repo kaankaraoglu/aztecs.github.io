@@ -13,12 +13,8 @@
     </template>
     <template v-else>
       <h3 class="box-title">Raids</h3>
-      <div
-        v-if="summary.normal > 0 || summary.heroic > 0 || summary.mythic > 0"
-        ref="progressRef"
-        class="summary"
-      >
-        <div v-if="summary.normal > 0" class="summary-pill normal">
+      <div v-if="summary.total > 0" ref="progressRef" class="summary">
+        <div class="summary-pill normal">
           <span class="summary-count">{{ summary.normal }}/{{ summary.total }}</span>
           <span class="summary-label">Normal</span>
           <span class="summary-track"
@@ -29,7 +25,7 @@
             ></span
           ></span>
         </div>
-        <div v-if="summary.heroic > 0" class="summary-pill heroic">
+        <div class="summary-pill heroic">
           <span class="summary-count">{{ summary.heroic }}/{{ summary.total }}</span>
           <span class="summary-label">Heroic</span>
           <span class="summary-track"
@@ -40,7 +36,7 @@
             ></span
           ></span>
         </div>
-        <div v-if="summary.mythic > 0" class="summary-pill mythic">
+        <div class="summary-pill mythic">
           <span class="summary-count">{{ summary.mythic }}/{{ summary.total }}</span>
           <span class="summary-label">Mythic</span>
           <span class="summary-track"
@@ -316,7 +312,6 @@ function highestDifficulty(raid) {
     letter-spacing: 0.05em;
     color: $accent-color;
     text-shadow: 0 0 20px rgba($accent-color, 0.3);
-    opacity: 0.6;
   }
 
   /* ── Skeleton ── */
@@ -449,7 +444,6 @@ function highestDifficulty(raid) {
     letter-spacing: 0.05em;
     color: $accent-color;
     text-shadow: 0 0 20px rgba($accent-color, 0.3);
-    opacity: 0.6;
     padding-left: 0.15rem;
   }
 
@@ -631,17 +625,18 @@ function highestDifficulty(raid) {
   /* ── Footer ── */
   .footer-links {
     display: flex;
-    flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.85rem;
   }
 
   .footer-link {
+    flex: 1 1 0;
+    text-align: center;
     font-size: 0.8em;
     font-weight: 600;
     color: $accent-color;
     text-decoration: none;
-    padding: 0.35rem 0.85rem;
+    padding: 0.9rem 0.85rem;
     border: 1px solid rgba($accent-color, 0.3);
     border-radius: $radius-md;
     transition:
