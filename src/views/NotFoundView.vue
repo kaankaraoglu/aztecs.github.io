@@ -22,7 +22,6 @@
   h1 {
     font-size: 3em;
     color: $accent-color;
-    text-shadow: 0 0 20px rgba($accent-color, 0.3);
     margin-bottom: 0.5rem;
   }
 
@@ -44,8 +43,7 @@
       color 0.2s ease;
 
     &:hover {
-      background: rgba($color-yellow, 0.1);
-      text-shadow: 0 0 12px rgba($accent-color, 0.6);
+      background: rgba(var(--t-yellow-rgb), 0.1);
     }
   }
 }

@@ -1,7 +1,44 @@
+@use './styles/theme';
 @use './styles/variables' as *;
 
 .info-box-heading {
   color: $accent-color;
   margin-top: 0;
-  text-shadow: 0 0 20px rgba($accent-color, 0.3);
+  margin-bottom: 0.75rem;
+  font-size: 1.35em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/*
+  Tailwind v4's preflight zeros list bullets and heading weights. We opt
+  back in for prose lists — which in this app only live on the Raiding,
+  About, and raid-requirements views — via the .prose-list class rather
+  than resetting every list globally (most lists on the site are roster
+  chips / runner rankings / boss rows that intentionally render without
+  bullets).
+*/
+.prose-list,
+.prose-list ul,
+.prose-list ol {
+  list-style-position: outside;
+  padding-left: 1.5em;
+}
+
+.prose-list,
+.prose-list ul {
+  list-style-type: disc;
+}
+
+.prose-list ol {
+  list-style-type: decimal;
+}
+
+.prose-list ul ul {
+  list-style-type: circle;
+}
+
+.prose-list li {
+  padding-left: 0.25em;
+  margin-bottom: 0.25em;
 }

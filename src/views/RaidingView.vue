@@ -3,7 +3,7 @@
     <div class="side-by-side">
       <InfoBox class="schedule reveal">
         <h2 class="info-box-heading">Raid Schedule</h2>
-        <ul>
+        <ul class="prose-list">
           <li>Wednesdays 20:00 - 22:00 ST</li>
           <li>Sundays 19:00 - 22:00 ST</li>
         </ul>
@@ -13,7 +13,7 @@
       <section class="loot-section reveal">
         <InfoBox class="loot-rules">
           <h2 class="info-box-heading">Loot Rules</h2>
-          <ol class="loot-rules-list">
+          <ol class="prose-list loot-rules-list">
             <li>One loot specialisation per raid (DO NOT switch roles mid-raid)</li>
             <li>
               Your loot spec must match your sign up role in the
@@ -38,7 +38,7 @@
 
       <InfoBox class="requirements reveal">
         <h2 class="info-box-heading">Requirements & Expectations</h2>
-        <ul class="raid-requirements">
+        <ul class="prose-list raid-requirements">
           <li>
             Sign up for raids on Discord
             <a
@@ -81,7 +81,6 @@ useScrollReveal(containerRef)
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
 @use '@/assets/styles/tokens' as *;
-@use 'sass:color';
 
 .raiding-view {
   position: relative;
@@ -138,7 +137,8 @@ useScrollReveal(containerRef)
   }
   .note {
     font-style: italic;
-    color: color.adjust($accent-color, $lightness: 10%);
+    color: $accent-color;
+    opacity: 0.85;
   }
 
   .schedule {
@@ -176,9 +176,6 @@ useScrollReveal(containerRef)
   }
   a:visited {
     color: $color-yellow;
-  }
-  a:hover {
-    text-shadow: 0 0 12px rgba($accent-color, 0.6);
   }
 
   .requirements {

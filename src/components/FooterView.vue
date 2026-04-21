@@ -72,6 +72,7 @@
 .footer-logo {
   height: 5em;
   opacity: 0.7;
+  filter: var(--t-logo-filter, none);
 
   @include mobile {
     margin: 0 auto;

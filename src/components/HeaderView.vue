@@ -4,8 +4,8 @@
       <RouterLink to="/" aria-label="Go to home" class="logo-home-link" @click="menuOpen = false">
         <img class="logo" alt="Aztecs logo" src="@/assets/images/logo.png" />
       </RouterLink>
-      <div class="splash-text" :style="{ opacity: splashVisible ? 1 : 0 }">{{ currentSplash }}</div>
     </div>
+    <div class="splash-text" :style="{ opacity: splashVisible ? 1 : 0 }">{{ currentSplash }}</div>
 
     <nav class="nav">
       <div class="nav-header">
@@ -32,6 +32,64 @@
         <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
         <DiscordIcon @click="openDiscordInvite" />
+        <AlertDialog v-model:open="flashbangOpen">
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>⚠️ Flashbang warning</AlertDialogTitle>
+              <AlertDialogDescription>
+                You're about to switch to light mode. Make sure you're not in a dark room, haven't
+                just woken up, and your eyes are ready. Proceed?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Take me back</AlertDialogCancel>
+              <AlertDialogAction @click="confirmSwitchToLight">I'm ready</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        <label
+          class="theme-switch"
+          :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`"
+        >
+          <span class="theme-switch-icon moon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="14"
+              height="14"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </span>
+          <Switch
+            class="theme-switch-control"
+            :model-value="theme === 'light'"
+            @update:model-value="onSwitchChange"
+          />
+          <span class="theme-switch-icon sun" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="14"
+              height="14"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              />
+            </svg>
+          </span>
+        </label>
       </div>
     </nav>
   </div>
@@ -40,9 +98,43 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import DiscordIcon from '@/components/icons/DiscordIcon.vue'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { Switch } from '@/components/ui/switch'
 import { useAnalytics } from '@/composables/useAnalytics'
+import { useTheme } from '@/composables/useTheme'
 
 const { trackEvent } = useAnalytics()
+const { theme, setTheme } = useTheme()
+
+const flashbangOpen = ref(false)
+
+function onSwitchChange(checked) {
+  // Switch -> ON (checked === true) means user is turning light mode on.
+  // That still needs the flashbang confirmation step. Bailing out here
+  // (i.e. not calling setTheme) leaves `theme` unchanged, so Vue re-renders
+  // the controlled Switch back to its previous state automatically.
+  if (checked) {
+    flashbangOpen.value = true
+    return
+  }
+  setTheme('dark')
+  trackEvent('theme_toggle', { state: 'dark' })
+}
+
+function confirmSwitchToLight() {
+  setTheme('light')
+  flashbangOpen.value = false
+  trackEvent('theme_toggle', { state: 'light', confirmed_flashbang: true })
+}
 
 function shuffleArray(arr) {
   const shuffled = [...arr]
@@ -122,9 +214,14 @@ onBeforeUnmount(() => {
 @use '@/assets/styles/tokens' as *;
 
 .header-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   .logo-wrapper {
     position: relative;
     display: inline-block;
+    line-height: 0;
 
     .logo {
       height: 14em;
@@ -133,6 +230,10 @@ onBeforeUnmount(() => {
       @include mobile {
         height: 8em;
       }
+    }
+
+    .logo {
+      filter: var(--t-logo-filter, none);
     }
 
     .logo-home-link {
@@ -151,40 +252,17 @@ onBeforeUnmount(() => {
   }
 
   .splash-text {
-    position: absolute;
-    bottom: 0.5rem;
-    right: -2rem;
+    margin: $space-4 0;
     font-size: 1em;
     font-weight: bold;
     color: $color-yellow;
     white-space: nowrap;
     pointer-events: none;
     user-select: none;
-    transform: rotate(-8deg);
-    transform-origin: center center;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     transition: opacity $duration-slow $ease-default;
     @include mobile {
       font-size: 0.75em;
-      right: -1rem;
-      bottom: 0.25rem;
-    }
-  }
-
-  .router-link-active {
-    color: $accent-color !important;
-    transition:
-      color $duration-normal $ease-default,
-      text-shadow $duration-normal $ease-default;
-
-    &:hover {
-      text-shadow: 0 0 12px rgba($accent-color, 0.6);
-    }
-
-    &::after {
-      opacity: 1;
-      transform: scaleX(1);
-      box-shadow: 0 0 8px rgba($accent-color, 0.4);
+      margin: $space-3 0;
     }
   }
 
@@ -192,10 +270,9 @@ onBeforeUnmount(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: $space-8 0 0;
+    margin: 0;
     padding-bottom: $space-4;
     @include mobile {
-      margin: $space-4 0 0;
       padding-bottom: $space-8;
     }
 
@@ -209,6 +286,31 @@ onBeforeUnmount(() => {
       }
     }
 
+    .theme-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-2;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .theme-switch-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-text-subtle;
+      transition: color $duration-fast $ease-default;
+    }
+
+    // Highlight the icon matching the current theme so the switch reads
+    // like "where the dot is now" rather than a toggle you have to parse.
+    .theme-switch .moon {
+      color: var(--t-theme-switch-moon, $color-text-subtle);
+    }
+    .theme-switch .sun {
+      color: var(--t-theme-switch-sun, $color-text-subtle);
+    }
+
     .hamburger {
       display: none;
       flex-direction: column;
@@ -220,7 +322,7 @@ onBeforeUnmount(() => {
         display: block;
         width: 24px;
         height: 3px;
-        background: white;
+        background: $color-text-primary;
         transition:
           transform $duration-normal $ease-default,
           opacity $duration-normal $ease-default;
@@ -251,11 +353,12 @@ onBeforeUnmount(() => {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
       gap: $space-8;
 
       .nav-link {
         text-decoration: none;
-        color: #fff;
+        color: $color-text-primary;
         font-weight: 800;
         font-size: 1.2em;
         position: relative;
@@ -278,15 +381,21 @@ onBeforeUnmount(() => {
 
         &:hover {
           color: $accent-color;
-          text-shadow: 0 0 12px rgba($accent-color, 0.6);
-          transition:
-            color $duration-normal $ease-default,
-            text-shadow $duration-normal $ease-default;
+          transition: color $duration-normal $ease-default;
         }
 
         &:hover::after {
           opacity: 0.4;
           transform: scaleX(1);
+        }
+
+        &.router-link-active {
+          color: $accent-color;
+
+          &::after {
+            opacity: 1;
+            transform: scaleX(1);
+          }
         }
       }
 

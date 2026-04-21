@@ -48,7 +48,7 @@ useScrollReveal(containerRef)
 }
 
 .memoriam-heading {
-  color: rgba($accent-color, 0.75);
+  color: rgba(var(--t-accent-rgb), 0.75);
   font-size: 2.2em;
   font-weight: 800;
   margin: 0 0 $space-4;

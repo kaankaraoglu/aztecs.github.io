@@ -59,7 +59,6 @@ useScrollReveal(containerRef)
 
 .page-heading {
   color: $accent-color;
-  text-shadow: 0 0 20px rgba($accent-color, 0.3);
   font-size: 2.5em;
   margin: 0 0 $space-4;
 
@@ -92,18 +91,23 @@ useScrollReveal(containerRef)
 }
 
 .about-card {
-  border: 1px solid $color-border;
+  border: 1px solid var(--glass-border);
   border-radius: $radius-xl;
   padding: $space-6 $space-8;
-  background: $surface-1;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
   line-height: 1.6;
   transition:
     background $duration-normal $ease-default,
-    border-color $duration-normal $ease-default;
+    border-color $duration-normal $ease-default,
+    transform $duration-normal $ease-default;
 
   &:hover {
-    background: $surface-accent-hover;
-    border-color: $color-border-hover;
+    background: var(--glass-bg-strong);
+    border-color: var(--glass-border-strong);
+    transform: translateY(-1px);
   }
 
   @include mobile {

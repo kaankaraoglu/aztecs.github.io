@@ -117,7 +117,6 @@ useScrollReveal(containerRef)
   font-size: 2.2em;
   font-weight: 800;
   color: $accent-color;
-  text-shadow: 0 0 20px rgba($accent-color, 0.3);
   text-align: center;
   @include mobile {
     font-size: 1.6em;
