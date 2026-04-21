@@ -16,6 +16,7 @@ export default defineConfig({
       png: { quality: 80 },
       jpeg: { quality: 80 },
       jpg: { quality: 80 },
+      webp: { quality: 82 },
     }),
   ],
   resolve: {
@@ -26,5 +27,6 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['src/test/setup.js'],
+    exclude: ['**/node_modules/**', '**/dist/**', '.claude/**'],
   },
 })

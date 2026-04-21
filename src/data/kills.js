@@ -15,20 +15,13 @@
  * }} Kill
  */
 
-import liberationOfUndermineImage from '@/assets/images/kills/liberation_of_undermine_2025_04_20.png'
-import gloryOfLiberationImage from '@/assets/images/kills/glory_of_the_liberation_of_undermine_raider_2025_04_27.jpg'
-import yoggSaronImage from '@/assets/images/kills/yoggsaron_2009_06_01.jpg'
-import ulduarImage from '@/assets/images/kills/ulduar_2009_04_19.jpg'
-import obsidianSanctumImage from '@/assets/images/kills/obsidian_sanctum_2009_02_23.jpg'
-import manaforgeOmegaImage from '@/assets/images/kills/manaforge_omega_2025_09_17.jpg'
-import gloryOfTheOmegaRaiderImage from '@/assets/images/kills/glory_of_the_omega_raider_2025_09_21.jpg'
-import voidspireImage from '@/assets/images/kills/voidspire_2026_04_12.png'
+const killImage = (filename) => new URL(`../assets/images/kills/${filename}`, import.meta.url).href
 
 /** @type {Kill[]} */
 export const kills = [
   {
     raidName: 'Voidspire (Heroic)',
-    imageUrl: voidspireImage,
+    imageUrl: killImage('voidspire_2026_04_12.webp'),
     date: '2026-04-12 21:49',
     tanks: [
       { name: 'Phruity', class: 'druid' },
@@ -55,7 +48,7 @@ export const kills = [
   },
   {
     raidName: 'Glory of the Omega Raider',
-    imageUrl: gloryOfTheOmegaRaiderImage,
+    imageUrl: killImage('glory_of_the_omega_raider_2025_09_21.webp'),
     date: '2025-09-21 21:15',
     tanks: [
       { name: 'Phruity', class: 'druid' },
@@ -84,7 +77,7 @@ export const kills = [
   },
   {
     raidName: 'Manaforge Omega (AOTC)',
-    imageUrl: manaforgeOmegaImage,
+    imageUrl: killImage('manaforge_omega_2025_09_17.webp'),
     date: '2025-09-17 22:01',
     tanks: [
       { name: 'Phruity', class: 'druid' },
@@ -115,7 +108,7 @@ export const kills = [
   },
   {
     raidName: 'Glory of the Liberation of Undermine Raider',
-    imageUrl: gloryOfLiberationImage,
+    imageUrl: killImage('glory_of_the_liberation_of_undermine_raider_2025_04_27.jpg'),
     date: '2025-04-27 20:21',
     attempts: 1,
     tanks: [
@@ -147,7 +140,7 @@ export const kills = [
   },
   {
     raidName: 'Liberation of Undermine (AOTC)',
-    imageUrl: liberationOfUndermineImage,
+    imageUrl: killImage('liberation_of_undermine_2025_04_20.webp'),
     date: '2025-04-20 19:39',
     tanks: [
       { name: 'Phing', class: 'monk' },
@@ -174,7 +167,15 @@ export const kills = [
       { name: 'Tulkas', class: 'rogue' },
     ],
   },
-  { raidName: 'Yogg-Saron', imageUrl: yoggSaronImage, date: '2009-06-01' },
-  { raidName: 'Ulduar', imageUrl: ulduarImage, date: '2009-04-19' },
-  { raidName: 'Obsidian Sanctum', imageUrl: obsidianSanctumImage, date: '2009-02-23' },
+  {
+    raidName: 'Yogg-Saron',
+    imageUrl: killImage('yoggsaron_2009_06_01.jpg'),
+    date: '2009-06-01',
+  },
+  { raidName: 'Ulduar', imageUrl: killImage('ulduar_2009_04_19.jpg'), date: '2009-04-19' },
+  {
+    raidName: 'Obsidian Sanctum',
+    imageUrl: killImage('obsidian_sanctum_2009_02_23.jpg'),
+    date: '2009-02-23',
+  },
 ]
