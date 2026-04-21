@@ -156,7 +156,18 @@ const lightboxSrc = ref('')
       object-fit: cover;
       border-radius: $radius-lg;
       border: 1px solid rgba(var(--t-accent-rgb), 0.3);
+      // Match the glass lift shadow used on InfoBox + KillCard.
+      box-shadow: var(--glass-shadow);
       cursor: zoom-in;
+      transition: box-shadow $duration-normal $ease-default;
+
+      &:hover {
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          inset 0 0 0 0.5px rgba(255, 255, 255, 0.08),
+          0 2px 4px rgba(9, 9, 11, 0.08),
+          0 24px 48px -12px rgba(9, 9, 11, 0.3);
+      }
     }
   }
 }
