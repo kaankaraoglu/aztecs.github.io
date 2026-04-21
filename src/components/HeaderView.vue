@@ -212,8 +212,6 @@ onBeforeUnmount(() => {
     white-space: nowrap;
     pointer-events: none;
     user-select: none;
-    transform: rotate(-8deg);
-    transform-origin: center center;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     transition: opacity $duration-slow $ease-default;
     @include mobile {
@@ -225,13 +223,7 @@ onBeforeUnmount(() => {
 
   .router-link-active {
     color: $accent-color !important;
-    transition:
-      color $duration-normal $ease-default,
-      text-shadow $duration-normal $ease-default;
-
-    &:hover {
-      text-shadow: 0 0 12px rgba(var(--t-accent-rgb), 0.6);
-    }
+    transition: color $duration-normal $ease-default;
 
     &::after {
       opacity: 1;
@@ -357,10 +349,7 @@ onBeforeUnmount(() => {
 
         &:hover {
           color: $accent-color;
-          text-shadow: 0 0 12px rgba(var(--t-accent-rgb), 0.6);
-          transition:
-            color $duration-normal $ease-default,
-            text-shadow $duration-normal $ease-default;
+          transition: color $duration-normal $ease-default;
         }
 
         &:hover::after {

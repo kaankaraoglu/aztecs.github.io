@@ -177,9 +177,6 @@ useScrollReveal(containerRef)
   a:visited {
     color: $color-yellow;
   }
-  a:hover {
-    text-shadow: 0 0 12px rgba(var(--t-accent-rgb), 0.6);
-  }
 
   .requirements {
     margin-bottom: $space-8;

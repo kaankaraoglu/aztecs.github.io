@@ -59,7 +59,6 @@ useScrollReveal(containerRef)
 
 .page-heading {
   color: $accent-color;
-  text-shadow: 0 0 20px rgba(var(--t-accent-rgb), 0.3);
   font-size: 2.5em;
   margin: 0 0 $space-4;
 

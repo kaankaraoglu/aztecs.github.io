@@ -132,20 +132,19 @@
 
       <div class="footer-links">
         <a
-          v-if="latestReport"
           class="footer-link"
-          :href="latestReport"
+          :href="latestReport || 'https://www.warcraftlogs.com/guild/eu/alakir/aztecs'"
           target="_blank"
           rel="noopener noreferrer"
           @click="
             trackEvent('click', {
               link_type: 'external',
-              link_url: latestReport,
-              link_text: 'Latest Log',
+              link_url: latestReport || 'https://www.warcraftlogs.com/guild/eu/alakir/aztecs',
+              link_text: latestReport ? 'Latest Log' : 'Warcraft Logs',
             })
           "
         >
-          Latest Log
+          {{ latestReport ? 'Latest Log' : 'Warcraft Logs' }}
         </a>
         <a
           class="footer-link"
@@ -311,7 +310,6 @@ function highestDifficulty(raid) {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: $accent-color;
-    text-shadow: 0 0 20px rgba(var(--t-accent-rgb), 0.3);
   }
 
   /* ── Skeleton ── */
@@ -443,7 +441,6 @@ function highestDifficulty(raid) {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: $accent-color;
-    text-shadow: 0 0 20px rgba(var(--t-accent-rgb), 0.3);
     padding-left: 0.15rem;
   }
 
