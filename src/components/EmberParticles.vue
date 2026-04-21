@@ -5,6 +5,8 @@ const canvasRef = ref(null)
 let animationId = null
 let particles = []
 let onVisibilityChange = null
+let onResize = null
+let resizeTimeout = null
 
 const PARTICLE_COUNT = 50
 const COLORS = ['#ffa203', '#ff8a05', '#f5bd25', '#fe691e']
@@ -73,11 +75,26 @@ onMounted(() => {
     }
   }
   document.addEventListener('visibilitychange', onVisibilityChange)
+
+  onResize = () => {
+    clearTimeout(resizeTimeout)
+    resizeTimeout = setTimeout(() => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+      for (const p of particles) {
+        if (p.x > canvas.width) p.x = Math.random() * canvas.width
+        if (p.y > canvas.height) p.y = canvas.height
+      }
+    }, 150)
+  }
+  window.addEventListener('resize', onResize)
 })
 
 onUnmounted(() => {
   if (animationId) cancelAnimationFrame(animationId)
   if (onVisibilityChange) document.removeEventListener('visibilitychange', onVisibilityChange)
+  if (onResize) window.removeEventListener('resize', onResize)
+  clearTimeout(resizeTimeout)
 })
 </script>
 
