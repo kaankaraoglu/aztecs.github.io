@@ -136,44 +136,63 @@ body {
 /* Permanent stacked gradient behind everything. Unlike .bg-blobs (fixed),
    this sits on <body> and scrolls with content, so glass cards always have
    something to refract regardless of scroll position. */
-/* Cursor-tracked spotlight (navier.ai style). The useCursorSpotlight
-   composable updates --cursor-x / --cursor-y on :root as the pointer
-   moves; these radial gradients re-anchor to that point so the glass
-   cards always have a soft moving light source behind them. A second
-   ambient gradient keeps the far corners from being flat, and --cursor-*
-   defaults so the effect still reads on first paint / touch devices
-   where the composable is a no-op. */
+/* Dot-grid backdrop + soft cursor highlight (Linear / Vercel style).
+   A faint repeating dot grid tiles the entire page so glass cards have
+   real texture to refract when blurred. The cursor composable writes
+   --cursor-x / --cursor-y; we use those to brighten a narrow area
+   around the pointer via a masked overlay, not a huge moving blob —
+   the page still feels alive without a distracting gradient ball. */
 :root {
   --cursor-x: 75%;
   --cursor-y: 20%;
 }
 
 :root[data-theme='light'] body {
-  background-image:
-    radial-gradient(
-      circle 60vmin at var(--cursor-x) var(--cursor-y),
-      rgba(24, 24, 27, 0.32),
-      transparent 60%
-    ),
-    radial-gradient(circle 55vmin at 10% 90%, rgba(40, 40, 48, 0.22), transparent 65%),
-    radial-gradient(circle 55vmin at 90% 100%, rgba(24, 24, 27, 0.22), transparent 65%);
   background-color: var(--t-background);
-  background-repeat: no-repeat;
-  background-size: 100% 100vh;
+  background-image: radial-gradient(circle at center, rgba(9, 9, 11, 0.12) 1px, transparent 1.5px);
+  background-size: 22px 22px;
   background-attachment: fixed;
 }
 
 :root[data-theme='dark'] body {
-  background-image:
-    radial-gradient(
-      circle 60vmin at var(--cursor-x) var(--cursor-y),
-      rgba(255, 170, 80, 0.14),
-      transparent 60%
-    ),
-    radial-gradient(circle 55vmin at 10% 90%, rgba(200, 80, 40, 0.08), transparent 65%),
-    radial-gradient(circle 55vmin at 90% 100%, rgba(255, 200, 120, 0.06), transparent 65%);
   background-color: var(--t-background);
-  background-repeat: no-repeat;
-  background-size: 100% 100vh;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 1.5px
+  );
+  background-size: 22px 22px;
   background-attachment: fixed;
+}
+
+/* Cursor highlight — a small (~24vmin) soft light that tracks the pointer
+   at very low opacity, just enough to lift the dot grid where the mouse
+   is without painting a visible gradient blob. Positioned as a fixed
+   overlay on body::after so it doesn't scale the body background and
+   doesn't intercept pointer events. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    circle 24vmin at var(--cursor-x) var(--cursor-y),
+    var(--t-cursor-highlight, rgba(9, 9, 11, 0.08)),
+    transparent 70%
+  );
+  transition: opacity 300ms ease;
+}
+
+:root[data-theme='dark'] {
+  --t-cursor-highlight: rgba(255, 200, 140, 0.08);
+}
+:root[data-theme='light'] {
+  --t-cursor-highlight: rgba(9, 9, 11, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    display: none;
+  }
 }
