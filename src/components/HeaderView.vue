@@ -204,8 +204,9 @@ onBeforeUnmount(() => {
 
   .splash-text {
     position: absolute;
-    bottom: 0.5rem;
-    right: -2rem;
+    left: 50%;
+    top: calc(100% + 0.75rem);
+    transform: translateX(-50%);
     font-size: 1em;
     font-weight: bold;
     color: $color-yellow;
@@ -215,8 +216,7 @@ onBeforeUnmount(() => {
     transition: opacity $duration-slow $ease-default;
     @include mobile {
       font-size: 0.75em;
-      right: -1rem;
-      bottom: 0.25rem;
+      top: calc(100% + 0.5rem);
     }
   }
 
@@ -256,20 +256,21 @@ onBeforeUnmount(() => {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: $space-2;
+      width: 1.8em;
+      height: 1.8em;
+      padding: 0;
       background: transparent;
-      border: 1px solid $color-border;
-      border-radius: $radius-md;
+      border: none;
       color: $color-text-primary;
       cursor: pointer;
-      transition:
-        background $duration-fast $ease-default,
-        border-color $duration-fast $ease-default,
-        color $duration-fast $ease-default;
+      transition: color $duration-fast $ease-default;
+
+      svg {
+        width: 1.1em;
+        height: 1.1em;
+      }
 
       &:hover {
-        background: $surface-accent-hover;
-        border-color: $color-border-hover;
         color: $accent-color;
       }
 
@@ -321,6 +322,7 @@ onBeforeUnmount(() => {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
       gap: $space-8;
 
       .nav-link {
