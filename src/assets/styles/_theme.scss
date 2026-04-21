@@ -54,6 +54,10 @@
   /* The logo asset is a white glyph; no inversion needed on dark. */
   --t-logo-filter: none;
 
+  /* Moon lit on dark, sun dimmed. */
+  --t-theme-switch-moon: var(--t-accent);
+  --t-theme-switch-sun: var(--t-text-subtle);
+
   /* Apple-style frosted glass on dark: translucent slate surface with a
      heavy backdrop blur + saturation bump so the ember/noise layer reads
      through as a soft gradient. Inner top highlight mimics light hitting
@@ -114,6 +118,10 @@
 
   /* Invert the white logo PNG so it reads as black on light bg */
   --t-logo-filter: invert(1);
+
+  /* Sun lit on light, moon dimmed. */
+  --t-theme-switch-moon: var(--t-text-subtle);
+  --t-theme-switch-sun: var(--t-accent);
 
   /* Apple-style frosted glass: heavy blur + saturation boost, translucent
      near-white surface, a thin inner top highlight for the edge-of-glass

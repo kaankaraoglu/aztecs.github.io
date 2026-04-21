@@ -2,13 +2,13 @@
   <div class="raid-progression">
     <template v-if="!raids.length">
       <div class="skeleton-pills">
-        <SkeletonLoader width="120px" height="3.5rem" />
-        <SkeletonLoader width="120px" height="3.5rem" />
-        <SkeletonLoader width="120px" height="3.5rem" />
+        <Skeleton class="h-14 w-[120px]" />
+        <Skeleton class="h-14 w-[120px]" />
+        <Skeleton class="h-14 w-[120px]" />
       </div>
-      <SkeletonLoader width="100%" height="2px" />
+      <Skeleton class="h-0.5 w-full" />
       <div class="skeleton-bosses">
-        <SkeletonLoader v-for="i in 5" :key="i" width="100%" height="2.2rem" />
+        <Skeleton v-for="i in 5" :key="i" class="h-9 w-full" />
       </div>
     </template>
     <template v-else>
@@ -169,7 +169,7 @@
 <script setup>
 import { reactive, ref, onMounted, onUnmounted } from 'vue'
 import RosterList from '@/components/RosterList.vue'
-import SkeletonLoader from '@/components/SkeletonLoader.vue'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useAnalytics } from '@/composables/useAnalytics'
 
 const { trackEvent } = useAnalytics()

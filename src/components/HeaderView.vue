@@ -47,47 +47,49 @@
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <button
-          type="button"
-          class="theme-toggle"
+        <label
+          class="theme-switch"
           :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`"
-          :aria-pressed="theme === 'light'"
-          @click="onToggleTheme"
         >
-          <svg
-            v-if="theme === 'dark'"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            width="20"
-            height="20"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="4" />
-            <path
-              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-            />
-          </svg>
-          <svg
-            v-else
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            width="20"
-            height="20"
-            aria-hidden="true"
-          >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </svg>
-        </button>
+          <span class="theme-switch-icon moon" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="14"
+              height="14"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </span>
+          <Switch
+            class="theme-switch-control"
+            :model-value="theme === 'light'"
+            @update:model-value="onSwitchChange"
+          />
+          <span class="theme-switch-icon sun" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="14"
+              height="14"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              />
+            </svg>
+          </span>
+        </label>
       </div>
     </nav>
   </div>
@@ -106,23 +108,26 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { Switch } from '@/components/ui/switch'
 import { useAnalytics } from '@/composables/useAnalytics'
 import { useTheme } from '@/composables/useTheme'
 
 const { trackEvent } = useAnalytics()
-const { theme, setTheme, toggleTheme } = useTheme()
+const { theme, setTheme } = useTheme()
 
 const flashbangOpen = ref(false)
 
-function onToggleTheme() {
-  // Dark → light: show the (tongue-in-cheek) flashbang warning first.
-  // Light → dark: just flip, no need to interrupt.
-  if (theme.value === 'dark') {
+function onSwitchChange(checked) {
+  // Switch -> ON (checked === true) means user is turning light mode on.
+  // That still needs the flashbang confirmation step. Bailing out here
+  // (i.e. not calling setTheme) leaves `theme` unchanged, so Vue re-renders
+  // the controlled Switch back to its previous state automatically.
+  if (checked) {
     flashbangOpen.value = true
     return
   }
-  toggleTheme()
-  trackEvent('theme_toggle', { state: theme.value })
+  setTheme('dark')
+  trackEvent('theme_toggle', { state: 'dark' })
 }
 
 function confirmSwitchToLight() {
@@ -281,32 +286,29 @@ onBeforeUnmount(() => {
       }
     }
 
-    .theme-toggle {
+    .theme-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: $space-2;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .theme-switch-icon {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 1.8em;
-      height: 1.8em;
-      padding: 0;
-      background: transparent;
-      border: none;
-      color: $color-text-primary;
-      cursor: pointer;
+      color: $color-text-subtle;
       transition: color $duration-fast $ease-default;
+    }
 
-      svg {
-        width: 1.1em;
-        height: 1.1em;
-      }
-
-      &:hover {
-        color: $accent-color;
-      }
-
-      &:focus-visible {
-        outline: 2px solid $accent-color;
-        outline-offset: 2px;
-      }
+    // Highlight the icon matching the current theme so the switch reads
+    // like "where the dot is now" rather than a toggle you have to parse.
+    .theme-switch .moon {
+      color: var(--t-theme-switch-moon, $color-text-subtle);
+    }
+    .theme-switch .sun {
+      color: var(--t-theme-switch-sun, $color-text-subtle);
     }
 
     .hamburger {
