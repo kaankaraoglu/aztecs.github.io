@@ -212,7 +212,6 @@ onBeforeUnmount(() => {
     white-space: nowrap;
     pointer-events: none;
     user-select: none;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
     transition: opacity $duration-slow $ease-default;
     @include mobile {
       font-size: 0.75em;

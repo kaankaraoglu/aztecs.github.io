@@ -26,8 +26,8 @@ const classes = computed(() => cn('info-box', !props.noHover && 'info-box--hover
   border-radius: 20px;
   border: 1px solid var(--glass-border);
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   box-shadow: var(--glass-shadow);
   padding: 1.5rem;
   box-sizing: border-box;

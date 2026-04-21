@@ -95,8 +95,8 @@ useScrollReveal(containerRef)
   border-radius: $radius-xl;
   padding: $space-6 $space-8;
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   box-shadow: var(--glass-shadow);
   line-height: 1.6;
   transition:
