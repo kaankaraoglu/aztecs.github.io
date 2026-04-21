@@ -75,6 +75,8 @@ const formattedUpdated = computed(() => {
 @use '@/assets/styles/tokens' as *;
 
 .mythic-plus-box {
+  display: flex;
+  flex-direction: column;
   gap: $space-6;
   text-align: left;
 }

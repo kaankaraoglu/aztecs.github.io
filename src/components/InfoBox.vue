@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 
 const props = defineProps({
@@ -14,8 +13,7 @@ const props = defineProps({
 
 const classes = computed(() =>
   cn(
-    // Shadcn Card's defaults give us rounded border + bg-card; override gap/padding to match site spacing.
-    '!gap-0 !py-0 !shadow-none p-6 transition-colors',
+    'bg-card text-card-foreground border rounded-[20px] p-6 box-border transition-colors max-[600px]:p-4 max-[600px]:rounded-2xl',
     !props.noHover && 'hover:bg-accent/5 hover:border-accent/40',
     props.class,
   ),
@@ -23,7 +21,7 @@ const classes = computed(() =>
 </script>
 
 <template>
-  <Card :class="classes">
+  <div :class="classes">
     <slot />
-  </Card>
+  </div>
 </template>

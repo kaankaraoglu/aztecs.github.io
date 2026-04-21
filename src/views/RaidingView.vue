@@ -96,6 +96,14 @@ useScrollReveal(containerRef)
     line-height: 1.5;
   }
 
+  .schedule,
+  .loot-rules,
+  .requirements {
+    padding: $space-8;
+    margin: $space-2 0 $space-8;
+    display: flex;
+    flex-direction: column;
+  }
   .progression {
     min-width: 0;
   }
@@ -109,6 +117,12 @@ useScrollReveal(containerRef)
     > * {
       display: flex;
       flex-direction: column;
+    }
+
+    .schedule,
+    .loot-rules,
+    .requirements {
+      flex: 1;
     }
 
     @include desktop-sm {

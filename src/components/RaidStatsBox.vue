@@ -172,6 +172,8 @@ function formatNumber(n) {
 }
 
 .stat-card {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   gap: $space-2;
