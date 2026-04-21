@@ -1,5 +1,5 @@
 <template>
-  <div class="info-box info-box--no-hover mythic-plus-box">
+  <InfoBox no-hover class="mythic-plus-box">
     <h3 class="mp-section-title">Mythic+</h3>
     <template v-if="hasData">
       <section class="mp-section">
@@ -46,11 +46,12 @@
       <p v-if="formattedUpdated" class="mp-updated">Updated {{ formattedUpdated }}</p>
     </template>
     <p v-else class="mp-empty">No M+ data yet this season.</p>
-  </div>
+  </InfoBox>
 </template>
 
 <script setup>
 import { computed } from 'vue'
+import InfoBox from '@/components/InfoBox.vue'
 import { useMythicPlus } from '@/composables/useMythicPlus'
 
 const { topRunners, dungeonBests, lastUpdated, hasData } = useMythicPlus()
@@ -71,12 +72,9 @@ const formattedUpdated = computed(() => {
 
 <style lang="scss" scoped>
 @use '@/assets/styles/_variables.scss' as *;
-@use '@/assets/styles/_info-box.scss';
 @use '@/assets/styles/tokens' as *;
 
 .mythic-plus-box {
-  display: flex;
-  flex-direction: column;
   gap: $space-6;
   text-align: left;
 }

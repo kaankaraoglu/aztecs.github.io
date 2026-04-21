@@ -69,7 +69,6 @@ useScrollReveal(containerRef)
 
 <style scoped lang="scss">
 @use '@/assets/styles/_variables.scss' as *;
-@use '@/assets/styles/_info-box.scss';
 @use '@/assets/styles/tokens' as *;
 
 .contact-view {
