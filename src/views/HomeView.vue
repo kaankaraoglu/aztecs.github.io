@@ -12,7 +12,12 @@
       <FadingDivider />
       <div class="top-boxes">
         <InfoBox no-hover>
-          <RaidProgressionBox :raids="raids" :summary="summary" :latest-report="latestReport" />
+          <RaidProgressionBox
+            :raids="raids"
+            :summary="summary"
+            :latest-report="latestReport"
+            :last-updated="lastUpdated"
+          />
         </InfoBox>
         <MythicPlusBox class="reveal" />
       </div>
@@ -48,6 +53,7 @@
 import { ref } from 'vue'
 import { kills } from '@/data/kills.js'
 import { useProgression } from '@/composables/useProgression.js'
+import { useMythicPlus } from '@/composables/useMythicPlus.js'
 import { useScrollReveal } from '@/composables/useScrollReveal.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
@@ -60,6 +66,7 @@ const containerRef = ref(null)
 useScrollReveal(containerRef)
 
 const { raids, summary, latestReport } = useProgression()
+const { lastUpdated } = useMythicPlus()
 const latestKills = kills.slice(0, 2)
 const lightboxSrc = ref('')
 </script>

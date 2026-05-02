@@ -1,6 +1,9 @@
 <template>
   <InfoBox no-hover class="mythic-plus-box">
-    <h3 class="mp-section-title">Mythic+</h3>
+    <div class="mp-section-header">
+      <h3 class="mp-section-title">Mythic+</h3>
+      <p v-if="formattedUpdated" class="mp-updated">Updated {{ formattedUpdated }}</p>
+    </div>
     <template v-if="hasData">
       <section class="mp-section">
         <ol class="runners-list">
@@ -46,7 +49,6 @@
           </div>
         </div>
       </section>
-      <p v-if="formattedUpdated" class="mp-updated">Updated {{ formattedUpdated }}</p>
     </template>
     <p v-else class="mp-empty">No M+ data yet this season.</p>
   </InfoBox>
@@ -118,8 +120,15 @@ const formattedUpdated = computed(() => {
   margin: $space-4 0 0;
 }
 
+.mp-section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
 .mp-updated {
-  margin: $space-2 0 0;
+  margin: 0;
   font-size: 0.7em;
   color: $color-text-muted;
   text-align: right;
