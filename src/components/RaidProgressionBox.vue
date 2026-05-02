@@ -50,12 +50,7 @@
       </div>
 
       <div class="instances">
-        <div
-          v-for="raid in raids"
-          :key="raid.name"
-          class="instance difficulty-section"
-          :data-difficulty="highestDifficulty(raid)"
-        >
+        <div v-for="raid in raids" :key="raid.name" class="instance difficulty-section">
           <h3 class="instance-name">{{ raid.name }}</h3>
           <div class="boss-list">
             <div
@@ -70,6 +65,7 @@
                     !boss.normal && !boss.heroic && !boss.mythic && boss.bestPercent != null,
                 },
               ]"
+              :data-boss-difficulty="bossHighestKill(boss)"
             >
               <span
                 v-for="bar in difficultyBars(boss)"
@@ -89,23 +85,28 @@
                 @keydown.space.prevent="hasRoster(boss) && toggle(boss.name)"
               >
                 <span class="boss-status">
-                  <span :class="['pip', { active: boss.normal }]">N</span>
-                  <span :class="['pip', { active: boss.heroic }]">HC</span>
-                  <span v-if="summary.mythic > 0" :class="['pip', { active: boss.mythic }]">M</span>
-                </span>
-                <span class="boss-name">{{ boss.name }}</span>
-                <span class="boss-meta">
-                  <template v-for="(item, i) in metaItems(boss)" :key="i">
-                    <span v-if="i > 0" class="meta-sep">|</span>
-                    <span>{{ item }}</span>
-                  </template>
+                  <span :class="['pip', 'normal', { active: boss.normal }]">N</span>
+                  <span :class="['pip', 'heroic', { active: boss.heroic }]">HC</span>
                   <span
-                    v-if="hasRoster(boss)"
-                    class="expand-caret"
-                    :class="{ open: expanded[boss.name] }"
-                    >&#9662;</span
+                    v-if="summary.mythic > 0"
+                    :class="['pip', 'mythic', { active: boss.mythic }]"
+                    >M</span
                   >
                 </span>
+                <span class="boss-name">{{ boss.name }}</span>
+                <span class="meta-best">{{
+                  boss.bestPercent != null ? `Best: ${boss.bestPercent.toFixed(1)}%` : ''
+                }}</span>
+                <span class="meta-pulls">{{ pullsText(boss) || '' }}</span>
+                <span class="meta-date">{{ boss.killedAt ? formatDate(boss.killedAt) : '' }}</span>
+                <span class="meta-raiders">{{
+                  hasRoster(boss) ? `${rosterSize(boss)} raiders` : ''
+                }}</span>
+                <span
+                  class="expand-caret"
+                  :class="{ open: expanded[boss.name], hidden: !hasRoster(boss) }"
+                  >&#9662;</span
+                >
               </div>
               <div class="roster-wrapper" :class="{ expanded: expanded[boss.name] }">
                 <div
@@ -226,7 +227,7 @@ function formatDate(isoString) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 }
 
-const DIFFICULTY_LABEL = { normal: 'Normal', heroic: 'Heroic', mythic: 'Mythic' }
+const DIFFICULTY_LABEL = { normal: 'N', heroic: 'HC', mythic: 'M' }
 
 function pullsText(boss) {
   const p = boss.pullsByDifficulty
@@ -236,17 +237,7 @@ function pullsText(boss) {
     if (p[diff]) parts.push(`${p[diff]} ${DIFFICULTY_LABEL[diff]}`)
   }
   if (!parts.length) return null
-  return `${parts.join(' & ')} pulls`
-}
-
-function metaItems(boss) {
-  const items = []
-  if (boss.bestPercent != null) items.push(`Best: ${boss.bestPercent.toFixed(1)}%`)
-  const pulls = pullsText(boss)
-  if (pulls) items.push(pulls)
-  if (boss.killedAt) items.push(formatDate(boss.killedAt))
-  if (hasRoster(boss)) items.push(`${rosterSize(boss)} raiders`)
-  return items
+  return `Pulls: ${parts.join(' & ')}`
 }
 
 const CLASS_DISPLAY = {
@@ -266,21 +257,11 @@ const CLASS_DISPLAY = {
 }
 
 function difficultyBars(boss) {
-  const bars = []
   const difficulties = ['normal', 'heroic', 'mythic']
-  for (const diff of difficulties) {
-    if (boss[diff]) {
-      bars.push({ difficulty: diff, width: '100%' })
-    }
-  }
-  // Show progress bar for the next unkilled difficulty above highest kill
-  if (boss.bestPercent != null) {
-    const nextDiff = difficulties.find((d) => !boss[d])
-    if (nextDiff) {
-      bars.push({ difficulty: nextDiff, width: `${boss.bestPercent}%` })
-    }
-  }
-  return bars
+  if (boss.bestPercent == null) return []
+  const nextDiff = difficulties.find((d) => !boss[d])
+  if (!nextDiff) return []
+  return [{ difficulty: nextDiff, width: `${boss.bestPercent}%` }]
 }
 
 function playerTooltip(player) {
@@ -300,11 +281,11 @@ function rosterSize(boss) {
   return (r?.tanks?.length || 0) + (r?.healers?.length || 0) + (r?.dps?.length || 0)
 }
 
-function highestDifficulty(raid) {
-  if (raid.bosses.some((b) => b.mythic)) return 'mythic'
-  if (raid.bosses.some((b) => b.heroic)) return 'heroic'
-  if (raid.bosses.some((b) => b.normal)) return 'normal'
-  return 'normal'
+function bossHighestKill(boss) {
+  if (boss.mythic) return 'mythic'
+  if (boss.heroic) return 'heroic'
+  if (boss.normal) return 'normal'
+  return 'none'
 }
 </script>
 
@@ -394,29 +375,18 @@ function highestDifficulty(raid) {
       }
     }
 
-    &.normal {
-      .summary-count {
-        color: $quality-rare;
-      }
-      .summary-fill {
-        background: $quality-rare;
-      }
+    .summary-fill {
+      background: $accent-color;
     }
-    &.heroic {
-      .summary-count {
-        color: $quality-epic;
-      }
-      .summary-fill {
-        background: $quality-epic;
-      }
+
+    &.normal .summary-count {
+      color: $quality-rare;
     }
-    &.mythic {
-      .summary-count {
-        color: $quality-legendary;
-      }
-      .summary-fill {
-        background: $quality-legendary;
-      }
+    &.heroic .summary-count {
+      color: $quality-epic;
+    }
+    &.mythic .summary-count {
+      color: $quality-legendary;
     }
   }
 
@@ -429,23 +399,7 @@ function highestDifficulty(raid) {
 
   .difficulty-section {
     break-inside: avoid;
-    border-left: 3px solid var(--difficulty-color);
-    padding-left: $space-4;
     margin-bottom: $space-4;
-
-    @include mobile {
-      padding-left: $space-2;
-    }
-
-    &[data-difficulty='normal'] {
-      --difficulty-color: #{$quality-rare};
-    }
-    &[data-difficulty='heroic'] {
-      --difficulty-color: #{$quality-epic};
-    }
-    &[data-difficulty='mythic'] {
-      --difficulty-color: #{$quality-legendary};
-    }
   }
 
   .instance-name {
@@ -464,13 +418,25 @@ function highestDifficulty(raid) {
     gap: 1px;
     border-radius: $radius-md;
     overflow: hidden;
+    background: $surface-2;
   }
 
   /* ── Boss rows ── */
   .boss-entry {
     position: relative;
     background: $surface-2;
+    border-left: 3px solid transparent;
     transition: background $duration-fast;
+
+    &[data-boss-difficulty='normal'] {
+      border-left-color: $quality-rare;
+    }
+    &[data-boss-difficulty='heroic'] {
+      border-left-color: $quality-epic;
+    }
+    &[data-boss-difficulty='mythic'] {
+      border-left-color: $quality-legendary;
+    }
 
     .difficulty-bar {
       position: absolute;
@@ -480,13 +446,13 @@ function highestDifficulty(raid) {
       pointer-events: none;
 
       &.normal {
-        background: rgba($quality-rare, 0.18);
+        background: rgba($quality-rare, 0.25);
       }
       &.heroic {
-        background: rgba($quality-epic, 0.25);
+        background: rgba($quality-epic, 0.3);
       }
       &.mythic {
-        background: rgba($quality-legendary, 0.18);
+        background: rgba($quality-legendary, 0.25);
       }
     }
 
@@ -497,25 +463,72 @@ function highestDifficulty(raid) {
     &.expandable .boss-row {
       cursor: pointer;
     }
-
-    &:not(.killed):not(.in-progress) {
-      opacity: 0.55;
-    }
   }
 
   .boss-row {
     position: relative;
-    display: flex;
+    display: grid;
+    grid-template-columns:
+      [status] auto
+      [name] minmax(0, 1fr)
+      [best] max-content
+      [pulls] max-content
+      [date] max-content
+      [raiders] max-content
+      [caret] 0.7rem;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.6rem;
-    min-height: 2.2rem;
+    gap: 1.2rem;
+    padding: 0.7rem 0.75rem;
+    min-height: 3rem;
+    font-size: 0.75em;
+
+    .boss-name {
+      font-size: 1.33em;
+    }
+
+    .meta-best,
+    .meta-date,
+    .meta-raiders,
+    .meta-pulls {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+    }
 
     @include tablet-sm {
-      flex-wrap: wrap;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-auto-flow: row;
       gap: 0.2rem 0.5rem;
-      padding: 0.35rem 0.5rem;
-      min-height: unset;
+      padding: 0.6rem 0.6rem;
+      min-height: 2.6rem;
+
+      .boss-status {
+        grid-row: 1;
+        grid-column: 1;
+      }
+      .boss-name {
+        grid-row: 1;
+        grid-column: 2;
+      }
+      .expand-caret {
+        grid-row: 1;
+        grid-column: 3;
+      }
+      .meta-best,
+      .meta-pulls,
+      .meta-date,
+      .meta-raiders {
+        grid-row: 2;
+        grid-column: 1 / -1;
+        text-align: left;
+        opacity: 0.5;
+        font-size: 0.95em;
+
+        &:empty {
+          display: none;
+        }
+      }
     }
   }
 
@@ -544,9 +557,17 @@ function highestDifficulty(raid) {
       background $duration-fast,
       color $duration-fast;
 
-    &.active {
-      background: rgba($quality-uncommon, 0.15);
-      color: $quality-uncommon;
+    &.normal.active {
+      background: rgba($quality-rare, 0.18);
+      color: $quality-rare;
+    }
+    &.heroic.active {
+      background: rgba($quality-epic, 0.25);
+      color: $quality-epic;
+    }
+    &.mythic.active {
+      background: rgba($quality-legendary, 0.2);
+      color: $quality-legendary;
     }
 
     @include tablet-sm {
@@ -557,37 +578,11 @@ function highestDifficulty(raid) {
   }
 
   .boss-name {
-    flex: 1;
-    font-size: 1em;
     font-weight: 500;
     min-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    @include tablet-sm {
-      font-size: 0.9em;
-      flex-basis: 0;
-    }
-  }
-
-  .boss-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex-shrink: 0;
-    font-size: 0.75em;
-
-    @include tablet-sm {
-      width: 100%;
-      font-size: 0.7em;
-      opacity: 0.5;
-      padding-left: calc(1.5rem * 2 + 3px + 0.5rem);
-    }
-  }
-
-  .meta-sep {
-    opacity: 0.2;
   }
 
   .expand-caret {
@@ -595,9 +590,14 @@ function highestDifficulty(raid) {
     font-size: 0.9em;
     transition: transform 0.2s;
     line-height: 1;
+    text-align: center;
 
     &.open {
       transform: rotate(180deg);
+    }
+
+    &.hidden {
+      visibility: hidden;
     }
   }
 

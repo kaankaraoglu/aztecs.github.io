@@ -111,8 +111,8 @@ describe('RaidProgressionBox', () => {
       props: { raids: mockRaids, summary: mockSummary },
     })
     expect(wrapper.text()).toContain('18 Mar')
-    expect(wrapper.text()).toContain('3 Normal pulls')
-    expect(wrapper.text()).toContain('2 Normal & 7 Heroic pulls')
+    expect(wrapper.text()).toContain('Pulls: 3 N')
+    expect(wrapper.text()).toContain('Pulls: 2 N & 7 HC')
   })
 
   it('shows best percent for unkilled bosses', () => {
