@@ -124,9 +124,13 @@ async function fetchProgression(token) {
 
   // Build per-boss data across all reports
   // Key: "bossName|difficulty"
+  // Process reports oldest-first so `killed`/`killedAt`/`pulls` reflect the
+  // FIRST kill, not whichever kill iteration happened to encounter first.
+  // WCL returns reports newest-first; sort ascending by startTime.
   const bossData = new Map()
+  const reportsChronological = [...reports].sort((a, b) => a.startTime - b.startTime)
 
-  for (const report of reports) {
+  for (const report of reportsChronological) {
     for (const fight of report.fights || []) {
       if (fight.encounterID === 0) continue
 
