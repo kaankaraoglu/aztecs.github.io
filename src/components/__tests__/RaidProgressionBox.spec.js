@@ -88,24 +88,6 @@ describe('RaidProgressionBox', () => {
     expect(entries[1].classes()).not.toContain('killed')
   })
 
-  it('shows summary pills when there are kills', () => {
-    const wrapper = mount(RaidProgressionBox, {
-      props: { raids: mockRaids, summary: mockSummary },
-    })
-    expect(wrapper.text()).toContain('2/3')
-    expect(wrapper.text()).toContain('Normal')
-  })
-
-  it('shows all three difficulty pills even when kills are zero', () => {
-    const emptySummary = { total: 2, normal: 0, heroic: 0, mythic: 0 }
-    const wrapper = mount(RaidProgressionBox, {
-      props: { raids: mockRaids, summary: emptySummary },
-    })
-    expect(wrapper.find('.summary').exists()).toBe(true)
-    expect(wrapper.findAll('.summary-pill')).toHaveLength(3)
-    expect(wrapper.find('.summary-pill.mythic').exists()).toBe(true)
-  })
-
   it('shows kill date and per-difficulty pull counts', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },

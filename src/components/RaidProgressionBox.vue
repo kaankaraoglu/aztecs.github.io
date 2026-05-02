@@ -13,42 +13,6 @@
     </template>
     <template v-else>
       <h3 class="box-title">Raids</h3>
-      <div v-if="summary.total > 0" ref="progressRef" class="summary">
-        <div class="summary-pill normal">
-          <span class="summary-count">{{ summary.normal }}/{{ summary.total }}</span>
-          <span class="summary-label">Normal</span>
-          <span class="summary-track"
-            ><span
-              class="summary-fill"
-              :class="{ animate: isVisible }"
-              :style="{ '--progress': pct(summary.normal) }"
-            ></span
-          ></span>
-        </div>
-        <div class="summary-pill heroic">
-          <span class="summary-count">{{ summary.heroic }}/{{ summary.total }}</span>
-          <span class="summary-label">Heroic</span>
-          <span class="summary-track"
-            ><span
-              class="summary-fill"
-              :class="{ animate: isVisible }"
-              :style="{ '--progress': pct(summary.heroic) }"
-            ></span
-          ></span>
-        </div>
-        <div class="summary-pill mythic">
-          <span class="summary-count">{{ summary.mythic }}/{{ summary.total }}</span>
-          <span class="summary-label">Mythic</span>
-          <span class="summary-track"
-            ><span
-              class="summary-fill"
-              :class="{ animate: isVisible }"
-              :style="{ '--progress': pct(summary.mythic) }"
-            ></span
-          ></span>
-        </div>
-      </div>
-
       <div class="instances">
         <div v-for="raid in raids" :key="raid.name" class="instance difficulty-section">
           <h3 class="instance-name">{{ raid.name }}</h3>
@@ -167,14 +131,14 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted, onUnmounted } from 'vue'
+import { reactive } from 'vue'
 import RosterList from '@/components/RosterList.vue'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAnalytics } from '@/composables/useAnalytics'
 
 const { trackEvent } = useAnalytics()
 
-const props = defineProps({
+defineProps({
   raids: {
     type: Array,
     required: true,
@@ -189,25 +153,6 @@ const props = defineProps({
   },
 })
 
-const progressRef = ref(null)
-const isVisible = ref(false)
-let progressObserver = null
-
-onMounted(() => {
-  progressObserver = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        isVisible.value = true
-        progressObserver.disconnect()
-      }
-    },
-    { threshold: 0.1 },
-  )
-  if (progressRef.value) progressObserver.observe(progressRef.value)
-})
-
-onUnmounted(() => progressObserver?.disconnect())
-
 const expanded = reactive({})
 
 function toggle(bossName) {
@@ -215,10 +160,6 @@ function toggle(bossName) {
   if (expanded[bossName]) {
     trackEvent('select_content', { content_type: 'boss_roster', item_id: bossName })
   }
-}
-
-function pct(killed) {
-  return props.summary.total > 0 ? `${(killed / props.summary.total) * 100}%` : '0%'
 }
 
 function formatDate(isoString) {
@@ -310,76 +251,6 @@ function rosterSize(boss) {
     display: flex;
     flex-direction: column;
     gap: 1px;
-  }
-
-  /* ── Summary ── */
-  .summary {
-    display: flex;
-    gap: $space-2;
-    margin-bottom: 1rem;
-
-    @include mobile-md {
-      flex-direction: column;
-    }
-  }
-
-  .summary-pill {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.35rem;
-    padding: $space-2 $space-3;
-    border-radius: $radius-md;
-    background: $surface-1;
-    border: 1px solid $color-border;
-
-    .summary-count {
-      font-size: 1.5em;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .summary-label {
-      font-size: 0.8em;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      opacity: 0.4;
-    }
-
-    .summary-track {
-      width: 100%;
-      height: 2px;
-      border-radius: 1px;
-      background: rgba(var(--t-text-primary-rgb), 0.06);
-      margin-top: 0.15rem;
-
-      .summary-fill {
-        display: block;
-        height: 100%;
-        border-radius: 1px;
-        width: 0;
-        transition: width 1s $ease-out;
-
-        &.animate {
-          width: var(--progress);
-        }
-      }
-    }
-
-    .summary-fill {
-      background: $accent-color;
-    }
-
-    &.normal .summary-count {
-      color: $quality-rare;
-    }
-    &.heroic .summary-count {
-      color: $quality-epic;
-    }
-    &.mythic .summary-count {
-      color: $quality-legendary;
-    }
   }
 
   /* ── Instances list ── */
@@ -654,13 +525,6 @@ function rosterSize(boss) {
     &:hover {
       background: rgba(var(--t-accent-rgb), 0.1);
       border-color: rgba(var(--t-accent-rgb), 0.6);
-    }
-  }
-
-  @include reduced-motion {
-    .summary-fill {
-      transition: none;
-      width: var(--progress);
     }
   }
 }
