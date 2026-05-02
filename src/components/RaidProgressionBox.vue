@@ -53,77 +53,76 @@
         <div v-for="raid in raids" :key="raid.name" class="instance difficulty-section">
           <h3 class="instance-name">{{ raid.name }}</h3>
           <div class="boss-list">
-            <div
-              v-for="boss in raid.bosses"
-              :key="boss.name"
-              :class="[
-                'boss-entry',
-                {
-                  expandable: hasRoster(boss),
-                  killed: boss.normal || boss.heroic || boss.mythic,
-                  'in-progress':
-                    !boss.normal && !boss.heroic && !boss.mythic && boss.bestPercent != null,
-                },
-              ]"
-              :data-boss-difficulty="bossHighestKill(boss)"
-            >
-              <span
-                v-for="bar in difficultyBars(boss)"
-                :key="bar.difficulty"
-                class="difficulty-bar"
-                :class="bar.difficulty"
-                :style="{ width: bar.width }"
-              ></span>
+            <div v-for="boss in raid.bosses" :key="boss.name" class="boss-line">
+              <span class="boss-status">
+                <span :class="['pip', 'normal', { active: boss.normal }]">N</span>
+                <span :class="['pip', 'heroic', { active: boss.heroic }]">HC</span>
+                <span v-if="summary.mythic > 0" :class="['pip', 'mythic', { active: boss.mythic }]"
+                  >M</span
+                >
+              </span>
               <div
-                class="boss-row"
-                :tabindex="hasRoster(boss) ? 0 : undefined"
-                :role="hasRoster(boss) ? 'button' : undefined"
-                :aria-expanded="hasRoster(boss) ? String(!!expanded[boss.name]) : undefined"
-                :aria-label="hasRoster(boss) ? `${boss.name} kill roster` : undefined"
-                @click="toggle(boss.name)"
-                @keydown.enter.prevent="hasRoster(boss) && toggle(boss.name)"
-                @keydown.space.prevent="hasRoster(boss) && toggle(boss.name)"
+                :class="[
+                  'boss-entry',
+                  {
+                    expandable: hasRoster(boss),
+                    killed: boss.normal || boss.heroic || boss.mythic,
+                    'in-progress':
+                      !boss.normal && !boss.heroic && !boss.mythic && boss.bestPercent != null,
+                  },
+                ]"
               >
-                <span class="boss-status">
-                  <span :class="['pip', 'normal', { active: boss.normal }]">N</span>
-                  <span :class="['pip', 'heroic', { active: boss.heroic }]">HC</span>
-                  <span
-                    v-if="summary.mythic > 0"
-                    :class="['pip', 'mythic', { active: boss.mythic }]"
-                    >M</span
-                  >
-                </span>
-                <span class="boss-name">{{ boss.name }}</span>
-                <span class="meta-best">{{
-                  boss.bestPercent != null ? `Best: ${boss.bestPercent.toFixed(1)}%` : ''
-                }}</span>
-                <span class="meta-pulls">{{ pullsText(boss) || '' }}</span>
-                <span class="meta-date">{{ boss.killedAt ? formatDate(boss.killedAt) : '' }}</span>
-                <span class="meta-raiders">{{
-                  hasRoster(boss) ? `${rosterSize(boss)} raiders` : ''
-                }}</span>
                 <span
-                  class="expand-caret"
-                  :class="{ open: expanded[boss.name], hidden: !hasRoster(boss) }"
-                  >&#9662;</span
-                >
-              </div>
-              <div class="roster-wrapper" :class="{ expanded: expanded[boss.name] }">
+                  v-for="bar in difficultyBars(boss)"
+                  :key="bar.difficulty"
+                  class="difficulty-bar"
+                  :class="bar.difficulty"
+                  :style="{ width: bar.width }"
+                ></span>
                 <div
-                  v-show="expanded[boss.name] && hasRoster(boss)"
-                  class="roster-inner"
-                  :aria-hidden="!expanded[boss.name]"
+                  class="boss-row"
+                  :tabindex="hasRoster(boss) ? 0 : undefined"
+                  :role="hasRoster(boss) ? 'button' : undefined"
+                  :aria-expanded="hasRoster(boss) ? String(!!expanded[boss.name]) : undefined"
+                  :aria-label="hasRoster(boss) ? `${boss.name} kill roster` : undefined"
+                  @click="toggle(boss.name)"
+                  @keydown.enter.prevent="hasRoster(boss) && toggle(boss.name)"
+                  @keydown.space.prevent="hasRoster(boss) && toggle(boss.name)"
                 >
-                  <RosterList
-                    v-if="expanded[boss.name] && hasRoster(boss)"
-                    class="roster-panel"
-                    :tanks="boss.roster?.tanks"
-                    :healers="boss.roster?.healers"
-                    :dps="boss.roster?.dps"
-                    :linked="true"
-                    :show-icons="true"
-                    :tooltip-fn="playerTooltip"
-                  />
+                  <span class="boss-name">{{ boss.name }}</span>
+                  <span class="meta-best">{{
+                    boss.bestPercent != null ? `Best: ${boss.bestPercent.toFixed(1)}%` : ''
+                  }}</span>
+                  <span class="meta-pulls">{{ pullsText(boss) || '' }}</span>
+                  <span class="meta-date">{{
+                    boss.killedAt ? formatDate(boss.killedAt) : ''
+                  }}</span>
+                  <span class="meta-raiders">{{
+                    hasRoster(boss) ? `${rosterSize(boss)} raiders` : ''
+                  }}</span>
+                  <span
+                    class="expand-caret"
+                    :class="{ open: expanded[boss.name], hidden: !hasRoster(boss) }"
+                    >&#9662;</span
+                  >
+                </div>
+                <div class="roster-wrapper" :class="{ expanded: expanded[boss.name] }">
+                  <div
+                    v-show="expanded[boss.name] && hasRoster(boss)"
+                    class="roster-inner"
+                    :aria-hidden="!expanded[boss.name]"
+                  >
+                    <RosterList
+                      v-if="expanded[boss.name] && hasRoster(boss)"
+                      class="roster-panel"
+                      :tanks="boss.roster?.tanks"
+                      :healers="boss.roster?.healers"
+                      :dps="boss.roster?.dps"
+                      :linked="true"
+                      :show-icons="true"
+                      :tooltip-fn="playerTooltip"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -280,13 +279,6 @@ function rosterSize(boss) {
   const r = boss.roster
   return (r?.tanks?.length || 0) + (r?.healers?.length || 0) + (r?.dps?.length || 0)
 }
-
-function bossHighestKill(boss) {
-  if (boss.mythic) return 'mythic'
-  if (boss.heroic) return 'heroic'
-  if (boss.normal) return 'normal'
-  return 'none'
-}
 </script>
 
 <style lang="scss" scoped>
@@ -415,28 +407,38 @@ function bossHighestKill(boss) {
   .boss-list {
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    border-radius: $radius-md;
-    overflow: hidden;
-    background: $surface-2;
+    gap: $space-2;
+  }
+
+  .boss-line {
+    display: flex;
+    align-items: stretch;
+    gap: $space-2;
+
+    > .boss-status {
+      flex-shrink: 0;
+      align-self: stretch;
+
+      .pip {
+        height: auto;
+        width: 2.6rem;
+        align-self: stretch;
+      }
+    }
+
+    > .boss-entry {
+      flex: 1;
+      min-width: 0;
+      border-radius: $radius-md;
+      overflow: hidden;
+    }
   }
 
   /* ── Boss rows ── */
   .boss-entry {
     position: relative;
     background: $surface-2;
-    border-left: 3px solid transparent;
     transition: background $duration-fast;
-
-    &[data-boss-difficulty='normal'] {
-      border-left-color: $quality-rare;
-    }
-    &[data-boss-difficulty='heroic'] {
-      border-left-color: $quality-epic;
-    }
-    &[data-boss-difficulty='mythic'] {
-      border-left-color: $quality-legendary;
-    }
 
     .difficulty-bar {
       position: absolute;
@@ -469,7 +471,6 @@ function bossHighestKill(boss) {
     position: relative;
     display: grid;
     grid-template-columns:
-      [status] auto
       [name] minmax(0, 1fr)
       [best] max-content
       [pulls] max-content
@@ -497,23 +498,19 @@ function bossHighestKill(boss) {
     }
 
     @include tablet-sm {
-      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       grid-auto-flow: row;
       gap: 0.2rem 0.5rem;
       padding: 0.6rem 0.6rem;
       min-height: 2.6rem;
 
-      .boss-status {
+      .boss-name {
         grid-row: 1;
         grid-column: 1;
       }
-      .boss-name {
-        grid-row: 1;
-        grid-column: 2;
-      }
       .expand-caret {
         grid-row: 1;
-        grid-column: 3;
+        grid-column: 2;
       }
       .meta-best,
       .meta-pulls,
