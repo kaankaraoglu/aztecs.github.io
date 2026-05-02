@@ -19,9 +19,12 @@
             >
             <span class="runner-score">{{ runner.score }}</span>
             <span v-if="runner.topKeys && runner.topKeys.length" class="runner-keys">
-              <span v-for="(key, ki) in runner.topKeys" :key="ki" class="runner-key">{{
-                key
-              }}</span>
+              <span
+                v-for="(key, ki) in runner.topKeys"
+                :key="ki"
+                :class="['runner-key', levelTier(keyLevel(key))]"
+                >{{ key }}</span
+              >
             </span>
           </li>
         </ol>
@@ -32,7 +35,7 @@
         <div class="dungeon-grid">
           <div v-for="best in dungeonBests" :key="best.dungeon" class="dungeon-cell">
             <span class="dungeon-name">{{ best.dungeon }}</span>
-            <span class="dungeon-level">+{{ best.level }}</span>
+            <span :class="['dungeon-level', levelTier(best.level)]">+{{ best.level }}</span>
             <span
               :class="['dungeon-timed', best.timed ? 'timed--yes' : 'timed--no']"
               :aria-label="best.timed ? 'Timed' : 'Not timed'"
@@ -55,6 +58,17 @@ import InfoBox from '@/components/InfoBox.vue'
 import { useMythicPlus } from '@/composables/useMythicPlus'
 
 const { topRunners, dungeonBests, lastUpdated, hasData } = useMythicPlus()
+
+function levelTier(level) {
+  if (level <= 10) return 'tier-normal'
+  if (level <= 15) return 'tier-heroic'
+  return 'tier-mythic'
+}
+
+function keyLevel(key) {
+  const m = /\+?(\d+)/.exec(key)
+  return m ? Number(m[1]) : 0
+}
 
 const formattedUpdated = computed(() => {
   if (!lastUpdated) return null
@@ -79,6 +93,23 @@ const formattedUpdated = computed(() => {
   flex-direction: column;
   gap: $space-6;
   text-align: left;
+  height: 100%;
+}
+
+.mp-section:first-of-type {
+  flex: 1;
+
+  .runners-list {
+    flex: 1;
+  }
+
+  .runner-entry {
+    flex: 1;
+  }
+}
+
+.mp-updated {
+  margin-top: auto;
 }
 
 .mp-empty {
@@ -183,12 +214,25 @@ const formattedUpdated = computed(() => {
   padding: 0.1rem $space-2;
   white-space: nowrap;
   flex-shrink: 0;
+
+  &.tier-normal {
+    color: $quality-rare;
+    border-color: rgba($quality-rare, 0.4);
+  }
+  &.tier-heroic {
+    color: $quality-epic;
+    border-color: rgba($quality-epic, 0.4);
+  }
+  &.tier-mythic {
+    color: $quality-legendary;
+    border-color: rgba($quality-legendary, 0.4);
+  }
 }
 
 /* ── Dungeon Grid ── */
 .dungeon-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
   gap: $space-2;
 
   @include mobile {
@@ -224,6 +268,16 @@ const formattedUpdated = computed(() => {
   font-weight: 700;
   color: $accent-color;
   flex-shrink: 0;
+
+  &.tier-normal {
+    color: $quality-rare;
+  }
+  &.tier-heroic {
+    color: $quality-epic;
+  }
+  &.tier-mythic {
+    color: $quality-legendary;
+  }
 }
 
 .dungeon-timed {
