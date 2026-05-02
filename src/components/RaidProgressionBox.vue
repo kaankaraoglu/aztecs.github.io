@@ -12,7 +12,10 @@
       </div>
     </template>
     <template v-else>
-      <h3 class="box-title">Raids</h3>
+      <div class="box-header">
+        <h3 class="box-title">Raids</h3>
+        <p v-if="formattedUpdated" class="box-updated">Updated {{ formattedUpdated }}</p>
+      </div>
       <div class="instances">
         <div v-for="raid in raids" :key="raid.name" class="instance difficulty-section">
           <h3 class="instance-name">{{ raid.name }}</h3>
@@ -110,35 +113,20 @@
         >
           {{ latestReport ? 'Latest Log' : 'Warcraft Logs' }}
         </a>
-        <a
-          class="footer-link"
-          href="https://raider.io/guilds/eu/alakir/Aztecs"
-          target="_blank"
-          rel="noopener noreferrer"
-          @click="
-            trackEvent('click', {
-              link_type: 'external',
-              link_url: 'https://raider.io/guilds/eu/alakir/Aztecs',
-              link_text: 'Raider.IO',
-            })
-          "
-        >
-          Raider.IO
-        </a>
       </div>
     </template>
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import RosterList from '@/components/RosterList.vue'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAnalytics } from '@/composables/useAnalytics'
 
 const { trackEvent } = useAnalytics()
 
-defineProps({
+const props = defineProps({
   raids: {
     type: Array,
     required: true,
@@ -151,6 +139,23 @@ defineProps({
     type: String,
     default: null,
   },
+  lastUpdated: {
+    type: String,
+    default: null,
+  },
+})
+
+const formattedUpdated = computed(() => {
+  if (!props.lastUpdated) return null
+  const date = new Date(props.lastUpdated)
+  if (Number.isNaN(date.getTime())) return null
+  return date.toLocaleString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 })
 
 const expanded = reactive({})
@@ -231,13 +236,29 @@ function rosterSize(boss) {
   min-width: 0;
   overflow: hidden;
 
+  .box-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: $space-3;
+    margin-bottom: 0.75rem;
+  }
+
   .box-title {
-    margin: 0 0 0.75rem;
+    margin: 0;
     font-size: 0.8em;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: $accent-color;
+  }
+
+  .box-updated {
+    margin: 0;
+    font-size: 0.7em;
+    color: $color-text-muted;
+    text-align: right;
+    opacity: 0.6;
   }
 
   /* ── Skeleton ── */
