@@ -235,6 +235,8 @@ function rosterSize(boss) {
   text-align: left;
   min-width: 0;
   overflow: hidden;
+  container-type: inline-size;
+  container-name: raidbox;
 
   .box-header {
     display: flex;
@@ -387,6 +389,45 @@ function rosterSize(boss) {
       overflow: hidden;
       text-overflow: ellipsis;
       text-align: left;
+    }
+
+    @container raidbox (max-width: 560px) {
+      grid-template-columns:
+        [name] minmax(0, 1fr)
+        [best] max-content
+        [date] max-content
+        [raiders] max-content
+        [caret] 0.7rem;
+      .meta-pulls {
+        display: none;
+      }
+    }
+    @container raidbox (max-width: 480px) {
+      grid-template-columns:
+        [name] minmax(0, 1fr)
+        [best] max-content
+        [date] max-content
+        [caret] 0.7rem;
+      .meta-raiders {
+        display: none;
+      }
+    }
+    @container raidbox (max-width: 420px) {
+      grid-template-columns:
+        [name] minmax(0, 1fr)
+        [date] max-content
+        [caret] 0.7rem;
+      .meta-best {
+        display: none;
+      }
+    }
+    @container raidbox (max-width: 360px) {
+      grid-template-columns:
+        [name] minmax(0, 1fr)
+        [caret] 0.7rem;
+      .meta-date {
+        display: none;
+      }
     }
 
     @include tablet-sm {
