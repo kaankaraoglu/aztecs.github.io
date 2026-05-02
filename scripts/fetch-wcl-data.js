@@ -92,7 +92,7 @@ async function fetchProgression(token) {
       }
     }
     reportData {
-      reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: 25) {
+      reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: 50) {
         data {
           code
           startTime
@@ -149,7 +149,7 @@ async function fetchProgression(token) {
       }
 
       const entry = bossData.get(key)
-      entry.pulls++
+      if (!entry.killed) entry.pulls++
 
       if (fight.kill && !entry.killed) {
         entry.killed = true
@@ -213,22 +213,28 @@ async function fetchProgression(token) {
       const heroicData = bossData.get(`${bossName}|heroic`)
       const mythicData = bossData.get(`${bossName}|mythic`)
 
-      const killData = mythicData?.killed
+      const killedEntries = [normalData, heroicData, mythicData].filter((d) => d?.killed)
+      const highestKill = mythicData?.killed
         ? mythicData
         : heroicData?.killed
           ? heroicData
           : normalData?.killed
             ? normalData
             : null
+      const firstKill = killedEntries.length
+        ? killedEntries.reduce((a, b) => (new Date(a.killedAt) <= new Date(b.killedAt) ? a : b))
+        : null
 
-      const totalPulls =
-        (normalData?.pulls || 0) + (heroicData?.pulls || 0) + (mythicData?.pulls || 0)
+      const pullsByDifficulty = {}
+      if (normalData?.pulls) pullsByDifficulty.normal = normalData.pulls
+      if (heroicData?.pulls) pullsByDifficulty.heroic = heroicData.pulls
+      if (mythicData?.pulls) pullsByDifficulty.mythic = mythicData.pulls
 
       const progressEntry = [mythicData, heroicData, normalData].find(
         (d) => d && !d.killed && d.bestPercent != null,
       )
 
-      const rosterKey = killData ? `${killData.name}|${killData.difficulty}` : null
+      const rosterKey = firstKill ? `${firstKill.name}|${firstKill.difficulty}` : null
       const roster = rosterKey ? rosterMap.get(rosterKey) : undefined
 
       return {
@@ -236,8 +242,8 @@ async function fetchProgression(token) {
         normal: !!normalData?.killed,
         heroic: !!heroicData?.killed,
         mythic: !!mythicData?.killed,
-        killedAt: killData?.killedAt || undefined,
-        pulls: totalPulls || undefined,
+        killedAt: highestKill?.killedAt || undefined,
+        pullsByDifficulty: Object.keys(pullsByDifficulty).length ? pullsByDifficulty : undefined,
         bestPercent: progressEntry?.bestPercent ?? undefined,
         roster: roster || undefined,
       }

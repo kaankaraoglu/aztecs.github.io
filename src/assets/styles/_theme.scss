@@ -144,23 +144,7 @@ body {
   color: var(--t-text-primary);
 }
 
-/* Static dot-grid backdrop (Linear / Vercel style). Tiles the body so
-   glass cards have real texture to refract when blurred. Low contrast
-   in both themes so it reads as texture, not pattern. */
-:root[data-theme='light'] body {
-  background-color: var(--t-background);
-  background-image: radial-gradient(circle at center, rgba(9, 9, 11, 0.12) 1px, transparent 1.5px);
-  background-size: 22px 22px;
-  background-attachment: fixed;
-}
-
+:root[data-theme='light'] body,
 :root[data-theme='dark'] body {
   background-color: var(--t-background);
-  background-image: radial-gradient(
-    circle at center,
-    rgba(255, 255, 255, 0.05) 1px,
-    transparent 1.5px
-  );
-  background-size: 22px 22px;
-  background-attachment: fixed;
 }

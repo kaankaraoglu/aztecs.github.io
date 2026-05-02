@@ -226,10 +226,24 @@ function formatDate(isoString) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
 }
 
+const DIFFICULTY_LABEL = { normal: 'Normal', heroic: 'Heroic', mythic: 'Mythic' }
+
+function pullsText(boss) {
+  const p = boss.pullsByDifficulty
+  if (!p) return null
+  const parts = []
+  for (const diff of ['normal', 'heroic', 'mythic']) {
+    if (p[diff]) parts.push(`${p[diff]} ${DIFFICULTY_LABEL[diff]}`)
+  }
+  if (!parts.length) return null
+  return `${parts.join(' & ')} pulls`
+}
+
 function metaItems(boss) {
   const items = []
   if (boss.bestPercent != null) items.push(`Best: ${boss.bestPercent.toFixed(1)}%`)
-  if (boss.pulls) items.push(`${boss.pulls} ${boss.pulls !== 1 ? 'pulls' : 'pull'}`)
+  const pulls = pullsText(boss)
+  if (pulls) items.push(pulls)
   if (boss.killedAt) items.push(formatDate(boss.killedAt))
   if (hasRoster(boss)) items.push(`${rosterSize(boss)} raiders`)
   return items
