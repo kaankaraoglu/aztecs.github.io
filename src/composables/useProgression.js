@@ -11,7 +11,7 @@ import wclData from '@/data/wcl-progression.json'
  *   heroic: boolean,
  *   mythic?: boolean,
  *   killedAt?: string,
- *   pulls?: number,
+ *   pullsByDifficulty?: { normal?: number, heroic?: number, mythic?: number },
  *   bestPercent?: number,
  *   roster?: RosterPlayer[]
  * }} Boss

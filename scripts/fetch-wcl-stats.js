@@ -96,6 +96,33 @@ async function fetchDeaths(token, code, fightIDs) {
 }
 
 /**
+ * Fetches tank names across given fights in a report (via playerDetails).
+ * @param {string} token
+ * @param {string} code
+ * @param {number[]} fightIDs
+ * @returns {Promise<Set<string>>}
+ */
+async function fetchTankNames(token, code, fightIDs) {
+  if (fightIDs.length === 0) return new Set()
+
+  const query = `{
+    reportData {
+      report(code: "${code}") {
+        playerDetails(fightIDs: [${fightIDs.join(',')}])
+      }
+    }
+  }`
+
+  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
+  const raw = result.data?.reportData?.report?.playerDetails
+  if (!raw) return new Set()
+
+  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
+  const tanks = parsed?.data?.playerDetails?.tanks || []
+  return new Set(tanks.map((t) => t.name).filter(Boolean))
+}
+
+/**
  * Fetches damage done table for specific boss fights in a report.
  * @param {string} token
  * @param {string} code
@@ -277,12 +304,16 @@ async function fetchStats(token, guildMembers) {
         const bossFightIDs = bossFights.map((f) => f.id)
         const killFights = bossFights.filter((f) => f.kill === true)
 
-        // Fetch deaths for all boss fights (Most Deaths + Iron Raider)
-        const allDeathEntries = await fetchDeaths(token, code, bossFightIDs)
+        // Fetch deaths and tank roster for all boss fights (Most Deaths + Iron Raider)
+        const [allDeathEntries, tankNames] = await Promise.all([
+          fetchDeaths(token, code, bossFightIDs),
+          fetchTankNames(token, code, bossFightIDs),
+        ])
 
-        // Accumulate deaths across all boss attempts (guild members only)
+        // Accumulate deaths across all boss attempts (guild members only, excluding tanks)
         for (const entry of allDeathEntries) {
           if (!entry.name) continue
+          if (tankNames.has(entry.name)) continue
           if (filterByGuild && !guildMembers.has(entry.name)) continue
           const existing = deathsByName.get(entry.name)
           if (existing) {

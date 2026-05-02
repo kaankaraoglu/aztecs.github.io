@@ -23,7 +23,7 @@ describe('RaidProgressionBox', () => {
           normal: true,
           heroic: false,
           killedAt: '2026-03-18T19:29:48.000Z',
-          pulls: 3,
+          pullsByDifficulty: { normal: 3 },
           roster: {
             tanks: [{ name: 'Phruity', class: 'druid', spec: 'Guardian' }],
             healers: [{ name: 'Proto', class: 'evoker', spec: 'Preservation' }],
@@ -34,14 +34,21 @@ describe('RaidProgressionBox', () => {
           name: 'Boss 2',
           normal: false,
           heroic: false,
-          pulls: 5,
+          pullsByDifficulty: { normal: 5 },
           bestPercent: 12.3,
         },
       ],
     },
     {
       name: 'Other Raid',
-      bosses: [{ name: 'Boss 3', normal: true, heroic: true }],
+      bosses: [
+        {
+          name: 'Boss 3',
+          normal: true,
+          heroic: true,
+          pullsByDifficulty: { normal: 2, heroic: 7 },
+        },
+      ],
     },
   ]
 
@@ -99,12 +106,13 @@ describe('RaidProgressionBox', () => {
     expect(wrapper.find('.summary-pill.mythic').exists()).toBe(true)
   })
 
-  it('shows kill date and pull count', () => {
+  it('shows kill date and per-difficulty pull counts', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
     expect(wrapper.text()).toContain('18 Mar')
-    expect(wrapper.text()).toContain('3 pulls')
+    expect(wrapper.text()).toContain('3 Normal pulls')
+    expect(wrapper.text()).toContain('2 Normal & 7 Heroic pulls')
   })
 
   it('shows best percent for unkilled bosses', () => {
