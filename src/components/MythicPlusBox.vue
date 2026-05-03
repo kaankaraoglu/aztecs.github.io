@@ -1,5 +1,5 @@
 <template>
-  <InfoBox no-hover class="mythic-plus-box">
+  <InfoBox class="mythic-plus-box">
     <div class="mp-section-header">
       <h3 class="mp-section-title">Mythic+</h3>
       <p v-if="formattedUpdated" class="mp-updated">Updated {{ formattedUpdated }}</p>
