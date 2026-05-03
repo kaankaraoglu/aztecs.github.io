@@ -11,7 +11,7 @@
       <RaidStatsBox class="reveal" />
       <FadingDivider />
       <div class="top-boxes">
-        <InfoBox no-hover>
+        <InfoBox>
           <RaidProgressionBox
             :raids="raids"
             :summary="summary"

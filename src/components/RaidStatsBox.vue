@@ -1,6 +1,6 @@
 <template>
   <div class="raid-stats-grid">
-    <InfoBox no-hover class="stat-card">
+    <InfoBox class="stat-card">
       <p class="stat-label">Most Deaths</p>
       <template v-if="stats.mostDeaths">
         <p :class="['stat-name', stats.mostDeaths.class]">{{ stats.mostDeaths.name }}</p>
@@ -8,7 +8,7 @@
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </InfoBox>
-    <InfoBox no-hover class="stat-card">
+    <InfoBox class="stat-card">
       <p class="stat-label">
         Iron Raider
         <HoverCard :open-delay="120" :close-delay="80">
@@ -42,7 +42,7 @@
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </InfoBox>
-    <InfoBox no-hover class="stat-card">
+    <InfoBox class="stat-card">
       <p class="stat-label">Highest Damage Done in Raid</p>
       <template v-if="stats.highestDamageDone">
         <p :class="['stat-name', stats.highestDamageDone.class]">
@@ -63,7 +63,7 @@
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </InfoBox>
-    <InfoBox no-hover class="stat-card">
+    <InfoBox class="stat-card">
       <p class="stat-label">Highest Damage Done in M+</p>
       <template v-if="stats.highestDamageDoneMplus">
         <p :class="['stat-name', stats.highestDamageDoneMplus.class]">
@@ -84,7 +84,7 @@
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </InfoBox>
-    <InfoBox no-hover class="stat-card">
+    <InfoBox class="stat-card">
       <p class="stat-label">Best Healer in Raid</p>
       <template v-if="stats.bestHealer">
         <p :class="['stat-name', stats.bestHealer.class]">{{ stats.bestHealer.name }}</p>
@@ -102,7 +102,7 @@
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </InfoBox>
-    <InfoBox no-hover class="stat-card">
+    <InfoBox class="stat-card">
       <p class="stat-label">Best Healer in M+</p>
       <template v-if="stats.bestHealerMplus">
         <p :class="['stat-name', stats.bestHealerMplus.class]">
@@ -123,13 +123,13 @@
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </InfoBox>
-    <InfoBox no-hover class="stat-card">
+    <InfoBox class="stat-card">
       <p class="stat-label">Highest Avoidable Damage Taken</p>
       <p class="stat-name"><span class="warrior">Peavy</span>, <span class="evoker">Proto</span></p>
       <p class="stat-name death-knight">Madhouse</p>
       <p class="stat-subtitle">by miles</p>
     </InfoBox>
-    <InfoBox no-hover class="stat-card">
+    <InfoBox class="stat-card">
       <p class="stat-label">Frontpage Material</p>
       <p class="stat-name warrior">Agro</p>
       <p class="stat-subtitle">because he asked</p>
