@@ -2,9 +2,12 @@ name = "aztecs-refresh"
 main = "src/index.js"
 compatibility_date = "2025-01-01"
 
-[[kv_namespaces]]
-binding = "RATE_LIMIT"
-id = ""        # fill in after `wrangler kv namespace create RATE_LIMIT`
+# Uncomment after creating the namespace:
+#   wrangler kv namespace create RATE_LIMIT
+# Then paste the id below and uncomment.
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "<paste-id-here>"
 
 # Secrets (set via `wrangler secret put`):
 #   GITHUB_TOKEN       — fine-grained PAT with Actions:write scope for this repo
