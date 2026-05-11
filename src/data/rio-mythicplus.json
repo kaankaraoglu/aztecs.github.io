@@ -1,0 +1,216 @@
+{
+  "season": "season-mn-1",
+  "topRunners": [
+    {
+      "name": "Rackz",
+      "class": "demon-hunter",
+      "score": 3546,
+      "topKeys": [
+        "+17 MC",
+        "+17 WS",
+        "+17 SEAT",
+        "+17 MT",
+        "+17 POS",
+        "+17 NPX",
+        "+17 AA",
+        "+17 SR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Aerioth",
+      "class": "priest",
+      "score": 3470,
+      "topKeys": [
+        "+17 AA",
+        "+17 POS",
+        "+17 NPX",
+        "+16 MT",
+        "+16 SEAT",
+        "+16 SR",
+        "+16 WS",
+        "+16 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Lilithh",
+      "class": "warlock",
+      "score": 3418,
+      "topKeys": [
+        "+16 MT",
+        "+16 POS",
+        "+16 AA",
+        "+16 SEAT",
+        "+16 NPX",
+        "+16 SR",
+        "+16 WS",
+        "+16 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Proto",
+      "class": "evoker",
+      "score": 3332,
+      "topKeys": [
+        "+16 SEAT",
+        "+16 SR",
+        "+16 POS",
+        "+16 AA",
+        "+15 WS",
+        "+15 MT",
+        "+15 NPX",
+        "+13 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Valorite",
+      "class": "death-knight",
+      "score": 3288,
+      "topKeys": [
+        "+16 MC",
+        "+16 AA",
+        "+16 NPX",
+        "+14 POS",
+        "+14 WS",
+        "+14 SEAT",
+        "+14 MT",
+        "+14 SR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Agro",
+      "class": "warrior",
+      "score": 3207,
+      "topKeys": [
+        "+15 MT",
+        "+15 WS",
+        "+15 POS",
+        "+14 NPX",
+        "+14 SR",
+        "+14 MC",
+        "+13 SEAT",
+        "+13 AA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Mxk",
+      "class": "warrior",
+      "score": 3198,
+      "topKeys": [
+        "+15 MT",
+        "+14 POS",
+        "+14 MC",
+        "+14 NPX",
+        "+14 SR",
+        "+14 SEAT",
+        "+13 WS",
+        "+13 AA"
+      ],
+      "realmSlug": "skullcrusher"
+    },
+    {
+      "name": "Draggelina",
+      "class": "evoker",
+      "score": 3178,
+      "topKeys": [
+        "+15 WS",
+        "+15 MT",
+        "+15 NPX",
+        "+14 MC",
+        "+14 SR",
+        "+13 POS",
+        "+13 AA",
+        "+12 SEAT"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 3158,
+      "topKeys": [
+        "+14 SR",
+        "+14 MT",
+        "+14 NPX",
+        "+14 POS",
+        "+14 SEAT",
+        "+14 AA",
+        "+12 WS",
+        "+12 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Psyobs",
+      "class": "mage",
+      "score": 3119,
+      "topKeys": [
+        "+15 SEAT",
+        "+14 MC",
+        "+13 WS",
+        "+13 AA",
+        "+13 POS",
+        "+13 MT",
+        "+13 SR",
+        "+13 NPX"
+      ],
+      "realmSlug": "draenor"
+    }
+  ],
+  "dungeonBests": [
+    {
+      "dungeon": "Maisara Caverns",
+      "level": 17,
+      "timed": true,
+      "team": ["Rackz"]
+    },
+    {
+      "dungeon": "Pit of Saron",
+      "level": 17,
+      "timed": true,
+      "team": ["Aerioth"]
+    },
+    {
+      "dungeon": "Seat of the Triumvirate",
+      "level": 17,
+      "timed": true,
+      "team": ["Rackz"]
+    },
+    {
+      "dungeon": "Magisters' Terrace",
+      "level": 17,
+      "timed": true,
+      "team": ["Rackz"]
+    },
+    {
+      "dungeon": "Algeth'ar Academy",
+      "level": 17,
+      "timed": true,
+      "team": ["Aerioth"]
+    },
+    {
+      "dungeon": "Nexus-Point Xenas",
+      "level": 17,
+      "timed": true,
+      "team": ["Aerioth"]
+    },
+    {
+      "dungeon": "Skyreach",
+      "level": 17,
+      "timed": true,
+      "team": ["Rackz"]
+    },
+    {
+      "dungeon": "Windrunner Spire",
+      "level": 17,
+      "timed": true,
+      "team": ["Rackz"]
+    }
+  ],
+  "lastUpdated": "2026-05-11T17:59:05.577Z"
+}
