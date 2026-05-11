@@ -3,11 +3,11 @@ import { mount, RouterLinkStub } from '@vue/test-utils'
 
 vi.stubGlobal(
   'IntersectionObserver',
-  vi.fn(() => ({
-    observe: vi.fn(),
-    disconnect: vi.fn(),
-    unobserve: vi.fn(),
-  })),
+  vi.fn(function () {
+    this.observe = vi.fn()
+    this.disconnect = vi.fn()
+    this.unobserve = vi.fn()
+  }),
 )
 
 vi.stubGlobal(

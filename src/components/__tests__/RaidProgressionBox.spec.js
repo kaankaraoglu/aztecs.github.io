@@ -7,7 +7,11 @@ const mockDisconnect = vi.fn()
 
 vi.stubGlobal(
   'IntersectionObserver',
-  vi.fn(() => ({ observe: mockObserve, disconnect: mockDisconnect, unobserve: vi.fn() })),
+  vi.fn(function () {
+    this.observe = mockObserve
+    this.disconnect = mockDisconnect
+    this.unobserve = vi.fn()
+  }),
 )
 
 describe('RaidProgressionBox', () => {
@@ -92,7 +96,7 @@ describe('RaidProgressionBox', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    expect(wrapper.text()).toContain('18 Mar')
+    expect(wrapper.text()).toContain('March 18th')
     expect(wrapper.text()).toContain('Pulls: 3 N')
     expect(wrapper.text()).toContain('Pulls: 2 N & 7 HC')
   })

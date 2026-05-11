@@ -10,13 +10,11 @@ let intersectionCallback
 
 vi.stubGlobal(
   'IntersectionObserver',
-  vi.fn((callback) => {
+  vi.fn(function (callback) {
     intersectionCallback = callback
-    return {
-      observe: mockObserve,
-      disconnect: mockDisconnect,
-      unobserve: mockUnobserve,
-    }
+    this.observe = mockObserve
+    this.disconnect = mockDisconnect
+    this.unobserve = mockUnobserve
   }),
 )
 

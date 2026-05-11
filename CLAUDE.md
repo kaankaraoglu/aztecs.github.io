@@ -28,14 +28,15 @@ Pre-commit hook runs lint-staged (Prettier + ESLint) on staged files.
 
 ### Data flow for raid progression
 
-Primary source is **Warcraft Logs**, fetched at build time:
+Primary source is **Warcraft Logs**, fetched every 30 minutes by the `fetch-data.yml` GitHub Actions workflow (independent of deploy):
 
-1. **`scripts/fetch-wcl-data.js`** runs as `prebuild` npm script. Authenticates with WCL OAuth2 (`WCL_CLIENT_ID`/`WCL_CLIENT_SECRET` env vars), fetches zone encounters and guild reports, writes `src/data/wcl-progression.json`. Per boss: kill status per difficulty, kill date, pull count, best %, and full kill roster with player names/classes.
-2. **`useProgression` composable** (`src/composables/useProgression.js`) reads the WCL JSON. Falls back to `src/data/progression.js` if WCL data is empty.
+1. **`fetch-data.yml`** runs on a 30-minute cron schedule. Executes `scripts/fetch-wcl-data.js`, `scripts/fetch-rio-data.js`, and `scripts/fetch-wcl-stats.js`. If any data JSON files changed, commits and pushes to `main`, which triggers a deploy.
+2. **`scripts/fetch-wcl-data.js`** authenticates with WCL OAuth2 (`WCL_CLIENT_ID`/`WCL_CLIENT_SECRET` env vars), fetches zone encounters and guild reports, writes `src/data/wcl-progression.json`. Per boss: kill status per difficulty, kill date, pull count, best %, and full kill roster with player names/classes.
+3. **`useProgression` composable** (`src/composables/useProgression.js`) reads the WCL JSON. Falls back to `src/data/progression.js` if WCL data is empty.
 
 **When a new raid tier launches**, update `CURRENT_ZONE_ID` and `RAID_INSTANCE_ENCOUNTERS` in `scripts/fetch-wcl-data.js`. The zone ID can be found via the WCL GraphQL API: `{ worldData { expansion(id: N) { zones { id name } } } }`.
 
-Data freshness depends on deploy frequency — trigger a deploy after raid nights to refresh. The **RefreshDataButton** component in the progression header lets users trigger an on-demand data refresh via a Cloudflare Worker (`workers/refresh/`) that dispatches the `refresh-data.yml` GitHub Actions workflow. Requires `VITE_REFRESH_WORKER_URL` and `VITE_TURNSTILE_SITE_KEY` env vars.
+The **RefreshDataButton** component in the progression header lets users trigger an on-demand data refresh via a Cloudflare Worker (`workers/refresh/`) that dispatches the `fetch-data.yml` GitHub Actions workflow. Requires `VITE_REFRESH_WORKER_URL` and `VITE_TURNSTILE_SITE_KEY` env vars.
 
 ### Data flow for kill cards
 
@@ -53,7 +54,7 @@ Firebase Analytics is initialized in `src/main.js`, lazy-loaded only in producti
 
 ### Deployment
 
-PRs trigger `ci.yml` which runs lint, test, and build as 3 parallel jobs. Push to `main` triggers `deploy.yml` which builds and pushes to `gh-pages`. Branch protection requires PRs for all changes to `main`.
+PRs trigger `ci.yml` which runs lint, test, and build as 3 parallel jobs. Push to `main` triggers `deploy.yml` which builds (using committed data, no re-fetch) and pushes to `gh-pages`. Data is fetched independently by `fetch-data.yml` every 30 minutes — if data changed, it commits to `main` which triggers a deploy. Branch protection requires PRs for all changes to `main`; the `fetch-data.yml` workflow pushes data commits directly using a PAT.
 
 ### Custom Instructions
 
