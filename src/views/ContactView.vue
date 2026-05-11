@@ -1,6 +1,6 @@
 <template>
   <div ref="containerRef" class="contact-view content-wrapper">
-    <div class="contact-box reveal">
+    <InfoBox class="contact-box reveal">
       <h1 class="contact-heading">Contact & Guild Roster</h1>
       <p class="contact-info">
         Reach out to any of the online officers or veterans in-game or on Discord for an invite to
@@ -55,13 +55,14 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </InfoBox>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useScrollReveal } from '@/composables/useScrollReveal.js'
+import InfoBox from '@/components/InfoBox.vue'
 
 const containerRef = ref(null)
 useScrollReveal(containerRef)
@@ -85,24 +86,13 @@ useScrollReveal(containerRef)
 }
 
 .contact-box {
-  border: 1px solid $color-border;
-  border-radius: $radius-xl;
-  padding: $space-10 $space-12;
-  max-width: 780px; // restore previous card width
+  max-width: 780px;
   width: 100%;
-  background: $surface-1;
-  transition:
-    background $duration-normal $ease-default,
-    border-color $duration-normal $ease-default;
-  &:hover {
-    background: $surface-accent-hover;
-    border-color: $color-border-hover;
-  }
   display: flex;
   flex-direction: column;
   align-items: stretch;
   box-sizing: border-box;
-  margin: 0 auto; // center inside custom width
+  margin: 0 auto;
 
   @include tablet {
     padding: $space-8;

@@ -116,6 +116,12 @@ html {
     min-height: 100vh;
     overflow-x: hidden;
 
+    #app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
     main {
       flex: 1;
       position: relative;
