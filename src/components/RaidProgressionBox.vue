@@ -173,7 +173,11 @@ function toggle(bossName) {
 
 function formatDate(isoString) {
   const d = new Date(isoString)
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+  const month = d.toLocaleDateString('en-US', { month: 'long' })
+  const day = d.getDate()
+  const suffixes = { 1: 'st', 2: 'nd', 3: 'rd', 21: 'st', 22: 'nd', 23: 'rd', 31: 'st' }
+  const suffix = suffixes[day] || 'th'
+  return `${month} ${day}${suffix}`
 }
 
 const DIFFICULTY_LABEL = { normal: 'N', heroic: 'HC', mythic: 'M' }
@@ -401,6 +405,16 @@ function rosterSize(boss) {
       text-align: left;
     }
 
+    .meta-best:not(:empty)::before,
+    .meta-pulls:not(:empty)::before,
+    .meta-date:not(:empty)::before,
+    .meta-raiders:not(:empty)::before {
+      content: '|';
+      margin-right: 1.2rem;
+      color: $color-text-muted;
+      opacity: 0.3;
+    }
+
     @container raidbox (max-width: 560px) {
       grid-template-columns:
         [name] minmax(0, 1fr)
@@ -466,6 +480,10 @@ function rosterSize(boss) {
         font-size: 0.95em;
 
         &:empty {
+          display: none;
+        }
+
+        &::before {
           display: none;
         }
       }
