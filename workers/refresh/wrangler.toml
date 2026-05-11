@@ -5,9 +5,9 @@ compatibility_date = "2025-01-01"
 # Uncomment after creating the namespace:
 #   wrangler kv namespace create RATE_LIMIT
 # Then paste the id below and uncomment.
-# [[kv_namespaces]]
-# binding = "RATE_LIMIT"
-# id = "<paste-id-here>"
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "8eafae95b72e40498b3aab0838f62dd2"
 
 # Secrets (set via `wrangler secret put`):
 #   GITHUB_TOKEN       — fine-grained PAT with Actions:write scope for this repo
