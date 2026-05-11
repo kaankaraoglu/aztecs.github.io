@@ -7,7 +7,11 @@ const mockDisconnect = vi.fn()
 
 vi.stubGlobal(
   'IntersectionObserver',
-  vi.fn(() => ({ observe: mockObserve, disconnect: mockDisconnect, unobserve: vi.fn() })),
+  vi.fn(function () {
+    this.observe = mockObserve
+    this.disconnect = mockDisconnect
+    this.unobserve = vi.fn()
+  }),
 )
 
 describe('RaidProgressionBox', () => {
