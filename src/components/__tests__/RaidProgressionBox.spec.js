@@ -96,7 +96,7 @@ describe('RaidProgressionBox', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    expect(wrapper.text()).toContain('18 Mar')
+    expect(wrapper.text()).toContain('March 18th')
     expect(wrapper.text()).toContain('Pulls: 3 N')
     expect(wrapper.text()).toContain('Pulls: 2 N & 7 HC')
   })
