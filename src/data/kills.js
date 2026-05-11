@@ -20,6 +20,28 @@ const killImage = (filename) => new URL(`../assets/images/kills/${filename}`, im
 /** @type {Kill[]} */
 export const kills = [
   {
+    raidName: "March on Quel'Danas (AOTC)",
+    imageUrl: killImage('march_on_queldanas_2026_05_10.webp'),
+    date: '2026-05-10',
+    tanks: [
+      { name: 'Phruity', class: 'druid' },
+      { name: 'Agro', class: 'warrior' },
+    ],
+    healers: [
+      { name: 'Proto', class: 'evoker' },
+      { name: 'Sâmáar', class: 'priest' },
+    ],
+    dds: [
+      { name: 'Aerioth', class: 'priest' },
+      { name: 'Blindee', class: 'shaman' },
+      { name: 'Blackmaira', class: 'paladin' },
+      { name: 'Olibb', class: 'paladin' },
+      { name: 'Valorite', class: 'death-knight' },
+      { name: 'Frosteyes', class: 'death-knight' },
+      { name: 'Mxk', class: 'warrior' },
+    ],
+  },
+  {
     raidName: 'Voidspire (Heroic)',
     imageUrl: killImage('voidspire_2026_04_12.webp'),
     date: '2026-04-12 21:49',
