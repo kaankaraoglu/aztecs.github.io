@@ -4,12 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-  schedule:
-    - cron: '0 * * * *' # Every hour
 
 jobs:
   build-and-deploy:
-    name: Fetch WCL data, build & deploy
+    name: Build & deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -19,10 +17,9 @@ jobs:
           cache: 'npm'
       - run: npm ci
 
-      - name: Fetch WCL data & build
+      - name: Build
         env:
-          WCL_CLIENT_ID: ${{ secrets.WCL_CLIENT_ID }}
-          WCL_CLIENT_SECRET: ${{ secrets.WCL_CLIENT_SECRET }}
+          SKIP_DATA_FETCH: 'true'
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}

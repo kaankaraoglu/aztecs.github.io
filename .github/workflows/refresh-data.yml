@@ -4,49 +4,20 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: refresh-data
+  group: fetch-data
   cancel-in-progress: false
 
 jobs:
-  refresh-and-deploy:
-    name: Fetch WCL data, build & deploy
+  trigger-fetch:
+    name: Trigger data fetch
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - uses: actions/github-script@v7
         with:
-          node-version: '22'
-          cache: 'npm'
-      - run: npm ci
-
-      - name: Fetch WCL data & build
-        env:
-          WCL_CLIENT_ID: ${{ secrets.WCL_CLIENT_ID }}
-          WCL_CLIENT_SECRET: ${{ secrets.WCL_CLIENT_SECRET }}
-          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
-          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
-          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
-          VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
-          VITE_REFRESH_WORKER_URL: ${{ secrets.VITE_REFRESH_WORKER_URL }}
-          VITE_TURNSTILE_SITE_KEY: ${{ secrets.VITE_TURNSTILE_SITE_KEY }}
-        run: npm run build
-
-      - name: Create CNAME and .nojekyll
-        run: |
-          echo "aztecs.se" > dist/CNAME
-          touch dist/.nojekyll
-
-      - name: Deploy to gh-pages
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git clone --depth=1 --branch=gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} out
-          rm -rf out/*
-          cp -r dist/. out/
-          cd out
-          git add .
-          git commit -m "Refresh data - $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'fetch-data.yml',
+              ref: 'main'
+            })
