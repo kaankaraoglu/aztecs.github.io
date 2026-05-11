@@ -1,6 +1,6 @@
 const ALLOWED_ORIGIN = 'https://aztecs.se'
 const REPO = 'kaankaraoglu/aztecs.github.io'
-const WORKFLOW_FILE = 'refresh-data.yml'
+const WORKFLOW_FILE = 'fetch-data.yml'
 const RATE_LIMIT_KEY = 'last-refresh'
 const RATE_LIMIT_SECONDS = 600
 
