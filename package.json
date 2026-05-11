@@ -22,7 +22,7 @@
     "@vueuse/core": "^14.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "firebase": "^12.11.0",
+    "firebase": "^12.13.0",
     "lucide-vue-next": "^1.0.0",
     "reka-ui": "^2.9.6",
     "tailwind-merge": "^3.5.0",
