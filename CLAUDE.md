@@ -35,7 +35,7 @@ Primary source is **Warcraft Logs**, fetched at build time:
 
 **When a new raid tier launches**, update `CURRENT_ZONE_ID` and `RAID_INSTANCE_ENCOUNTERS` in `scripts/fetch-wcl-data.js`. The zone ID can be found via the WCL GraphQL API: `{ worldData { expansion(id: N) { zones { id name } } } }`.
 
-Data freshness depends on deploy frequency — trigger a deploy after raid nights to refresh.
+Data freshness depends on deploy frequency — trigger a deploy after raid nights to refresh. The **RefreshDataButton** component in the progression header lets users trigger an on-demand data refresh via a Cloudflare Worker (`workers/refresh/`) that dispatches the `refresh-data.yml` GitHub Actions workflow. Requires `VITE_REFRESH_WORKER_URL` and `VITE_TURNSTILE_SITE_KEY` env vars.
 
 ### Data flow for kill cards
 
