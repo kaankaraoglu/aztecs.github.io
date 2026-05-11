@@ -14,7 +14,10 @@
     <template v-else>
       <div class="box-header">
         <h3 class="box-title">Raids</h3>
-        <p v-if="formattedUpdated" class="box-updated">Updated {{ formattedUpdated }}</p>
+        <div class="box-header-actions">
+          <p v-if="formattedUpdated" class="box-updated">Updated {{ formattedUpdated }}</p>
+          <RefreshDataButton />
+        </div>
       </div>
       <div class="instances">
         <div v-for="raid in raids" :key="raid.name" class="instance difficulty-section">
@@ -120,6 +123,7 @@
 
 <script setup>
 import { computed, reactive } from 'vue'
+import RefreshDataButton from '@/components/RefreshDataButton.vue'
 import RosterList from '@/components/RosterList.vue'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAnalytics } from '@/composables/useAnalytics'
@@ -244,6 +248,12 @@ function rosterSize(boss) {
     justify-content: space-between;
     gap: $space-3;
     margin-bottom: 0.75rem;
+  }
+
+  .box-header-actions {
+    display: flex;
+    align-items: baseline;
+    gap: $space-3;
   }
 
   .box-title {

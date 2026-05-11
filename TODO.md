@@ -66,7 +66,7 @@
 
 ## Integrations
 
-- [ ] **"Refresh data" button to trigger GitHub Actions** — Add a button on the progression view that re-runs the WCL fetch + deploy on demand, so data can be refreshed without a code push.
+- [x] **"Refresh data" button to trigger GitHub Actions** — Add a button on the progression view that re-runs the WCL fetch + deploy on demand, so data can be refreshed without a code push.
   - **Architecture:** Browser → Cloudflare Worker (holds fine-grained GitHub PAT) → GitHub `workflow_dispatch` API → new `refresh-data.yml` workflow that runs `npm run build` and pushes to `gh-pages`.
   - **Worker (`aztecs-refresh`):** `POST /refresh` endpoint. Verifies `Origin: https://aztecs.se`, validates a Cloudflare Turnstile token, enforces a 10-min global rate limit via Workers KV, then dispatches the workflow and returns the run URL. Secrets: `GITHUB_TOKEN`, `TURNSTILE_SECRET`. Free tier covers expected volume.
   - **GitHub side:** New `.github/workflows/refresh-data.yml` (trigger: `workflow_dispatch` only, concurrency group to prevent overlap). Fine-grained PAT scoped to this repo with `Actions: write` only, 90-day rotation.
