@@ -61,11 +61,8 @@ import { useMythicPlus } from '@/composables/useMythicPlus'
 
 const { topRunners, dungeonBests, lastUpdated, hasData } = useMythicPlus()
 
-function levelTier(level) {
-  if (level <= 10) return 'tier-normal'
-  if (level <= 15) return 'tier-heroic'
-  return 'tier-mythic'
-}
+const levelTier = (level) =>
+  level <= 10 ? 'tier-normal' : level <= 15 ? 'tier-heroic' : 'tier-mythic'
 
 function keyLevel(key) {
   const m = /\+?(\d+)/.exec(key)

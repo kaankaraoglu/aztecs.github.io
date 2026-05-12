@@ -42,80 +42,18 @@
       </template>
       <p v-else class="stat-empty">No data yet.</p>
     </InfoBox>
-    <InfoBox class="stat-card">
-      <p class="stat-label">Highest Damage Done in Raid</p>
-      <template v-if="stats.highestDamageDone">
-        <p :class="['stat-name', stats.highestDamageDone.class]">
-          {{ stats.highestDamageDone.name }}
-        </p>
+    <InfoBox v-for="card in performanceCards" :key="card.key" class="stat-card">
+      <p class="stat-label">{{ card.label }}</p>
+      <template v-if="stats[card.key]">
+        <p :class="['stat-name', stats[card.key].class]">{{ stats[card.key].name }}</p>
         <p class="stat-value">
-          {{ formatNumber(stats.highestDamageDone.amount) }} on
-          {{ stats.highestDamageDone.boss || 'a boss' }}
+          {{ formatNumber(stats[card.key].amount) }} on
+          {{ stats[card.key].boss || 'a boss' }}
         </p>
         <a
-          v-if="stats.highestDamageDone.report"
+          v-if="stats[card.key].report"
           class="stat-link"
-          :href="stats.highestDamageDone.report"
-          target="_blank"
-          rel="noopener noreferrer"
-          >View Log</a
-        >
-      </template>
-      <p v-else class="stat-empty">No data yet.</p>
-    </InfoBox>
-    <InfoBox class="stat-card">
-      <p class="stat-label">Highest Damage Done in M+</p>
-      <template v-if="stats.highestDamageDoneMplus">
-        <p :class="['stat-name', stats.highestDamageDoneMplus.class]">
-          {{ stats.highestDamageDoneMplus.name }}
-        </p>
-        <p class="stat-value">
-          {{ formatNumber(stats.highestDamageDoneMplus.amount) }} on
-          {{ stats.highestDamageDoneMplus.boss || 'a boss' }}
-        </p>
-        <a
-          v-if="stats.highestDamageDoneMplus.report"
-          class="stat-link"
-          :href="stats.highestDamageDoneMplus.report"
-          target="_blank"
-          rel="noopener noreferrer"
-          >View Log</a
-        >
-      </template>
-      <p v-else class="stat-empty">No data yet.</p>
-    </InfoBox>
-    <InfoBox class="stat-card">
-      <p class="stat-label">Best Healer in Raid</p>
-      <template v-if="stats.bestHealer">
-        <p :class="['stat-name', stats.bestHealer.class]">{{ stats.bestHealer.name }}</p>
-        <p class="stat-value">
-          {{ formatNumber(stats.bestHealer.amount) }} on {{ stats.bestHealer.boss || 'a boss' }}
-        </p>
-        <a
-          v-if="stats.bestHealer.report"
-          class="stat-link"
-          :href="stats.bestHealer.report"
-          target="_blank"
-          rel="noopener noreferrer"
-          >View Log</a
-        >
-      </template>
-      <p v-else class="stat-empty">No data yet.</p>
-    </InfoBox>
-    <InfoBox class="stat-card">
-      <p class="stat-label">Best Healer in M+</p>
-      <template v-if="stats.bestHealerMplus">
-        <p :class="['stat-name', stats.bestHealerMplus.class]">
-          {{ stats.bestHealerMplus.name }}
-        </p>
-        <p class="stat-value">
-          {{ formatNumber(stats.bestHealerMplus.amount) }} on
-          {{ stats.bestHealerMplus.boss || 'a boss' }}
-        </p>
-        <a
-          v-if="stats.bestHealerMplus.report"
-          class="stat-link"
-          :href="stats.bestHealerMplus.report"
+          :href="stats[card.key].report"
           target="_blank"
           rel="noopener noreferrer"
           >View Log</a
@@ -143,6 +81,13 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { useRaidStats } from '@/composables/useRaidStats.js'
 
 const { stats } = useRaidStats()
+
+const performanceCards = [
+  { key: 'highestDamageDone', label: 'Highest Damage Done in Raid' },
+  { key: 'highestDamageDoneMplus', label: 'Highest Damage Done in M+' },
+  { key: 'bestHealer', label: 'Best Healer in Raid' },
+  { key: 'bestHealerMplus', label: 'Best Healer in M+' },
+]
 
 /**
  * @param {number} n

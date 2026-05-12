@@ -15,7 +15,7 @@ const DEFAULT_THEME = 'dark'
 function readInitialTheme() {
   if (typeof window === 'undefined') return DEFAULT_THEME
   try {
-    const stored = window.localStorage?.getItem(STORAGE_KEY)
+    const stored = localStorage.getItem(STORAGE_KEY)
     if (stored === 'light' || stored === 'dark') return stored
   } catch {
     /* storage may be unavailable (private mode, sandboxed tests, etc.) */
@@ -39,7 +39,7 @@ export function useTheme() {
   function setTheme(next) {
     theme.value = next
     try {
-      window.localStorage?.setItem(STORAGE_KEY, next)
+      localStorage.setItem(STORAGE_KEY, next)
     } catch {
       /* ignore storage errors */
     }

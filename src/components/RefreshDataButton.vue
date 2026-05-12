@@ -45,34 +45,22 @@ let countdownTimer = null
 
 const { trackEvent } = useAnalytics()
 
+const STATE_MESSAGES = {
+  idle: { label: 'Refresh', ariaLabel: 'Refresh progression data' },
+  submitting: { label: 'Refreshing…', ariaLabel: 'Refreshing progression data…' },
+  success: { label: 'Triggered!', ariaLabel: 'Data refresh triggered successfully' },
+  error: { label: 'Failed', ariaLabel: 'Data refresh failed, try again later' },
+}
+
 const label = computed(() => {
-  switch (state.value) {
-    case 'submitting':
-      return 'Refreshing…'
-    case 'success':
-      return 'Triggered!'
-    case 'error':
-      return 'Failed'
-    case 'rate-limited':
-      return `Wait ${formatCountdown(retryCountdown.value)}`
-    default:
-      return 'Refresh'
-  }
+  if (state.value === 'rate-limited') return `Wait ${formatCountdown(retryCountdown.value)}`
+  return STATE_MESSAGES[state.value]?.label ?? STATE_MESSAGES.idle.label
 })
 
 const ariaLabel = computed(() => {
-  switch (state.value) {
-    case 'submitting':
-      return 'Refreshing progression data…'
-    case 'success':
-      return 'Data refresh triggered successfully'
-    case 'error':
-      return 'Data refresh failed, try again later'
-    case 'rate-limited':
-      return `Rate limited, retry in ${formatCountdown(retryCountdown.value)}`
-    default:
-      return 'Refresh progression data'
-  }
+  if (state.value === 'rate-limited')
+    return `Rate limited, retry in ${formatCountdown(retryCountdown.value)}`
+  return STATE_MESSAGES[state.value]?.ariaLabel ?? STATE_MESSAGES.idle.ariaLabel
 })
 
 /**
