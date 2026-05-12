@@ -5,14 +5,21 @@
 
 # ⚔️ `aztecs.github.io`
 
-**Guild website for Aztecs — an established Horde guild on Al'Akir since 2005**
+**Guild website for Aztecs — an established Horde guild on Al'Akir (EU) since 2005**
 
 [![PR Checks](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/ci.yml)
 [![Build & Deploy](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/deploy.yml)
+[![Fetch Data](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/fetch-data.yml/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/fetch-data.yml)
 [![GitHub Pages](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/pages/pages-build-deployment)
-[![Dependabot Updates](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/kaankaraoglu/aztecs.github.io/actions/workflows/dependabot/dependabot-updates)
 
-[**aztecs.se**](https://aztecs.se) · Vue 3 · Vite · Warcraft Logs · GitHub Pages
+![Vue](https://img.shields.io/badge/Vue%203-4FC08D?logo=vuedotjs&logoColor=fff)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=fff)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff)
+![Node 22](https://img.shields.io/badge/Node-22-339933?logo=nodedotjs&logoColor=fff)
+![Vitest](https://img.shields.io/badge/Vitest-6E9F18?logo=vitest&logoColor=fff)
+![Cloudflare Workers](https://img.shields.io/badge/CF%20Workers-F38020?logo=cloudflareworkers&logoColor=fff)
+
+[**aztecs.se**](https://aztecs.se)
 
 </div>
 
@@ -20,13 +27,15 @@
 
 ## Overview
 
-Raiding, Mythic+, and good times. The site features live raid progression pulled from [Warcraft Logs](https://www.warcraftlogs.com/) at build time, historical kill screenshots with rosters, guild info, and a contact page.
+Raiding, Mythic+, and good times. The site features live raid progression pulled from [Warcraft Logs](https://www.warcraftlogs.com/), Mythic+ data from [Raider.IO](https://raider.io/), historical kill screenshots with rosters, guild info, and more.
 
 **Key features:**
 
-- **Live raid progression** — per-boss kill status, pull counts, best %, and full kill rosters fetched from the WCL API
-- **Scheduled deploys** — auto-deploys after raid nights (Wed/Sun) to keep progression fresh
+- **Live raid progression** — per-boss kill status, pull counts, best %, and full kill rosters fetched from the WCL API every 30 minutes
+- **Mythic+ rankings** — current season scores and run data from Raider.IO
+- **Raid statistics** — DPS/HPS rankings across boss encounters
 - **Kill archive** — screenshot cards with date, roster, and class-colored player names
+- **On-demand refresh** — Cloudflare Worker + Turnstile lets users trigger a data update from the site
 - **Splash text** — rotating guild inside jokes on the header
 
 ## Getting Started
@@ -38,56 +47,103 @@ npm ci
 npm run dev
 ```
 
+> WCL/RIO credentials are optional for local dev — progression and M+ data fall back to committed JSON files.
+
 ### Commands
 
-| Command          | Description                       |
-| ---------------- | --------------------------------- |
-| `npm run dev`    | Start dev server                  |
-| `npm run build`  | Fetch WCL data + production build |
-| `npm test`       | Run tests (Vitest)                |
-| `npm run lint`   | ESLint with auto-fix              |
-| `npm run format` | Prettier format all files         |
+| Command              | Description                                         |
+| -------------------- | --------------------------------------------------- |
+| `npm run dev`        | Fetch latest data, then start dev server            |
+| `npm run build`      | Production build (skips fetch if `SKIP_DATA_FETCH`) |
+| `npm test`           | Run all tests (Vitest)                              |
+| `npm run test:watch` | Watch mode                                          |
+| `npm run lint`       | ESLint with auto-fix                                |
+| `npm run format`     | Prettier format all files                           |
+| `npm run fetch-data` | Fetch WCL + RIO + stats data manually               |
 
 ### Environment Variables
 
-WCL credentials are optional for local dev (progression falls back to static data):
-
-| Variable            | Required    | Description                        |
-| ------------------- | ----------- | ---------------------------------- |
-| `WCL_CLIENT_ID`     | Deploy only | Warcraft Logs OAuth client ID      |
-| `WCL_CLIENT_SECRET` | Deploy only | Warcraft Logs OAuth client secret  |
-| `VITE_FIREBASE_*`   | Deploy only | Firebase Analytics config (7 vars) |
+| Variable                  | Required    | Description                                      |
+| ------------------------- | ----------- | ------------------------------------------------ |
+| `WCL_CLIENT_ID`           | Deploy only | Warcraft Logs OAuth client ID                    |
+| `WCL_CLIENT_SECRET`       | Deploy only | Warcraft Logs OAuth client secret                |
+| `VITE_FIREBASE_*`         | Deploy only | Firebase Analytics config (7 vars)               |
+| `VITE_REFRESH_WORKER_URL` | Deploy only | Cloudflare Worker URL for on-demand data refresh |
+| `VITE_TURNSTILE_SITE_KEY` | Deploy only | Cloudflare Turnstile site key for bot protection |
 
 ## Architecture
 
 ```
 src/
-├── components/         # Reusable components (HeaderView, KillCard, etc.)
-├── composables/        # useRaiderIO — reads WCL build-time data
-├── data/               # Static kills, progression fallback, WCL JSON
-├── views/              # Route-level pages (Home, Raiding, Achievements, Contact)
-├── assets/styles/      # SCSS variables, shared partials
-└── router/             # Vue Router with per-route titles
+├── assets/styles/       # SCSS variables, WoW class colors, shared partials
+├── components/          # Reusable components (HeaderView, KillCard, InfoBox, etc.)
+│   ├── ui/              # Base UI primitives
+│   └── refresh/         # Refresh data button + Turnstile integration
+├── composables/         # Composition API hooks
+│   ├── useProgression   # Raid progression from WCL data
+│   ├── useMythicPlus    # M+ data from Raider.IO
+│   ├── useRaidStats     # Raid DPS/HPS statistics
+│   ├── useAnalytics     # Firebase Analytics (prod only)
+│   ├── useTheme         # Dark/light theme toggle
+│   ├── useScrollReveal  # Scroll-based reveal animations
+│   └── useTiltEffect    # Card tilt interaction
+├── data/                # Static kills, progression fallback, fetched JSON
+├── views/               # Route-level pages
+│   ├── HomeView         # Landing page
+│   ├── RaidingView      # Raid progression + stats
+│   ├── AchievementsView # Kill archive
+│   ├── AboutView        # Guild info
+│   ├── ContactView      # Contact page
+│   ├── InMemoriamView   # Memorial page
+│   └── NotFoundView     # 404 page
+└── router/              # Vue Router with per-route titles
+
 scripts/
-└── fetch-wcl-data.js   # Build-time WCL fetcher (runs as prebuild)
+├── fetch-wcl-data.js    # Fetch raid progression from WCL GraphQL API
+├── fetch-rio-data.js    # Fetch M+ data from Raider.IO API
+├── fetch-wcl-stats.js   # Fetch raid statistics from WCL
+├── fetch-wcl-history.js # Fetch historical WCL data
+├── wcl-api.js           # Shared WCL OAuth + GraphQL client
+└── load-env.js          # Environment variable loader
+
+workers/
+└── refresh/             # Cloudflare Worker for on-demand data refresh
 ```
 
 ### Data Flow
 
 ```
-Build time:  WCL API  →  fetch-wcl-data.js  →  wcl-progression.json
-Runtime:     wcl-progression.json  →  useRaiderIO()  →  RaidProgressionBox
-Fallback:    progression.js (static)  →  useRaiderIO()  (if WCL data empty)
+                          ┌─────────────────────────┐
+                          │   fetch-data.yml (cron)  │
+                          │     every 30 minutes     │
+                          └────────┬────────────────┘
+                                   │
+                   ┌───────────────┼───────────────┐
+                   ▼               ▼               ▼
+          fetch-wcl-data.js  fetch-rio-data.js  fetch-wcl-stats.js
+                   │               │               │
+                   ▼               ▼               ▼
+        wcl-progression.json  rio-mythicplus.json  wcl-stats.json
+                   │               │               │
+                   ▼               ▼               ▼
+          useProgression()   useMythicPlus()   useRaidStats()
+                   │               │               │
+                   ▼               ▼               ▼
+        RaidProgressionBox   MythicPlusBox    RaidStatsBox
 ```
+
+If WCL data is empty at runtime, `useProgression` falls back to the static `progression.js`.
 
 ## CI/CD
 
-| Workflow           | Trigger                        | What it does                           |
-| ------------------ | ------------------------------ | -------------------------------------- |
-| **PR Checks**      | Pull requests                  | Lint, test, build (parallel)           |
-| **Build & Deploy** | Push to main, schedule, manual | Fetch WCL → build → deploy to gh-pages |
+| Workflow           | Trigger                 | What it does                                    |
+| ------------------ | ----------------------- | ----------------------------------------------- |
+| **PR Checks**      | Pull requests to `main` | Lint, test, build (3 parallel jobs)             |
+| **Build & Deploy** | Push to `main`          | Build with committed data, deploy to `gh-pages` |
+| **Fetch Data**     | Every 30 min + manual   | Fetch WCL/RIO data, commit if changed           |
+| **Refresh Data**   | Manual (via Worker)     | Triggers Fetch Data workflow on demand          |
 
-The deploy workflow runs on a schedule: **Wed 23:00 CET**, **Sun 23:00 CET** (after raids), and **daily 06:00 CET**.
+Data fetching and deployment are decoupled: `fetch-data.yml` commits updated JSON to `main`, which triggers `deploy.yml` automatically.
 
 ## Contributing
 
