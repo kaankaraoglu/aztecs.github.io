@@ -5,7 +5,6 @@ const mockStatsData = {
   zone: 'Test Zone',
   stats: {
     mostDeaths: null,
-    ironRaider: null,
     highestDamageDone: null,
     highestDamageDoneMplus: null,
     bestHealer: null,
@@ -21,7 +20,6 @@ describe('useRaidStats', () => {
   beforeEach(() => {
     mockStatsData.zone = 'Test Zone'
     mockStatsData.stats.mostDeaths = null
-    mockStatsData.stats.ironRaider = null
     mockStatsData.stats.highestDamageDone = null
     mockStatsData.stats.highestDamageDoneMplus = null
     mockStatsData.stats.bestHealer = null
@@ -42,7 +40,7 @@ describe('useRaidStats', () => {
   })
 
   it('sets hasData to true when at least one stat is present', () => {
-    mockStatsData.stats.ironRaider = { name: 'Survivor', class: 'paladin', killsAttended: 30 }
+    mockStatsData.stats.mostDeaths = { name: 'Tank', class: 'warrior', count: 5 }
     const result = useRaidStats()
     expect(result.hasData).toBe(true)
   })
@@ -50,7 +48,6 @@ describe('useRaidStats', () => {
   it('detects hasData for each individual stat field', () => {
     const statFields = [
       ['mostDeaths', { name: 'A', class: 'warrior', count: 1 }],
-      ['ironRaider', { name: 'B', class: 'paladin', killsAttended: 1 }],
       ['highestDamageDone', { name: 'C', class: 'mage', amount: 100, boss: 'X' }],
       ['highestDamageDoneMplus', { name: 'D', class: 'rogue', amount: 200, boss: 'Y' }],
       ['bestHealer', { name: 'E', class: 'priest', amount: 300, boss: 'Z' }],

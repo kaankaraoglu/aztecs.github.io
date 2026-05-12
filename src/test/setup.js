@@ -22,7 +22,6 @@ const stubs = [
       zone: '',
       stats: {
         mostDeaths: null,
-        ironRaider: null,
         highestDamageDone: null,
         highestDamageDoneMplus: null,
         bestHealer: null,

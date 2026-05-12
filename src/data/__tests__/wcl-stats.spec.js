@@ -17,7 +17,6 @@ describe.skipIf(!exists)('WCL stats data', () => {
     expect(data).toHaveProperty('zone')
     expect(data).toHaveProperty('stats')
     expect(data.stats).toHaveProperty('mostDeaths')
-    expect(data.stats).toHaveProperty('ironRaider')
     expect(data.stats).toHaveProperty('highestDamageDone')
     expect(data.stats).toHaveProperty('highestDamageDoneMplus')
     expect(data.stats).toHaveProperty('bestHealerMplus')

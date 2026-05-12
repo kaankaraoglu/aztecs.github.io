@@ -4,7 +4,6 @@ import RaidStatsBox from '../RaidStatsBox.vue'
 
 const mockStats = {
   mostDeaths: null,
-  ironRaider: null,
   highestDamageDone: null,
   highestDamageDoneMplus: null,
   bestHealer: null,
@@ -18,7 +17,6 @@ vi.mock('@/composables/useRaidStats.js', () => ({
 function setMockStats(overrides) {
   Object.assign(mockStats, {
     mostDeaths: null,
-    ironRaider: null,
     highestDamageDone: null,
     highestDamageDoneMplus: null,
     bestHealer: null,
@@ -32,13 +30,13 @@ describe('RaidStatsBox', () => {
     setMockStats({})
     const wrapper = mount(RaidStatsBox)
     const empties = wrapper.findAll('.stat-empty')
-    expect(empties).toHaveLength(6)
+    expect(empties).toHaveLength(5)
   })
 
   it('renders all 8 stat cards', () => {
     setMockStats({})
     const wrapper = mount(RaidStatsBox)
-    expect(wrapper.findAll('.stat-card')).toHaveLength(8)
+    expect(wrapper.findAll('.stat-card')).toHaveLength(7)
   })
 
   it('renders mostDeaths with name, class, and count', () => {
@@ -53,17 +51,6 @@ describe('RaidStatsBox', () => {
     expect(deathCard.find('.stat-value').text()).toBe('15 deaths')
   })
 
-  it('renders ironRaider with killsAttended', () => {
-    setMockStats({
-      ironRaider: { name: 'Phruity', class: 'druid', killsAttended: 8 },
-    })
-    const wrapper = mount(RaidStatsBox)
-    const cards = wrapper.findAll('.stat-card')
-    const ironCard = cards[1]
-    expect(ironCard.find('.stat-name').text()).toBe('Phruity')
-    expect(ironCard.find('.stat-value').text()).toBe('8 kills attended')
-  })
-
   it('renders highestDamageDone with formatted number and boss', () => {
     setMockStats({
       highestDamageDone: {
@@ -76,7 +63,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    const dmgCard = cards[2]
+    const dmgCard = cards[1]
     expect(dmgCard.find('.stat-name').text()).toBe('Aurielle')
     expect(dmgCard.find('.stat-value').text()).toContain('1.5M')
     expect(dmgCard.find('.stat-value').text()).toContain('Ragnaros')
@@ -95,7 +82,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    expect(cards[2].find('.stat-link').exists()).toBe(false)
+    expect(cards[1].find('.stat-link').exists()).toBe(false)
   })
 
   it('formats thousands with K suffix', () => {
@@ -104,7 +91,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    expect(cards[4].find('.stat-value').text()).toContain('750K')
+    expect(cards[3].find('.stat-value').text()).toContain('750K')
   })
 
   it('falls back to "a boss" when boss name is missing', () => {
@@ -117,7 +104,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    expect(cards[2].find('.stat-value').text()).toContain('a boss')
+    expect(cards[1].find('.stat-value').text()).toContain('a boss')
   })
 
   it('always renders the two hardcoded fun cards', () => {

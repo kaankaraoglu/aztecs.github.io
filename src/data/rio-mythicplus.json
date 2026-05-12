@@ -167,66 +167,50 @@
       "dungeon": "Maisara Caverns",
       "level": 17,
       "timed": true,
-      "team": [
-        "Rackz"
-      ]
+      "team": ["Rackz"]
     },
     {
       "dungeon": "Pit of Saron",
       "level": 17,
       "timed": true,
-      "team": [
-        "Aerioth"
-      ]
+      "team": ["Aerioth"]
     },
     {
       "dungeon": "Seat of the Triumvirate",
       "level": 17,
       "timed": true,
-      "team": [
-        "Rackz"
-      ]
+      "team": ["Rackz"]
     },
     {
       "dungeon": "Magisters' Terrace",
       "level": 17,
       "timed": true,
-      "team": [
-        "Rackz"
-      ]
+      "team": ["Rackz"]
     },
     {
       "dungeon": "Algeth'ar Academy",
       "level": 17,
       "timed": true,
-      "team": [
-        "Aerioth"
-      ]
+      "team": ["Aerioth"]
     },
     {
       "dungeon": "Nexus-Point Xenas",
       "level": 17,
       "timed": true,
-      "team": [
-        "Aerioth"
-      ]
+      "team": ["Aerioth"]
     },
     {
       "dungeon": "Skyreach",
       "level": 17,
       "timed": true,
-      "team": [
-        "Rackz"
-      ]
+      "team": ["Rackz"]
     },
     {
       "dungeon": "Windrunner Spire",
       "level": 17,
       "timed": true,
-      "team": [
-        "Rackz"
-      ]
+      "team": ["Rackz"]
     }
   ],
-  "lastUpdated": "2026-05-12T09:03:54.724Z"
+  "lastUpdated": "2026-05-12T15:59:02.529Z"
 }
