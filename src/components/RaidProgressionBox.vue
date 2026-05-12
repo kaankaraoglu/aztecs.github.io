@@ -171,13 +171,17 @@ function toggle(bossName) {
   }
 }
 
+function ordinalSuffix(day) {
+  if (day > 3 && day < 21) return 'th'
+  const suffixes = ['th', 'st', 'nd', 'rd']
+  return suffixes[day % 10] || 'th'
+}
+
 function formatDate(isoString) {
   const d = new Date(isoString)
   const month = d.toLocaleDateString('en-US', { month: 'long' })
   const day = d.getDate()
-  const suffixes = { 1: 'st', 2: 'nd', 3: 'rd', 21: 'st', 22: 'nd', 23: 'rd', 31: 'st' }
-  const suffix = suffixes[day] || 'th'
-  return `${month} ${day}${suffix}`
+  return `${month} ${day}${ordinalSuffix(day)}`
 }
 
 const DIFFICULTY_LABEL = { normal: 'N', heroic: 'HC', mythic: 'M' }
@@ -224,14 +228,13 @@ function playerTooltip(player) {
   return player.spec
 }
 
-function hasRoster(boss) {
-  const r = boss.roster
-  return r && (r.tanks?.length || 0) + (r.healers?.length || 0) + (r.dps?.length || 0) > 0
-}
-
 function rosterSize(boss) {
   const r = boss.roster
   return (r?.tanks?.length || 0) + (r?.healers?.length || 0) + (r?.dps?.length || 0)
+}
+
+function hasRoster(boss) {
+  return rosterSize(boss) > 0
 }
 </script>
 

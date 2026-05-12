@@ -71,20 +71,19 @@ const props = defineProps({
   tooltipFn: { type: Function, default: null },
 })
 
-/**
- * Collapse props into an iterable list of { role, label, players } so the
- * template can render all three groups with one v-for, and we don't get
- * the "only v-for shows markers" edge case from the old triple-section
- * layout.
- */
+const ROLE_DEFS = [
+  { role: 'tank', prop: 'tanks', label: 'Tanks', ariaLabel: 'Tanks' },
+  { role: 'healer', prop: 'healers', label: 'Healers', ariaLabel: 'Healers' },
+  { role: 'dps', prop: 'dps', label: 'DDs', ariaLabel: 'Damage dealers' },
+]
+
 const renderedGroups = computed(() => {
-  const groups = []
-  if (props.tanks?.length)
-    groups.push({ role: 'tank', label: 'Tanks', ariaLabel: 'Tanks', players: props.tanks })
-  if (props.healers?.length)
-    groups.push({ role: 'healer', label: 'Healers', ariaLabel: 'Healers', players: props.healers })
-  if (props.dps?.length)
-    groups.push({ role: 'dps', label: 'DDs', ariaLabel: 'Damage dealers', players: props.dps })
+  const groups = ROLE_DEFS.filter((def) => props[def.prop]?.length).map((def) => ({
+    role: def.role,
+    label: def.label,
+    ariaLabel: def.ariaLabel,
+    players: props[def.prop],
+  }))
   return groups.map((g, i) => ({ ...g, isLast: i === groups.length - 1 }))
 })
 </script>
