@@ -2,7 +2,6 @@
  * Build-time script that fetches fun raid stats from Warcraft Logs.
  * Writes to src/data/wcl-stats.json with:
  * - Most Deaths: player with the highest total deaths across all reports
- * - Iron Raider: player who attended the most kills without ever dying
  * - Highest Damage Done in Raid: highest single-fight damage total by any one player in raid
  * - Highest Damage Done in M+: highest single-encounter damage total by any one player in M+
  * - Best Healer in Raid: highest single-fight healing total by any one player in raid
@@ -61,7 +60,6 @@ const EMPTY_OUTPUT = {
   zone: null,
   stats: {
     mostDeaths: null,
-    ironRaider: null,
     highestDamageDone: null,
     highestDamageDoneMplus: null,
     bestHealer: null,
@@ -175,41 +173,6 @@ async function fetchHealingDone(token, code, fightIDs) {
 }
 
 /**
- * Fetches playerDetails for a specific fight to collect participant names and classes.
- * @param {string} token
- * @param {string} code
- * @param {number} fightId
- * @returns {Promise<Map<string, {type: string, spec: string}>>} Map of player name → class/spec info
- */
-async function fetchFightParticipants(token, code, fightId) {
-  const query = `{
-    reportData {
-      report(code: "${code}") {
-        playerDetails(fightIDs: [${fightId}])
-      }
-    }
-  }`
-
-  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
-  const raw = result.data?.reportData?.report?.playerDetails
-  if (!raw) return new Map()
-
-  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
-  const pd = parsed?.data?.playerDetails
-  if (!pd) return new Map()
-
-  /** @type {Map<string, {type: string, spec: string}>} */
-  const players = new Map()
-  for (const role of ['tanks', 'healers', 'dps']) {
-    for (const player of pd[role] || []) {
-      const spec = player.specs?.[0]?.spec || ''
-      players.set(player.name, { type: player.type || '', spec })
-    }
-  }
-  return players
-}
-
-/**
  * @param {string} token
  * @param {Set<string>} guildMembers - set of guild member names for filtering
  */
@@ -235,7 +198,6 @@ async function fetchStats(token, guildMembers) {
             id
             name
             encounterID
-            kill
           }
         }
       }
@@ -272,9 +234,6 @@ async function fetchStats(token, guildMembers) {
   /** @type {Map<string, { type: string, total: number }>} */
   const deathsByName = new Map()
 
-  /** @type {Map<string, { type: string, count: number }>} */
-  const killAttendanceByName = new Map()
-
   /** @type {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} */
   let highestDamageDoneEntry = null
 
@@ -302,9 +261,7 @@ async function fetchStats(token, guildMembers) {
           (f) => f.encounterID > 0 && raidEncounterIDs.has(f.encounterID),
         )
         const bossFightIDs = bossFights.map((f) => f.id)
-        const killFights = bossFights.filter((f) => f.kill === true)
-
-        // Fetch deaths and tank roster for all boss fights (Most Deaths + Iron Raider)
+        // Fetch deaths and tank roster for all boss fights
         const [allDeathEntries, tankNames] = await Promise.all([
           fetchDeaths(token, code, bossFightIDs),
           fetchTankNames(token, code, bossFightIDs),
@@ -358,20 +315,6 @@ async function fetchStats(token, guildMembers) {
                 reportCode: code,
                 bossName: fight.name,
               }
-            }
-          }
-        }
-
-        // Fetch participants for each kill fight (Iron Raider tracking)
-        for (const fight of killFights) {
-          const participants = await fetchFightParticipants(token, code, fight.id)
-          for (const [name, { type: classType, spec }] of participants) {
-            if (filterByGuild && !guildMembers.has(name)) continue
-            const existing = killAttendanceByName.get(name)
-            if (existing) {
-              existing.count++
-            } else {
-              killAttendanceByName.set(name, { type: classType, spec, count: 1 })
             }
           }
         }
@@ -441,32 +384,6 @@ async function fetchStats(token, guildMembers) {
     }
   }
 
-  // --- Iron Raider ---
-  // Fewest deaths among regular raiders (≥60% of max attendance), excluding Holy Priests
-  let maxAttendance = 0
-  for (const { count } of killAttendanceByName.values()) {
-    if (count > maxAttendance) maxAttendance = count
-  }
-  const minKillsForIron = Math.ceil(maxAttendance * 0.6)
-  let ironRaider = null
-  let ironRaiderDeaths = Infinity
-  for (const [name, { type, spec, count }] of killAttendanceByName) {
-    if (type === 'Priest' && spec === 'Holy') continue
-    if (count < minKillsForIron) continue
-    const deaths = deathsByName.get(name)?.total ?? 0
-    if (
-      deaths < ironRaiderDeaths ||
-      (deaths === ironRaiderDeaths && count > (ironRaider?.killsAttended ?? 0))
-    ) {
-      ironRaiderDeaths = deaths
-      ironRaider = {
-        name,
-        class: CLASS_MAP[type] || type.toLowerCase() || null,
-        killsAttended: count,
-      }
-    }
-  }
-
   // --- Highest Damage Done ---
   let highestDamageDone = null
   if (highestDamageDoneEntry) {
@@ -524,7 +441,6 @@ async function fetchStats(token, guildMembers) {
     zone: zoneName,
     stats: {
       mostDeaths,
-      ironRaider,
       highestDamageDone,
       highestDamageDoneMplus,
       bestHealer,
@@ -547,7 +463,6 @@ async function main() {
     writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2) + '\n')
     console.log(
       `${LOG_PREFIX} Wrote stats: mostDeaths=${data.stats.mostDeaths?.name ?? 'none'}, ` +
-        `ironRaider=${data.stats.ironRaider?.name ?? 'none'}, ` +
         `highestDamageDone=${data.stats.highestDamageDone?.name ?? 'none'}, ` +
         `highestDamageDoneMplus=${data.stats.highestDamageDoneMplus?.name ?? 'none'}, ` +
         `bestHealer=${data.stats.bestHealer?.name ?? 'none'}, ` +
