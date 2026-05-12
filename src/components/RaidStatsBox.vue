@@ -9,40 +9,6 @@
       <p v-else class="stat-empty">No data yet.</p>
     </InfoBox>
     <InfoBox class="stat-card">
-      <p class="stat-label">
-        Iron Raider
-        <HoverCard :open-delay="120" :close-delay="80">
-          <HoverCardTrigger as-child>
-            <button type="button" class="info-icon-wrapper" aria-label="What is Iron Raider?">
-              <svg
-                class="info-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                width="14"
-                height="14"
-                aria-hidden="true"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a.75.75 0 0 0 0 1.5h.253a.25.25 0 0 1 .244.304l-.459 2.066A1.75 1.75 0 0 0 10.747 15H11a.75.75 0 0 0 0-1.5h-.253a.25.25 0 0 1-.244-.304l.459-2.066A1.75 1.75 0 0 0 9.253 9H9Z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </button>
-          </HoverCardTrigger>
-          <HoverCardContent class="w-64 text-sm">
-            Most boss kills attended without dying on any of them.
-          </HoverCardContent>
-        </HoverCard>
-      </p>
-      <template v-if="stats.ironRaider">
-        <p :class="['stat-name', stats.ironRaider.class]">{{ stats.ironRaider.name }}</p>
-        <p class="stat-value">{{ stats.ironRaider.killsAttended }} kills attended</p>
-      </template>
-      <p v-else class="stat-empty">No data yet.</p>
-    </InfoBox>
-    <InfoBox class="stat-card">
       <p class="stat-label">Highest Damage Done in Raid</p>
       <template v-if="stats.highestDamageDone">
         <p :class="['stat-name', stats.highestDamageDone.class]">
@@ -139,7 +105,6 @@
 
 <script setup>
 import InfoBox from '@/components/InfoBox.vue'
-import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { useRaidStats } from '@/composables/useRaidStats.js'
 
 const { stats } = useRaidStats()
@@ -194,39 +159,6 @@ function formatNumber(n) {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: $color-text-subtle;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: $space-1;
-}
-
-.info-icon-wrapper {
-  display: inline-flex;
-  align-items: center;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  color: inherit;
-  cursor: help;
-
-  &:focus-visible {
-    outline: 2px solid $accent-color;
-    outline-offset: 2px;
-    border-radius: 50%;
-  }
-}
-
-.info-icon {
-  opacity: 0.5;
-  transition:
-    opacity $duration-fast $ease-default,
-    color $duration-fast $ease-default;
-
-  .info-icon-wrapper:hover &,
-  .info-icon-wrapper:focus-visible & {
-    opacity: 1;
-    color: $accent-color;
-  }
 }
 
 .stat-name {
