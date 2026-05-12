@@ -217,7 +217,6 @@ async function fetchProgression(token) {
       const heroicData = bossData.get(`${bossName}|heroic`)
       const mythicData = bossData.get(`${bossName}|mythic`)
 
-      const killedEntries = [normalData, heroicData, mythicData].filter((d) => d?.killed)
       const highestKill = mythicData?.killed
         ? mythicData
         : heroicData?.killed
@@ -225,9 +224,6 @@ async function fetchProgression(token) {
           : normalData?.killed
             ? normalData
             : null
-      const firstKill = killedEntries.length
-        ? killedEntries.reduce((a, b) => (new Date(a.killedAt) <= new Date(b.killedAt) ? a : b))
-        : null
 
       const pullsByDifficulty = {}
       if (normalData?.pulls) pullsByDifficulty.normal = normalData.pulls
@@ -238,7 +234,7 @@ async function fetchProgression(token) {
         (d) => d && !d.killed && d.bestPercent != null,
       )
 
-      const rosterKey = firstKill ? `${firstKill.name}|${firstKill.difficulty}` : null
+      const rosterKey = highestKill ? `${highestKill.name}|${highestKill.difficulty}` : null
       const roster = rosterKey ? rosterMap.get(rosterKey) : undefined
 
       return {
