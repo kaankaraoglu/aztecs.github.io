@@ -172,6 +172,14 @@
       ]
     },
     {
+      "dungeon": "Magisters' Terrace",
+      "level": 17,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Pit of Saron",
       "level": 17,
       "timed": true,
@@ -181,14 +189,6 @@
     },
     {
       "dungeon": "Seat of the Triumvirate",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Magisters' Terrace",
       "level": 17,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-13T22:57:47.527Z"
+  "lastUpdated": "2026-05-13T23:51:37.029Z"
 }
