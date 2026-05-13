@@ -84,15 +84,15 @@
     {
       "name": "Agro",
       "class": "warrior",
-      "score": 3207,
+      "score": 3231,
       "topKeys": [
         "+15 MT",
+        "+15 SEAT",
         "+15 WS",
         "+15 POS",
         "+14 NPX",
         "+14 SR",
         "+14 MC",
-        "+13 SEAT",
         "+13 AA"
       ],
       "realmSlug": "alakir"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-13T16:15:23.722Z"
+  "lastUpdated": "2026-05-13T18:23:15.364Z"
 }
