@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch, computed } from 'vue'
+import { useScrollLock } from '@vueuse/core'
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 
 const props = defineProps({
@@ -11,6 +12,7 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const imageError = ref(false)
+const scrollLocked = useScrollLock(document.body)
 
 const isOpen = computed({
   get: () => props.open,
@@ -18,6 +20,13 @@ const isOpen = computed({
     if (!v) emit('close')
   },
 })
+
+watch(
+  () => props.open,
+  (open) => {
+    scrollLocked.value = open
+  },
+)
 
 watch(
   () => props.src,

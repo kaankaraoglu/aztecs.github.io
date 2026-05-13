@@ -86,4 +86,18 @@ describe('ImageLightbox', () => {
     expect(wrapper.find('.lightbox-error').exists()).toBe(false)
     expect(wrapper.find('.lightbox-image').exists()).toBe(true)
   })
+
+  it('locks body scroll when open and unlocks when closed', async () => {
+    const wrapper = mount(ImageLightbox, {
+      props: { open: false, src: 'test.jpg' },
+      global,
+    })
+    expect(document.body.style.overflow).not.toBe('hidden')
+
+    await wrapper.setProps({ open: true })
+    expect(document.body.style.overflow).toBe('hidden')
+
+    await wrapper.setProps({ open: false })
+    expect(document.body.style.overflow).not.toBe('hidden')
+  })
 })
