@@ -98,22 +98,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Mxk",
-      "class": "warrior",
-      "score": 3198,
-      "topKeys": [
-        "+15 MT",
-        "+14 POS",
-        "+14 MC",
-        "+14 NPX",
-        "+14 SR",
-        "+14 SEAT",
-        "+13 WS",
-        "+13 AA"
-      ],
-      "realmSlug": "skullcrusher"
-    },
-    {
       "name": "Draggelina",
       "class": "evoker",
       "score": 3178,
@@ -160,6 +144,22 @@
         "+13 NPX"
       ],
       "realmSlug": "draenor"
+    },
+    {
+      "name": "Umgitsbubble",
+      "class": "paladin",
+      "score": 3075,
+      "topKeys": [
+        "+14 NPX",
+        "+14 MT",
+        "+13 POS",
+        "+13 WS",
+        "+13 MC",
+        "+13 SR",
+        "+12 AA",
+        "+12 SEAT"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-15T17:22:35.223Z"
+  "lastUpdated": "2026-05-15T19:03:29.444Z"
 }
