@@ -4,11 +4,11 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3560,
+      "score": 3573,
       "topKeys": [
+        "+18 WS",
         "+18 POS",
         "+17 MC",
-        "+17 WS",
         "+17 SEAT",
         "+17 MT",
         "+17 NPX",
@@ -172,6 +172,14 @@
       ]
     },
     {
+      "dungeon": "Windrunner Spire",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Maisara Caverns",
       "level": 17,
       "timed": true,
@@ -218,15 +226,7 @@
       "team": [
         "Rackz"
       ]
-    },
-    {
-      "dungeon": "Windrunner Spire",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
     }
   ],
-  "lastUpdated": "2026-05-15T20:40:02.546Z"
+  "lastUpdated": "2026-05-15T21:51:37.644Z"
 }
