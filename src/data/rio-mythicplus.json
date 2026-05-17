@@ -2,22 +2,6 @@
   "season": "season-mn-1",
   "topRunners": [
     {
-      "name": "Rackz",
-      "class": "demon-hunter",
-      "score": 3591,
-      "topKeys": [
-        "+18 MT",
-        "+18 WS",
-        "+18 POS",
-        "+17 MC",
-        "+17 SEAT",
-        "+17 NPX",
-        "+17 AA",
-        "+17 SR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Aerioth",
       "class": "priest",
       "score": 3470,
@@ -160,47 +144,31 @@
         "+13 NPX"
       ],
       "realmSlug": "draenor"
+    },
+    {
+      "name": "Umgitsbubble",
+      "class": "paladin",
+      "score": 3099,
+      "topKeys": [
+        "+14 POS",
+        "+14 NPX",
+        "+14 MT",
+        "+13 WS",
+        "+13 MC",
+        "+13 AA",
+        "+13 SR",
+        "+12 SEAT"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
     {
-      "dungeon": "Magisters' Terrace",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
       "dungeon": "Pit of Saron",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Windrunner Spire",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Maisara Caverns",
       "level": 17,
       "timed": true,
       "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Seat of the Triumvirate",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
+        "Aerioth"
       ]
     },
     {
@@ -220,13 +188,45 @@
       ]
     },
     {
-      "dungeon": "Skyreach",
-      "level": 17,
+      "dungeon": "Maisara Caverns",
+      "level": 16,
       "timed": true,
       "team": [
-        "Rackz"
+        "Lilithh"
+      ]
+    },
+    {
+      "dungeon": "Magisters' Terrace",
+      "level": 16,
+      "timed": true,
+      "team": [
+        "Lilithh"
+      ]
+    },
+    {
+      "dungeon": "Seat of the Triumvirate",
+      "level": 16,
+      "timed": true,
+      "team": [
+        "Lilithh"
+      ]
+    },
+    {
+      "dungeon": "Skyreach",
+      "level": 16,
+      "timed": true,
+      "team": [
+        "Lilithh"
+      ]
+    },
+    {
+      "dungeon": "Windrunner Spire",
+      "level": 16,
+      "timed": true,
+      "team": [
+        "Lilithh"
       ]
     }
   ],
-  "lastUpdated": "2026-05-17T21:45:44.496Z"
+  "lastUpdated": "2026-05-17T22:44:54.048Z"
 }
