@@ -14,19 +14,21 @@
         </TableHeader>
         <TableBody>
           <TableRow v-for="sub in submissions" :key="sub.discordId">
-            <TableCell class="col-char">
+            <TableCell class="col-char text-left">
               <span :class="toCssClass(sub.className)" class="char-name">{{
                 sub.characterName
               }}</span>
             </TableCell>
-            <TableCell class="col-class">
+            <TableCell class="col-class text-left">
               <span :class="toCssClass(sub.className)">{{ getClassName(sub.className) }}</span>
             </TableCell>
-            <TableCell class="col-spec">{{ getSpecName(sub.className, sub.specName) }}</TableCell>
-            <TableCell class="col-role hide-mobile">{{
+            <TableCell class="col-spec text-left">{{
+              getSpecName(sub.className, sub.specName)
+            }}</TableCell>
+            <TableCell class="col-role hide-mobile text-left">{{
               getRoleName(sub.className, sub.specName)
             }}</TableCell>
-            <TableCell class="col-discord hide-mobile discord-col">{{
+            <TableCell class="col-discord hide-mobile discord-col text-left">{{
               sub.discordUsername
             }}</TableCell>
           </TableRow>
@@ -86,11 +88,6 @@ function getRoleName(classKey, specKey) {
 
 .signup-table :deep(table) {
   table-layout: fixed;
-}
-
-.signup-table :deep(th),
-.signup-table :deep(td) {
-  text-align: left;
 }
 
 .signup-table :deep(.col-char) {

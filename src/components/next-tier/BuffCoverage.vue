@@ -22,6 +22,7 @@
               :title="buff.description"
             >
               {{ buff.name }}
+              <span class="buff-class">{{ classNames(buff.classes) }}</span>
             </Badge>
           </div>
         </div>
@@ -46,6 +47,7 @@
               :title="buff.description"
             >
               {{ buff.name }}
+              <span class="buff-class">{{ classNames(buff.classes) }}</span>
             </Badge>
           </div>
         </div>
@@ -58,6 +60,7 @@
 import { computed } from 'vue'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { WOW_CLASSES } from '@/data/wow-classes.js'
 
 const props = defineProps({
   coveredBuffs: { type: Array, required: true },
@@ -72,6 +75,10 @@ const throughputMissing = computed(() =>
 )
 const utilityCovered = computed(() => props.coveredBuffs.filter((b) => b.category === 'utility'))
 const utilityMissing = computed(() => props.missingBuffs.filter((b) => b.category === 'utility'))
+
+function classNames(classes) {
+  return classes.map((key) => WOW_CLASSES[key]?.name ?? key).join(', ')
+}
 </script>
 
 <style scoped lang="scss">
@@ -116,5 +123,11 @@ const utilityMissing = computed(() => props.missingBuffs.filter((b) => b.categor
   width: 100%;
   margin-bottom: $space-2;
   break-inside: avoid;
+}
+
+.buff-class {
+  margin-left: auto;
+  font-size: 0.6875rem;
+  opacity: 0.7;
 }
 </style>
