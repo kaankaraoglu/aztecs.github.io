@@ -88,40 +88,40 @@ function getRoleName(classKey, specKey) {
   table-layout: fixed;
 }
 
-.col-char {
+.signup-table :deep(.col-char) {
   width: 22%;
 }
 
-.col-class {
+.signup-table :deep(.col-class) {
   width: 18%;
 }
 
-.col-spec {
+.signup-table :deep(.col-spec) {
   width: 20%;
 }
 
-.col-role {
+.signup-table :deep(.col-role) {
   width: 12%;
 }
 
-.col-discord {
+.signup-table :deep(.col-discord) {
   width: 28%;
 }
 
 @include mobile {
-  .col-char {
+  .signup-table :deep(.col-char) {
     width: 34%;
   }
 
-  .col-class {
+  .signup-table :deep(.col-class) {
     width: 33%;
   }
 
-  .col-spec {
+  .signup-table :deep(.col-spec) {
     width: 33%;
   }
 
-  .hide-mobile {
+  .signup-table :deep(.hide-mobile) {
     display: none;
   }
 }
