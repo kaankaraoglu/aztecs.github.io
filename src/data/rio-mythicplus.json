@@ -148,13 +148,13 @@
     {
       "name": "Umgitsbubble",
       "class": "paladin",
-      "score": 3128,
+      "score": 3142,
       "topKeys": [
+        "+14 WS",
         "+14 POS",
         "+14 NPX",
         "+14 SEAT",
         "+14 MT",
-        "+13 WS",
         "+13 MC",
         "+13 AA",
         "+13 SR"
@@ -196,6 +196,14 @@
       ]
     },
     {
+      "dungeon": "Nexus-Point Xenas",
+      "level": 17,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Maisara Caverns",
       "level": 17,
       "timed": true,
@@ -218,15 +226,7 @@
       "team": [
         "Aerioth"
       ]
-    },
-    {
-      "dungeon": "Nexus-Point Xenas",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
     }
   ],
-  "lastUpdated": "2026-05-18T20:54:09.338Z"
+  "lastUpdated": "2026-05-18T22:01:42.572Z"
 }
