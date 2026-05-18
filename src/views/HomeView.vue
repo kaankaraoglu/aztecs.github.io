@@ -7,7 +7,7 @@
       </p>
     </section>
     <div class="content-wrapper">
-      <RecruitmentBox class="reveal" />
+      <MissingClassesBox class="reveal" :submissions="submissions" />
       <p class="section-label">TIER STATS</p>
       <RaidStatsBox class="reveal" />
       <FadingDivider />
@@ -51,26 +51,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { kills } from '@/data/kills.js'
 import { useProgression } from '@/composables/useProgression.js'
 import { useMythicPlus } from '@/composables/useMythicPlus.js'
+import { useNextTierSignups } from '@/composables/useNextTierSignups.js'
 import { useScrollReveal } from '@/composables/useScrollReveal.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import MythicPlusBox from '@/components/MythicPlusBox.vue'
 import RaidStatsBox from '@/components/RaidStatsBox.vue'
+import MissingClassesBox from '@/components/MissingClassesBox.vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
 import InfoBox from '@/components/InfoBox.vue'
-import RecruitmentBox from '@/components/RecruitmentBox.vue'
 
 const containerRef = ref(null)
 useScrollReveal(containerRef)
 
 const { raids, summary, latestReport } = useProgression()
 const { lastUpdated } = useMythicPlus()
+const { submissions, fetchSubmissions } = useNextTierSignups()
 const latestKills = kills.slice(0, 2)
 const lightboxSrc = ref('')
+
+onMounted(() => {
+  fetchSubmissions()
+})
 </script>
 
 <style lang="scss" scoped>
