@@ -88,6 +88,11 @@ function getRoleName(classKey, specKey) {
   table-layout: fixed;
 }
 
+.signup-table :deep(th),
+.signup-table :deep(td) {
+  text-align: left;
+}
+
 .signup-table :deep(.col-char) {
   width: 22%;
 }
