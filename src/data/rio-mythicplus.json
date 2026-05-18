@@ -132,7 +132,7 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 3158,
+      "score": 3168,
       "topKeys": [
         "+14 SR",
         "+14 MT",
@@ -140,7 +140,7 @@
         "+14 POS",
         "+14 SEAT",
         "+14 AA",
-        "+12 WS",
+        "+13 WS",
         "+12 MC"
       ],
       "realmSlug": "alakir"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-18T14:28:48.664Z"
+  "lastUpdated": "2026-05-18T17:17:47.381Z"
 }
