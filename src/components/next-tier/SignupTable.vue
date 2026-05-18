@@ -3,32 +3,35 @@
     <CardContent class="p-6">
       <h2 class="section-title">All Signups ({{ submissions.length }})</h2>
       <Table v-if="submissions.length > 0" class="signup-table">
+        <colgroup>
+          <col style="width: 22%" />
+          <col style="width: 18%" />
+          <col style="width: 20%" />
+          <col style="width: 12%" />
+          <col style="width: 28%" />
+        </colgroup>
         <TableHeader>
           <TableRow>
-            <TableHead class="col-char">Character</TableHead>
-            <TableHead class="col-class">Class</TableHead>
-            <TableHead class="col-spec">Spec</TableHead>
-            <TableHead class="col-role hide-mobile">Role</TableHead>
-            <TableHead class="col-discord hide-mobile">Discord</TableHead>
+            <TableHead>Character</TableHead>
+            <TableHead>Class</TableHead>
+            <TableHead>Spec</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Discord</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow v-for="sub in submissions" :key="sub.discordId">
-            <TableCell class="col-char">
+            <TableCell>
               <span :class="toCssClass(sub.className)" class="char-name">{{
                 sub.characterName
               }}</span>
             </TableCell>
-            <TableCell class="col-class">
+            <TableCell>
               <span :class="toCssClass(sub.className)">{{ getClassName(sub.className) }}</span>
             </TableCell>
-            <TableCell class="col-spec">{{ getSpecName(sub.className, sub.specName) }}</TableCell>
-            <TableCell class="col-role hide-mobile">{{
-              getRoleName(sub.className, sub.specName)
-            }}</TableCell>
-            <TableCell class="col-discord hide-mobile discord-col">{{
-              sub.discordUsername
-            }}</TableCell>
+            <TableCell>{{ getSpecName(sub.className, sub.specName) }}</TableCell>
+            <TableCell>{{ getRoleName(sub.className, sub.specName) }}</TableCell>
+            <TableCell class="discord-col">{{ sub.discordUsername }}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -88,41 +91,20 @@ function getRoleName(classKey, specKey) {
   table-layout: fixed;
 }
 
-.col-char {
-  width: 22%;
-}
-
-.col-class {
-  width: 18%;
-}
-
-.col-spec {
-  width: 20%;
-}
-
-.col-role {
-  width: 12%;
-}
-
-.col-discord {
-  width: 28%;
-}
-
 @include mobile {
-  .col-char {
+  .signup-table :deep(th:nth-child(n + 4)),
+  .signup-table :deep(td:nth-child(n + 4)) {
+    display: none;
+  }
+
+  .signup-table :deep(col:nth-child(1)) {
     width: 34%;
   }
-
-  .col-class {
+  .signup-table :deep(col:nth-child(2)) {
     width: 33%;
   }
-
-  .col-spec {
+  .signup-table :deep(col:nth-child(3)) {
     width: 33%;
-  }
-
-  .hide-mobile {
-    display: none;
   }
 }
 
