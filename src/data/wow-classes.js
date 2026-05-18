@@ -1,6 +1,6 @@
 /** @typedef {{ name: string, role: 'tank' | 'healer' | 'melee' | 'ranged', buffs: string[] }} SpecDef */
 /** @typedef {{ name: string, specs: Record<string, SpecDef> }} ClassDef */
-/** @typedef {{ name: string, classes: string[] }} BuffDef */
+/** @typedef {{ name: string, icon: string, classes: string[] }} BuffDef */
 
 /** @type {Record<string, ClassDef>} */
 export const WOW_CLASSES = {
@@ -112,14 +112,46 @@ export const WOW_CLASSES = {
 
 /** @type {Record<string, BuffDef>} */
 export const RAID_BUFFS = {
-  battleShout: { name: 'Battle Shout', classes: ['warrior'] },
-  arcaneIntellect: { name: 'Arcane Intellect', classes: ['mage'] },
-  markOfTheWild: { name: 'Mark of the Wild', classes: ['druid'] },
-  powerWordFortitude: { name: 'Power Word: Fortitude', classes: ['priest'] },
-  mysticTouch: { name: 'Mystic Touch', classes: ['monk'] },
-  chaosBrand: { name: 'Chaos Brand', classes: ['demonHunter'] },
-  bloodlust: { name: 'Bloodlust / Heroism', classes: ['shaman', 'mage', 'evoker'] },
-  skyfury: { name: 'Skyfury', classes: ['shaman'] },
-  devotionAura: { name: 'Devotion Aura', classes: ['paladin'] },
-  huntersMark: { name: "Hunter's Mark", classes: ['hunter'] },
+  battleShout: { name: 'Battle Shout', icon: 'ability_warrior_battleshout', classes: ['warrior'] },
+  arcaneIntellect: {
+    name: 'Arcane Intellect',
+    icon: 'spell_holy_magicalsentry',
+    classes: ['mage'],
+  },
+  markOfTheWild: {
+    name: 'Mark of the Wild',
+    icon: 'spell_nature_regeneration',
+    classes: ['druid'],
+  },
+  powerWordFortitude: {
+    name: 'Power Word: Fortitude',
+    icon: 'spell_holy_wordfortitude',
+    classes: ['priest'],
+  },
+  mysticTouch: { name: 'Mystic Touch', icon: 'ability_monk_sparring', classes: ['monk'] },
+  chaosBrand: {
+    name: 'Chaos Brand',
+    icon: 'ability_demonhunter_empowerwards',
+    classes: ['demonHunter'],
+  },
+  bloodlust: {
+    name: 'Bloodlust',
+    icon: 'spell_nature_bloodlust',
+    classes: ['shaman', 'mage', 'evoker'],
+  },
+  skyfury: {
+    name: 'Skyfury',
+    icon: 'achievement_raidprimalist_windelemental',
+    classes: ['shaman'],
+  },
+  devotionAura: {
+    name: 'Devotion Aura',
+    icon: 'spell_holy_devotionaura',
+    classes: ['paladin'],
+  },
+  huntersMark: {
+    name: "Hunter's Mark",
+    icon: 'ability_hunter_markedfordeath',
+    classes: ['hunter'],
+  },
 }

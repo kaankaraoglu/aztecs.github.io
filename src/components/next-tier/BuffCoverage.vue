@@ -4,10 +4,20 @@
       <h2 class="section-title">Raid Buff Coverage</h2>
       <div class="buff-grid">
         <Badge v-for="buff in coveredBuffs" :key="buff.name" variant="success" class="buff-pill">
-          &#10003; {{ buff.name }}
+          <img
+            :src="`https://wow.zamimg.com/images/wow/icons/small/${buff.icon}.jpg`"
+            :alt="buff.name"
+            class="buff-icon"
+          />
+          {{ buff.name }}
         </Badge>
         <Badge v-for="buff in missingBuffs" :key="buff.name" variant="danger" class="buff-pill">
-          &#10007; {{ buff.name }}
+          <img
+            :src="`https://wow.zamimg.com/images/wow/icons/small/${buff.icon}.jpg`"
+            :alt="buff.name"
+            class="buff-icon"
+          />
+          {{ buff.name }}
         </Badge>
       </div>
     </CardContent>
@@ -44,5 +54,15 @@ defineProps({
 
 .buff-pill {
   font-size: 0.8125rem;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+.buff-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  flex-shrink: 0;
 }
 </style>

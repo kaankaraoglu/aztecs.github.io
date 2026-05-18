@@ -52,7 +52,7 @@ describe('useBuffAnalysis', () => {
     const { coveredBuffs } = useBuffAnalysis(submissions)
 
     const coveredNames = coveredBuffs.value.map((b) => b.name)
-    expect(coveredNames).toContain('Bloodlust / Heroism')
+    expect(coveredNames).toContain('Bloodlust')
     expect(coveredNames).toContain('Skyfury')
   })
 
@@ -60,7 +60,7 @@ describe('useBuffAnalysis', () => {
     const submissions = ref([makeSubmission('shaman', 'elemental'), makeSubmission('mage', 'fire')])
     const { coveredBuffs } = useBuffAnalysis(submissions)
 
-    const bloodlustEntries = coveredBuffs.value.filter((b) => b.name === 'Bloodlust / Heroism')
+    const bloodlustEntries = coveredBuffs.value.filter((b) => b.name === 'Bloodlust')
     expect(bloodlustEntries).toHaveLength(1)
   })
 
