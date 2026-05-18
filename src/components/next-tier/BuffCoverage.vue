@@ -4,7 +4,10 @@
       <div class="buff-columns">
         <div class="buff-section">
           <h2 class="section-title">Throughput Buffs</h2>
-          <div class="buff-list">
+          <div
+            class="buff-list"
+            :style="gridRows(throughputCovered.length + throughputMissing.length)"
+          >
             <Badge
               v-for="buff in throughputCovered"
               :key="buff.name"
@@ -13,6 +16,10 @@
               :title="buff.description"
             >
               {{ buff.name }}
+              <span class="buff-meta">
+                <span class="buff-class">{{ classNames(buff.classes) }}</span>
+                <span class="buff-count">{{ buff.count }}</span>
+              </span>
             </Badge>
             <Badge
               v-for="buff in throughputMissing"
@@ -29,7 +36,7 @@
 
         <div class="buff-section">
           <h2 class="section-title">Utility</h2>
-          <div class="buff-list">
+          <div class="buff-list" :style="gridRows(utilityCovered.length + utilityMissing.length)">
             <Badge
               v-for="buff in utilityCovered"
               :key="buff.name"
@@ -38,6 +45,10 @@
               :title="buff.description"
             >
               {{ buff.name }}
+              <span class="buff-meta">
+                <span class="buff-class">{{ classNames(buff.classes) }}</span>
+                <span class="buff-count">{{ buff.count }}</span>
+              </span>
             </Badge>
             <Badge
               v-for="buff in utilityMissing"
@@ -79,6 +90,11 @@ const utilityMissing = computed(() => props.missingBuffs.filter((b) => b.categor
 function classNames(classes) {
   return classes.map((key) => WOW_CLASSES[key]?.name ?? key).join(', ')
 }
+
+function gridRows(count) {
+  if (count <= 1) return {}
+  return { gridTemplateRows: `repeat(${Math.ceil(count / 2)}, auto)` }
+}
 </script>
 
 <style scoped lang="scss">
@@ -110,8 +126,10 @@ function classNames(classes) {
 }
 
 .buff-list {
-  columns: 11rem auto;
-  column-gap: $space-2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-flow: column;
+  gap: $space-2;
 }
 
 .buff-pill {
@@ -121,13 +139,34 @@ function classNames(classes) {
   padding: $space-2 $space-3;
   cursor: default;
   width: 100%;
-  margin-bottom: $space-2;
-  break-inside: avoid;
+}
+
+.buff-meta {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
 }
 
 .buff-class {
-  margin-left: auto;
   font-size: 0.6875rem;
   opacity: 0.7;
+}
+
+.buff-pill > .buff-class {
+  margin-left: auto;
+}
+
+.buff-count {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 $space-1;
 }
 </style>

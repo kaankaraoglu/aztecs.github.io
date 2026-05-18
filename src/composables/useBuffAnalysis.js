@@ -3,21 +3,28 @@ import { WOW_CLASSES, RAID_BUFFS } from '@/data/wow-classes.js'
 
 /**
  * @typedef {import('@/data/wow-classes.js').BuffDef} BuffDef
+ * @typedef {BuffDef & { count: number }} CoveredBuff
  *
  * @param {import('vue').Ref<Array<{ className: string, specName: string }>>} submissions
  * @returns {{
- *   coveredBuffs: import('vue').ComputedRef<BuffDef[]>,
+ *   coveredBuffs: import('vue').ComputedRef<CoveredBuff[]>,
  *   missingBuffs: import('vue').ComputedRef<BuffDef[]>,
  *   roleCounts: import('vue').ComputedRef<{ tank: number, healer: number, melee: number, ranged: number }>
  * }}
  */
 export function useBuffAnalysis(submissions) {
   const coveredBuffs = computed(() => {
-    const submittedClasses = new Set(submissions.value.map((s) => s.className))
+    const classCounts = new Map()
+    for (const s of submissions.value) {
+      classCounts.set(s.className, (classCounts.get(s.className) || 0) + 1)
+    }
 
-    return Object.values(RAID_BUFFS).filter((buff) =>
-      buff.classes.some((cls) => submittedClasses.has(cls)),
-    )
+    return Object.values(RAID_BUFFS)
+      .filter((buff) => buff.classes.some((cls) => classCounts.has(cls)))
+      .map((buff) => ({
+        ...buff,
+        count: buff.classes.reduce((sum, cls) => sum + (classCounts.get(cls) || 0), 0),
+      }))
   })
 
   const missingBuffs = computed(() => {

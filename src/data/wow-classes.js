@@ -18,17 +18,17 @@ export const WOW_CLASSES = {
       holy: {
         name: 'Holy',
         role: 'healer',
-        buffs: ['devotionAura', 'concentrationAura', 'blessingOfSummer', 'masteryAura'],
+        buffs: ['devotionAura', 'concentrationAura', 'masteryAura'],
       },
       protection: {
         name: 'Protection',
         role: 'tank',
-        buffs: ['devotionAura', 'concentrationAura', 'blessingOfSummer', 'masteryAura'],
+        buffs: ['devotionAura', 'concentrationAura', 'masteryAura'],
       },
       retribution: {
         name: 'Retribution',
         role: 'melee',
-        buffs: ['devotionAura', 'concentrationAura', 'blessingOfSummer', 'masteryAura'],
+        buffs: ['devotionAura', 'concentrationAura', 'masteryAura'],
       },
     },
   },
@@ -185,12 +185,6 @@ export const RAID_BUFFS = {
     name: 'Battle Shout',
     description: 'Increases Attack Power by 5% for 1 hour',
     classes: ['warrior'],
-    category: 'throughput',
-  },
-  blessingOfSummer: {
-    name: 'Blessing of Summer',
-    description: 'Increases damage dealt by target for 30s',
-    classes: ['paladin'],
     category: 'throughput',
   },
   blessingOfTheBronze: {
