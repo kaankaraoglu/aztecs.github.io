@@ -40,10 +40,15 @@ describe('WOW_CLASSES', () => {
 })
 
 describe('RAID_BUFFS', () => {
-  it('every buff has a name, icon, and at least one providing class', () => {
+  it('every buff has a name, description, icon, category, and at least one providing class', () => {
+    const validCategories = ['throughput', 'utility']
     for (const [key, buff] of Object.entries(RAID_BUFFS)) {
       expect(buff.name, `${key} missing name`).toBeTruthy()
+      expect(buff.description, `${key} missing description`).toBeTruthy()
       expect(buff.icon, `${key} missing icon`).toBeTruthy()
+      expect(validCategories, `${key} has invalid category '${buff.category}'`).toContain(
+        buff.category,
+      )
       expect(buff.classes.length, `${key} has no providing classes`).toBeGreaterThan(0)
     }
   })

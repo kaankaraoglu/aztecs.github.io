@@ -2,7 +2,7 @@
   <div class="tier-header">
     <h1 class="tier-title">{{ tierName }}</h1>
     <div class="tier-meta">
-      <Badge :variant="isOpen ? 'success' : 'danger'">
+      <Badge :variant="isOpen ? 'success' : 'danger'" class="status-badge">
         {{ isOpen ? 'Signups Open' : 'Signups Closed' }}
       </Badge>
       <span class="signup-count">{{ signupCount }} signed up</span>
@@ -41,9 +41,14 @@ defineProps({
 
 .tier-meta {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: $space-3;
+  gap: $space-2;
+
+  .status-badge {
+    font-size: 1rem;
+    padding: $space-2 $space-4;
+  }
 }
 
 .signup-count {
