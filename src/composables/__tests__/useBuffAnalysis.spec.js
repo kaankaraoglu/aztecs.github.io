@@ -53,7 +53,7 @@ describe('useBuffAnalysis', () => {
 
     const coveredNames = coveredBuffs.value.map((b) => b.name)
     expect(coveredNames).toContain('Bloodlust')
-    expect(coveredNames).toContain('Skyfury')
+    expect(coveredNames).toContain('Mana Tide Totem')
   })
 
   it('does not double-count a buff when two classes provide it', () => {

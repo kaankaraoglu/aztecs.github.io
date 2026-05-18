@@ -3,7 +3,13 @@
     <CardContent class="p-6">
       <h2 class="section-title">Raid Buff Coverage</h2>
       <div class="buff-grid">
-        <Badge v-for="buff in coveredBuffs" :key="buff.name" variant="success" class="buff-pill">
+        <Badge
+          v-for="buff in coveredBuffs"
+          :key="buff.name"
+          variant="success"
+          class="buff-pill"
+          :title="buff.description"
+        >
           <img
             :src="`https://wow.zamimg.com/images/wow/icons/small/${buff.icon}.jpg`"
             :alt="buff.name"
@@ -11,7 +17,13 @@
           />
           {{ buff.name }}
         </Badge>
-        <Badge v-for="buff in missingBuffs" :key="buff.name" variant="danger" class="buff-pill">
+        <Badge
+          v-for="buff in missingBuffs"
+          :key="buff.name"
+          variant="danger"
+          class="buff-pill"
+          :title="buff.description"
+        >
           <img
             :src="`https://wow.zamimg.com/images/wow/icons/small/${buff.icon}.jpg`"
             :alt="buff.name"
@@ -53,15 +65,20 @@ defineProps({
 }
 
 .buff-pill {
+  flex: 1 1 auto;
+  min-width: fit-content;
   font-size: 0.8125rem;
   display: inline-flex;
   align-items: center;
-  gap: $space-1;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  cursor: default;
 }
 
 .buff-icon {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   border-radius: 3px;
   flex-shrink: 0;
 }
