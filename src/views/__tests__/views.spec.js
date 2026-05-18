@@ -19,6 +19,19 @@ vi.stubGlobal(
   })),
 )
 
+if (typeof globalThis.localStorage === 'undefined') {
+  const store = {}
+  vi.stubGlobal('localStorage', {
+    getItem: vi.fn((key) => store[key] ?? null),
+    setItem: vi.fn((key, val) => {
+      store[key] = String(val)
+    }),
+    removeItem: vi.fn((key) => {
+      delete store[key]
+    }),
+  })
+}
+
 import HomeView from '../HomeView.vue'
 import ContactView from '../ContactView.vue'
 import RaidingView from '../RaidingView.vue'
@@ -31,6 +44,7 @@ const homeStubs = {
   RaidStatsBox: { template: '<div class="stub-raid-stats" />' },
   RaidProgressionBox: { template: '<div class="stub-raid-progression" />' },
   MythicPlusBox: { template: '<div class="stub-mythic-plus" />' },
+  MissingClassesBox: { template: '<div class="stub-missing-classes" />' },
   FadingDivider: { template: '<hr class="stub-divider" />' },
   ImageLightbox: { template: '<div class="stub-lightbox" />' },
   Teleport: true,
