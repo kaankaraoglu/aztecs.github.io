@@ -7,6 +7,7 @@
       </p>
     </section>
     <div class="content-wrapper">
+      <RecruitmentBox class="reveal" />
       <p class="section-label">TIER STATS</p>
       <RaidStatsBox class="reveal" />
       <FadingDivider />
@@ -61,6 +62,7 @@ import MythicPlusBox from '@/components/MythicPlusBox.vue'
 import RaidStatsBox from '@/components/RaidStatsBox.vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
 import InfoBox from '@/components/InfoBox.vue'
+import RecruitmentBox from '@/components/RecruitmentBox.vue'
 
 const containerRef = ref(null)
 useScrollReveal(containerRef)
