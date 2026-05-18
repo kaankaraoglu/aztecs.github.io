@@ -25,6 +25,9 @@
 
       <div :class="['nav-links', { open: menuOpen }]">
         <RouterLink class="nav-link" to="/" @click="menuOpen = false">Home</RouterLink>
+        <RouterLink class="nav-link" to="/next-tier" @click="menuOpen = false"
+          >Next Tier</RouterLink
+        >
         <RouterLink class="nav-link" to="/achievements" @click="menuOpen = false"
           >Achievements</RouterLink
         >

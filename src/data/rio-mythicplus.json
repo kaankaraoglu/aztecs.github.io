@@ -4,16 +4,16 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3546,
+      "score": 3605,
       "topKeys": [
+        "+18 MT",
+        "+18 WS",
+        "+18 POS",
+        "+18 SR",
         "+17 MC",
-        "+17 WS",
         "+17 SEAT",
-        "+17 MT",
-        "+17 POS",
         "+17 NPX",
-        "+17 AA",
-        "+17 SR"
+        "+17 AA"
       ],
       "realmSlug": "alakir"
     },
@@ -84,15 +84,15 @@
     {
       "name": "Agro",
       "class": "warrior",
-      "score": 3207,
+      "score": 3231,
       "topKeys": [
         "+15 MT",
+        "+15 SEAT",
         "+15 WS",
         "+15 POS",
         "+14 NPX",
         "+14 SR",
         "+14 MC",
-        "+13 SEAT",
         "+13 AA"
       ],
       "realmSlug": "alakir"
@@ -164,6 +164,38 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Magisters' Terrace",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Pit of Saron",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Skyreach",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Windrunner Spire",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Maisara Caverns",
       "level": 17,
       "timed": true,
@@ -172,23 +204,7 @@
       ]
     },
     {
-      "dungeon": "Pit of Saron",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "Seat of the Triumvirate",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Magisters' Terrace",
       "level": 17,
       "timed": true,
       "team": [
@@ -210,23 +226,7 @@
       "team": [
         "Aerioth"
       ]
-    },
-    {
-      "dungeon": "Skyreach",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Windrunner Spire",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
     }
   ],
-  "lastUpdated": "2026-05-13T08:52:48.938Z"
+  "lastUpdated": "2026-05-18T14:28:48.664Z"
 }
