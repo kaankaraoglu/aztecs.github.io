@@ -2,26 +2,33 @@
   <Card class="signup-table-card">
     <CardContent class="p-6">
       <h2 class="section-title">All Signups ({{ submissions.length }})</h2>
-      <Table v-if="submissions.length > 0">
+      <Table v-if="submissions.length > 0" class="signup-table">
         <TableHeader>
           <TableRow>
-            <TableHead>Character</TableHead>
-            <TableHead>Class / Spec</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Discord</TableHead>
+            <TableHead class="col-char">Character</TableHead>
+            <TableHead class="col-class">Class</TableHead>
+            <TableHead class="col-spec">Spec</TableHead>
+            <TableHead class="col-role hide-mobile">Role</TableHead>
+            <TableHead class="col-discord hide-mobile">Discord</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow v-for="sub in submissions" :key="sub.discordId">
-            <TableCell>
-              <span :class="sub.className" class="char-name">{{ sub.characterName }}</span>
+            <TableCell class="col-char">
+              <span :class="toCssClass(sub.className)" class="char-name">{{
+                sub.characterName
+              }}</span>
             </TableCell>
-            <TableCell>
-              <span :class="sub.className">{{ getClassName(sub.className) }}</span>
-              · {{ getSpecName(sub.className, sub.specName) }}
+            <TableCell class="col-class">
+              <span :class="toCssClass(sub.className)">{{ getClassName(sub.className) }}</span>
             </TableCell>
-            <TableCell>{{ getRoleName(sub.className, sub.specName) }}</TableCell>
-            <TableCell class="discord-col">{{ sub.discordUsername }}</TableCell>
+            <TableCell class="col-spec">{{ getSpecName(sub.className, sub.specName) }}</TableCell>
+            <TableCell class="col-role hide-mobile">{{
+              getRoleName(sub.className, sub.specName)
+            }}</TableCell>
+            <TableCell class="col-discord hide-mobile discord-col">{{
+              sub.discordUsername
+            }}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -45,6 +52,10 @@ import { WOW_CLASSES } from '@/data/wow-classes.js'
 defineProps({
   submissions: { type: Array, required: true },
 })
+
+function toCssClass(classKey) {
+  return classKey.replace(/([A-Z])/g, '-$1').toLowerCase()
+}
 
 function getClassName(classKey) {
   return WOW_CLASSES[classKey]?.name ?? classKey
@@ -71,6 +82,48 @@ function getRoleName(classKey, specKey) {
   letter-spacing: 0.05em;
   color: $color-text-subtle;
   margin: 0 0 $space-4 0;
+}
+
+.signup-table :deep(table) {
+  table-layout: fixed;
+}
+
+.col-char {
+  width: 22%;
+}
+
+.col-class {
+  width: 18%;
+}
+
+.col-spec {
+  width: 20%;
+}
+
+.col-role {
+  width: 12%;
+}
+
+.col-discord {
+  width: 28%;
+}
+
+@include mobile {
+  .col-char {
+    width: 34%;
+  }
+
+  .col-class {
+    width: 33%;
+  }
+
+  .col-spec {
+    width: 33%;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
 }
 
 .char-name {
