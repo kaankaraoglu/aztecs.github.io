@@ -85,21 +85,17 @@ onMounted(async () => {
   align-items: flex-start;
 
   > :first-child {
-    flex: 1;
+    flex: 3;
     min-width: 0;
   }
 
   > :last-child {
-    flex-shrink: 0;
-    width: 280px;
+    flex: 2;
+    min-width: 0;
   }
 
   @include tablet {
     flex-direction: column;
-
-    > :last-child {
-      width: 100%;
-    }
   }
 }
 
