@@ -146,20 +146,20 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Psyobs",
-      "class": "mage",
-      "score": 3119,
+      "name": "Umgitsbubble",
+      "class": "paladin",
+      "score": 3128,
       "topKeys": [
-        "+15 SEAT",
-        "+14 MC",
+        "+14 POS",
+        "+14 NPX",
+        "+14 SEAT",
+        "+14 MT",
         "+13 WS",
+        "+13 MC",
         "+13 AA",
-        "+13 POS",
-        "+13 MT",
-        "+13 SR",
-        "+13 NPX"
+        "+13 SR"
       ],
-      "realmSlug": "draenor"
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-18T19:12:45.139Z"
+  "lastUpdated": "2026-05-18T20:54:09.338Z"
 }
