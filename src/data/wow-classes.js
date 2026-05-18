@@ -130,6 +130,7 @@ export const WOW_CLASSES = {
     specs: {
       havoc: { name: 'Havoc', role: 'melee', buffs: ['chaosBrand', 'darkness'] },
       vengeance: { name: 'Vengeance', role: 'tank', buffs: ['chaosBrand', 'darkness'] },
+      devourer: { name: 'Devourer', role: 'melee', buffs: ['chaosBrand', 'darkness'] },
     },
   },
   deathKnight: {
