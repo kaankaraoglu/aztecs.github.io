@@ -13,21 +13,20 @@
       {{ error }}
     </div>
 
-    <SignupForm
-      class="reveal"
-      :current-user="currentUser"
-      :existing-submission="existingSubmission"
-      :is-open="config.isOpen"
-      :discord-auth-url="getDiscordAuthUrl()"
-      @submit="submitSignup"
-      @delete="deleteSignup"
-      @sign-out="signOut"
-    />
-
-    <div class="signups-row reveal">
-      <SignupTable :submissions="submissions" />
+    <div class="signup-role-row reveal">
+      <SignupForm
+        :current-user="currentUser"
+        :existing-submission="existingSubmission"
+        :is-open="config.isOpen"
+        :discord-auth-url="getDiscordAuthUrl()"
+        @submit="submitSignup"
+        @delete="deleteSignup"
+        @sign-out="signOut"
+      />
       <RoleBalance :role-counts="roleCounts" />
     </div>
+
+    <SignupTable class="reveal" :submissions="submissions" />
   </div>
 </template>
 
@@ -79,7 +78,7 @@ onMounted(async () => {
   z-index: 10;
 }
 
-.signups-row {
+.signup-role-row {
   display: flex;
   gap: $space-6;
   align-items: flex-start;
