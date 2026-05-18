@@ -6,9 +6,10 @@
         <TableHeader>
           <TableRow>
             <TableHead class="col-char">Character</TableHead>
-            <TableHead class="col-spec">Class / Spec</TableHead>
-            <TableHead class="col-role">Role</TableHead>
-            <TableHead class="col-discord">Discord</TableHead>
+            <TableHead class="col-class">Class</TableHead>
+            <TableHead class="col-spec">Spec</TableHead>
+            <TableHead class="col-role hide-mobile">Role</TableHead>
+            <TableHead class="col-discord hide-mobile">Discord</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -18,12 +19,16 @@
                 sub.characterName
               }}</span>
             </TableCell>
-            <TableCell class="col-spec">
+            <TableCell class="col-class">
               <span :class="toCssClass(sub.className)">{{ getClassName(sub.className) }}</span>
-              · {{ getSpecName(sub.className, sub.specName) }}
             </TableCell>
-            <TableCell class="col-role">{{ getRoleName(sub.className, sub.specName) }}</TableCell>
-            <TableCell class="col-discord discord-col">{{ sub.discordUsername }}</TableCell>
+            <TableCell class="col-spec">{{ getSpecName(sub.className, sub.specName) }}</TableCell>
+            <TableCell class="col-role hide-mobile">{{
+              getRoleName(sub.className, sub.specName)
+            }}</TableCell>
+            <TableCell class="col-discord hide-mobile discord-col">{{
+              sub.discordUsername
+            }}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -84,19 +89,41 @@ function getRoleName(classKey, specKey) {
 }
 
 .col-char {
-  width: 25%;
+  width: 22%;
+}
+
+.col-class {
+  width: 18%;
 }
 
 .col-spec {
-  width: 30%;
+  width: 20%;
 }
 
 .col-role {
-  width: 15%;
+  width: 12%;
 }
 
 .col-discord {
-  width: 30%;
+  width: 28%;
+}
+
+@include mobile {
+  .col-char {
+    width: 34%;
+  }
+
+  .col-class {
+    width: 33%;
+  }
+
+  .col-spec {
+    width: 33%;
+  }
+
+  .hide-mobile {
+    display: none;
+  }
 }
 
 .char-name {
