@@ -31,6 +31,9 @@
         <RouterLink class="nav-link" to="/raiding" @click="menuOpen = false">Raiding</RouterLink>
         <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
+        <RouterLink class="nav-link" to="/next-tier" @click="menuOpen = false"
+          >Next Tier</RouterLink
+        >
         <DiscordIcon @click="openDiscordInvite" />
         <AlertDialog v-model:open="flashbangOpen">
           <AlertDialogContent>

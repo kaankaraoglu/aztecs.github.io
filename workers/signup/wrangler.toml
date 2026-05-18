@@ -1,0 +1,18 @@
+name = "aztecs-signup"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+routes = [
+  { pattern = "signup.aztecs.se", custom_domain = true }
+]
+
+[[kv_namespaces]]
+binding = "SIGNUPS"
+id = "21438ff7912644609b7c7f4bcd79a8e6"
+
+# Secrets (set via `cd workers/signup && npx wrangler secret put <NAME>`):
+#   DISCORD_CLIENT_ID      — from Discord developer portal
+#   DISCORD_CLIENT_SECRET  — from Discord developer portal
+#   JWT_SECRET             — random string for signing JWTs
+#   ADMIN_SECRET           — shared secret for admin endpoints
+#   FRONTEND_URL           — e.g. https://aztecs.se
