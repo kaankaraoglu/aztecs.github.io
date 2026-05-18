@@ -2,12 +2,13 @@ name = "aztecs-signup"
 main = "src/index.js"
 compatibility_date = "2025-01-01"
 
-# Create the KV namespace:
-#   cd workers/signup && npx wrangler kv namespace create SIGNUPS
-# Then paste the id below and uncomment.
-# [[kv_namespaces]]
-# binding = "SIGNUPS"
-# id = "<paste-id-here>"
+routes = [
+  { pattern = "signup.aztecs.se", custom_domain = true }
+]
+
+[[kv_namespaces]]
+binding = "SIGNUPS"
+id = "21438ff7912644609b7c7f4bcd79a8e6"
 
 # Secrets (set via `cd workers/signup && npx wrangler secret put <NAME>`):
 #   DISCORD_CLIENT_ID      — from Discord developer portal
