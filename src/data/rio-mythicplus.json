@@ -4,16 +4,16 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3591,
+      "score": 3605,
       "topKeys": [
         "+18 MT",
         "+18 WS",
         "+18 POS",
+        "+18 SR",
         "+17 MC",
         "+17 SEAT",
         "+17 NPX",
-        "+17 AA",
-        "+17 SR"
+        "+17 AA"
       ],
       "realmSlug": "alakir"
     },
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "Skyreach",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Windrunner Spire",
       "level": 18,
       "timed": true,
@@ -218,15 +226,7 @@
       "team": [
         "Aerioth"
       ]
-    },
-    {
-      "dungeon": "Skyreach",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
     }
   ],
-  "lastUpdated": "2026-05-17T23:49:44.243Z"
+  "lastUpdated": "2026-05-18T02:10:38.900Z"
 }
