@@ -84,12 +84,12 @@ onMounted(async () => {
   align-items: flex-start;
 
   > :first-child {
-    flex: 3;
+    flex: 7;
     min-width: 0;
   }
 
   > :last-child {
-    flex: 2;
+    flex: 13;
     min-width: 0;
   }
 
