@@ -9,8 +9,6 @@
 
     <BuffCoverage class="reveal" :covered-buffs="coveredBuffs" :missing-buffs="missingBuffs" />
 
-    <RoleBalance class="reveal" :role-counts="roleCounts" />
-
     <div v-if="error" class="error-banner reveal">
       {{ error }}
     </div>
@@ -26,7 +24,10 @@
       @sign-out="signOut"
     />
 
-    <SignupTable class="reveal" :submissions="submissions" />
+    <div class="signups-row reveal">
+      <SignupTable :submissions="submissions" />
+      <RoleBalance :role-counts="roleCounts" />
+    </div>
   </div>
 </template>
 
@@ -76,6 +77,30 @@ onMounted(async () => {
   gap: $space-6;
   position: relative;
   z-index: 10;
+}
+
+.signups-row {
+  display: flex;
+  gap: $space-6;
+  align-items: flex-start;
+
+  > :first-child {
+    flex: 1;
+    min-width: 0;
+  }
+
+  > :last-child {
+    flex-shrink: 0;
+    width: 280px;
+  }
+
+  @include tablet {
+    flex-direction: column;
+
+    > :last-child {
+      width: 100%;
+    }
+  }
 }
 
 .error-banner {
