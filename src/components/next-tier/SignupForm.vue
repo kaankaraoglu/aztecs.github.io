@@ -160,6 +160,8 @@ function handleSubmit() {
 .auth-prompt {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: $space-3;
 }
 
