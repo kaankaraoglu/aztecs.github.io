@@ -26,6 +26,10 @@ import {
 
 loadEnv()
 
+const IS_CI = !!process.env.CI
+const REPORT_LIMIT = IS_CI ? 50 : 10
+const LOCAL_MEMBER_LIMIT = 20
+
 const LOG_PREFIX = '[wcl-stats]'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -45,7 +49,14 @@ async function fetchGuildRoster() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
     const members = data.members || []
-    const names = new Set(members.map((m) => m.character.name))
+    let memberNames = members.map((m) => m.character.name)
+    if (!IS_CI && memberNames.length > LOCAL_MEMBER_LIMIT) {
+      console.log(
+        `${LOG_PREFIX} Local mode: limiting roster to ${LOCAL_MEMBER_LIMIT} of ${memberNames.length} members`,
+      )
+      memberNames = memberNames.slice(0, LOCAL_MEMBER_LIMIT)
+    }
+    const names = new Set(memberNames)
     console.log(`${LOG_PREFIX} Fetched guild roster: ${names.size} members from Raider.IO`)
     return names
   } catch (err) {
@@ -191,7 +202,7 @@ async function fetchStats(token, guildMembers) {
       }
     }
     reportData {
-      raidReports: reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: 50) {
+      raidReports: reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: ${REPORT_LIMIT}) {
         data {
           code
           fights {
@@ -201,7 +212,7 @@ async function fetchStats(token, guildMembers) {
           }
         }
       }
-      mplusReports: reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_MPLUS_ZONE_ID}, limit: 50) {
+      mplusReports: reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_MPLUS_ZONE_ID}, limit: ${REPORT_LIMIT}) {
         data {
           code
           fights {

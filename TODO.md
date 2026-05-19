@@ -53,10 +53,10 @@
 
 ## CI / DX
 
-- [ ] **Add `format:check` to CI** — The `format:check` script exists in `package.json` but isn't run in CI. A developer bypassing the pre-commit hook can land unformatted code.
-- [ ] **Use a maintained GitHub Pages deploy action** — `deploy.yml` manually clones `gh-pages`, deletes contents, copies `dist/`, and pushes. Using `JamesIves/github-pages-deploy-action@v4` or `peaceiris/actions-gh-pages@v3` handles edge cases and is easier to maintain.
-- [ ] **Add bundle size visualization** — Configure `rollup-plugin-visualizer` to generate a report on builds, useful for tracking Firebase and other dependency sizes.
-- [ ] **Explicit code splitting for Firebase** — Add `manualChunks` in `vite.config.js` `build.rollupOptions` to isolate Firebase into its own chunk.
+- [x] **Add `format:check` to CI** — The `format:check` script exists in `package.json` but isn't run in CI. A developer bypassing the pre-commit hook can land unformatted code.
+- [x] **Use a maintained GitHub Pages deploy action** — `deploy.yml` manually clones `gh-pages`, deletes contents, copies `dist/`, and pushes. Using `JamesIves/github-pages-deploy-action@v4` or `peaceiris/actions-gh-pages@v3` handles edge cases and is easier to maintain.
+- [x] **Add bundle size visualization** — Configure `rollup-plugin-visualizer` to generate a report on builds, useful for tracking Firebase and other dependency sizes.
+- [x] **Explicit code splitting for Firebase** — Add `manualChunks` in `vite.config.js` `build.rollupOptions` to isolate Firebase into its own chunk.
 
 ## Features
 
