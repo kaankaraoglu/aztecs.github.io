@@ -84,14 +84,14 @@
     {
       "name": "Agro",
       "class": "warrior",
-      "score": 3231,
+      "score": 3246,
       "topKeys": [
+        "+15 SR",
         "+15 MT",
         "+15 SEAT",
         "+15 WS",
         "+15 POS",
         "+14 NPX",
-        "+14 SR",
         "+14 MC",
         "+13 AA"
       ],
@@ -148,15 +148,15 @@
     {
       "name": "Umgitsbubble",
       "class": "paladin",
-      "score": 3142,
+      "score": 3156,
       "topKeys": [
         "+14 WS",
         "+14 POS",
         "+14 NPX",
         "+14 SEAT",
+        "+14 AA",
         "+14 MT",
         "+13 MC",
-        "+13 AA",
         "+13 SR"
       ],
       "realmSlug": "alakir"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-19T19:43:37.730Z"
+  "lastUpdated": "2026-05-19T21:13:21.239Z"
 }
