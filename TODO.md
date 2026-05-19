@@ -23,12 +23,12 @@
 
 - [x] **Hamburger menu** (`HeaderView.vue`) — Add `role="button"`, `aria-label`, and keyboard support (Enter/Space)
 - [x] **Boss expand** (`RaidProgressionBox.vue`) — Add `aria-expanded` attribute and keyboard support (Enter key to toggle)
-- [ ] **ImageLightbox** — Add `role="dialog"`, `aria-modal="true"`, focus trap, and scroll lock (`document.body.style.overflow = 'hidden'`)
-- [ ] **MythicPlusBox** — Add `aria-label` to timed/untimed checkmark symbols (currently reads as "check mark" / "cross mark" instead of "Timed" / "Not timed")
-- [ ] **KillCard roster** — Use semantic `<ul>/<li>` instead of flat `<span>` elements
-- [ ] **ContactView table** — Add `<caption>` for screen reader context
-- [ ] **KillCard images on HomeView** — Images have `cursor: zoom-in` and a click handler but no `role="button"` or keyboard event for lightbox access
-- [ ] **External links in FooterView** — Links opening in `target="_blank"` should warn assistive technology users (e.g., append " (opens in new tab)" or use `aria-label`)
+- [x] **ImageLightbox** — Add `role="dialog"`, `aria-modal="true"`, focus trap, and scroll lock (`document.body.style.overflow = 'hidden'`)
+- [x] **MythicPlusBox** — Add `aria-label` to timed/untimed checkmark symbols (currently reads as "check mark" / "cross mark" instead of "Timed" / "Not timed")
+- [x] **KillCard roster** — Use semantic `<ul>/<li>` instead of flat `<span>` elements
+- [x] **ContactView table** — Add `<caption>` for screen reader context
+- [x] **KillCard images on HomeView** — Images have `cursor: zoom-in` and a click handler but no `role="button"` or keyboard event for lightbox access
+- [x] **External links in FooterView** — Links opening in `target="_blank"` should warn assistive technology users (e.g., append " (opens in new tab)" or use `aria-label`)
 
 ## Performance
 
@@ -58,12 +58,6 @@
 - [x] **Add bundle size visualization** — Configure `rollup-plugin-visualizer` to generate a report on builds, useful for tracking Firebase and other dependency sizes.
 - [x] **Explicit code splitting for Firebase** — Add `manualChunks` in `vite.config.js` `build.rollupOptions` to isolate Firebase into its own chunk.
 
-## Features
-
-- [ ] **Search/filter** — Allow searching kills or bosses by name
-- [ ] **M+ runner sorting** — Allow sorting leaderboard by score or name
-- [ ] **Service worker / offline support** — Cache static assets for offline browsing
-
 ## Integrations
 
 - [x] **"Refresh data" button to trigger GitHub Actions** — Add a button on the progression view that re-runs the WCL fetch + deploy on demand, so data can be refreshed without a code push.
@@ -74,14 +68,3 @@
   - **One-time setup (outside repo):** Cloudflare account + Worker, Turnstile site for `aztecs.se`, fine-grained GitHub PAT, `wrangler secret put` for both secrets, KV namespace for rate limiting, `wrangler deploy`.
   - **In-repo PR:** workflow file + Vue component + env var plumbing in GitHub Actions secrets.
   - **Open questions:** custom domain (`refresh.aztecs.se`) vs. `.workers.dev`; surface "last updated" timestamp from `wcl-progression.json` (not currently shown); button placement (progression only vs. also home).
-
-## Accessibility (a11y)
-
-- [x] **Hamburger menu** (`HeaderView.vue`) — Add `role="button"`, `aria-label`, and keyboard support (Enter/Space)
-- [x] **Boss expand** (`RaidProgressionBox.vue`) — Add `aria-expanded` attribute and keyboard support (Enter key to toggle)
-- [ ] **ImageLightbox** — Add `role="dialog"`, `aria-modal="true"`, focus trap, and scroll lock (`document.body.style.overflow = 'hidden'`)
-- [ ] **MythicPlusBox** — Add `aria-label` to timed/untimed checkmark symbols (currently reads as "check mark" / "cross mark" instead of "Timed" / "Not timed")
-- [ ] **KillCard roster** — Use semantic `<ul>/<li>` instead of flat `<span>` elements
-- [ ] **ContactView table** — Add `<caption>` for screen reader context
-- [ ] **KillCard images on HomeView** — Images have `cursor: zoom-in` and a click handler but no `role="button"` or keyboard event for lightbox access
-- [ ] **External links in FooterView** — Links opening in `target="_blank"` should warn assistive technology users (e.g., append " (opens in new tab)" or use `aria-label`)
