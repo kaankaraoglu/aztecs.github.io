@@ -139,10 +139,10 @@ export const WOW_CLASSES = {
       blood: {
         name: 'Blood',
         role: 'tank',
-        buffs: ['unholyMight', 'deathGrip', 'abominationLimb', 'gorefiendsGrasp'],
+        buffs: ['deathGrip', 'abominationLimb', 'gorefiendsGrasp'],
       },
-      frost: { name: 'Frost', role: 'melee', buffs: ['unholyMight', 'deathGrip'] },
-      unholy: { name: 'Unholy', role: 'melee', buffs: ['unholyMight', 'deathGrip'] },
+      frost: { name: 'Frost', role: 'melee', buffs: ['deathGrip'] },
+      unholy: { name: 'Unholy', role: 'melee', buffs: ['deathGrip'] },
     },
   },
   evoker: {
@@ -265,12 +265,6 @@ export const RAID_BUFFS = {
     description:
       'Grants 2% Mastery and 20% chance for auto attacks to instantly strike again for 1 hour',
     classes: ['shaman'],
-    category: 'throughput',
-  },
-  unholyMight: {
-    name: 'Unholy Might',
-    description: 'Increases Strength by 5%',
-    classes: ['deathKnight'],
     category: 'throughput',
   },
   abominationLimb: {
