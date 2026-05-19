@@ -17,6 +17,9 @@ import { GUILD_ID, CURRENT_ZONE_ID, CLASS_MAP, getToken, graphql } from './wcl-a
 
 loadEnv()
 
+const IS_CI = !!process.env.CI
+const REPORT_LIMIT = IS_CI ? 50 : 10
+
 const LOG_PREFIX = '[wcl]'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -92,7 +95,7 @@ async function fetchProgression(token) {
       }
     }
     reportData {
-      reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: 50) {
+      reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: ${REPORT_LIMIT}) {
         data {
           code
           startTime

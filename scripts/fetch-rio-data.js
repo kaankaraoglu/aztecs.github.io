@@ -33,6 +33,9 @@ if (process.env.SKIP_RIO_FETCH) {
   process.exit(0)
 }
 
+const IS_CI = !!process.env.CI
+const LOCAL_MEMBER_LIMIT = 20
+
 const BATCH_SIZE = 10
 const BATCH_DELAY_MS = 1500
 
@@ -116,6 +119,13 @@ async function main() {
     for (const m of uniqueMembers) {
       const slug = m.character.profile_url.split('/')[5]
       realmSlugByName.set(m.character.name, slug)
+    }
+
+    if (!IS_CI && uniqueMembers.length > LOCAL_MEMBER_LIMIT) {
+      console.log(
+        `[rio] Local mode: limiting to ${LOCAL_MEMBER_LIMIT} of ${uniqueMembers.length} members`,
+      )
+      uniqueMembers.length = LOCAL_MEMBER_LIMIT
     }
 
     const totalBatches = Math.ceil(uniqueMembers.length / BATCH_SIZE)
