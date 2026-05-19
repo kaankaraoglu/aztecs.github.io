@@ -40,6 +40,14 @@ describe('FooterView', () => {
     }
   })
 
+  it('includes screen-reader new-tab warning on external links', () => {
+    const wrapper = mountFooter()
+    const externalLinks = wrapper.findAll('.footer-social a')
+    for (const link of externalLinks) {
+      expect(link.find('.sr-only').text()).toBe('(opens in new tab)')
+    }
+  })
+
   it('shows the current year in copyright', () => {
     const wrapper = mountFooter()
     const year = new Date().getFullYear().toString()

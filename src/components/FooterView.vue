@@ -19,15 +19,17 @@
       <div class="footer-social">
         <h4 class="footer-heading">Community</h4>
         <nav>
-          <a href="https://discord.gg/GfmnD24VHa" target="_blank" rel="noopener">Discord</a>
+          <a href="https://discord.gg/GfmnD24VHa" target="_blank" rel="noopener"
+            >Discord<span class="sr-only"> (opens in new tab)</span></a
+          >
           <a
             href="https://www.warcraftlogs.com/guild/eu/alakir/aztecs"
             target="_blank"
             rel="noopener"
-            >Warcraft Logs</a
+            >Warcraft Logs<span class="sr-only"> (opens in new tab)</span></a
           >
           <a href="https://raider.io/guilds/eu/alakir/Aztecs" target="_blank" rel="noopener"
-            >Raider.IO</a
+            >Raider.IO<span class="sr-only"> (opens in new tab)</span></a
           >
         </nav>
       </div>
