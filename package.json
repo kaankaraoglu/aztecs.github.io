@@ -18,12 +18,12 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@lucide/vue": "^1.16.0",
     "@tailwindcss/vite": "^4.2.4",
     "@vueuse/core": "^14.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^12.13.0",
-    "lucide-vue-next": "^1.0.0",
     "reka-ui": "^2.9.6",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.4",
@@ -50,6 +50,13 @@
     "vite-plugin-image-optimizer": "^2.0.3",
     "vite-plugin-vue-devtools": "^8.1.1",
     "vitest": "^4.1.6"
+  },
+  "overrides": {
+    "vite-plugin-vue-devtools": {
+      "vite-plugin-inspect": {
+        "vite": "$vite"
+      }
+    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue,scss,css,md,json,yml,yaml}": [
