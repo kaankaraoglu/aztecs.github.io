@@ -32,19 +32,9 @@ jobs:
           VITE_SIGNUP_WORKER_URL: ${{ secrets.VITE_SIGNUP_WORKER_URL }}
         run: npm run build
 
-      - name: Create CNAME and .nojekyll
-        run: |
-          echo "aztecs.se" > dist/CNAME
-          touch dist/.nojekyll
-
       - name: Deploy to gh-pages
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git clone --depth=1 --branch=gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} out
-          rm -rf out/*
-          cp -r dist/. out/
-          cd out
-          git add .
-          git commit -m "Deploy site - $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
-          git push
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: aztecs.se
