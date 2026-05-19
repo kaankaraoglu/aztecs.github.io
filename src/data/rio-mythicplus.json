@@ -164,6 +164,14 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Skyreach",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Magisters' Terrace",
       "level": 18,
       "timed": true,
@@ -173,14 +181,6 @@
     },
     {
       "dungeon": "Pit of Saron",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Skyreach",
       "level": 18,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-19T14:35:10.214Z"
+  "lastUpdated": "2026-05-19T17:34:41.088Z"
 }
