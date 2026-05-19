@@ -43,13 +43,13 @@
 
 ## SEO & Meta
 
-- [ ] **Add `robots.txt`** — Create `public/robots.txt` with `Allow: /` and `Sitemap: https://aztecs.se/sitemap.xml`
-- [ ] **Add `sitemap.xml`** — Create `public/sitemap.xml` listing all 6 routes for better discoverability
-- [ ] **Add `<link rel="canonical">`** — Point to `https://aztecs.se` to prevent duplicate indexing via the `github.io` subdomain
-- [ ] **Per-route meta tags** — The router's `beforeEach` hook only updates `document.title`. Extend it to also set `<meta name="description">` and OG tags per route for better social sharing / SEO.
-- [ ] **Add `<meta name="color-scheme" content="dark">`** — Tells the browser to render native UI elements (scrollbars, form inputs, selection) in dark mode, matching the site's dark theme.
-- [ ] **Add `<noscript>` fallback** — Add a minimal message in `index.html` for users with JavaScript disabled.
-- [ ] **Audit font loading** — Verify Noto Sans is actually used in the UI; if not, removing it saves a network round-trip.
+- [x] **Add `robots.txt`** — Create `public/robots.txt` with `Allow: /` and `Sitemap: https://aztecs.se/sitemap.xml`
+- [x] **Add `sitemap.xml`** — Create `public/sitemap.xml` listing all 6 routes for better discoverability
+- [x] **Add `<link rel="canonical">`** — Point to `https://aztecs.se` to prevent duplicate indexing via the `github.io` subdomain
+- [x] **Per-route meta tags** — The router's `beforeEach` hook only updates `document.title`. Extend it to also set `<meta name="description">` and OG tags per route for better social sharing / SEO.
+- [x] **Add `<meta name="color-scheme" content="dark">`** — Tells the browser to render native UI elements (scrollbars, form inputs, selection) in dark mode, matching the site's dark theme.
+- [x] **Add `<noscript>` fallback** — Add a minimal message in `index.html` for users with JavaScript disabled.
+- [x] **Audit font loading** — Noto Sans was loaded but unused; removed from Google Fonts import (only Cal Sans is used).
 
 ## CI / DX
 
