@@ -50,6 +50,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Proto",
+      "class": "evoker",
+      "score": 3332,
+      "topKeys": [
+        "+16 SEAT",
+        "+16 SR",
+        "+16 POS",
+        "+16 AA",
+        "+15 WS",
+        "+15 MT",
+        "+15 NPX",
+        "+13 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 3288,
@@ -144,22 +160,6 @@
         "+13 SR"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Psyobs",
-      "class": "mage",
-      "score": 3119,
-      "topKeys": [
-        "+15 SEAT",
-        "+14 MC",
-        "+13 WS",
-        "+13 AA",
-        "+13 POS",
-        "+13 MT",
-        "+13 SR",
-        "+13 NPX"
-      ],
-      "realmSlug": "draenor"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-21T13:47:10.220Z"
+  "lastUpdated": "2026-05-21T16:35:29.153Z"
 }
