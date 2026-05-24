@@ -114,6 +114,38 @@
       "realmSlug": "skullcrusher"
     },
     {
+      "name": "Umgitsbubble",
+      "class": "paladin",
+      "score": 3188,
+      "topKeys": [
+        "+15 POS",
+        "+14 MC",
+        "+14 WS",
+        "+14 NPX",
+        "+14 SEAT",
+        "+14 AA",
+        "+14 MT",
+        "+13 SR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 3183,
+      "topKeys": [
+        "+15 SEAT",
+        "+14 SR",
+        "+14 MT",
+        "+14 NPX",
+        "+14 POS",
+        "+14 AA",
+        "+13 WS",
+        "+12 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Draggelina",
       "class": "evoker",
       "score": 3178,
@@ -126,38 +158,6 @@
         "+13 POS",
         "+13 AA",
         "+12 SEAT"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 3168,
-      "topKeys": [
-        "+14 SR",
-        "+14 MT",
-        "+14 NPX",
-        "+14 POS",
-        "+14 SEAT",
-        "+14 AA",
-        "+13 WS",
-        "+12 MC"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Umgitsbubble",
-      "class": "paladin",
-      "score": 3167,
-      "topKeys": [
-        "+15 POS",
-        "+14 WS",
-        "+14 NPX",
-        "+14 SEAT",
-        "+14 AA",
-        "+14 MT",
-        "+13 MC",
-        "+13 SR"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-24T15:42:38.840Z"
+  "lastUpdated": "2026-05-24T16:52:22.398Z"
 }
