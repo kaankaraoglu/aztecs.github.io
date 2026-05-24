@@ -18,6 +18,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Aerioth",
+      "class": "priest",
+      "score": 3470,
+      "topKeys": [
+        "+17 AA",
+        "+17 POS",
+        "+17 NPX",
+        "+16 MT",
+        "+16 SEAT",
+        "+16 SR",
+        "+16 WS",
+        "+16 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Lilithh",
       "class": "warlock",
       "score": 3418,
@@ -144,22 +160,6 @@
         "+13 SR"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Psyobs",
-      "class": "mage",
-      "score": 3119,
-      "topKeys": [
-        "+15 SEAT",
-        "+14 MC",
-        "+13 WS",
-        "+13 AA",
-        "+13 POS",
-        "+13 MT",
-        "+13 SR",
-        "+13 NPX"
-      ],
-      "realmSlug": "draenor"
     }
   ],
   "dungeonBests": [
@@ -208,7 +208,7 @@
       "level": 17,
       "timed": true,
       "team": [
-        "Rackz"
+        "Aerioth"
       ]
     },
     {
@@ -224,9 +224,9 @@
       "level": 17,
       "timed": true,
       "team": [
-        "Rackz"
+        "Aerioth"
       ]
     }
   ],
-  "lastUpdated": "2026-05-24T08:17:45.866Z"
+  "lastUpdated": "2026-05-24T10:16:59.411Z"
 }
