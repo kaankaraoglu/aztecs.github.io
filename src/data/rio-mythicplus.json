@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Umgitsbubble",
+      "class": "paladin",
+      "score": 3213,
+      "topKeys": [
+        "+15 POS",
+        "+14 SR",
+        "+14 MC",
+        "+14 WS",
+        "+14 NPX",
+        "+14 SEAT",
+        "+14 AA",
+        "+14 MT"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Mxk",
       "class": "warrior",
       "score": 3198,
@@ -112,22 +128,6 @@
         "+13 AA"
       ],
       "realmSlug": "skullcrusher"
-    },
-    {
-      "name": "Umgitsbubble",
-      "class": "paladin",
-      "score": 3188,
-      "topKeys": [
-        "+15 POS",
-        "+14 MC",
-        "+14 WS",
-        "+14 NPX",
-        "+14 SEAT",
-        "+14 AA",
-        "+14 MT",
-        "+13 SR"
-      ],
-      "realmSlug": "alakir"
     },
     {
       "name": "Blackmaira",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-24T21:17:25.863Z"
+  "lastUpdated": "2026-05-24T22:29:46.377Z"
 }
