@@ -4,13 +4,13 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3605,
+      "score": 3618,
       "topKeys": [
         "+18 MT",
+        "+18 MC",
         "+18 WS",
         "+18 POS",
         "+18 SR",
-        "+17 MC",
         "+17 SEAT",
         "+17 NPX",
         "+17 AA"
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "Maisara Caverns",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Pit of Saron",
       "level": 18,
       "timed": true,
@@ -212,14 +220,6 @@
       ]
     },
     {
-      "dungeon": "Maisara Caverns",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
       "dungeon": "Algeth'ar Academy",
       "level": 17,
       "timed": true,
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-25T20:07:58.670Z"
+  "lastUpdated": "2026-05-25T21:41:57.751Z"
 }
