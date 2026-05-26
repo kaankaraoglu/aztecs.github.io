@@ -4,10 +4,6 @@
       <div class="header-row">
         <div class="title-block">
           <h2 class="section-title">Flex Mythic Readiness</h2>
-          <p class="description">
-            Flex Mythic is a new difficulty requiring a minimum of
-            <strong>{{ MIN_PLAYERS }} players</strong>.
-          </p>
         </div>
         <Badge :variant="isReady ? 'success' : 'danger'" class="status-badge">
           {{ isReady ? 'Ready' : `Need ${needed} more` }}
@@ -79,18 +75,7 @@ const thresholdPct = computed(() => `${(MIN_PLAYERS / MAX_DISPLAY) * 100}%`)
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: $color-text-subtle;
-  margin: 0 0 $space-1 0;
-}
-
-.description {
-  font-size: 0.875rem;
-  color: $color-text-muted;
   margin: 0;
-
-  strong {
-    color: $color-text-primary;
-    font-weight: 600;
-  }
 }
 
 .status-badge {
