@@ -7,6 +7,8 @@
       :signup-count="submissions.length"
     />
 
+    <FlexMythicReadiness class="reveal" :signup-count="submissions.length" />
+
     <BuffCoverage class="reveal" :covered-buffs="coveredBuffs" :missing-buffs="missingBuffs" />
 
     <div v-if="error" class="error-banner reveal">
@@ -40,6 +42,7 @@ import BuffCoverage from '@/components/next-tier/BuffCoverage.vue'
 import RoleBalance from '@/components/next-tier/RoleBalance.vue'
 import SignupForm from '@/components/next-tier/SignupForm.vue'
 import SignupTable from '@/components/next-tier/SignupTable.vue'
+import FlexMythicReadiness from '@/components/next-tier/FlexMythicReadiness.vue'
 
 const containerRef = ref(null)
 useScrollReveal(containerRef)
