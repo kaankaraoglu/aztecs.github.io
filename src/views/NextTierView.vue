@@ -96,6 +96,11 @@ onMounted(async () => {
     min-width: 0;
   }
 
+  > :only-child {
+    flex: 1;
+    width: 100%;
+  }
+
   @include tablet {
     flex-direction: column;
   }
