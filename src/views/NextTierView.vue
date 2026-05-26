@@ -103,6 +103,10 @@ onMounted(async () => {
 
   @include tablet {
     flex-direction: column;
+
+    > * {
+      width: 100%;
+    }
   }
 }
 
