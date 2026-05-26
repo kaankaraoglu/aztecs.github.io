@@ -7,7 +7,10 @@
       </p>
     </section>
     <div class="content-wrapper">
-      <MissingClassesBox class="reveal" :submissions="submissions" />
+      <div class="next-tier-row">
+        <MissingClassesBox class="reveal" :submissions="submissions" />
+        <FlexMythicReadiness class="reveal" :signup-count="submissions.length" />
+      </div>
       <p class="section-label">TIER STATS</p>
       <RaidStatsBox class="reveal" />
       <FadingDivider />
@@ -62,6 +65,7 @@ import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import MythicPlusBox from '@/components/MythicPlusBox.vue'
 import RaidStatsBox from '@/components/RaidStatsBox.vue'
 import MissingClassesBox from '@/components/MissingClassesBox.vue'
+import FlexMythicReadiness from '@/components/next-tier/FlexMythicReadiness.vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
 import InfoBox from '@/components/InfoBox.vue'
 
@@ -138,6 +142,27 @@ onMounted(() => {
 
     @include tablet {
       grid-template-columns: 1fr;
+    }
+  }
+
+  .next-tier-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: $space-6;
+    align-items: stretch;
+    margin-bottom: $space-6;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
+
+    > :deep(.missing-classes-box) {
+      margin-bottom: 0;
+      height: 100%;
+    }
+
+    > :only-child {
+      grid-column: 1 / -1;
     }
   }
 
