@@ -84,7 +84,7 @@ const thresholdPct = computed(() => `${(MIN_PLAYERS / MAX_DISPLAY) * 100}%`)
 
 .description {
   font-size: 0.875rem;
-  color: $color-text-secondary;
+  color: $color-text-muted;
   margin: 0;
 
   strong {
