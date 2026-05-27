@@ -62,12 +62,19 @@
 
   @include tablet {
     grid-template-columns: 1fr 1fr;
+    justify-content: center;
   }
 
   @include mobile {
     grid-template-columns: 1fr;
     gap: $space-6;
     text-align: center;
+  }
+}
+
+.footer-brand {
+  @include tablet {
+    display: none;
   }
 }
 
@@ -79,10 +86,6 @@
   @include mobile {
     margin: 0 auto;
     display: block;
-  }
-
-  @include tablet {
-    display: none;
   }
 }
 
