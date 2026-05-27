@@ -37,6 +37,15 @@ export default defineConfig({
           if (id.includes('node_modules/firebase/') || id.includes('node_modules/@firebase/')) {
             return 'firebase'
           }
+          if (id.includes('node_modules/reka-ui/')) {
+            return 'reka-ui'
+          }
+          if (id.includes('node_modules/@vueuse/')) {
+            return 'vueuse'
+          }
+          if (id.includes('node_modules/@lucide/')) {
+            return 'lucide'
+          }
         },
       },
     },

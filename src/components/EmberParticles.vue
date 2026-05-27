@@ -8,8 +8,18 @@ let onVisibilityChange = null
 let onResize = null
 let resizeTimeout = null
 
-const PARTICLE_COUNT = 50
 const COLORS = ['#ffa203', '#ff8a05', '#f5bd25', '#fe691e']
+
+// ~50 particles at 1920x1080; clamped so tiny phones don't feel empty
+// and ultrawide displays don't choke on overdraw.
+const PIXELS_PER_PARTICLE = 41472
+const MIN_PARTICLES = 20
+const MAX_PARTICLES = 80
+
+function targetParticleCount(canvas) {
+  const raw = Math.round((canvas.width * canvas.height) / PIXELS_PER_PARTICLE)
+  return Math.max(MIN_PARTICLES, Math.min(MAX_PARTICLES, raw))
+}
 
 function createParticle(canvas) {
   return {
@@ -59,7 +69,7 @@ onMounted(() => {
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
 
-  particles = Array.from({ length: PARTICLE_COUNT }, () => createParticle(canvas))
+  particles = Array.from({ length: targetParticleCount(canvas) }, () => createParticle(canvas))
   for (const p of particles) {
     p.y = Math.random() * canvas.height
   }
@@ -81,6 +91,16 @@ onMounted(() => {
     resizeTimeout = setTimeout(() => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
+
+      const desired = targetParticleCount(canvas)
+      if (desired > particles.length) {
+        for (let i = particles.length; i < desired; i++) {
+          particles.push(createParticle(canvas))
+        }
+      } else if (desired < particles.length) {
+        particles.length = desired
+      }
+
       for (const p of particles) {
         if (p.x > canvas.width) p.x = Math.random() * canvas.width
         if (p.y > canvas.height) p.y = canvas.height
