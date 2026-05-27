@@ -92,17 +92,17 @@ workers/
 
 All routes are lazy-loaded. Vue Router 5 with hash-based page transitions (fade + slide-up enter, fade exit).
 
-| Route | View | Page Title |
-|-------|------|-----------|
-| `/` | HomeView | Aztecs - Horde Guild on Al'Akir |
-| `/contact` | ContactView | Aztecs - Contact & Roster |
-| `/raiding` | RaidingView | Aztecs - Raiding |
-| `/achievements` | AchievementsView | Aztecs - Achievements |
-| `/about` | AboutView | Aztecs - About Us |
-| `/in-memoriam` | InMemoriamView | Aztecs - In Memoriam |
-| `/next-tier` | NextTierView | Aztecs - Next Tier Signups |
-| `/wow-kills` | → `/achievements` | (redirect) |
-| `/:pathMatch(.*)* ` | NotFoundView | — |
+| Route               | View              | Page Title                      |
+| ------------------- | ----------------- | ------------------------------- |
+| `/`                 | HomeView          | Aztecs - Horde Guild on Al'Akir |
+| `/contact`          | ContactView       | Aztecs - Contact & Roster       |
+| `/raiding`          | RaidingView       | Aztecs - Raiding                |
+| `/achievements`     | AchievementsView  | Aztecs - Achievements           |
+| `/about`            | AboutView         | Aztecs - About Us               |
+| `/in-memoriam`      | InMemoriamView    | Aztecs - In Memoriam            |
+| `/next-tier`        | NextTierView      | Aztecs - Next Tier Signups      |
+| `/wow-kills`        | → `/achievements` | (redirect)                      |
+| `/:pathMatch(.*)* ` | NotFoundView      | —                               |
 
 The router also sets `<title>`, meta description, Open Graph tags, Twitter cards, and canonical URL on each navigation, and fires `page_view` analytics events.
 
@@ -118,17 +118,17 @@ The router also sets `<title>`, meta description, Open Graph tags, Twitter cards
 
 ### Composables
 
-| File | Purpose |
-|------|---------|
-| `useProgression.js` | Raid progression — reads `wcl-progression.json`, falls back to `progression.js` |
-| `useMythicPlus.js` | M+ season/dungeon data from `rio-mythicplus.json` |
-| `useRaidStats.js` | Deaths/DPS/healing records from `wcl-stats.json` |
-| `useBuffAnalysis.js` | Computes covered vs. missing raid buffs + role counts from signups |
-| `useNextTierSignups.js` | Full signup flow: Discord OAuth, JWT, CRUD via signup worker API |
-| `useAnalytics.js` | Firebase Analytics wrapper — lazy, silent, no-ops outside production |
-| `useTheme.js` | Dark/light theme toggle — persists to localStorage, sets `data-theme` on `<html>` |
-| `useScrollReveal.js` | IntersectionObserver-based scroll-triggered reveal animations |
-| `useTiltEffect.js` | 3D mouse-tilt effect (desktop only, respects `prefers-reduced-motion`) |
+| File                    | Purpose                                                                           |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| `useProgression.js`     | Raid progression — reads `wcl-progression.json`, falls back to `progression.js`   |
+| `useMythicPlus.js`      | M+ season/dungeon data from `rio-mythicplus.json`                                 |
+| `useRaidStats.js`       | Deaths/DPS/healing records from `wcl-stats.json`                                  |
+| `useBuffAnalysis.js`    | Computes covered vs. missing raid buffs + role counts from signups                |
+| `useNextTierSignups.js` | Full signup flow: Discord OAuth, JWT, CRUD via signup worker API                  |
+| `useAnalytics.js`       | Firebase Analytics wrapper — lazy, silent, no-ops outside production              |
+| `useTheme.js`           | Dark/light theme toggle — persists to localStorage, sets `data-theme` on `<html>` |
+| `useScrollReveal.js`    | IntersectionObserver-based scroll-triggered reveal animations                     |
+| `useTiltEffect.js`      | 3D mouse-tilt effect (desktop only, respects `prefers-reduced-motion`)            |
 
 ### Data Flow for Raid Progression
 
@@ -148,15 +148,15 @@ The **RefreshDataButton** component in the progression header lets users trigger
 
 ### Static Data Files
 
-| File | Purpose |
-|------|---------|
-| `src/data/wow-classes.js` | `WOW_CLASSES` (specs, buffs per class) and `RAID_BUFFS` catalog |
-| `src/data/progression.js` | Static fallback raid data (used if WCL JSON is empty) |
-| `src/data/kills.js` | Historical boss kills with dates, rosters, screenshots (newest-first) |
-| `src/data/in-memoriam.js` | Memorial entries for departed guild members |
-| `src/data/wcl-progression.json` | Build-time fetched — full WCL raid data |
-| `src/data/rio-mythicplus.json` | Build-time fetched — RIO M+ season data |
-| `src/data/wcl-stats.json` | Build-time fetched — aggregated raid statistics |
+| File                            | Purpose                                                               |
+| ------------------------------- | --------------------------------------------------------------------- |
+| `src/data/wow-classes.js`       | `WOW_CLASSES` (specs, buffs per class) and `RAID_BUFFS` catalog       |
+| `src/data/progression.js`       | Static fallback raid data (used if WCL JSON is empty)                 |
+| `src/data/kills.js`             | Historical boss kills with dates, rosters, screenshots (newest-first) |
+| `src/data/in-memoriam.js`       | Memorial entries for departed guild members                           |
+| `src/data/wcl-progression.json` | Build-time fetched — full WCL raid data                               |
+| `src/data/rio-mythicplus.json`  | Build-time fetched — RIO M+ season data                               |
+| `src/data/wcl-stats.json`       | Build-time fetched — aggregated raid statistics                       |
 
 ### Cloudflare Workers
 
@@ -164,15 +164,15 @@ The **RefreshDataButton** component in the progression header lets users trigger
 
 Discord OAuth + signup CRUD backed by Cloudflare KV (`SIGNUPS` namespace).
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /auth/discord` | Redirect to Discord OAuth |
-| `GET /auth/discord/callback` | Callback — issues JWT |
-| `GET /api/config` | Current tier config (id, name, isOpen) |
-| `PUT /api/admin/config` | Update config (requires `ADMIN_SECRET`) |
-| `GET /api/submissions` | List all signups for current tier |
-| `PUT /api/submissions` | Create/update signup (requires JWT) |
-| `DELETE /api/submissions` | Remove signup (requires JWT) |
+| Endpoint                     | Description                             |
+| ---------------------------- | --------------------------------------- |
+| `GET /auth/discord`          | Redirect to Discord OAuth               |
+| `GET /auth/discord/callback` | Callback — issues JWT                   |
+| `GET /api/config`            | Current tier config (id, name, isOpen)  |
+| `PUT /api/admin/config`      | Update config (requires `ADMIN_SECRET`) |
+| `GET /api/submissions`       | List all signups for current tier       |
+| `PUT /api/submissions`       | Create/update signup (requires JWT)     |
+| `DELETE /api/submissions`    | Remove signup (requires JWT)            |
 
 Secrets (via `wrangler secret`): `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `JWT_SECRET`, `ADMIN_SECRET`, `FRONTEND_URL`
 
@@ -218,15 +218,18 @@ Firebase Analytics is initialized in `src/main.js`, lazy-loaded only in producti
 ### Environment Variables
 
 Build-time only (not exposed to browser):
+
 - `WCL_CLIENT_ID`, `WCL_CLIENT_SECRET` — Warcraft Logs API credentials
 
 Runtime (Vite `VITE_` prefix, exposed to browser):
+
 - `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_MEASUREMENT_ID`
 - `VITE_SIGNUP_WORKER_URL` — base URL for the signup Cloudflare Worker
 - `VITE_REFRESH_WORKER_URL` — base URL for the refresh Cloudflare Worker
 - `VITE_TURNSTILE_SITE_KEY` — Cloudflare Turnstile public key
 
 CI build flag:
+
 - `SKIP_DATA_FETCH=true` — skips the prebuild fetch (data already in repo)
 
 ### Deployment
@@ -235,17 +238,17 @@ PRs trigger `ci.yml` which runs lint, test, and build as 3 parallel jobs. Push t
 
 ### Key Dependencies
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| vue | ^3.5.34 | Framework |
-| vue-router | ^5.0.7 | Routing |
-| reka-ui | ^2.9.6 | Headless UI primitives (Shadcn-style) |
-| @vueuse/core | ^14.2.1 | Vue utility composables |
-| @lucide/vue | ^1.16.0 | Icon library |
-| tailwindcss | ^4.2.4 | Utility CSS |
-| firebase | ^12.13.0 | Analytics |
-| class-variance-authority | ^0.7.1 | Component variant helpers |
-| tailwind-merge | ^3.5.0 | Merge Tailwind classes safely |
+| Package                  | Version  | Purpose                               |
+| ------------------------ | -------- | ------------------------------------- |
+| vue                      | ^3.5.34  | Framework                             |
+| vue-router               | ^5.0.7   | Routing                               |
+| reka-ui                  | ^2.9.6   | Headless UI primitives (Shadcn-style) |
+| @vueuse/core             | ^14.2.1  | Vue utility composables               |
+| @lucide/vue              | ^1.16.0  | Icon library                          |
+| tailwindcss              | ^4.2.4   | Utility CSS                           |
+| firebase                 | ^12.13.0 | Analytics                             |
+| class-variance-authority | ^0.7.1   | Component variant helpers             |
+| tailwind-merge           | ^3.5.0   | Merge Tailwind classes safely         |
 
 ## Custom Instructions
 
