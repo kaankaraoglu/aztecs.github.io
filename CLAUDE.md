@@ -254,3 +254,35 @@ PRs trigger `ci.yml` which runs lint, test, and build as 3 parallel jobs. Push t
 
 Always check before you push to a branch to see if it is already merged or not. If so, open a new branch and PR.
 Always open links with Firefox.
+
+### PR Description Template
+
+Use this exact format when creating pull requests via `gh pr create`:
+
+```
+## What
+
+<one or two sentences: what changed and why>
+
+## Type
+
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Refactor / cleanup
+- [ ] Data / content update
+- [ ] Docs
+- [ ] CI / tooling
+
+## How to verify
+
+<numbered steps to confirm the change works — include route, component, or command>
+
+1.
+2.
+
+## Notes
+
+<trade-offs, follow-ups, caveats — omit section if nothing to add>
+```
+
+The same template lives in `.github/pull_request_template.md` and auto-populates GitHub's PR UI.
