@@ -1,36 +1,32 @@
 <template>
-  <Card class="flex-mythic-readiness">
-    <CardContent class="p-6">
-      <div class="header-row">
-        <div class="title-block">
-          <h2 class="section-title">Flex Mythic Readiness</h2>
-        </div>
-        <Badge :variant="isReady ? 'success' : 'danger'" class="status-badge">
-          {{ isReady ? 'Ready' : `Need ${needed} more` }}
-        </Badge>
+  <InfoBox no-hover class="flex-mythic-readiness">
+    <div class="header-row">
+      <div class="title-block">
+        <h2 class="section-title">Flex Mythic Readiness</h2>
       </div>
+      <Badge :variant="isReady ? 'success' : 'danger'" class="status-badge">
+        {{ isReady ? 'Ready' : `Need ${needed} more` }}
+      </Badge>
+    </div>
 
-      <div class="progress-track">
-        <div class="progress-fill" :class="{ ready: isReady }" :style="{ width: progressPct }" />
-        <div class="progress-threshold" :style="{ left: thresholdPct }" />
-      </div>
+    <div class="progress-track">
+      <div class="progress-fill" :class="{ ready: isReady }" :style="{ width: progressPct }" />
+      <div class="progress-threshold" :style="{ left: thresholdPct }" />
+    </div>
 
-      <div class="progress-labels">
-        <span class="label-current">
-          <span class="count" :class="isReady ? 'text-ready' : 'text-short'">{{
-            signupCount
-          }}</span>
-          signed up
-        </span>
-        <span class="label-min">{{ MIN_PLAYERS }} min</span>
-      </div>
-    </CardContent>
-  </Card>
+    <div class="progress-labels">
+      <span class="label-current">
+        <span class="count" :class="isReady ? 'text-ready' : 'text-short'">{{ signupCount }}</span>
+        signed up
+      </span>
+      <span class="label-min">{{ MIN_PLAYERS }} min</span>
+    </div>
+  </InfoBox>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { Card, CardContent } from '@/components/ui/card'
+import InfoBox from '@/components/InfoBox.vue'
 import { Badge } from '@/components/ui/badge'
 
 const MIN_PLAYERS = 15
@@ -71,9 +67,9 @@ const thresholdPct = computed(() => `${(MIN_PLAYERS / MAX_DISPLAY) * 100}%`)
 
 .section-title {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   color: $color-text-subtle;
   margin: 0;
 }
