@@ -4,16 +4,16 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3618,
+      "score": 3633,
       "topKeys": [
         "+18 MT",
         "+18 MC",
         "+18 WS",
+        "+18 AA",
         "+18 POS",
         "+18 SR",
         "+17 SEAT",
-        "+17 NPX",
-        "+17 AA"
+        "+17 NPX"
       ],
       "realmSlug": "alakir"
     },
@@ -196,6 +196,14 @@
       ]
     },
     {
+      "dungeon": "Algeth'ar Academy",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Windrunner Spire",
       "level": 18,
       "timed": true,
@@ -218,15 +226,7 @@
       "team": [
         "Aerioth"
       ]
-    },
-    {
-      "dungeon": "Algeth'ar Academy",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
     }
   ],
-  "lastUpdated": "2026-05-28T17:07:01.743Z"
+  "lastUpdated": "2026-05-28T19:53:35.775Z"
 }
