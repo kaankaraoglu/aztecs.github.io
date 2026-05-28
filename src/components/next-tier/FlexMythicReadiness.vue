@@ -49,20 +49,16 @@ const thresholdPct = computed(() => `${(MIN_PLAYERS / MAX_DISPLAY) * 100}%`)
 @use '@/assets/styles/tokens' as *;
 
 .header-row {
+  position: relative;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: $space-4;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-2;
   margin-bottom: $space-4;
-
-  @include mobile {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
 .title-block {
-  flex: 1;
+  width: 100%;
 }
 
 .section-title {
@@ -72,13 +68,21 @@ const thresholdPct = computed(() => `${(MIN_PLAYERS / MAX_DISPLAY) * 100}%`)
   letter-spacing: 0.1em;
   color: $color-text-subtle;
   margin: 0;
+  text-align: center;
 }
 
 .status-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
   font-size: 0.875rem;
   padding: $space-2 $space-4;
   white-space: nowrap;
   flex-shrink: 0;
+
+  @include mobile {
+    position: static;
+  }
 }
 
 .progress-track {
