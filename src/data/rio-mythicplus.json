@@ -4,16 +4,16 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3645,
+      "score": 3661,
       "topKeys": [
         "+18 MT",
         "+18 MC",
+        "+18 NPX",
         "+18 WS",
         "+18 AA",
         "+18 POS",
         "+18 SEAT",
-        "+18 SR",
-        "+17 NPX"
+        "+18 SR"
       ],
       "realmSlug": "alakir"
     },
@@ -188,6 +188,14 @@
       ]
     },
     {
+      "dungeon": "Nexus-Point Xenas",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Maisara Caverns",
       "level": 18,
       "timed": true,
@@ -218,15 +226,7 @@
       "team": [
         "Rackz"
       ]
-    },
-    {
-      "dungeon": "Nexus-Point Xenas",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
     }
   ],
-  "lastUpdated": "2026-05-30T12:46:13.960Z"
+  "lastUpdated": "2026-05-30T14:24:59.179Z"
 }
