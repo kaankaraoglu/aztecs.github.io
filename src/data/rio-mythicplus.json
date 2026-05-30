@@ -4,15 +4,15 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3633,
+      "score": 3645,
       "topKeys": [
         "+18 MT",
         "+18 MC",
         "+18 WS",
         "+18 AA",
         "+18 POS",
+        "+18 SEAT",
         "+18 SR",
-        "+17 SEAT",
         "+17 NPX"
       ],
       "realmSlug": "alakir"
@@ -164,6 +164,14 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Seat of the Triumvirate",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Skyreach",
       "level": 18,
       "timed": true,
@@ -212,14 +220,6 @@
       ]
     },
     {
-      "dungeon": "Seat of the Triumvirate",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
       "dungeon": "Nexus-Point Xenas",
       "level": 17,
       "timed": true,
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-30T09:52:02.826Z"
+  "lastUpdated": "2026-05-30T12:46:13.960Z"
 }
