@@ -100,14 +100,14 @@
     {
       "name": "Umgitsbubble",
       "class": "paladin",
-      "score": 3213,
+      "score": 3232,
       "topKeys": [
+        "+15 SEAT",
         "+15 POS",
         "+14 SR",
         "+14 MC",
         "+14 WS",
         "+14 NPX",
-        "+14 SEAT",
         "+14 AA",
         "+14 MT"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-05-31T20:37:04.666Z"
+  "lastUpdated": "2026-05-31T21:48:48.456Z"
 }
