@@ -4,7 +4,7 @@ const WORKER_URL = import.meta.env.VITE_SIGNUP_WORKER_URL ?? ''
 const TOKEN_KEY = 'aztecs-signup-jwt'
 
 /**
- * @typedef {{ discordId: string, discordUsername: string }} CurrentUser
+ * @typedef {{ discordId: string, discordUsername: string, isAdmin: boolean }} CurrentUser
  * @typedef {{
  *   discordId: string,
  *   discordUsername: string,
@@ -49,7 +49,11 @@ function loadStoredUser() {
     localStorage.removeItem(TOKEN_KEY)
     return
   }
-  currentUser.value = { discordId: payload.sub, discordUsername: payload.username }
+  currentUser.value = {
+    discordId: payload.sub,
+    discordUsername: payload.username,
+    isAdmin: payload.isAdmin === true,
+  }
 }
 
 function getAuthHeaders() {
@@ -63,6 +67,8 @@ export function useNextTierSignups() {
     () => submissions.value.find((s) => s.discordId === currentUser.value?.discordId) ?? null,
   )
 
+  const isAdmin = computed(() => currentUser.value?.isAdmin === true)
+
   function handleAuthCallback() {
     const hash = window.location.hash
     if (!hash) return
@@ -75,7 +81,11 @@ export function useNextTierSignups() {
       localStorage.setItem(TOKEN_KEY, token)
       const payload = parseJwtPayload(token)
       if (payload) {
-        currentUser.value = { discordId: payload.sub, discordUsername: payload.username }
+        currentUser.value = {
+          discordId: payload.sub,
+          discordUsername: payload.username,
+          isAdmin: payload.isAdmin === true,
+        }
       }
     }
 
@@ -137,10 +147,17 @@ export function useNextTierSignups() {
     }
   }
 
-  async function deleteSignup() {
+  /**
+   * Remove a signup. Pass a `discordId` to remove another member's signup
+   * (admin only); omit it to remove the current user's own signup.
+   * @param {string} [discordId]
+   */
+  async function deleteSignup(discordId) {
     error.value = null
     try {
-      const res = await fetch(`${WORKER_URL}/api/submissions`, {
+      const query =
+        typeof discordId === 'string' ? `?discordId=${encodeURIComponent(discordId)}` : ''
+      const res = await fetch(`${WORKER_URL}/api/submissions${query}`, {
         method: 'DELETE',
         headers: getAuthHeaders(),
       })
@@ -177,6 +194,7 @@ export function useNextTierSignups() {
     config,
     currentUser,
     existingSubmission,
+    isAdmin,
     loading,
     error,
     handleAuthCallback,
