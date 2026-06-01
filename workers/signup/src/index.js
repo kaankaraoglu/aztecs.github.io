@@ -9,6 +9,7 @@ export default {
    *   DISCORD_CLIENT_SECRET: string,
    *   JWT_SECRET: string,
    *   ADMIN_SECRET: string,
+   *   ADMIN_DISCORD_IDS: string,
    *   FRONTEND_URL: string
    * }} env
    */
@@ -103,7 +104,10 @@ async function handleDiscordCallback(url, env) {
   }
 
   const user = await userRes.json()
-  const jwt = await createJwt({ sub: user.id, username: user.username }, env.JWT_SECRET)
+  const jwt = await createJwt(
+    { sub: user.id, username: user.username, isAdmin: isAdminUser(user.id, env) },
+    env.JWT_SECRET,
+  )
 
   return Response.redirect(`${env.FRONTEND_URL}/next-tier#token=${jwt}`, 302)
 }
@@ -179,6 +183,18 @@ async function requireAuth(request, secret) {
   const authHeader = request.headers.get('Authorization')
   if (!authHeader?.startsWith('Bearer ')) return null
   return verifyJwt(authHeader.slice(7), secret)
+}
+
+/**
+ * Whether a Discord user id is in the admin allowlist.
+ * `ADMIN_DISCORD_IDS` is a comma-separated list of Discord user ids.
+ */
+function isAdminUser(discordId, env) {
+  if (!discordId || !env.ADMIN_DISCORD_IDS) return false
+  return env.ADMIN_DISCORD_IDS.split(',')
+    .map((id) => id.trim())
+    .filter(Boolean)
+    .includes(discordId)
 }
 
 // --- Config ---
@@ -281,14 +297,31 @@ async function handleDeleteSubmission(request, env) {
     return corsResponse(env.FRONTEND_URL, 401, { error: 'Unauthorized' })
   }
 
-  const config = await env.SIGNUPS.get(CONFIG_KEY, 'json')
-  if (!config?.isOpen) {
-    return corsResponse(env.FRONTEND_URL, 403, { error: 'Signups are closed' })
+  const admin = isAdminUser(user.sub, env)
+  const targetId = new URL(request.url).searchParams.get('discordId')
+
+  // Only admins may remove someone else's signup.
+  if (targetId && targetId !== user.sub && !admin) {
+    return corsResponse(env.FRONTEND_URL, 403, { error: 'Forbidden' })
   }
 
-  const tierId = config.currentTierId
+  // Regular users may only remove their signup while signups are open;
+  // admins can remove any signup at any time.
+  if (!admin) {
+    const config = await env.SIGNUPS.get(CONFIG_KEY, 'json')
+    if (!config?.isOpen) {
+      return corsResponse(env.FRONTEND_URL, 403, { error: 'Signups are closed' })
+    }
+  }
+
+  const tierId = await getCurrentTierId(env)
+  if (!tierId) {
+    return corsResponse(env.FRONTEND_URL, 404, { error: 'No active tier' })
+  }
+
+  const removeId = targetId ?? user.sub
   const submissions = (await env.SIGNUPS.get(`tier:${tierId}`, 'json')) ?? []
-  const filtered = submissions.filter((s) => s.discordId !== user.sub)
+  const filtered = submissions.filter((s) => s.discordId !== removeId)
 
   await env.SIGNUPS.put(`tier:${tierId}`, JSON.stringify(filtered))
   return corsResponse(env.FRONTEND_URL, 200, { deleted: true })

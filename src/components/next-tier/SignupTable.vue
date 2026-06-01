@@ -10,6 +10,9 @@
             <TableHead class="col-spec">Spec</TableHead>
             <TableHead class="col-role hide-mobile">Role</TableHead>
             <TableHead class="col-discord hide-mobile">Discord</TableHead>
+            <TableHead v-if="isAdmin" class="col-actions"
+              ><span class="sr-only">Actions</span></TableHead
+            >
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -31,6 +34,16 @@
             <TableCell class="col-discord hide-mobile discord-col text-left">{{
               sub.discordUsername
             }}</TableCell>
+            <TableCell v-if="isAdmin" class="col-actions text-right">
+              <Button
+                variant="destructive"
+                size="sm"
+                :aria-label="`Remove ${sub.characterName}`"
+                @click="confirmDelete(sub)"
+              >
+                Remove
+              </Button>
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -41,6 +54,7 @@
 
 <script setup>
 import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import {
   Table,
   TableHeader,
@@ -53,7 +67,15 @@ import { WOW_CLASSES } from '@/data/wow-classes.js'
 
 defineProps({
   submissions: { type: Array, required: true },
+  isAdmin: { type: Boolean, default: false },
 })
+
+const emit = defineEmits(['delete'])
+
+function confirmDelete(sub) {
+  const ok = window.confirm(`Remove ${sub.characterName}'s signup? This can't be undone.`)
+  if (ok) emit('delete', sub.discordId)
+}
 
 function toCssClass(classKey) {
   return classKey.replace(/([A-Z])/g, '-$1').toLowerCase()
@@ -108,6 +130,11 @@ function getRoleName(classKey, specKey) {
 
 .signup-table :deep(.col-discord) {
   width: 28%;
+}
+
+.signup-table :deep(.col-actions) {
+  width: 10%;
+  white-space: nowrap;
 }
 
 @include mobile {

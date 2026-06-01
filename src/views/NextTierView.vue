@@ -28,7 +28,12 @@
       <RoleBalance :role-counts="roleCounts" />
     </div>
 
-    <SignupTable class="reveal" :submissions="submissions" />
+    <SignupTable
+      class="reveal"
+      :submissions="submissions"
+      :is-admin="isAdmin"
+      @delete="deleteSignup"
+    />
   </div>
 </template>
 
@@ -52,6 +57,7 @@ const {
   config,
   currentUser,
   existingSubmission,
+  isAdmin,
   error,
   handleAuthCallback,
   fetchConfig,
