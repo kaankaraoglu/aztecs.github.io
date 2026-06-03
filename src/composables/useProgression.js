@@ -45,6 +45,9 @@ export function useProgression() {
   /** @type {import('vue').Ref<ProgressSummary>} */
   const summary = ref(hasWclData ? wclData.summary : computeSummary(fallbackRaids))
   const latestReport = hasWclData ? wclData.latestReport || null : null
+  // When true, the mythic tier is relabelled "MX" / "Mythic Flex" in the UI.
+  // Only set on the new raid's zone data; falls back to false everywhere else.
+  const mythicFlex = hasWclData ? (wclData.mythicFlex ?? false) : false
 
-  return { raids, summary, latestReport }
+  return { raids, summary, latestReport, mythicFlex }
 }

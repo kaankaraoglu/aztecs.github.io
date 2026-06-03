@@ -25,10 +25,13 @@
           <div class="boss-list">
             <div v-for="boss in raid.bosses" :key="boss.name" class="boss-line">
               <span class="boss-status">
-                <span :class="['pip', 'normal', { active: boss.normal }]">N</span>
-                <span :class="['pip', 'heroic', { active: boss.heroic }]">HC</span>
-                <span v-if="summary.mythic > 0" :class="['pip', 'mythic', { active: boss.mythic }]"
-                  >M</span
+                <span :class="['pip', 'normal', { active: boss.normal }]" title="Normal">N</span>
+                <span :class="['pip', 'heroic', { active: boss.heroic }]" title="Heroic">HC</span>
+                <span
+                  v-if="summary.mythic > 0"
+                  :class="['pip', 'mythic', { active: boss.mythic }]"
+                  :title="mythicName"
+                  >{{ mythicLabel }}</span
                 >
               </span>
               <div
@@ -147,7 +150,16 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  // When true, the mythic tier is shown as "MX" / "Mythic Flex" (new raid only).
+  mythicFlex: {
+    type: Boolean,
+    default: false,
+  },
 })
+
+// Mythic tier is internally "mythic"; only its display label changes for Mythic Flex.
+const mythicLabel = computed(() => (props.mythicFlex ? 'MX' : 'M'))
+const mythicName = computed(() => (props.mythicFlex ? 'Mythic Flex' : 'Mythic'))
 
 const formattedUpdated = computed(() => {
   if (!props.lastUpdated) return null
@@ -184,14 +196,13 @@ function formatDate(isoString) {
   return `${month} ${day}${ordinalSuffix(day)}`
 }
 
-const DIFFICULTY_LABEL = { normal: 'N', heroic: 'HC', mythic: 'M' }
-
 function pullsText(boss) {
   const p = boss.pullsByDifficulty
   if (!p) return null
+  const labels = { normal: 'N', heroic: 'HC', mythic: mythicLabel.value }
   const parts = []
   for (const diff of ['normal', 'heroic', 'mythic']) {
-    if (p[diff]) parts.push(`${p[diff]} ${DIFFICULTY_LABEL[diff]}`)
+    if (p[diff]) parts.push(`${p[diff]} ${labels[diff]}`)
   }
   if (!parts.length) return null
   return `Pulls: ${parts.join(' & ')}`

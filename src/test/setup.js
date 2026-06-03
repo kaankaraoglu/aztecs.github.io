@@ -14,7 +14,12 @@ const dataDir = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'data')
 const stubs = [
   [
     'wcl-progression.json',
-    { zone: '', raids: [], summary: { total: 0, normal: 0, heroic: 0, mythic: 0 } },
+    {
+      zone: '',
+      raids: [],
+      summary: { total: 0, normal: 0, heroic: 0, mythic: 0 },
+      mythicFlex: false,
+    },
   ],
   [
     'wcl-stats.json',

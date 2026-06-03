@@ -138,7 +138,7 @@ Primary source is **Warcraft Logs**, fetched every 30 minutes by the `fetch-data
 2. **`scripts/fetch-wcl-data.js`** authenticates with WCL OAuth2 (`WCL_CLIENT_ID`/`WCL_CLIENT_SECRET` env vars), fetches zone encounters and guild reports, writes `src/data/wcl-progression.json`. Per boss: kill status per difficulty, kill date, pull count, best %, and full kill roster with player names/classes.
 3. **`useProgression` composable** (`src/composables/useProgression.js`) reads the WCL JSON. Falls back to `src/data/progression.js` if WCL data is empty.
 
-**When a new raid tier launches**, update `CURRENT_ZONE_ID` and `RAID_INSTANCE_ENCOUNTERS` in `scripts/fetch-wcl-data.js`. The zone ID can be found via the WCL GraphQL API: `{ worldData { expansion(id: N) { zones { id name } } } }`.
+**When a new raid tier launches**, update `CURRENT_ZONE_ID` and `RAID_INSTANCE_ENCOUNTERS` in `scripts/fetch-wcl-data.js`. The zone ID can be found via the WCL GraphQL API: `{ worldData { expansion(id: N) { zones { id name } } } }`. If the new tier uses the **Mythic Flex** difficulty, also set `MYTHIC_FLEX = true` in the same file — this relabels the mythic tier as "MX" / "Mythic Flex" in the UI (same legendary colour) for that tier only; the underlying data still uses the `mythic` field.
 
 The **RefreshDataButton** component in the progression header lets users trigger an on-demand data refresh via a Cloudflare Worker (`workers/refresh/`) that dispatches the `fetch-data.yml` GitHub Actions workflow. Requires `VITE_REFRESH_WORKER_URL` and `VITE_TURNSTILE_SITE_KEY` env vars.
 

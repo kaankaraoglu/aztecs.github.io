@@ -30,7 +30,15 @@ const EMPTY_OUTPUT = {
   raids: [],
   summary: { total: 0, normal: 0, heroic: 0, mythic: 0 },
   latestReport: null,
+  mythicFlex: false,
 }
+
+// Set true when the active zone uses the Mythic Flex difficulty (relabels the
+// mythic tier as "MX" / "Mythic Flex" in the UI). Leave false for legacy mythic.
+// Flip this alongside CURRENT_ZONE_ID / RAID_INSTANCE_ENCOUNTERS when a new tier launches.
+const MYTHIC_FLEX = false
+// TODO @launch: if WCL assigns Mythic Flex a NEW difficulty id (not 5),
+// add it to DIFF_NAME and map it to 'mythic'.
 
 const RAID_INSTANCE_ENCOUNTERS = {
   'The Voidspire': [
@@ -266,7 +274,7 @@ async function fetchProgression(token) {
     ? `https://www.warcraftlogs.com/reports/${reports[0].code}`
     : null
 
-  return { zone: zone.name, raids, summary, latestReport }
+  return { zone: zone.name, raids, summary, latestReport, mythicFlex: MYTHIC_FLEX }
 }
 
 async function main() {
