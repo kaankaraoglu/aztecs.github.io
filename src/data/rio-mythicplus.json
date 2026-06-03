@@ -82,6 +82,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 3266,
+      "topKeys": [
+        "+16 POS",
+        "+15 SEAT",
+        "+15 WS",
+        "+14 SR",
+        "+14 MT",
+        "+14 NPX",
+        "+14 AA",
+        "+13 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Agro",
       "class": "warrior",
       "score": 3246,
@@ -110,22 +126,6 @@
         "+14 NPX",
         "+14 AA",
         "+14 MT"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 3208,
-      "topKeys": [
-        "+15 SEAT",
-        "+14 SR",
-        "+14 MT",
-        "+14 NPX",
-        "+14 POS",
-        "+14 AA",
-        "+13 MC",
-        "+13 WS"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-06-03T10:17:37.078Z"
+  "lastUpdated": "2026-06-03T15:13:29.930Z"
 }
