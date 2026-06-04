@@ -21,7 +21,6 @@
             :summary="summary"
             :latest-report="latestReport"
             :last-updated="lastUpdated"
-            :mythic-flex="mythicFlex"
           />
         </InfoBox>
         <MythicPlusBox class="reveal" />
@@ -73,7 +72,7 @@ import InfoBox from '@/components/InfoBox.vue'
 const containerRef = ref(null)
 useScrollReveal(containerRef)
 
-const { raids, summary, latestReport, mythicFlex } = useProgression()
+const { raids, summary, latestReport } = useProgression()
 const { lastUpdated } = useMythicPlus()
 const { submissions, fetchSubmissions } = useNextTierSignups()
 const latestKills = kills.slice(0, 2)
