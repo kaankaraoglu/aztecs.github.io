@@ -71,8 +71,8 @@ describe('HomeView', () => {
     expect(mount_().find('.latest-achievements').exists()).toBe(true)
   })
 
-  it('renders the tier stats label', () => {
-    expect(mount_().text()).toContain('TIER STATS')
+  it('renders the raid stats box', () => {
+    expect(mount_().find('.stub-raid-stats').exists()).toBe(true)
   })
 })
 

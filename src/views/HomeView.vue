@@ -11,7 +11,6 @@
         <MissingClassesBox class="reveal" :submissions="submissions" />
         <FlexMythicReadiness class="reveal" :signup-count="submissions.length" />
       </div>
-      <p class="section-label">TIER STATS</p>
       <RaidStatsBox class="reveal" />
       <FadingDivider />
       <div class="top-boxes">

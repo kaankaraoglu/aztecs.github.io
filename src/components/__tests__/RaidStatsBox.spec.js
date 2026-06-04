@@ -45,7 +45,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    const deathCard = cards[0]
+    const deathCard = cards[5]
     expect(deathCard.find('.stat-name').text()).toBe('Proto')
     expect(deathCard.find('.stat-name').classes()).toContain('evoker')
     expect(deathCard.find('.stat-value').text()).toBe('15 deaths')
@@ -63,7 +63,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    const dmgCard = cards[1]
+    const dmgCard = cards[0]
     expect(dmgCard.find('.stat-name').text()).toBe('Aurielle')
     expect(dmgCard.find('.stat-value').text()).toContain('1.5M')
     expect(dmgCard.find('.stat-value').text()).toContain('Ragnaros')
@@ -82,7 +82,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    expect(cards[1].find('.stat-link').exists()).toBe(false)
+    expect(cards[0].find('.stat-link').exists()).toBe(false)
   })
 
   it('formats thousands with K suffix', () => {
@@ -91,7 +91,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    expect(cards[3].find('.stat-value').text()).toContain('750K')
+    expect(cards[2].find('.stat-value').text()).toContain('750K')
   })
 
   it('falls back to "a boss" when boss name is missing', () => {
@@ -104,7 +104,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    expect(cards[1].find('.stat-value').text()).toContain('a boss')
+    expect(cards[0].find('.stat-value').text()).toContain('a boss')
   })
 
   it('always renders the two hardcoded fun cards', () => {
