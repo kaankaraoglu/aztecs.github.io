@@ -60,9 +60,9 @@ import { useRaidStats } from '@/composables/useRaidStats.js'
 const { stats } = useRaidStats()
 
 const performanceCards = [
-  { key: 'highestDamageDone', label: 'Highest Damage Done in Raid' },
+  { key: 'highestDamageDone', label: 'Highest Damage Done in One Raid Encounter' },
   { key: 'highestDamageDoneMplus', label: 'Highest Damage Done in M+' },
-  { key: 'bestHealer', label: 'Best Healer in Raid' },
+  { key: 'bestHealer', label: 'Highest Healing Done in One Raid Encounter' },
   { key: 'bestHealerMplus', label: 'Best Healer in M+' },
 ]
 
