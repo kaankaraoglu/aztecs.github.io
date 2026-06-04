@@ -6,7 +6,6 @@ const mockWclData = {
   raids: [],
   summary: null,
   latestReport: null,
-  mythicFlex: false,
 }
 
 const mockFallbackRaids = [
@@ -19,8 +18,12 @@ const mockFallbackRaids = [
   },
 ]
 
+/** Mutated in-place per test to simulate announced-but-unlogged raids */
+const mockUpcoming = []
+
 vi.mock('@/data/wcl-progression.json', () => ({ default: mockWclData }))
 vi.mock('@/data/progression.js', () => ({ raids: mockFallbackRaids }))
+vi.mock('@/data/upcoming.js', () => ({ upcomingRaids: mockUpcoming }))
 
 const { useProgression } = await import('../useProgression')
 
@@ -29,7 +32,7 @@ describe('useProgression', () => {
     mockWclData.raids = []
     mockWclData.summary = null
     mockWclData.latestReport = null
-    mockWclData.mythicFlex = false
+    mockUpcoming.length = 0
   })
 
   it('falls back to static progression data when WCL data is empty', () => {
@@ -73,23 +76,20 @@ describe('useProgression', () => {
     expect(latestReport).toBeNull()
   })
 
-  it('defaults mythicFlex to false', () => {
-    const { mythicFlex } = useProgression()
-    expect(mythicFlex).toBe(false)
-  })
+  it('prepends upcoming raids and counts them in the summary', () => {
+    mockUpcoming.push({
+      name: 'Sporefall',
+      mythicFlex: true,
+      bosses: [{ name: 'Rotmire', normal: false, heroic: false, mythic: false }],
+    })
 
-  it('exposes mythicFlex from WCL data when set', () => {
-    mockWclData.raids = [
-      {
-        name: 'WCL Raid',
-        bosses: [{ name: 'WCL Boss', normal: true, heroic: true, mythic: true }],
-      },
-    ]
-    mockWclData.summary = { total: 1, normal: 1, heroic: 1, mythic: 1 }
-    mockWclData.mythicFlex = true
+    const { raids, summary } = useProgression()
 
-    const { mythicFlex } = useProgression()
-    expect(mythicFlex).toBe(true)
+    // Upcoming raid shows first, ahead of the live/fallback raids
+    expect(raids.value[0].name).toBe('Sporefall')
+    expect(raids.value.map((r) => r.name)).toContain('Fallback Raid')
+    // Its (unkilled) boss adds to the total but not to any difficulty count
+    expect(summary.value).toEqual({ total: 3, normal: 2, heroic: 1, mythic: 0 })
   })
 
   it('computes fallback summary correctly with multiple bosses', () => {

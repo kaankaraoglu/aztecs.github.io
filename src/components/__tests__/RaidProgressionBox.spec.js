@@ -174,7 +174,7 @@ describe('RaidProgressionBox', () => {
   ]
   const mythicSummary = { total: 1, normal: 1, heroic: 1, mythic: 1 }
 
-  it('labels the mythic pip "M" by default', () => {
+  it('labels the mythic pip "M" for a normal mythic raid', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mythicRaids, summary: mythicSummary },
     })
@@ -184,19 +184,59 @@ describe('RaidProgressionBox', () => {
     expect(mythicPip.attributes('title')).toBe('Mythic')
   })
 
-  it('labels the mythic pip "MX" when mythicFlex is enabled', () => {
+  it('labels the mythic pip "MX" for a Mythic Flex raid', () => {
     const wrapper = mount(RaidProgressionBox, {
-      props: { raids: mythicRaids, summary: mythicSummary, mythicFlex: true },
+      props: {
+        raids: [{ ...mythicRaids[0], mythicFlex: true }],
+        summary: mythicSummary,
+      },
     })
     const mythicPip = wrapper.find('.pip.mythic')
     expect(mythicPip.text()).toBe('MX')
     expect(mythicPip.attributes('title')).toBe('Mythic Flex')
   })
 
-  it('uses the "MX" label in pull text when mythicFlex is enabled', () => {
+  it('shows the MX pip for a Mythic Flex raid even with no mythic kills', () => {
+    const upcomingFlex = [
+      {
+        name: 'Sporefall',
+        mythicFlex: true,
+        bosses: [{ name: 'Rotmire', normal: false, heroic: false, mythic: false }],
+      },
+    ]
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: upcomingFlex, summary: { total: 1, normal: 0, heroic: 0, mythic: 0 } },
+    })
+    const mythicPip = wrapper.find('.pip.mythic')
+    expect(mythicPip.exists()).toBe(true)
+    expect(mythicPip.text()).toBe('MX')
+    expect(mythicPip.classes()).not.toContain('active')
+  })
+
+  it('keeps non-flex raids labelled "M" when shown alongside a Mythic Flex raid', () => {
+    const mixed = [
+      {
+        name: 'Sporefall',
+        mythicFlex: true,
+        bosses: [{ name: 'Rotmire', normal: false, heroic: false, mythic: true }],
+      },
+      {
+        name: 'Old Tier',
+        bosses: [{ name: 'Old Boss', normal: true, heroic: true, mythic: true }],
+      },
+    ]
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mixed, summary: { total: 2, normal: 1, heroic: 1, mythic: 2 } },
+    })
+    const pips = wrapper.findAll('.pip.mythic')
+    expect(pips.map((p) => p.text())).toEqual(['MX', 'M'])
+  })
+
+  it('uses the "MX" label in pull text for a Mythic Flex raid', () => {
     const flexRaids = [
       {
         name: 'Flex Raid',
+        mythicFlex: true,
         bosses: [
           {
             name: 'Flex Boss',
@@ -209,7 +249,7 @@ describe('RaidProgressionBox', () => {
       },
     ]
     const wrapper = mount(RaidProgressionBox, {
-      props: { raids: flexRaids, summary: mythicSummary, mythicFlex: true },
+      props: { raids: flexRaids, summary: mythicSummary },
     })
     expect(wrapper.text()).toContain('Pulls: 2 N & 4 HC & 9 MX')
   })
