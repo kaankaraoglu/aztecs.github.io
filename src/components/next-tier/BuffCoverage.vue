@@ -11,7 +11,7 @@
             <Badge
               v-for="buff in throughputCovered"
               :key="buff.name"
-              variant="success"
+              :variant="buff.count === 1 ? 'warning' : 'success'"
               class="buff-pill"
               :title="buff.description"
             >
@@ -40,7 +40,7 @@
             <Badge
               v-for="buff in utilityCovered"
               :key="buff.name"
-              variant="success"
+              :variant="buff.count === 1 ? 'warning' : 'success'"
               class="buff-pill"
               :title="buff.description"
             >
