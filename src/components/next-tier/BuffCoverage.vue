@@ -63,6 +63,21 @@
           </div>
         </div>
       </div>
+
+      <div class="buff-legend">
+        <span class="legend-item">
+          <span class="legend-swatch legend-swatch--success" aria-hidden="true"></span>
+          Covered
+        </span>
+        <span class="legend-item">
+          <span class="legend-swatch legend-swatch--warning" aria-hidden="true"></span>
+          Single source
+        </span>
+        <span class="legend-item">
+          <span class="legend-swatch legend-swatch--danger" aria-hidden="true"></span>
+          Missing
+        </span>
+      </div>
     </CardContent>
   </Card>
 </template>
@@ -168,5 +183,43 @@ function gridRows(count) {
   align-items: center;
   justify-content: center;
   padding: 0 $space-1;
+}
+
+.buff-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-4;
+  margin-top: $space-6;
+  padding-top: $space-4;
+  border-top: 1px solid $color-border;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-text-subtle;
+}
+
+.legend-swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+.legend-swatch--success {
+  background: rgba(16, 185, 129, 0.5);
+}
+
+.legend-swatch--warning {
+  background: rgba(245, 158, 11, 0.5);
+}
+
+.legend-swatch--danger {
+  background: rgba(239, 68, 68, 0.5);
 }
 </style>
