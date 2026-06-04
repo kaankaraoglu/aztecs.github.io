@@ -30,13 +30,13 @@ const EMPTY_OUTPUT = {
   raids: [],
   summary: { total: 0, normal: 0, heroic: 0, mythic: 0 },
   latestReport: null,
-  mythicFlex: false,
 }
 
-// Set true when the active zone uses the Mythic Flex difficulty (relabels the
-// mythic tier as "MX" / "Mythic Flex" in the UI). Leave false for legacy mythic.
-// Flip this alongside CURRENT_ZONE_ID / RAID_INSTANCE_ENCOUNTERS when a new tier launches.
-const MYTHIC_FLEX = false
+// Raid instances whose mythic tier is the "Mythic Flex" difficulty. Their mythic
+// pip is relabelled "MX" / "Mythic Flex" in the UI (same legendary colour); the
+// underlying data still uses the `mythic` field. Add an instance name here when a
+// Mythic Flex tier launches, alongside CURRENT_ZONE_ID / RAID_INSTANCE_ENCOUNTERS.
+const MYTHIC_FLEX_INSTANCES = new Set([])
 // TODO @launch: if WCL assigns Mythic Flex a NEW difficulty id (not 5),
 // add it to DIFF_NAME and map it to 'mythic'.
 
@@ -223,6 +223,7 @@ async function fetchProgression(token) {
   // Build output grouped by raid instance
   const raids = Object.entries(RAID_INSTANCE_ENCOUNTERS).map(([instanceName, bossNames]) => ({
     name: instanceName,
+    mythicFlex: MYTHIC_FLEX_INSTANCES.has(instanceName),
     bosses: bossNames.map((bossName) => {
       const normalData = bossData.get(`${bossName}|normal`)
       const heroicData = bossData.get(`${bossName}|heroic`)
@@ -274,7 +275,7 @@ async function fetchProgression(token) {
     ? `https://www.warcraftlogs.com/reports/${reports[0].code}`
     : null
 
-  return { zone: zone.name, raids, summary, latestReport, mythicFlex: MYTHIC_FLEX }
+  return { zone: zone.name, raids, summary, latestReport }
 }
 
 async function main() {

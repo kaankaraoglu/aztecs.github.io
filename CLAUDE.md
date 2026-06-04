@@ -118,17 +118,17 @@ The router also sets `<title>`, meta description, Open Graph tags, Twitter cards
 
 ### Composables
 
-| File                    | Purpose                                                                           |
-| ----------------------- | --------------------------------------------------------------------------------- |
-| `useProgression.js`     | Raid progression — reads `wcl-progression.json`, falls back to `progression.js`   |
-| `useMythicPlus.js`      | M+ season/dungeon data from `rio-mythicplus.json`                                 |
-| `useRaidStats.js`       | Deaths/DPS/healing records from `wcl-stats.json`                                  |
-| `useBuffAnalysis.js`    | Computes covered vs. missing raid buffs + role counts from signups                |
-| `useNextTierSignups.js` | Full signup flow: Discord OAuth, JWT, CRUD via signup worker API                  |
-| `useAnalytics.js`       | Firebase Analytics wrapper — lazy, silent, no-ops outside production              |
-| `useTheme.js`           | Dark/light theme toggle — persists to localStorage, sets `data-theme` on `<html>` |
-| `useScrollReveal.js`    | IntersectionObserver-based scroll-triggered reveal animations                     |
-| `useTiltEffect.js`      | 3D mouse-tilt effect (desktop only, respects `prefers-reduced-motion`)            |
+| File                    | Purpose                                                                                                      |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `useProgression.js`     | Raid progression — reads `wcl-progression.json` (falls back to `progression.js`), then appends `upcoming.js` |
+| `useMythicPlus.js`      | M+ season/dungeon data from `rio-mythicplus.json`                                                            |
+| `useRaidStats.js`       | Deaths/DPS/healing records from `wcl-stats.json`                                                             |
+| `useBuffAnalysis.js`    | Computes covered vs. missing raid buffs + role counts from signups                                           |
+| `useNextTierSignups.js` | Full signup flow: Discord OAuth, JWT, CRUD via signup worker API                                             |
+| `useAnalytics.js`       | Firebase Analytics wrapper — lazy, silent, no-ops outside production                                         |
+| `useTheme.js`           | Dark/light theme toggle — persists to localStorage, sets `data-theme` on `<html>`                            |
+| `useScrollReveal.js`    | IntersectionObserver-based scroll-triggered reveal animations                                                |
+| `useTiltEffect.js`      | 3D mouse-tilt effect (desktop only, respects `prefers-reduced-motion`)                                       |
 
 ### Data Flow for Raid Progression
 
@@ -138,7 +138,9 @@ Primary source is **Warcraft Logs**, fetched every 30 minutes by the `fetch-data
 2. **`scripts/fetch-wcl-data.js`** authenticates with WCL OAuth2 (`WCL_CLIENT_ID`/`WCL_CLIENT_SECRET` env vars), fetches zone encounters and guild reports, writes `src/data/wcl-progression.json`. Per boss: kill status per difficulty, kill date, pull count, best %, and full kill roster with player names/classes.
 3. **`useProgression` composable** (`src/composables/useProgression.js`) reads the WCL JSON. Falls back to `src/data/progression.js` if WCL data is empty.
 
-**When a new raid tier launches**, update `CURRENT_ZONE_ID` and `RAID_INSTANCE_ENCOUNTERS` in `scripts/fetch-wcl-data.js`. The zone ID can be found via the WCL GraphQL API: `{ worldData { expansion(id: N) { zones { id name } } } }`. If the new tier uses the **Mythic Flex** difficulty, also set `MYTHIC_FLEX = true` in the same file — this relabels the mythic tier as "MX" / "Mythic Flex" in the UI (same legendary colour) for that tier only; the underlying data still uses the `mythic` field.
+**When a new raid tier launches**, update `CURRENT_ZONE_ID` and `RAID_INSTANCE_ENCOUNTERS` in `scripts/fetch-wcl-data.js`. The zone ID can be found via the WCL GraphQL API: `{ worldData { expansion(id: N) { zones { id name } } } }`. If a raid instance uses the **Mythic Flex** difficulty, add its name to `MYTHIC_FLEX_INSTANCES` in the same file — this sets a per-raid `mythicFlex: true` flag that relabels that raid's mythic tier as "MX" / "Mythic Flex" in the UI (same legendary colour); the underlying data still uses the `mythic` field. Other raids shown at the same time keep plain "Mythic".
+
+**To show an announced raid before it's on Warcraft Logs**, add it to `src/data/upcoming.js`. `useProgression` appends these raids (each may carry its own `mythicFlex` flag) to the live progression so they render alongside the current tier. Move the entry into the WCL fetch config once the raid goes live.
 
 The **RefreshDataButton** component in the progression header lets users trigger an on-demand data refresh via a Cloudflare Worker (`workers/refresh/`) that dispatches the `fetch-data.yml` GitHub Actions workflow. Requires `VITE_REFRESH_WORKER_URL` and `VITE_TURNSTILE_SITE_KEY` env vars.
 
@@ -152,6 +154,7 @@ The **RefreshDataButton** component in the progression header lets users trigger
 | ------------------------------- | --------------------------------------------------------------------- |
 | `src/data/wow-classes.js`       | `WOW_CLASSES` (specs, buffs per class) and `RAID_BUFFS` catalog       |
 | `src/data/progression.js`       | Static fallback raid data (used if WCL JSON is empty)                 |
+| `src/data/upcoming.js`          | Announced raids not yet on WCL — appended to live progression         |
 | `src/data/kills.js`             | Historical boss kills with dates, rosters, screenshots (newest-first) |
 | `src/data/in-memoriam.js`       | Memorial entries for departed guild members                           |
 | `src/data/wcl-progression.json` | Build-time fetched — full WCL raid data                               |

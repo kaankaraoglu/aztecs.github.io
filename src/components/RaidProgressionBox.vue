@@ -28,10 +28,10 @@
                 <span :class="['pip', 'normal', { active: boss.normal }]" title="Normal">N</span>
                 <span :class="['pip', 'heroic', { active: boss.heroic }]" title="Heroic">HC</span>
                 <span
-                  v-if="summary.mythic > 0"
+                  v-if="summary.mythic > 0 || raid.mythicFlex"
                   :class="['pip', 'mythic', { active: boss.mythic }]"
-                  :title="mythicName"
-                  >{{ mythicLabel }}</span
+                  :title="raid.mythicFlex ? 'Mythic Flex' : 'Mythic'"
+                  >{{ raid.mythicFlex ? 'MX' : 'M' }}</span
                 >
               </span>
               <div
@@ -66,7 +66,7 @@
                   <span class="meta-best">{{
                     boss.bestPercent != null ? `Best: ${boss.bestPercent.toFixed(1)}%` : ''
                   }}</span>
-                  <span class="meta-pulls">{{ pullsText(boss) || '' }}</span>
+                  <span class="meta-pulls">{{ pullsText(boss, raid.mythicFlex) || '' }}</span>
                   <span class="meta-date">{{
                     boss.killedAt ? formatDate(boss.killedAt) : ''
                   }}</span>
@@ -150,16 +150,7 @@ const props = defineProps({
     type: String,
     default: null,
   },
-  // When true, the mythic tier is shown as "MX" / "Mythic Flex" (new raid only).
-  mythicFlex: {
-    type: Boolean,
-    default: false,
-  },
 })
-
-// Mythic tier is internally "mythic"; only its display label changes for Mythic Flex.
-const mythicLabel = computed(() => (props.mythicFlex ? 'MX' : 'M'))
-const mythicName = computed(() => (props.mythicFlex ? 'Mythic Flex' : 'Mythic'))
 
 const formattedUpdated = computed(() => {
   if (!props.lastUpdated) return null
@@ -196,10 +187,10 @@ function formatDate(isoString) {
   return `${month} ${day}${ordinalSuffix(day)}`
 }
 
-function pullsText(boss) {
+function pullsText(boss, mythicFlex = false) {
   const p = boss.pullsByDifficulty
   if (!p) return null
-  const labels = { normal: 'N', heroic: 'HC', mythic: mythicLabel.value }
+  const labels = { normal: 'N', heroic: 'HC', mythic: mythicFlex ? 'MX' : 'M' }
   const parts = []
   for (const diff of ['normal', 'heroic', 'mythic']) {
     if (p[diff]) parts.push(`${p[diff]} ${labels[diff]}`)

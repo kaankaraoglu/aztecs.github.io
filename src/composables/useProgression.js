@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { raids as fallbackRaids } from '@/data/progression.js'
+import { upcomingRaids } from '@/data/upcoming.js'
 import wclData from '@/data/wcl-progression.json'
 
 /**
@@ -16,7 +17,7 @@ import wclData from '@/data/wcl-progression.json'
  *   roster?: RosterPlayer[]
  * }} Boss
  *
- * @typedef {{ name: string, bosses: Boss[] }} Raid
+ * @typedef {{ name: string, mythicFlex?: boolean, bosses: Boss[] }} Raid
  * @typedef {{ total: number, normal: number, heroic: number, mythic: number }} ProgressSummary
  */
 
@@ -39,15 +40,15 @@ function computeSummary(raids) {
  */
 export function useProgression() {
   const hasWclData = wclData.raids && wclData.raids.length > 0
+  const baseRaids = hasWclData ? wclData.raids : fallbackRaids
+  // Announced-but-unlogged tiers (e.g. Mythic Flex raids) show alongside live data.
+  const allRaids = [...upcomingRaids, ...baseRaids]
 
   /** @type {import('vue').Ref<Raid[]>} */
-  const raids = ref(hasWclData ? wclData.raids : fallbackRaids)
+  const raids = ref(allRaids)
   /** @type {import('vue').Ref<ProgressSummary>} */
-  const summary = ref(hasWclData ? wclData.summary : computeSummary(fallbackRaids))
+  const summary = ref(computeSummary(allRaids))
   const latestReport = hasWclData ? wclData.latestReport || null : null
-  // When true, the mythic tier is relabelled "MX" / "Mythic Flex" in the UI.
-  // Only set on the new raid's zone data; falls back to false everywhere else.
-  const mythicFlex = hasWclData ? (wclData.mythicFlex ?? false) : false
 
-  return { raids, summary, latestReport, mythicFlex }
+  return { raids, summary, latestReport }
 }
