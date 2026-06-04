@@ -2,9 +2,9 @@
  * Build-time script that fetches fun raid stats from Warcraft Logs.
  * Writes to src/data/wcl-stats.json with:
  * - Most Deaths: player with the highest total deaths across all reports
- * - Highest Damage Done in Raid: highest single-fight damage total by any one player in raid
+ * - Highest Damage Done in One Raid Encounter: highest single-fight damage total by any one player in raid
  * - Highest Damage Done in M+: highest single-encounter damage total by any one player in M+
- * - Best Healer in Raid: highest single-fight healing total by any one player in raid
+ * - Highest Healing Done in One Raid Encounter: highest single-fight healing total by any one player in raid
  * - Best Healer in M+: highest single-encounter healing total by any one player in M+
  *
  * Requires WCL_CLIENT_ID and WCL_CLIENT_SECRET env vars.
