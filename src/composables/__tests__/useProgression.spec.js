@@ -6,6 +6,7 @@ const mockWclData = {
   raids: [],
   summary: null,
   latestReport: null,
+  mythicFlex: false,
 }
 
 const mockFallbackRaids = [
@@ -28,6 +29,7 @@ describe('useProgression', () => {
     mockWclData.raids = []
     mockWclData.summary = null
     mockWclData.latestReport = null
+    mockWclData.mythicFlex = false
   })
 
   it('falls back to static progression data when WCL data is empty', () => {
@@ -69,6 +71,25 @@ describe('useProgression', () => {
   it('returns null latestReport when WCL data has no report', () => {
     const { latestReport } = useProgression()
     expect(latestReport).toBeNull()
+  })
+
+  it('defaults mythicFlex to false', () => {
+    const { mythicFlex } = useProgression()
+    expect(mythicFlex).toBe(false)
+  })
+
+  it('exposes mythicFlex from WCL data when set', () => {
+    mockWclData.raids = [
+      {
+        name: 'WCL Raid',
+        bosses: [{ name: 'WCL Boss', normal: true, heroic: true, mythic: true }],
+      },
+    ]
+    mockWclData.summary = { total: 1, normal: 1, heroic: 1, mythic: 1 }
+    mockWclData.mythicFlex = true
+
+    const { mythicFlex } = useProgression()
+    expect(mythicFlex).toBe(true)
   })
 
   it('computes fallback summary correctly with multiple bosses', () => {
