@@ -42,7 +42,9 @@
         </InfoBox>
         <InfoBox class="stat-card">
           <p class="stat-label">Highest Avoidable Damage Taken</p>
-          <p class="stat-name"><span class="warrior">Peavy</span>, <span class="evoker">Proto</span></p>
+          <p class="stat-name">
+            <span class="warrior">Peavy</span>, <span class="evoker">Proto</span>
+          </p>
           <p class="stat-name death-knight">Madhouse</p>
           <p class="stat-subtitle">by miles</p>
         </InfoBox>
