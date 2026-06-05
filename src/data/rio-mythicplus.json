@@ -4,16 +4,16 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3661,
+      "score": 3690,
       "topKeys": [
-        "+18 MT",
+        "+19 MT",
+        "+19 SR",
         "+18 MC",
         "+18 NPX",
         "+18 WS",
         "+18 AA",
         "+18 POS",
-        "+18 SEAT",
-        "+18 SR"
+        "+18 SEAT"
       ],
       "realmSlug": "alakir"
     },
@@ -164,6 +164,22 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Skyreach",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Magisters' Terrace",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Algeth'ar Academy",
       "level": 18,
       "timed": true,
@@ -173,22 +189,6 @@
     },
     {
       "dungeon": "Seat of the Triumvirate",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Skyreach",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Magisters' Terrace",
       "level": 18,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-06-04T23:43:48.153Z"
+  "lastUpdated": "2026-06-05T02:11:45.191Z"
 }
