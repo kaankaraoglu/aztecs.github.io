@@ -4,12 +4,12 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3690,
+      "score": 3703,
       "topKeys": [
         "+19 MT",
         "+19 SR",
+        "+19 NPX",
         "+18 MC",
-        "+18 NPX",
         "+18 WS",
         "+18 AA",
         "+18 POS",
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "Nexus-Point Xenas",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Algeth'ar Academy",
       "level": 18,
       "timed": true,
@@ -189,14 +197,6 @@
     },
     {
       "dungeon": "Seat of the Triumvirate",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Nexus-Point Xenas",
       "level": 18,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-06-07T15:09:27.340Z"
+  "lastUpdated": "2026-06-07T16:51:12.489Z"
 }
