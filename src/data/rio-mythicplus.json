@@ -130,6 +130,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Chaos",
+      "class": "warlock",
+      "score": 3212,
+      "topKeys": [
+        "+16 MT",
+        "+16 POS",
+        "+14 SR",
+        "+14 WS",
+        "+13 NPX",
+        "+13 AA",
+        "+13 MC",
+        "+12 SEAT"
+      ],
+      "realmSlug": "skullcrusher"
+    },
+    {
       "name": "Mxk",
       "class": "warrior",
       "score": 3198,
@@ -144,22 +160,6 @@
         "+13 AA"
       ],
       "realmSlug": "skullcrusher"
-    },
-    {
-      "name": "Draggelina",
-      "class": "evoker",
-      "score": 3178,
-      "topKeys": [
-        "+15 WS",
-        "+15 MT",
-        "+15 NPX",
-        "+14 MC",
-        "+14 SR",
-        "+13 POS",
-        "+13 AA",
-        "+12 SEAT"
-      ],
-      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-06-07T17:59:39.283Z"
+  "lastUpdated": "2026-06-07T19:19:05.983Z"
 }
