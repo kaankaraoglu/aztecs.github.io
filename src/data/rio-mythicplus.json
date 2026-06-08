@@ -4,14 +4,14 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3719,
+      "score": 3735,
       "topKeys": [
+        "+19 WS",
         "+19 MT",
         "+19 AA",
         "+19 SR",
         "+19 NPX",
         "+18 MC",
-        "+18 WS",
         "+18 POS",
         "+18 SEAT"
       ],
@@ -196,6 +196,14 @@
       ]
     },
     {
+      "dungeon": "Windrunner Spire",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Seat of the Triumvirate",
       "level": 18,
       "timed": true,
@@ -218,15 +226,7 @@
       "team": [
         "Rackz"
       ]
-    },
-    {
-      "dungeon": "Windrunner Spire",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
     }
   ],
-  "lastUpdated": "2026-06-08T17:33:58.455Z"
+  "lastUpdated": "2026-06-08T20:01:19.178Z"
 }
