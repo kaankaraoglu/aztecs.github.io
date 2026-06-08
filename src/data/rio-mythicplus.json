@@ -132,16 +132,16 @@
     {
       "name": "Chaos",
       "class": "warlock",
-      "score": 3212,
+      "score": 3245,
       "topKeys": [
         "+16 MT",
         "+16 POS",
+        "+15 SEAT",
         "+14 SR",
         "+14 WS",
         "+13 NPX",
         "+13 AA",
-        "+13 MC",
-        "+12 SEAT"
+        "+13 MC"
       ],
       "realmSlug": "skullcrusher"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-06-08T14:08:34.985Z"
+  "lastUpdated": "2026-06-08T17:33:58.455Z"
 }
