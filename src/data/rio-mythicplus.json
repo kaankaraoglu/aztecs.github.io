@@ -4,14 +4,14 @@
     {
       "name": "Rackz",
       "class": "demon-hunter",
-      "score": 3703,
+      "score": 3719,
       "topKeys": [
         "+19 MT",
+        "+19 AA",
         "+19 SR",
         "+19 NPX",
         "+18 MC",
         "+18 WS",
-        "+18 AA",
         "+18 POS",
         "+18 SEAT"
       ],
@@ -164,6 +164,14 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Algeth'ar Academy",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
       "dungeon": "Skyreach",
       "level": 19,
       "timed": true,
@@ -182,14 +190,6 @@
     {
       "dungeon": "Nexus-Point Xenas",
       "level": 19,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Algeth'ar Academy",
-      "level": 18,
       "timed": true,
       "team": [
         "Rackz"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-06-08T00:10:55.578Z"
+  "lastUpdated": "2026-06-08T05:11:08.101Z"
 }
