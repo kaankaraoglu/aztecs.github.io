@@ -66,6 +66,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 3308,
+      "topKeys": [
+        "+16 MC",
+        "+16 POS",
+        "+15 SEAT",
+        "+15 WS",
+        "+14 SR",
+        "+14 MT",
+        "+14 NPX",
+        "+14 AA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 3288,
@@ -78,22 +94,6 @@
         "+14 SEAT",
         "+14 MT",
         "+14 SR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 3266,
-      "topKeys": [
-        "+16 POS",
-        "+15 SEAT",
-        "+15 WS",
-        "+14 SR",
-        "+14 MT",
-        "+14 NPX",
-        "+14 AA",
-        "+13 MC"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-06-10T08:44:19.850Z"
+  "lastUpdated": "2026-06-10T12:14:55.648Z"
 }
