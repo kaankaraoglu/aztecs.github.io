@@ -95,62 +95,56 @@ async function fetchRoster(token, reportCode, fightId) {
 }
 
 async function fetchProgression(token) {
-  // Phase 1: fetch zone structure + all fights (kills and wipes) across all tracked zones
-  const zoneAliases = CURRENT_ZONE_IDS.map(
-    (id, i) => `zone${i}: zone(id: ${id}) { name encounters { id name } }`,
-  ).join('\n      ')
-  const reportAliases = CURRENT_ZONE_IDS.map(
-    (id, i) =>
-      `reports${i}: reports(guildID: ${GUILD_ID}, zoneID: ${id}, limit: ${REPORT_LIMIT}) {
-        data {
-          code
-          startTime
-          fights {
-            id
-            name
-            encounterID
-            kill
-            difficulty
+  // Phase 1: fetch zone structure + all fights (kills and wipes) across all
+  // tracked zones. Each zone is queried separately to stay within WCL's
+  // per-request query complexity limit.
+  const zoneNames = []
+  const reportsByCode = new Map()
+
+  for (const zoneId of CURRENT_ZONE_IDS) {
+    const query = `{
+      worldData {
+        zone(id: ${zoneId}) {
+          name
+          encounters { id name }
+        }
+      }
+      reportData {
+        reports(guildID: ${GUILD_ID}, zoneID: ${zoneId}, limit: ${REPORT_LIMIT}) {
+          data {
+            code
             startTime
-            fightPercentage
+            fights {
+              id
+              name
+              encounterID
+              kill
+              difficulty
+              startTime
+              fightPercentage
+            }
           }
         }
-      }`,
-  ).join('\n      ')
+      }
+    }`
 
-  const query = `{
-    worldData {
-      ${zoneAliases}
-    }
-    reportData {
-      ${reportAliases}
-    }
-  }`
-
-  console.log(
-    `${LOG_PREFIX} Fetching zone info and reports for zones ${CURRENT_ZONE_IDS.join(', ')}...`,
-  )
-  const result = await graphql(token, query)
-
-  const zoneNames = []
-  for (let i = 0; i < CURRENT_ZONE_IDS.length; i++) {
-    const zone = result.data?.worldData?.[`zone${i}`]
+    console.log(`${LOG_PREFIX} Fetching zone info and reports for zone ${zoneId}...`)
+    const result = await graphql(token, query)
+    const zone = result.data?.worldData?.zone
     if (zone) zoneNames.push(zone.name)
-  }
-  if (!zoneNames.length) throw new Error('No zones found')
-  const zoneName = zoneNames.join(' / ')
 
-  // Merge reports across zones, deduplicating by report code (a single raid
-  // session can span multiple zones and appear in both zone queries).
-  const reportsByCode = new Map()
-  for (let i = 0; i < CURRENT_ZONE_IDS.length; i++) {
-    const zoneReports = result.data?.reportData?.[`reports${i}`]?.data || []
+    // Deduplicate by report code — a single raid session can span multiple
+    // zones and appear in both zone queries.
+    const zoneReports = result.data?.reportData?.reports?.data || []
     for (const report of zoneReports) {
       if (!reportsByCode.has(report.code)) {
         reportsByCode.set(report.code, report)
       }
     }
   }
+
+  if (!zoneNames.length) throw new Error('No zones found')
+  const zoneName = zoneNames.join(' / ')
   const reports = [...reportsByCode.values()].sort((a, b) => b.startTime - a.startTime)
 
   const totalFights = reports.reduce((sum, r) => sum + (r.fights?.length || 0), 0)
