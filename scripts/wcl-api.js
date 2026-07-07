@@ -6,7 +6,8 @@
  */
 
 const GUILD_ID = 18606
-const CURRENT_ZONE_ID = 46 // VS / DR / MQD (Midnight Season 1)
+const CURRENT_ZONE_IDS = [46, 50] // VS / DR / MQD + Sporefall (Midnight Season 1)
+const CURRENT_ZONE_ID = CURRENT_ZONE_IDS[0]
 const CURRENT_MPLUS_ZONE_ID = 47 // Midnight Season 1 M+
 const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
 const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
@@ -100,4 +101,12 @@ async function graphql(token, query, { retries = 3, logPrefix = '[wcl]' } = {}) 
   }
 }
 
-export { GUILD_ID, CURRENT_ZONE_ID, CURRENT_MPLUS_ZONE_ID, CLASS_MAP, getToken, graphql }
+export {
+  GUILD_ID,
+  CURRENT_ZONE_ID,
+  CURRENT_ZONE_IDS,
+  CURRENT_MPLUS_ZONE_ID,
+  CLASS_MAP,
+  getToken,
+  graphql,
+}

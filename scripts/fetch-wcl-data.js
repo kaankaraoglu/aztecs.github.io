@@ -13,7 +13,7 @@ import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadEnv } from './load-env.js'
-import { GUILD_ID, CURRENT_ZONE_ID, CLASS_MAP, getToken, graphql } from './wcl-api.js'
+import { GUILD_ID, CURRENT_ZONE_IDS, CLASS_MAP, getToken, graphql } from './wcl-api.js'
 
 loadEnv()
 
@@ -35,8 +35,8 @@ const EMPTY_OUTPUT = {
 // Raid instances whose mythic tier is the "Mythic Flex" difficulty. Their mythic
 // pip is relabelled "MX" / "Mythic Flex" in the UI (same legendary colour); the
 // underlying data still uses the `mythic` field. Add an instance name here when a
-// Mythic Flex tier launches, alongside CURRENT_ZONE_ID / RAID_INSTANCE_ENCOUNTERS.
-const MYTHIC_FLEX_INSTANCES = new Set([])
+// Mythic Flex tier launches, alongside CURRENT_ZONE_IDS / RAID_INSTANCE_ENCOUNTERS.
+const MYTHIC_FLEX_INSTANCES = new Set(['Sporefall'])
 // TODO @launch: if WCL assigns Mythic Flex a NEW difficulty id (not 5),
 // add it to DIFF_NAME and map it to 'mythic'.
 
@@ -51,6 +51,7 @@ const RAID_INSTANCE_ENCOUNTERS = {
   ],
   'The Dreamrift': ['Chimaerus, the Undreamt God'],
   "March on Quel'Danas": ["Belo'ren, Child of Al'ar", 'Midnight Falls'],
+  Sporefall: ['Rotmire'],
 }
 
 const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }
@@ -94,16 +95,13 @@ async function fetchRoster(token, reportCode, fightId) {
 }
 
 async function fetchProgression(token) {
-  // Phase 1: fetch zone structure + all fights (kills and wipes)
-  const query = `{
-    worldData {
-      zone(id: ${CURRENT_ZONE_ID}) {
-        name
-        encounters { id name }
-      }
-    }
-    reportData {
-      reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: ${REPORT_LIMIT}) {
+  // Phase 1: fetch zone structure + all fights (kills and wipes) across all tracked zones
+  const zoneAliases = CURRENT_ZONE_IDS.map(
+    (id, i) => `zone${i}: zone(id: ${id}) { name encounters { id name } }`,
+  ).join('\n      ')
+  const reportAliases = CURRENT_ZONE_IDS.map(
+    (id, i) =>
+      `reports${i}: reports(guildID: ${GUILD_ID}, zoneID: ${id}, limit: ${REPORT_LIMIT}) {
         data {
           code
           startTime
@@ -117,20 +115,47 @@ async function fetchProgression(token) {
             fightPercentage
           }
         }
-      }
+      }`,
+  ).join('\n      ')
+
+  const query = `{
+    worldData {
+      ${zoneAliases}
+    }
+    reportData {
+      ${reportAliases}
     }
   }`
 
-  console.log(`${LOG_PREFIX} Fetching zone info and reports for zone ${CURRENT_ZONE_ID}...`)
+  console.log(
+    `${LOG_PREFIX} Fetching zone info and reports for zones ${CURRENT_ZONE_IDS.join(', ')}...`,
+  )
   const result = await graphql(token, query)
-  const zone = result.data?.worldData?.zone
-  const reports = result.data?.reportData?.reports?.data || []
 
-  if (!zone) throw new Error('Zone not found')
+  const zoneNames = []
+  for (let i = 0; i < CURRENT_ZONE_IDS.length; i++) {
+    const zone = result.data?.worldData?.[`zone${i}`]
+    if (zone) zoneNames.push(zone.name)
+  }
+  if (!zoneNames.length) throw new Error('No zones found')
+  const zoneName = zoneNames.join(' / ')
+
+  // Merge reports across zones, deduplicating by report code (a single raid
+  // session can span multiple zones and appear in both zone queries).
+  const reportsByCode = new Map()
+  for (let i = 0; i < CURRENT_ZONE_IDS.length; i++) {
+    const zoneReports = result.data?.reportData?.[`reports${i}`]?.data || []
+    for (const report of zoneReports) {
+      if (!reportsByCode.has(report.code)) {
+        reportsByCode.set(report.code, report)
+      }
+    }
+  }
+  const reports = [...reportsByCode.values()].sort((a, b) => b.startTime - a.startTime)
 
   const totalFights = reports.reduce((sum, r) => sum + (r.fights?.length || 0), 0)
   console.log(
-    `${LOG_PREFIX} Zone: ${zone.name}, ${reports.length} reports, ${totalFights} total fights`,
+    `${LOG_PREFIX} Zones: ${zoneName}, ${reports.length} reports, ${totalFights} total fights`,
   )
 
   // Build per-boss data across all reports
@@ -275,7 +300,7 @@ async function fetchProgression(token) {
     ? `https://www.warcraftlogs.com/reports/${reports[0].code}`
     : null
 
-  return { zone: zone.name, raids, summary, latestReport }
+  return { zone: zoneName, raids, summary, latestReport }
 }
 
 async function main() {
