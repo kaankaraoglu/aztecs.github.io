@@ -25,10 +25,7 @@ describe('upcoming raids data', () => {
     }
   })
 
-  it('includes Sporefall as a Mythic Flex raid with boss Rotmire', () => {
-    const sporefall = upcomingRaids.find((r) => r.name === 'Sporefall')
-    expect(sporefall).toBeDefined()
-    expect(sporefall.mythicFlex).toBe(true)
-    expect(sporefall.bosses.map((b) => b.name)).toContain('Rotmire')
+  it('has no upcoming raids when all announced raids are live on WCL', () => {
+    expect(upcomingRaids).toHaveLength(0)
   })
 })
