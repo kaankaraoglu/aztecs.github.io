@@ -18,6 +18,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 3491,
+      "topKeys": [
+        "+19 POS",
+        "+18 MT",
+        "+17 NPX",
+        "+17 SEAT",
+        "+16 MC",
+        "+16 SR",
+        "+15 WS",
+        "+14 AA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Aerioth",
       "class": "priest",
       "score": 3470,
@@ -30,22 +46,6 @@
         "+16 SR",
         "+16 WS",
         "+16 MC"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 3469,
-      "topKeys": [
-        "+19 POS",
-        "+18 MT",
-        "+17 NPX",
-        "+17 SEAT",
-        "+16 MC",
-        "+15 WS",
-        "+14 SR",
-        "+14 AA"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-07-08T17:18:59.709Z"
+  "lastUpdated": "2026-07-08T18:54:11.644Z"
 }
