@@ -49,7 +49,7 @@
     "vite": "^8.1.4",
     "vite-plugin-image-optimizer": "^2.0.3",
     "vite-plugin-vue-devtools": "^8.1.1",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.10"
   },
   "overrides": {
     "vite-plugin-vue-devtools": {
