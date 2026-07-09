@@ -42,7 +42,7 @@ export function useProgression() {
   const hasWclData = wclData.raids && wclData.raids.length > 0
   const baseRaids = hasWclData ? wclData.raids : fallbackRaids
   // Announced-but-unlogged tiers (e.g. Mythic Flex raids) show alongside live data.
-  const allRaids = [...upcomingRaids, ...baseRaids]
+  const allRaids = [...upcomingRaids, ...[...baseRaids].reverse()]
 
   /** @type {import('vue').Ref<Raid[]>} */
   const raids = ref(allRaids)
