@@ -2,6 +2,22 @@
   "season": "season-mn-1",
   "topRunners": [
     {
+      "name": "Rackz",
+      "class": "demon-hunter",
+      "score": 3848,
+      "topKeys": [
+        "+20 SR",
+        "+20 POS",
+        "+20 WS",
+        "+20 MT",
+        "+20 MC",
+        "+19 AA",
+        "+19 SEAT",
+        "+19 NPX"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 3491,
@@ -144,89 +160,73 @@
         "+13 AA"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 3236,
-      "topKeys": [
-        "+15 SEAT",
-        "+15 MT",
-        "+14 POS",
-        "+14 MC",
-        "+14 WS",
-        "+14 AA",
-        "+14 SR",
-        "+14 NPX"
-      ],
-      "realmSlug": "xavius"
     }
   ],
   "dungeonBests": [
     {
-      "dungeon": "Pit of Saron",
-      "level": 19,
-      "timed": true,
-      "team": [
-        "Blackmaira"
-      ]
-    },
-    {
-      "dungeon": "Magisters' Terrace",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Blackmaira"
-      ]
-    },
-    {
-      "dungeon": "Algeth'ar Academy",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "Windrunner Spire",
-      "level": 17,
+      "level": 20,
       "timed": true,
       "team": [
-        "Clash"
-      ]
-    },
-    {
-      "dungeon": "Seat of the Triumvirate",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Blackmaira"
+        "Rackz"
       ]
     },
     {
       "dungeon": "Skyreach",
-      "level": 17,
+      "level": 20,
       "timed": true,
       "team": [
-        "Clash"
+        "Rackz"
       ]
     },
     {
-      "dungeon": "Nexus-Point Xenas",
-      "level": 17,
+      "dungeon": "Magisters' Terrace",
+      "level": 20,
       "timed": true,
       "team": [
-        "Blackmaira"
+        "Rackz"
       ]
     },
     {
       "dungeon": "Maisara Caverns",
-      "level": 17,
+      "level": 20,
       "timed": true,
       "team": [
-        "Clash"
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Pit of Saron",
+      "level": 20,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Algeth'ar Academy",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Seat of the Triumvirate",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Nexus-Point Xenas",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
       ]
     }
   ],
-  "lastUpdated": "2026-07-11T19:40:02.730Z"
+  "lastUpdated": "2026-07-11T20:38:50.515Z"
 }
