@@ -114,6 +114,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Chaos",
+      "class": "warlock",
+      "score": 3280,
+      "topKeys": [
+        "+16 MT",
+        "+16 POS",
+        "+15 MC",
+        "+15 SEAT",
+        "+14 SR",
+        "+14 WS",
+        "+13 NPX",
+        "+13 AA"
+      ],
+      "realmSlug": "skullcrusher"
+    },
+    {
       "name": "Umgitsbubble",
       "class": "paladin",
       "score": 3252,
@@ -144,22 +160,6 @@
         "+13 AA"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 3236,
-      "topKeys": [
-        "+15 SEAT",
-        "+15 MT",
-        "+14 POS",
-        "+14 MC",
-        "+14 WS",
-        "+14 AA",
-        "+14 SR",
-        "+14 NPX"
-      ],
-      "realmSlug": "xavius"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-07-11T21:40:40.562Z"
+  "lastUpdated": "2026-07-11T22:37:19.933Z"
 }
