@@ -1,38 +1,10 @@
 {
-  "zone": "VS / DR / MQD",
+  "zone": null,
   "stats": {
-    "mostDeaths": {
-      "name": "Aerioth",
-      "class": "priest",
-      "count": 195
-    },
-    "highestDamageDone": {
-      "name": "Aerioth",
-      "class": "priest",
-      "amount": 63381154,
-      "boss": "Crown of the Cosmos",
-      "report": "https://www.warcraftlogs.com/reports/YQXFLZT1Ah4KayDz"
-    },
-    "highestDamageDoneMplus": {
-      "name": "Valorite",
-      "class": "death-knight",
-      "amount": 264275348,
-      "boss": "Magisters' Terrace",
-      "report": "https://www.warcraftlogs.com/reports/GXNJMmyfZkDw24PV"
-    },
-    "bestHealer": {
-      "name": "Proto",
-      "class": "evoker",
-      "amount": 63744949,
-      "boss": "Crown of the Cosmos",
-      "report": "https://www.warcraftlogs.com/reports/YQXFLZT1Ah4KayDz"
-    },
-    "bestHealerMplus": {
-      "name": "Éowyn",
-      "class": "druid",
-      "amount": 71319993,
-      "boss": "Pit of Saron",
-      "report": "https://www.warcraftlogs.com/reports/g4wPvDZkCFx7TrBQ"
-    }
+    "mostDeaths": null,
+    "highestDamageDone": null,
+    "highestDamageDoneMplus": null,
+    "bestHealer": null,
+    "bestHealerMplus": null
   }
 }
