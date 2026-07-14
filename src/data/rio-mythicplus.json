@@ -66,22 +66,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Lilithh",
-      "class": "warlock",
-      "score": 3418,
-      "topKeys": [
-        "+16 MT",
-        "+16 POS",
-        "+16 AA",
-        "+16 SEAT",
-        "+16 NPX",
-        "+16 SR",
-        "+16 WS",
-        "+16 MC"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Proto",
       "class": "evoker",
       "score": 3332,
@@ -160,6 +144,22 @@
         "+13 AA"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 3236,
+      "topKeys": [
+        "+15 SEAT",
+        "+15 MT",
+        "+14 POS",
+        "+14 MC",
+        "+14 WS",
+        "+14 AA",
+        "+14 SR",
+        "+14 NPX"
+      ],
+      "realmSlug": "xavius"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-07-14T17:02:48.490Z"
+  "lastUpdated": "2026-07-14T18:36:49.050Z"
 }
