@@ -82,22 +82,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Proto",
-      "class": "evoker",
-      "score": 3332,
-      "topKeys": [
-        "+16 SEAT",
-        "+16 SR",
-        "+16 POS",
-        "+16 AA",
-        "+15 WS",
-        "+15 MT",
-        "+15 NPX",
-        "+13 MC"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 3288,
@@ -160,6 +144,22 @@
         "+13 AA"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 3236,
+      "topKeys": [
+        "+15 SEAT",
+        "+15 MT",
+        "+14 POS",
+        "+14 MC",
+        "+14 WS",
+        "+14 AA",
+        "+14 SR",
+        "+14 NPX"
+      ],
+      "realmSlug": "xavius"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-07-17T04:41:42.851Z"
+  "lastUpdated": "2026-07-17T07:11:17.537Z"
 }
