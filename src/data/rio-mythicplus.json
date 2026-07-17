@@ -20,13 +20,13 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 3491,
+      "score": 3504,
       "topKeys": [
         "+19 POS",
         "+18 MT",
+        "+17 MC",
         "+17 NPX",
         "+17 SEAT",
-        "+16 MC",
         "+16 SR",
         "+15 WS",
         "+14 AA"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-07-17T21:41:36.038Z"
+  "lastUpdated": "2026-07-17T22:38:48.170Z"
 }
