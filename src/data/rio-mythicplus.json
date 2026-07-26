@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 3304,
+      "topKeys": [
+        "+16 NPX",
+        "+16 MC",
+        "+15 POS",
+        "+15 SEAT",
+        "+15 MT",
+        "+14 WS",
+        "+14 AA",
+        "+14 SR"
+      ],
+      "realmSlug": "xavius"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 3288,
@@ -128,22 +144,6 @@
         "+13 AA"
       ],
       "realmSlug": "skullcrusher"
-    },
-    {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 3272,
-      "topKeys": [
-        "+16 MC",
-        "+15 POS",
-        "+15 SEAT",
-        "+15 MT",
-        "+14 WS",
-        "+14 AA",
-        "+14 SR",
-        "+14 NPX"
-      ],
-      "realmSlug": "xavius"
     },
     {
       "name": "Umgitsbubble",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-07-26T20:05:07.021Z"
+  "lastUpdated": "2026-07-26T21:25:05.986Z"
 }
