@@ -82,6 +82,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 3334,
+      "topKeys": [
+        "+16 NPX",
+        "+16 SR",
+        "+16 MC",
+        "+15 POS",
+        "+15 SEAT",
+        "+15 MT",
+        "+14 WS",
+        "+14 AA"
+      ],
+      "realmSlug": "xavius"
+    },
+    {
       "name": "Proto",
       "class": "evoker",
       "score": 3332,
@@ -96,22 +112,6 @@
         "+13 MC"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 3304,
-      "topKeys": [
-        "+16 NPX",
-        "+16 MC",
-        "+15 POS",
-        "+15 SEAT",
-        "+15 MT",
-        "+14 WS",
-        "+14 AA",
-        "+14 SR"
-      ],
-      "realmSlug": "xavius"
     },
     {
       "name": "Valorite",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-07-27T08:52:29.567Z"
+  "lastUpdated": "2026-07-27T12:11:08.786Z"
 }
