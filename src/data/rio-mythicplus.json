@@ -84,16 +84,16 @@
     {
       "name": "Frosteyes",
       "class": "death-knight",
-      "score": 3334,
+      "score": 3363,
       "topKeys": [
         "+16 NPX",
         "+16 SR",
         "+16 MC",
+        "+16 AA",
         "+15 POS",
         "+15 SEAT",
         "+15 MT",
-        "+14 WS",
-        "+14 AA"
+        "+14 WS"
       ],
       "realmSlug": "xavius"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-07-29T20:08:26.208Z"
+  "lastUpdated": "2026-07-29T21:25:47.752Z"
 }
