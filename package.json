@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "fetch-data": "node scripts/fetch-wcl-data.js && node scripts/fetch-rio-data.js && node scripts/fetch-wcl-stats.js",
-    "predev": "npm run fetch-data",
+    "predev": "node -e \"if(!process.env.SKIP_DATA_FETCH){process.exit(1)}\" || npm run fetch-data",
     "dev": "vite",
     "prebuild": "node -e \"if(!process.env.SKIP_DATA_FETCH){process.exit(1)}\" || npm run fetch-data",
     "build": "vite build",

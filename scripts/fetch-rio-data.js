@@ -15,6 +15,7 @@
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+import { writeFallback } from './write-fallback.js'
 
 const GUILD_URL =
   'https://raider.io/api/v1/guilds/profile?region=eu&realm=al-akir&name=Aztecs&fields=members'
@@ -28,8 +29,7 @@ const EMPTY_OUTPUT = { season: null, topRunners: [], dungeonBests: [], lastUpdat
 
 // Skip when explicitly opted out (e.g. CI pre-merge checks)
 if (process.env.SKIP_RIO_FETCH) {
-  writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
-  console.log('[rio] SKIP_RIO_FETCH set, skipping RIO fetch (wrote empty M+ data)')
+  writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, '[rio]', 'SKIP_RIO_FETCH set, skipping RIO fetch')
   process.exit(0)
 }
 
@@ -100,8 +100,7 @@ async function main() {
     const members = guildData.members || []
 
     if (members.length === 0) {
-      console.warn('[rio] No guild members found')
-      writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
+      writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, '[rio]', 'No guild members found')
       return
     }
 
@@ -240,8 +239,7 @@ async function main() {
       `[rio] Wrote M+ data: ${topRunners.length} top runners, ${dungeonBests.length} dungeon bests`,
     )
   } catch (err) {
-    console.warn(`[rio] Failed to fetch M+ data: ${err.message}`)
-    writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
+    writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, '[rio]', `Failed to fetch M+ data: ${err.message}`)
   }
 }
 

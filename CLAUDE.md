@@ -9,7 +9,7 @@ Guild website for "Aztecs", a WoW Horde guild on Al'Akir (EU). Built with Vue 3 
 ## Commands
 
 ```bash
-npm run dev          # Start dev server (auto-fetches data first via predev hook)
+npm run dev          # Start dev server (fetches data first unless SKIP_DATA_FETCH=true)
 npm run build        # Production build (copies index.html → 404.html for SPA routing)
 npm run lint         # ESLint with auto-fix
 npm run format       # Prettier format all files
@@ -25,7 +25,9 @@ CI enforces zero ESLint warnings: `npx eslint . --max-warnings=0`
 
 Pre-commit hook runs lint-staged (Prettier + ESLint) on staged files.
 
-Set `SKIP_DATA_FETCH=true` to skip the prebuild data fetch (done automatically in CI).
+Set `SKIP_DATA_FETCH=true` to skip the data fetch before `dev` and `build` (done automatically in CI).
+
+A fetch that produces nothing — missing WCL credentials, or an upstream outage — leaves the existing `src/data/*.json` untouched rather than overwriting it with empty output. Empty output is only written when the file is absent or unparseable, so a failed fetch degrades to stale data instead of a blank site.
 
 ## Architecture
 
@@ -233,7 +235,7 @@ Runtime (Vite `VITE_` prefix, exposed to browser):
 
 CI build flag:
 
-- `SKIP_DATA_FETCH=true` — skips the prebuild fetch (data already in repo)
+- `SKIP_DATA_FETCH=true` — skips the `predev` / `prebuild` fetch (data already in repo)
 
 ### Deployment
 

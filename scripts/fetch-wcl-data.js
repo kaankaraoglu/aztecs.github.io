@@ -13,6 +13,7 @@ import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadEnv } from './load-env.js'
+import { writeFallback } from './write-fallback.js'
 import { GUILD_ID, CURRENT_ZONE_IDS, CLASS_MAP, getToken, graphql } from './wcl-api.js'
 
 loadEnv()
@@ -300,8 +301,7 @@ async function fetchProgression(token) {
 async function main() {
   const token = await getToken(LOG_PREFIX)
   if (!token) {
-    writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
-    console.log(`${LOG_PREFIX} Wrote empty progression (no credentials)`)
+    writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, LOG_PREFIX, 'No credentials')
     return
   }
 
@@ -318,8 +318,12 @@ async function main() {
         `${data.summary.normal}N ${data.summary.heroic}HC ${data.summary.mythic}M`,
     )
   } catch (err) {
-    console.warn(`${LOG_PREFIX} Failed to fetch progression: ${err.message}`)
-    writeFileSync(OUTPUT_PATH, JSON.stringify(EMPTY_OUTPUT, null, 2) + '\n')
+    writeFallback(
+      OUTPUT_PATH,
+      EMPTY_OUTPUT,
+      LOG_PREFIX,
+      `Failed to fetch progression: ${err.message}`,
+    )
   }
 }
 
