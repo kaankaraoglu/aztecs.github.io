@@ -130,6 +130,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Chaos",
+      "class": "warlock",
+      "score": 3280,
+      "topKeys": [
+        "+16 MT",
+        "+16 POS",
+        "+15 MC",
+        "+15 SEAT",
+        "+14 SR",
+        "+14 WS",
+        "+13 NPX",
+        "+13 AA"
+      ],
+      "realmSlug": "skullcrusher"
+    },
+    {
       "name": "Umgitsbubble",
       "class": "paladin",
       "score": 3252,
@@ -142,22 +158,6 @@
         "+14 NPX",
         "+14 AA",
         "+14 MT"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 3246,
-      "topKeys": [
-        "+15 SR",
-        "+15 MT",
-        "+15 SEAT",
-        "+15 WS",
-        "+15 POS",
-        "+14 NPX",
-        "+14 MC",
-        "+13 AA"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-08T17:30:18.778Z"
+  "lastUpdated": "2026-08-08T17:59:31.948Z"
 }
