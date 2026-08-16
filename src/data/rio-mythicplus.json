@@ -18,22 +18,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 3504,
-      "topKeys": [
-        "+19 POS",
-        "+18 MT",
-        "+17 MC",
-        "+17 NPX",
-        "+17 SEAT",
-        "+16 SR",
-        "+15 WS",
-        "+14 AA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Aerioth",
       "class": "priest",
       "score": 3470,
@@ -160,6 +144,22 @@
         "+14 MT"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Agro",
+      "class": "warrior",
+      "score": 3246,
+      "topKeys": [
+        "+15 SR",
+        "+15 MT",
+        "+15 SEAT",
+        "+15 WS",
+        "+15 POS",
+        "+14 NPX",
+        "+14 MC",
+        "+13 AA"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-16T15:44:09.698Z"
+  "lastUpdated": "2026-08-16T16:16:02.351Z"
 }
