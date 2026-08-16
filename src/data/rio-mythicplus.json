@@ -66,6 +66,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Lilithh",
+      "class": "warlock",
+      "score": 3418,
+      "topKeys": [
+        "+16 MT",
+        "+16 POS",
+        "+16 AA",
+        "+16 SEAT",
+        "+16 NPX",
+        "+16 SR",
+        "+16 WS",
+        "+16 MC"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Frosteyes",
       "class": "death-knight",
       "score": 3415,
@@ -144,22 +160,6 @@
         "+14 MT"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 3246,
-      "topKeys": [
-        "+15 SR",
-        "+15 MT",
-        "+15 SEAT",
-        "+15 WS",
-        "+15 POS",
-        "+14 NPX",
-        "+14 MC",
-        "+13 AA"
-      ],
-      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-16T06:22:37.446Z"
+  "lastUpdated": "2026-08-16T07:08:46.256Z"
 }
