@@ -50,22 +50,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Clash",
-      "class": "mage",
-      "score": 3422,
-      "topKeys": [
-        "+17 WS",
-        "+17 SEAT",
-        "+17 MC",
-        "+17 POS",
-        "+17 SR",
-        "+14 NPX",
-        "+14 MT",
-        "+14 AA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Lilithh",
       "class": "warlock",
       "score": 3418,
@@ -160,6 +144,22 @@
         "+14 MT"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Agro",
+      "class": "warrior",
+      "score": 3246,
+      "topKeys": [
+        "+15 SR",
+        "+15 MT",
+        "+15 SEAT",
+        "+15 WS",
+        "+15 POS",
+        "+14 NPX",
+        "+14 MC",
+        "+13 AA"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-18T14:04:02.051Z"
+  "lastUpdated": "2026-08-18T15:00:09.579Z"
 }
