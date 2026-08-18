@@ -172,23 +172,7 @@
       ]
     },
     {
-      "dungeon": "Skyreach",
-      "level": 20,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
       "dungeon": "Magisters' Terrace",
-      "level": 20,
-      "timed": true,
-      "team": [
-        "Rackz"
-      ]
-    },
-    {
-      "dungeon": "Maisara Caverns",
       "level": 20,
       "timed": true,
       "team": [
@@ -204,15 +188,23 @@
       ]
     },
     {
-      "dungeon": "Algeth'ar Academy",
-      "level": 19,
+      "dungeon": "Maisara Caverns",
+      "level": 20,
       "timed": true,
       "team": [
         "Rackz"
       ]
     },
     {
-      "dungeon": "Seat of the Triumvirate",
+      "dungeon": "Skyreach",
+      "level": 20,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
+    },
+    {
+      "dungeon": "Algeth'ar Academy",
       "level": 19,
       "timed": true,
       "team": [
@@ -226,7 +218,15 @@
       "team": [
         "Rackz"
       ]
+    },
+    {
+      "dungeon": "Seat of the Triumvirate",
+      "level": 19,
+      "timed": true,
+      "team": [
+        "Rackz"
+      ]
     }
   ],
-  "lastUpdated": "2026-08-18T05:01:40.360Z"
+  "lastUpdated": "2026-08-18T05:28:32.170Z"
 }
