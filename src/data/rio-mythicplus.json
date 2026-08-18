@@ -172,7 +172,7 @@
       ]
     },
     {
-      "dungeon": "Magisters' Terrace",
+      "dungeon": "Skyreach",
       "level": 20,
       "timed": true,
       "team": [
@@ -180,7 +180,7 @@
       ]
     },
     {
-      "dungeon": "Pit of Saron",
+      "dungeon": "Magisters' Terrace",
       "level": 20,
       "timed": true,
       "team": [
@@ -196,7 +196,7 @@
       ]
     },
     {
-      "dungeon": "Skyreach",
+      "dungeon": "Pit of Saron",
       "level": 20,
       "timed": true,
       "team": [
@@ -212,7 +212,7 @@
       ]
     },
     {
-      "dungeon": "Nexus-Point Xenas",
+      "dungeon": "Seat of the Triumvirate",
       "level": 19,
       "timed": true,
       "team": [
@@ -220,7 +220,7 @@
       ]
     },
     {
-      "dungeon": "Seat of the Triumvirate",
+      "dungeon": "Nexus-Point Xenas",
       "level": 19,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-18T05:28:32.170Z"
+  "lastUpdated": "2026-08-18T05:53:41.319Z"
 }
