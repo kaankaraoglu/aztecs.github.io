@@ -1,6 +1,43 @@
 {
   "season": "season-mn-2",
-  "topRunners": [],
-  "dungeonBests": [],
-  "lastUpdated": "2026-08-19T08:44:56.879Z"
+  "topRunners": [
+    {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 467,
+      "topKeys": [
+        "+7 BV",
+        "+4 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Amorrlan",
+      "class": "demon-hunter",
+      "score": 167,
+      "topKeys": [
+        "+2 KR"
+      ],
+      "realmSlug": "alakir"
+    }
+  ],
+  "dungeonBests": [
+    {
+      "dungeon": "The Blinding Vale",
+      "level": 7,
+      "timed": true,
+      "team": [
+        "Daruni"
+      ]
+    },
+    {
+      "dungeon": "Kings' Rest",
+      "level": 4,
+      "timed": true,
+      "team": [
+        "Daruni"
+      ]
+    }
+  ],
+  "lastUpdated": "2026-08-19T09:25:24.439Z"
 }
