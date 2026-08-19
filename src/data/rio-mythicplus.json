@@ -33,12 +33,13 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 1102,
+      "score": 1272,
       "topKeys": [
         "+10 DON",
         "+8 RLP",
         "+8 VSA",
-        "+4 KR"
+        "+4 KR",
+        "+2 AOF"
       ],
       "realmSlug": "alakir"
     },
@@ -52,6 +53,15 @@
         "+7 TOS"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 170,
+      "topKeys": [
+        "+2 MR"
+      ],
+      "realmSlug": "burning-legion"
     }
   ],
   "dungeonBests": [
@@ -110,7 +120,15 @@
       "team": [
         "Daruni"
       ]
+    },
+    {
+      "dungeon": "Altar of Fangs",
+      "level": 2,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
     }
   ],
-  "lastUpdated": "2026-08-19T17:18:25.265Z"
+  "lastUpdated": "2026-08-19T17:48:27.433Z"
 }
