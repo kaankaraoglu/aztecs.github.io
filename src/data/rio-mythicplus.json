@@ -17,6 +17,20 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 1442,
+      "topKeys": [
+        "+10 DON",
+        "+8 RLP",
+        "+8 VSA",
+        "+4 KR",
+        "+2 AOF",
+        "+2 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 1363,
@@ -31,26 +45,14 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 1272,
-      "topKeys": [
-        "+10 DON",
-        "+8 RLP",
-        "+8 VSA",
-        "+4 KR",
-        "+2 AOF"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 819,
+      "score": 988,
       "topKeys": [
         "+8 VSA",
         "+7 KR",
-        "+7 TOS"
+        "+7 TOS",
+        "+2 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -130,5 +132,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-19T17:48:27.433Z"
+  "lastUpdated": "2026-08-19T18:18:35.329Z"
 }
