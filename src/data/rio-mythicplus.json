@@ -18,8 +18,9 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 533,
+      "score": 819,
       "topKeys": [
+        "+8 VSA",
         "+7 KR",
         "+7 TOS"
       ],
@@ -28,15 +29,33 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 490,
+      "score": 735,
       "topKeys": [
+        "+6 MR",
         "+6 KR",
         "+6 TOS"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 286,
+      "topKeys": [
+        "+8 VSA"
       ],
       "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
+    {
+      "dungeon": "Voidscar Arena",
+      "level": 8,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
+    },
     {
       "dungeon": "The Blinding Vale",
       "level": 7,
@@ -76,15 +95,7 @@
       "team": [
         "Daruni"
       ]
-    },
-    {
-      "dungeon": "Voidscar Arena",
-      "level": 6,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
     }
   ],
-  "lastUpdated": "2026-08-19T16:21:48.611Z"
+  "lastUpdated": "2026-08-19T16:54:25.560Z"
 }
