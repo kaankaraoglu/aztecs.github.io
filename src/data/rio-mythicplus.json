@@ -4,9 +4,11 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 467,
+      "score": 952,
       "topKeys": [
         "+7 BV",
+        "+6 MR",
+        "+6 VSA",
         "+4 KR"
       ],
       "realmSlug": "alakir"
@@ -31,6 +33,22 @@
       ]
     },
     {
+      "dungeon": "Murder Row",
+      "level": 6,
+      "timed": true,
+      "team": [
+        "Daruni"
+      ]
+    },
+    {
+      "dungeon": "Voidscar Arena",
+      "level": 6,
+      "timed": true,
+      "team": [
+        "Daruni"
+      ]
+    },
+    {
       "dungeon": "Kings' Rest",
       "level": 4,
       "timed": true,
@@ -39,5 +57,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-19T10:32:57.736Z"
+  "lastUpdated": "2026-08-19T11:07:13.285Z"
 }
