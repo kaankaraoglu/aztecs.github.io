@@ -4,10 +4,11 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 952,
+      "score": 1194,
       "topKeys": [
         "+7 BV",
         "+6 MR",
+        "+6 RLP",
         "+6 VSA",
         "+4 KR"
       ],
@@ -16,9 +17,9 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 167,
+      "score": 244,
       "topKeys": [
-        "+2 KR"
+        "+7 KR"
       ],
       "realmSlug": "alakir"
     }
@@ -33,7 +34,23 @@
       ]
     },
     {
+      "dungeon": "Kings' Rest",
+      "level": 7,
+      "timed": false,
+      "team": [
+        "Amorrlan"
+      ]
+    },
+    {
       "dungeon": "Murder Row",
+      "level": 6,
+      "timed": true,
+      "team": [
+        "Daruni"
+      ]
+    },
+    {
+      "dungeon": "Ruby Life Pools",
       "level": 6,
       "timed": true,
       "team": [
@@ -47,15 +64,7 @@
       "team": [
         "Daruni"
       ]
-    },
-    {
-      "dungeon": "Kings' Rest",
-      "level": 4,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
     }
   ],
-  "lastUpdated": "2026-08-19T11:07:13.285Z"
+  "lastUpdated": "2026-08-19T11:25:23.462Z"
 }
