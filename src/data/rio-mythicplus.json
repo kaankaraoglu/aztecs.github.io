@@ -2,6 +2,21 @@
   "season": "season-mn-2",
   "topRunners": [
     {
+      "name": "Aerioth",
+      "class": "priest",
+      "score": 1703,
+      "topKeys": [
+        "+6 MR",
+        "+6 KR",
+        "+6 TOS",
+        "+6 RLP",
+        "+6 BV",
+        "+6 DON",
+        "+6 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 1363,
@@ -16,6 +31,18 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 1102,
+      "topKeys": [
+        "+10 DON",
+        "+8 RLP",
+        "+8 VSA",
+        "+4 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Amorrlan",
       "class": "demon-hunter",
       "score": 819,
@@ -25,29 +52,25 @@
         "+7 TOS"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Aerioth",
-      "class": "priest",
-      "score": 735,
-      "topKeys": [
-        "+6 MR",
-        "+6 KR",
-        "+6 TOS"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 286,
-      "topKeys": [
-        "+8 VSA"
-      ],
-      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
+    {
+      "dungeon": "Den of Nalorakk",
+      "level": 10,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
+    },
+    {
+      "dungeon": "Ruby Life Pools",
+      "level": 8,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
+    },
     {
       "dungeon": "Voidscar Arena",
       "level": 8,
@@ -87,15 +110,7 @@
       "team": [
         "Daruni"
       ]
-    },
-    {
-      "dungeon": "Ruby Life Pools",
-      "level": 6,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
     }
   ],
-  "lastUpdated": "2026-08-19T16:54:25.560Z"
+  "lastUpdated": "2026-08-19T17:18:25.265Z"
 }
