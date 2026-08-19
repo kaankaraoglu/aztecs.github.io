@@ -66,6 +66,42 @@
         "+2 MR"
       ],
       "realmSlug": "burning-legion"
+    },
+    {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 170,
+      "topKeys": [
+        "+2 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Valorite",
+      "class": "death-knight",
+      "score": 170,
+      "topKeys": [
+        "+2 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Meld",
+      "class": "hunter",
+      "score": 170,
+      "topKeys": [
+        "+2 KR"
+      ],
+      "realmSlug": "twisting-nether"
+    },
+    {
+      "name": "Agro",
+      "class": "warrior",
+      "score": 170,
+      "topKeys": [
+        "+2 KR"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -134,5 +170,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-19T21:48:29.520Z"
+  "lastUpdated": "2026-08-19T22:14:50.891Z"
 }
