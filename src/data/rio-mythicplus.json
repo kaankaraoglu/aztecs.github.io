@@ -2,6 +2,21 @@
   "season": "season-mn-2",
   "topRunners": [
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 1767,
+      "topKeys": [
+        "+10 DON",
+        "+10 TOS",
+        "+8 RLP",
+        "+8 VSA",
+        "+4 KR",
+        "+2 AOF",
+        "+2 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Aerioth",
       "class": "priest",
       "score": 1703,
@@ -13,20 +28,6 @@
         "+6 BV",
         "+6 DON",
         "+6 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 1442,
-      "topKeys": [
-        "+10 DON",
-        "+8 RLP",
-        "+8 VSA",
-        "+4 KR",
-        "+2 AOF",
-        "+2 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -47,11 +48,11 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 988,
+      "score": 1049,
       "topKeys": [
+        "+10 TOS",
         "+8 VSA",
         "+7 KR",
-        "+7 TOS",
         "+2 BV"
       ],
       "realmSlug": "alakir"
@@ -67,6 +68,14 @@
     }
   ],
   "dungeonBests": [
+    {
+      "dungeon": "Temple of Sethraliss",
+      "level": 10,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
+    },
     {
       "dungeon": "Den of Nalorakk",
       "level": 10,
@@ -108,14 +117,6 @@
       ]
     },
     {
-      "dungeon": "Temple of Sethraliss",
-      "level": 7,
-      "timed": true,
-      "team": [
-        "Amorrlan"
-      ]
-    },
-    {
       "dungeon": "Murder Row",
       "level": 6,
       "timed": true,
@@ -132,5 +133,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-19T20:15:39.171Z"
+  "lastUpdated": "2026-08-19T20:52:22.283Z"
 }
