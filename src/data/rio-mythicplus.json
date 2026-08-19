@@ -17,10 +17,19 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 404,
+      "score": 429,
       "topKeys": [
         "+7 KR",
         "+2 TOS"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Aerioth",
+      "class": "priest",
+      "score": 245,
+      "topKeys": [
+        "+6 KR"
       ],
       "realmSlug": "alakir"
     }
@@ -37,7 +46,7 @@
     {
       "dungeon": "Kings' Rest",
       "level": 7,
-      "timed": false,
+      "timed": true,
       "team": [
         "Amorrlan"
       ]
@@ -75,5 +84,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-19T12:26:41.629Z"
+  "lastUpdated": "2026-08-19T13:37:43.682Z"
 }
