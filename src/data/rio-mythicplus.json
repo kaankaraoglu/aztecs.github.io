@@ -4,13 +4,14 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 1194,
+      "score": 1363,
       "topKeys": [
         "+7 BV",
         "+6 MR",
         "+6 RLP",
         "+6 VSA",
-        "+4 KR"
+        "+4 KR",
+        "+2 TOS"
       ],
       "realmSlug": "alakir"
     },
@@ -80,9 +81,9 @@
       "level": 2,
       "timed": true,
       "team": [
-        "Amorrlan"
+        "Daruni"
       ]
     }
   ],
-  "lastUpdated": "2026-08-19T13:37:43.682Z"
+  "lastUpdated": "2026-08-19T14:15:14.777Z"
 }
