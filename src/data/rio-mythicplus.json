@@ -17,9 +17,10 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 244,
+      "score": 404,
       "topKeys": [
-        "+7 KR"
+        "+7 KR",
+        "+2 TOS"
       ],
       "realmSlug": "alakir"
     }
@@ -64,7 +65,15 @@
       "team": [
         "Daruni"
       ]
+    },
+    {
+      "dungeon": "Temple of Sethraliss",
+      "level": 2,
+      "timed": true,
+      "team": [
+        "Amorrlan"
+      ]
     }
   ],
-  "lastUpdated": "2026-08-19T11:25:23.462Z"
+  "lastUpdated": "2026-08-19T11:54:51.721Z"
 }
