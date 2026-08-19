@@ -18,10 +18,10 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 429,
+      "score": 533,
       "topKeys": [
         "+7 KR",
-        "+2 TOS"
+        "+7 TOS"
       ],
       "realmSlug": "alakir"
     },
@@ -53,6 +53,14 @@
       ]
     },
     {
+      "dungeon": "Temple of Sethraliss",
+      "level": 7,
+      "timed": true,
+      "team": [
+        "Amorrlan"
+      ]
+    },
+    {
       "dungeon": "Murder Row",
       "level": 6,
       "timed": true,
@@ -75,15 +83,7 @@
       "team": [
         "Daruni"
       ]
-    },
-    {
-      "dungeon": "Temple of Sethraliss",
-      "level": 2,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
     }
   ],
-  "lastUpdated": "2026-08-19T14:15:14.777Z"
+  "lastUpdated": "2026-08-19T15:00:27.651Z"
 }
