@@ -4,14 +4,14 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 1767,
+      "score": 1840,
       "topKeys": [
         "+10 DON",
         "+10 TOS",
         "+8 RLP",
         "+8 VSA",
+        "+6 AOF",
         "+4 KR",
-        "+2 AOF",
         "+2 BV"
       ],
       "realmSlug": "alakir"
@@ -48,11 +48,12 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 1049,
+      "score": 1293,
       "topKeys": [
         "+10 TOS",
         "+8 VSA",
         "+7 KR",
+        "+6 AOF",
         "+2 BV"
       ],
       "realmSlug": "alakir"
@@ -126,12 +127,12 @@
     },
     {
       "dungeon": "Altar of Fangs",
-      "level": 2,
+      "level": 6,
       "timed": true,
       "team": [
         "Blackmaira"
       ]
     }
   ],
-  "lastUpdated": "2026-08-19T20:52:22.283Z"
+  "lastUpdated": "2026-08-19T21:16:37.931Z"
 }
