@@ -62,10 +62,11 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 563,
+      "score": 733,
       "topKeys": [
         "+5 TOS",
         "+2 VSA",
+        "+2 RLP",
         "+2 KR"
       ],
       "realmSlug": "alakir"
@@ -188,5 +189,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T09:58:04.156Z"
+  "lastUpdated": "2026-08-20T10:22:26.913Z"
 }
