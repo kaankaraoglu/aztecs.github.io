@@ -70,6 +70,17 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Bagz",
+      "class": "rogue",
+      "score": 546,
+      "topKeys": [
+        "+4 RLP",
+        "+3 VSA",
+        "+2 MR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Sotray",
       "class": "priest",
       "score": 170,
@@ -104,15 +115,6 @@
         "+2 KR"
       ],
       "realmSlug": "twisting-nether"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 170,
-      "topKeys": [
-        "+2 KR"
-      ],
-      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -181,5 +183,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T03:26:11.828Z"
+  "lastUpdated": "2026-08-20T04:06:02.327Z"
 }
