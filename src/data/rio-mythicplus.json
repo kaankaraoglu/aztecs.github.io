@@ -35,12 +35,12 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 1728,
+      "score": 1813,
       "topKeys": [
+        "+10 RLP",
         "+7 TOS",
         "+6 MR",
         "+6 KR",
-        "+6 RLP",
         "+6 BV",
         "+6 DON",
         "+6 VSA"
@@ -147,6 +147,14 @@
       ]
     },
     {
+      "dungeon": "Ruby Life Pools",
+      "level": 10,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Den of Nalorakk",
       "level": 10,
       "timed": true,
@@ -171,14 +179,6 @@
       ]
     },
     {
-      "dungeon": "Ruby Life Pools",
-      "level": 8,
-      "timed": true,
-      "team": [
-        "Blackmaira"
-      ]
-    },
-    {
       "dungeon": "Kings' Rest",
       "level": 7,
       "timed": true,
@@ -195,5 +195,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T14:07:37.634Z"
+  "lastUpdated": "2026-08-20T15:02:37.562Z"
 }
