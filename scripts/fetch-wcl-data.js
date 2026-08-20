@@ -37,7 +37,7 @@ const EMPTY_OUTPUT = {
 // pip is relabelled "MX" / "Mythic Flex" in the UI (same legendary colour); the
 // underlying data still uses the `mythic` field. Add an instance name here when a
 // Mythic Flex tier launches, alongside CURRENT_ZONE_IDS / RAID_INSTANCE_ENCOUNTERS.
-const MYTHIC_FLEX_INSTANCES = new Set(['Sporefall'])
+const MYTHIC_FLEX_INSTANCES = new Set(['Sporefall', 'The Tidebound Grotto'])
 // TODO @launch: if WCL assigns Mythic Flex a NEW difficulty id (not 5),
 // add it to DIFF_NAME and map it to 'mythic'.
 
@@ -53,6 +53,17 @@ const RAID_INSTANCE_ENCOUNTERS = {
   'The Dreamrift': ['Chimaerus, the Undreamt God'],
   "March on Quel'Danas": ["Belo'ren, Child of Al'ar", 'Midnight Falls'],
   Sporefall: ['Rotmire'],
+  'The Tidebound Grotto': ['Nymrissa Wavecaller'],
+  'The Venomous Abyss': [
+    "Nek'zali the Soulcoiler",
+    'Entombed Sentinels',
+    'Vashnik the Malignant',
+    'The Lost Explorers',
+    'Sszorak',
+    'The Twin Fangs',
+    'The Coiled Altar',
+    "Ula'tek",
+  ],
 }
 
 const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }
