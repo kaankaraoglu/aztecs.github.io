@@ -2,6 +2,22 @@
   "season": "season-mn-2",
   "topRunners": [
     {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 2070,
+      "topKeys": [
+        "+9 AOF",
+        "+9 DON",
+        "+7 KR",
+        "+7 BV",
+        "+6 MR",
+        "+6 RLP",
+        "+6 VSA",
+        "+6 TOS"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 1840,
@@ -17,17 +33,17 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 1705,
+      "name": "Aerioth",
+      "class": "priest",
+      "score": 1728,
       "topKeys": [
-        "+9 DON",
-        "+7 KR",
-        "+7 BV",
+        "+7 TOS",
         "+6 MR",
+        "+6 KR",
         "+6 RLP",
-        "+6 VSA",
-        "+2 TOS"
+        "+6 BV",
+        "+6 DON",
+        "+6 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -47,12 +63,35 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 733,
+      "score": 1036,
       "topKeys": [
+        "+6 BV",
+        "+5 VSA",
         "+5 TOS",
-        "+2 VSA",
         "+2 RLP",
         "+2 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 643,
+      "topKeys": [
+        "+6 BV",
+        "+5 VSA",
+        "+2 RLP"
+      ],
+      "realmSlug": "xavius"
+    },
+    {
+      "name": "Zultharek",
+      "class": "shaman",
+      "score": 643,
+      "topKeys": [
+        "+6 BV",
+        "+5 VSA",
+        "+2 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -86,35 +125,6 @@
         "+2 KR"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Meld",
-      "class": "hunter",
-      "score": 397,
-      "topKeys": [
-        "+5 BV",
-        "+2 KR"
-      ],
-      "realmSlug": "twisting-nether"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 397,
-      "topKeys": [
-        "+5 BV",
-        "+2 KR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 170,
-      "topKeys": [
-        "+2 MR"
-      ],
-      "realmSlug": "burning-legion"
     }
   ],
   "dungeonBests": [
@@ -135,6 +145,14 @@
       ]
     },
     {
+      "dungeon": "Altar of Fangs",
+      "level": 9,
+      "timed": true,
+      "team": [
+        "Daruni"
+      ]
+    },
+    {
       "dungeon": "Voidscar Arena",
       "level": 8,
       "timed": true,
@@ -151,7 +169,7 @@
       ]
     },
     {
-      "dungeon": "Kings' Rest",
+      "dungeon": "The Blinding Vale",
       "level": 7,
       "timed": true,
       "team": [
@@ -159,7 +177,7 @@
       ]
     },
     {
-      "dungeon": "The Blinding Vale",
+      "dungeon": "Kings' Rest",
       "level": 7,
       "timed": true,
       "team": [
@@ -173,15 +191,7 @@
       "team": [
         "Daruni"
       ]
-    },
-    {
-      "dungeon": "Altar of Fangs",
-      "level": 6,
-      "timed": true,
-      "team": [
-        "Blackmaira"
-      ]
     }
   ],
-  "lastUpdated": "2026-08-20T12:25:02.562Z"
+  "lastUpdated": "2026-08-20T13:26:01.483Z"
 }
