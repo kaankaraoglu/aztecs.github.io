@@ -32,16 +32,16 @@
             ],
             "healers": [
               {
-                "name": "Blindee",
-                "class": "shaman",
-                "spec": "Restoration",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blindee"
-              },
-              {
                 "name": "Proto",
                 "class": "evoker",
                 "spec": "Preservation",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/proto"
+              },
+              {
+                "name": "Blindee",
+                "class": "shaman",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blindee"
               },
               {
                 "name": "Sâmáar",
@@ -51,6 +51,12 @@
               }
             ],
             "dps": [
+              {
+                "name": "Aurielle",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
+              },
               {
                 "name": "Valorite",
                 "class": "death-knight",
@@ -64,40 +70,10 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/baradd%C3%BBr"
               },
               {
-                "name": "Frosteyes",
-                "class": "death-knight",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
-              },
-              {
-                "name": "Aerioth",
-                "class": "priest",
-                "spec": "Shadow",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
-              },
-              {
-                "name": "Aurielle",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
-              },
-              {
-                "name": "Blackmaira",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
-              },
-              {
                 "name": "Synthia",
                 "class": "demon-hunter",
                 "spec": "Devourer",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
-              },
-              {
-                "name": "Goudlockje",
-                "class": "warlock",
-                "spec": "Demonology",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/goudlockje"
               },
               {
                 "name": "Daruni",
@@ -106,16 +82,40 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
               },
               {
+                "name": "Wablahigh",
+                "class": "druid",
+                "spec": "Feral",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+              },
+              {
+                "name": "Blackmaira",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
+              },
+              {
+                "name": "Goudlockje",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/goudlockje"
+              },
+              {
+                "name": "Aerioth",
+                "class": "priest",
+                "spec": "Shadow",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
+              },
+              {
                 "name": "Grombro",
                 "class": "mage",
                 "spec": "Frost",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/draenor/grombro"
               },
               {
-                "name": "Wablahigh",
-                "class": "druid",
-                "spec": "Feral",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+                "name": "Frosteyes",
+                "class": "death-knight",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
               }
             ]
           }
@@ -147,16 +147,16 @@
             ],
             "healers": [
               {
-                "name": "Blindee",
-                "class": "shaman",
-                "spec": "Restoration",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blindee"
-              },
-              {
                 "name": "Proto",
                 "class": "evoker",
                 "spec": "Preservation",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/proto"
+              },
+              {
+                "name": "Blindee",
+                "class": "shaman",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blindee"
               },
               {
                 "name": "Sâmáar",
@@ -166,6 +166,12 @@
               }
             ],
             "dps": [
+              {
+                "name": "Aurielle",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
+              },
               {
                 "name": "Valorite",
                 "class": "death-knight",
@@ -179,40 +185,10 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/baradd%C3%BBr"
               },
               {
-                "name": "Frosteyes",
-                "class": "death-knight",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
-              },
-              {
-                "name": "Aerioth",
-                "class": "priest",
-                "spec": "Shadow",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
-              },
-              {
-                "name": "Aurielle",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
-              },
-              {
-                "name": "Blackmaira",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
-              },
-              {
                 "name": "Synthia",
                 "class": "demon-hunter",
                 "spec": "Devourer",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
-              },
-              {
-                "name": "Goudlockje",
-                "class": "warlock",
-                "spec": "Demonology",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/goudlockje"
               },
               {
                 "name": "Daruni",
@@ -221,16 +197,40 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
               },
               {
+                "name": "Wablahigh",
+                "class": "druid",
+                "spec": "Feral",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+              },
+              {
+                "name": "Blackmaira",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
+              },
+              {
+                "name": "Goudlockje",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/goudlockje"
+              },
+              {
+                "name": "Aerioth",
+                "class": "priest",
+                "spec": "Shadow",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
+              },
+              {
                 "name": "Grombro",
                 "class": "mage",
                 "spec": "Frost",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/draenor/grombro"
               },
               {
-                "name": "Wablahigh",
-                "class": "druid",
-                "spec": "Feral",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+                "name": "Frosteyes",
+                "class": "death-knight",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
               }
             ]
           }
@@ -268,6 +268,12 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/proto"
               },
               {
+                "name": "Éowyn",
+                "class": "druid",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/%C3%A9owyn"
+              },
+              {
                 "name": "Sâmáar",
                 "class": "priest",
                 "spec": "Holy",
@@ -278,15 +284,15 @@
                 "class": "paladin",
                 "spec": "Holy",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
-              },
-              {
-                "name": "Éowyn",
-                "class": "druid",
-                "spec": "Restoration",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/%C3%A9owyn"
               }
             ],
             "dps": [
+              {
+                "name": "Aurielle",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
+              },
               {
                 "name": "Valorite",
                 "class": "death-knight",
@@ -300,34 +306,10 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/baradd%C3%BBr"
               },
               {
-                "name": "Frosteyes",
-                "class": "death-knight",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
-              },
-              {
-                "name": "Aerioth",
-                "class": "priest",
-                "spec": "Shadow",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
-              },
-              {
-                "name": "Aurielle",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
-              },
-              {
                 "name": "Synthia",
                 "class": "demon-hunter",
                 "spec": "Devourer",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
-              },
-              {
-                "name": "Goudlockje",
-                "class": "warlock",
-                "spec": "Demonology",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/goudlockje"
               },
               {
                 "name": "Daruni",
@@ -336,16 +318,34 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
               },
               {
+                "name": "Wablahigh",
+                "class": "druid",
+                "spec": "Feral",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+              },
+              {
+                "name": "Goudlockje",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/goudlockje"
+              },
+              {
+                "name": "Aerioth",
+                "class": "priest",
+                "spec": "Shadow",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
+              },
+              {
                 "name": "Grombro",
                 "class": "mage",
                 "spec": "Frost",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/draenor/grombro"
               },
               {
-                "name": "Wablahigh",
-                "class": "druid",
-                "spec": "Feral",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+                "name": "Frosteyes",
+                "class": "death-knight",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
               }
             ]
           }
@@ -363,16 +363,16 @@
           "roster": {
             "tanks": [
               {
-                "name": "Phruity",
-                "class": "druid",
-                "spec": "Guardian",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
-              },
-              {
                 "name": "Agro",
                 "class": "warrior",
                 "spec": "Protection",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
+              },
+              {
+                "name": "Phruity",
+                "class": "druid",
+                "spec": "Guardian",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
               }
             ],
             "healers": [
@@ -397,46 +397,10 @@
             ],
             "dps": [
               {
-                "name": "Synthia",
-                "class": "demon-hunter",
-                "spec": "Devourer",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
-              },
-              {
-                "name": "Aurielle",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
-              },
-              {
                 "name": "Frosteyes",
                 "class": "death-knight",
                 "spec": "Frost",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
-              },
-              {
-                "name": "Mxk",
-                "class": "warrior",
-                "spec": "Fury",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/mxk"
-              },
-              {
-                "name": "Blackmaira",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
-              },
-              {
-                "name": "Grombro",
-                "class": "mage",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/draenor/grombro"
-              },
-              {
-                "name": "Lilithh",
-                "class": "warlock",
-                "spec": "Demonology",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/lilithh"
               },
               {
                 "name": "Wablahigh",
@@ -445,10 +409,28 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
               },
               {
+                "name": "Grombro",
+                "class": "mage",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/draenor/grombro"
+              },
+              {
                 "name": "Aerioth",
                 "class": "priest",
                 "spec": "Shadow",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
+              },
+              {
+                "name": "Mxk",
+                "class": "warrior",
+                "spec": "Fury",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/mxk"
+              },
+              {
+                "name": "Valorite",
+                "class": "death-knight",
+                "spec": "Unholy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               },
               {
                 "name": "Baraddûr",
@@ -457,10 +439,28 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/baradd%C3%BBr"
               },
               {
-                "name": "Valorite",
-                "class": "death-knight",
-                "spec": "Unholy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
+                "name": "Lilithh",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/lilithh"
+              },
+              {
+                "name": "Aurielle",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
+              },
+              {
+                "name": "Synthia",
+                "class": "demon-hunter",
+                "spec": "Devourer",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
+              },
+              {
+                "name": "Blackmaira",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
               }
             ]
           }
@@ -478,25 +478,19 @@
           "roster": {
             "tanks": [
               {
-                "name": "Phruity",
-                "class": "druid",
-                "spec": "Guardian",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
-              },
-              {
                 "name": "Agro",
                 "class": "warrior",
                 "spec": "Protection",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
+              },
+              {
+                "name": "Phruity",
+                "class": "druid",
+                "spec": "Guardian",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
               }
             ],
             "healers": [
-              {
-                "name": "Blackmaira",
-                "class": "paladin",
-                "spec": "Holy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
-              },
               {
                 "name": "Éowyn",
                 "class": "druid",
@@ -514,44 +508,20 @@
                 "class": "priest",
                 "spec": "Holy",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
+              },
+              {
+                "name": "Blackmaira",
+                "class": "paladin",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
               }
             ],
             "dps": [
-              {
-                "name": "Synthia",
-                "class": "demon-hunter",
-                "spec": "Devourer",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
-              },
-              {
-                "name": "Aurielle",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
-              },
               {
                 "name": "Frosteyes",
                 "class": "death-knight",
                 "spec": "Frost",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
-              },
-              {
-                "name": "Mxk",
-                "class": "warrior",
-                "spec": "Arms",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/mxk"
-              },
-              {
-                "name": "Grombro",
-                "class": "mage",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/draenor/grombro"
-              },
-              {
-                "name": "Lilithh",
-                "class": "warlock",
-                "spec": "Demonology",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/lilithh"
               },
               {
                 "name": "Wablahigh",
@@ -560,10 +530,28 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
               },
               {
+                "name": "Grombro",
+                "class": "mage",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/draenor/grombro"
+              },
+              {
                 "name": "Aerioth",
                 "class": "priest",
                 "spec": "Shadow",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
+              },
+              {
+                "name": "Mxk",
+                "class": "warrior",
+                "spec": "Arms",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/mxk"
+              },
+              {
+                "name": "Valorite",
+                "class": "death-knight",
+                "spec": "Unholy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               },
               {
                 "name": "Baraddûr",
@@ -572,10 +560,22 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/baradd%C3%BBr"
               },
               {
-                "name": "Valorite",
-                "class": "death-knight",
-                "spec": "Unholy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
+                "name": "Lilithh",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/lilithh"
+              },
+              {
+                "name": "Aurielle",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
+              },
+              {
+                "name": "Synthia",
+                "class": "demon-hunter",
+                "spec": "Devourer",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
               }
             ]
           }
@@ -607,42 +607,54 @@
             ],
             "healers": [
               {
-                "name": "Sâmáar",
-                "class": "priest",
-                "spec": "Holy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
-              },
-              {
                 "name": "Blackmaira",
                 "class": "paladin",
                 "spec": "Holy",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
               },
               {
-                "name": "Éowyn",
-                "class": "druid",
-                "spec": "Restoration",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/%C3%A9owyn"
-              },
-              {
                 "name": "Proto",
                 "class": "evoker",
                 "spec": "Preservation",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/proto"
+              },
+              {
+                "name": "Sâmáar",
+                "class": "priest",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
+              },
+              {
+                "name": "Éowyn",
+                "class": "druid",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/%C3%A9owyn"
               }
             ],
             "dps": [
               {
-                "name": "Aerioth",
-                "class": "priest",
-                "spec": "Shadow",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
+                "name": "Daruni",
+                "class": "druid",
+                "spec": "Balance",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
               },
               {
-                "name": "Blindee",
-                "class": "shaman",
-                "spec": "Enhancement",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blindee"
+                "name": "Aurielle",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
+              },
+              {
+                "name": "Lilithh",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/lilithh"
+              },
+              {
+                "name": "Valorite",
+                "class": "death-knight",
+                "spec": "Unholy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               },
               {
                 "name": "Synthia",
@@ -657,6 +669,12 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
               },
               {
+                "name": "Blindee",
+                "class": "shaman",
+                "spec": "Enhancement",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blindee"
+              },
+              {
                 "name": "Frosteyes",
                 "class": "death-knight",
                 "spec": "Frost",
@@ -669,34 +687,16 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/kazzak/babasiru"
               },
               {
-                "name": "Valorite",
-                "class": "death-knight",
-                "spec": "Unholy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
-              },
-              {
-                "name": "Lilithh",
-                "class": "warlock",
-                "spec": "Demonology",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/lilithh"
-              },
-              {
-                "name": "Daruni",
-                "class": "druid",
-                "spec": "Balance",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
-              },
-              {
-                "name": "Aurielle",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
-              },
-              {
                 "name": "Mxk",
                 "class": "warrior",
                 "spec": "Arms",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/mxk"
+              },
+              {
+                "name": "Aerioth",
+                "class": "priest",
+                "spec": "Shadow",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
               }
             ]
           }
@@ -740,19 +740,25 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/proto"
               },
               {
-                "name": "Sâmáar",
-                "class": "priest",
-                "spec": "Holy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
-              },
-              {
                 "name": "Éowyn",
                 "class": "druid",
                 "spec": "Restoration",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/%C3%A9owyn"
+              },
+              {
+                "name": "Sâmáar",
+                "class": "priest",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
               }
             ],
             "dps": [
+              {
+                "name": "Aurielle",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
+              },
               {
                 "name": "Valorite",
                 "class": "death-knight",
@@ -766,40 +772,10 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/baradd%C3%BBr"
               },
               {
-                "name": "Frosteyes",
-                "class": "death-knight",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
-              },
-              {
-                "name": "Aerioth",
-                "class": "priest",
-                "spec": "Shadow",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
-              },
-              {
-                "name": "Aurielle",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
-              },
-              {
-                "name": "Blackmaira",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
-              },
-              {
                 "name": "Synthia",
                 "class": "demon-hunter",
                 "spec": "Devourer",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
-              },
-              {
-                "name": "Goudlockje",
-                "class": "warlock",
-                "spec": "Demonology",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/goudlockje"
               },
               {
                 "name": "Daruni",
@@ -808,16 +784,40 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
               },
               {
+                "name": "Wablahigh",
+                "class": "druid",
+                "spec": "Feral",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+              },
+              {
+                "name": "Blackmaira",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
+              },
+              {
+                "name": "Goudlockje",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/goudlockje"
+              },
+              {
+                "name": "Aerioth",
+                "class": "priest",
+                "spec": "Shadow",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
+              },
+              {
                 "name": "Grombro",
                 "class": "mage",
                 "spec": "Frost",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/draenor/grombro"
               },
               {
-                "name": "Wablahigh",
-                "class": "druid",
-                "spec": "Feral",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+                "name": "Frosteyes",
+                "class": "death-knight",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
               }
             ]
           }
@@ -855,48 +855,36 @@
             ],
             "healers": [
               {
-                "name": "Sâmáar",
-                "class": "priest",
-                "spec": "Holy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
-              },
-              {
                 "name": "Proto",
                 "class": "evoker",
                 "spec": "Preservation",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/proto"
               },
               {
-                "name": "Olibb",
-                "class": "paladin",
-                "spec": "Holy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/olibb"
-              },
-              {
                 "name": "Éowyn",
                 "class": "druid",
                 "spec": "Restoration",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/%C3%A9owyn"
+              },
+              {
+                "name": "Sâmáar",
+                "class": "priest",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
+              },
+              {
+                "name": "Olibb",
+                "class": "paladin",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/olibb"
               }
             ],
             "dps": [
               {
-                "name": "Rackz",
-                "class": "demon-hunter",
-                "spec": "Devourer",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/rackz"
-              },
-              {
-                "name": "Daruni",
-                "class": "druid",
-                "spec": "Balance",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
-              },
-              {
-                "name": "Rhampage",
+                "name": "Mxk",
                 "class": "warrior",
                 "spec": "Arms",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/rhampage"
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/mxk"
               },
               {
                 "name": "Blackmaira",
@@ -905,22 +893,10 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
               },
               {
-                "name": "Aurielle",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
-              },
-              {
-                "name": "Mxk",
-                "class": "warrior",
-                "spec": "Arms",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/mxk"
-              },
-              {
-                "name": "Frosteyes",
-                "class": "death-knight",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
+                "name": "Daruni",
+                "class": "druid",
+                "spec": "Balance",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
               },
               {
                 "name": "Aerioth",
@@ -929,10 +905,16 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
               },
               {
-                "name": "Lilithh",
-                "class": "warlock",
-                "spec": "Demonology",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/lilithh"
+                "name": "Aurielle",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aurielle"
+              },
+              {
+                "name": "Rhampage",
+                "class": "warrior",
+                "spec": "Arms",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/rhampage"
               },
               {
                 "name": "Valorite",
@@ -941,16 +923,34 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               },
               {
-                "name": "Wablahigh",
-                "class": "druid",
-                "spec": "Feral",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
+                "name": "Frosteyes",
+                "class": "death-knight",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
               },
               {
                 "name": "Synthia",
                 "class": "demon-hunter",
                 "spec": "Devourer",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
+              },
+              {
+                "name": "Rackz",
+                "class": "demon-hunter",
+                "spec": "Devourer",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/rackz"
+              },
+              {
+                "name": "Lilithh",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/lilithh"
+              },
+              {
+                "name": "Wablahigh",
+                "class": "druid",
+                "spec": "Feral",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/wablahigh"
               }
             ]
           }
@@ -968,57 +968,33 @@
           "roster": {
             "tanks": [
               {
-                "name": "Phruity",
-                "class": "druid",
-                "spec": "Guardian",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
-              },
-              {
                 "name": "Agro",
                 "class": "warrior",
                 "spec": "Protection",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
+              },
+              {
+                "name": "Phruity",
+                "class": "druid",
+                "spec": "Guardian",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
               }
             ],
             "healers": [
-              {
-                "name": "Sâmáar",
-                "class": "priest",
-                "spec": "Holy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
-              },
               {
                 "name": "Blindee",
                 "class": "shaman",
                 "spec": "Restoration",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blindee"
+              },
+              {
+                "name": "Sâmáar",
+                "class": "priest",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
               }
             ],
             "dps": [
-              {
-                "name": "Valorite",
-                "class": "death-knight",
-                "spec": "Unholy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
-              },
-              {
-                "name": "Frosteyes",
-                "class": "death-knight",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
-              },
-              {
-                "name": "Blackmaira",
-                "class": "paladin",
-                "spec": "Retribution",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
-              },
-              {
-                "name": "Proto",
-                "class": "evoker",
-                "spec": "Augmentation",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/proto"
-              },
               {
                 "name": "Aerioth",
                 "class": "priest",
@@ -1032,10 +1008,34 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/olibb"
               },
               {
+                "name": "Frosteyes",
+                "class": "death-knight",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
+              },
+              {
+                "name": "Proto",
+                "class": "evoker",
+                "spec": "Augmentation",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/proto"
+              },
+              {
                 "name": "Mxk",
                 "class": "warrior",
                 "spec": "Fury",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/mxk"
+              },
+              {
+                "name": "Blackmaira",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
+              },
+              {
+                "name": "Valorite",
+                "class": "death-knight",
+                "spec": "Unholy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               }
             ]
           }
@@ -1073,36 +1073,36 @@
             ],
             "healers": [
               {
-                "name": "Éowyn",
-                "class": "druid",
-                "spec": "Restoration",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/%C3%A9owyn"
-              },
-              {
                 "name": "Samaari",
                 "class": "monk",
                 "spec": "Mistweaver",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/samaari"
+              },
+              {
+                "name": "Éowyn",
+                "class": "druid",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/%C3%A9owyn"
               }
             ],
             "dps": [
+              {
+                "name": "Incendia",
+                "class": "mage",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/incendia"
+              },
+              {
+                "name": "Valorite",
+                "class": "death-knight",
+                "spec": "Unholy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
+              },
               {
                 "name": "Frosteyes",
                 "class": "death-knight",
                 "spec": "Frost",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
-              },
-              {
-                "name": "Clash",
-                "class": "mage",
-                "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/clash"
-              },
-              {
-                "name": "Daruni",
-                "class": "druid",
-                "spec": "Balance",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
               },
               {
                 "name": "Blackmaira",
@@ -1117,16 +1117,16 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
               },
               {
-                "name": "Valorite",
-                "class": "death-knight",
-                "spec": "Unholy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
-              },
-              {
-                "name": "Incendia",
+                "name": "Clash",
                 "class": "mage",
                 "spec": "Frost",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/incendia"
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/clash"
+              },
+              {
+                "name": "Daruni",
+                "class": "druid",
+                "spec": "Balance",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
               }
             ]
           }
