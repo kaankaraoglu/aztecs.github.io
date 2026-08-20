@@ -20,15 +20,15 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 1840,
+      "score": 1998,
       "topKeys": [
+        "+10 BV",
         "+10 DON",
         "+10 TOS",
         "+8 RLP",
         "+8 VSA",
         "+6 AOF",
-        "+4 KR",
-        "+2 BV"
+        "+4 KR"
       ],
       "realmSlug": "alakir"
     },
@@ -63,13 +63,26 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 1036,
+      "score": 1276,
       "topKeys": [
         "+6 BV",
+        "+6 AOF",
         "+5 VSA",
         "+5 TOS",
         "+2 RLP",
         "+2 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Zultharek",
+      "class": "shaman",
+      "score": 882,
+      "topKeys": [
+        "+6 BV",
+        "+6 AOF",
+        "+5 VSA",
+        "+2 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -83,17 +96,6 @@
         "+2 RLP"
       ],
       "realmSlug": "xavius"
-    },
-    {
-      "name": "Zultharek",
-      "class": "shaman",
-      "score": 643,
-      "topKeys": [
-        "+6 BV",
-        "+5 VSA",
-        "+2 RLP"
-      ],
-      "realmSlug": "alakir"
     },
     {
       "name": "Bagz",
@@ -128,6 +130,14 @@
     }
   ],
   "dungeonBests": [
+    {
+      "dungeon": "The Blinding Vale",
+      "level": 10,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
+    },
     {
       "dungeon": "Temple of Sethraliss",
       "level": 10,
@@ -169,14 +179,6 @@
       ]
     },
     {
-      "dungeon": "The Blinding Vale",
-      "level": 7,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
-    },
-    {
       "dungeon": "Kings' Rest",
       "level": 7,
       "timed": true,
@@ -193,5 +195,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T13:26:01.483Z"
+  "lastUpdated": "2026-08-20T14:07:37.634Z"
 }
