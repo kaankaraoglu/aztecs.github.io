@@ -20,9 +20,33 @@
         </div>
       </div>
       <div class="instances">
-        <div v-for="raid in raids" :key="raid.name" class="instance difficulty-section">
-          <h3 class="instance-name">{{ raid.name }}</h3>
-          <div class="boss-list">
+        <div
+          v-for="(raid, raidIndex) in raids"
+          :key="raid.name"
+          class="instance difficulty-section"
+          :class="{ collapsible: raidIndex > 0 }"
+        >
+          <h3 v-if="raidIndex === 0" class="instance-name">{{ raid.name }}</h3>
+          <button
+            v-else
+            type="button"
+            class="instance-toggle"
+            :aria-expanded="String(isRaidOpen(raid))"
+            @click="toggleRaid(raid.name)"
+          >
+            <span class="instance-name">{{ raid.name }}</span>
+            <span class="instance-summary">
+              <span
+                v-for="tally in raidTallies(raid)"
+                :key="tally.difficulty"
+                :class="['pip', 'tally', tally.difficulty, { active: tally.killed > 0 }]"
+                :title="tally.title"
+                >{{ tally.killed }}/{{ tally.total }} {{ tally.label }}</span
+              >
+            </span>
+            <span class="expand-caret" :class="{ open: isRaidOpen(raid) }">&#9662;</span>
+          </button>
+          <div v-show="isRaidOpen(raid)" class="boss-list">
             <div v-for="boss in raid.bosses" :key="boss.name" class="boss-line">
               <span class="boss-status">
                 <span :class="['pip', 'normal', { active: boss.normal }]" title="Normal">N</span>
@@ -166,6 +190,39 @@ const formattedUpdated = computed(() => {
 })
 
 const expanded = reactive({})
+const expandedRaids = reactive({})
+
+/** The newest raid is always open; older tiers collapse to their header line. */
+function isRaidOpen(raid) {
+  return props.raids[0]?.name === raid.name || !!expandedRaids[raid.name]
+}
+
+function toggleRaid(raidName) {
+  expandedRaids[raidName] = !expandedRaids[raidName]
+  if (expandedRaids[raidName]) {
+    trackEvent('select_content', { content_type: 'raid_instance', item_id: raidName })
+  }
+}
+
+function raidTallies(raid) {
+  const total = raid.bosses.length
+  const tallies = [
+    { difficulty: 'normal', label: 'N', title: 'Normal' },
+    { difficulty: 'heroic', label: 'HC', title: 'Heroic' },
+  ]
+  if (props.summary.mythic > 0 || raid.mythicFlex) {
+    tallies.push({
+      difficulty: 'mythic',
+      label: raid.mythicFlex ? 'MX' : 'M',
+      title: raid.mythicFlex ? 'Mythic Flex' : 'Mythic',
+    })
+  }
+  return tallies.map((t) => ({
+    ...t,
+    total,
+    killed: raid.bosses.filter((b) => b[t.difficulty]).length,
+  }))
+}
 
 function toggle(bossName) {
   expanded[bossName] = !expanded[bossName]
@@ -315,6 +372,52 @@ function hasRoster(boss) {
     letter-spacing: 0.05em;
     color: $accent-color;
     padding-left: 0.15rem;
+  }
+
+  .instance-toggle {
+    display: flex;
+    align-items: center;
+    gap: $space-3;
+    width: 100%;
+    margin-bottom: 0.3rem;
+    padding: 0.5rem 0.6rem;
+    background: $surface-2;
+    border: none;
+    border-radius: $radius-md;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background $duration-fast;
+
+    &:hover {
+      background: $surface-3;
+    }
+
+    .instance-name {
+      margin: 0;
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .expand-caret {
+      flex-shrink: 0;
+    }
+  }
+
+  .instance-summary {
+    display: flex;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+
+  .pip.tally {
+    width: auto;
+    padding: 0 0.4rem;
+    letter-spacing: 0.02em;
   }
 
   .boss-list {

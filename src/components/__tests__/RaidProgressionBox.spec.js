@@ -80,7 +80,7 @@ describe('RaidProgressionBox', () => {
       props: { raids: mockRaids, summary: mockSummary },
     })
     // Boss 1: N active. Boss 3: N + HC active = 3 active pips
-    expect(wrapper.findAll('.pip.active').length).toBe(3)
+    expect(wrapper.findAll('.boss-status .pip.active').length).toBe(3)
   })
 
   it('dims unkilled bosses', () => {
@@ -228,8 +228,49 @@ describe('RaidProgressionBox', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mixed, summary: { total: 2, normal: 1, heroic: 1, mythic: 2 } },
     })
-    const pips = wrapper.findAll('.pip.mythic')
+    const pips = wrapper.findAll('.boss-status .pip.mythic')
     expect(pips.map((p) => p.text())).toEqual(['MX', 'M'])
+  })
+
+  it('collapses previous raids to a single header line by default', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    // Newest raid renders as a plain heading with its boss list open.
+    expect(wrapper.find('h3.instance-name').text()).toBe('Test Raid')
+    const toggles = wrapper.findAll('.instance-toggle')
+    expect(toggles.length).toBe(1)
+    expect(toggles[0].text()).toContain('Other Raid')
+    expect(toggles[0].attributes('aria-expanded')).toBe('false')
+
+    const lists = wrapper.findAll('.boss-list')
+    expect(lists[0].attributes('style') || '').not.toContain('display: none')
+    expect(lists[1].attributes('style')).toContain('display: none')
+  })
+
+  it('shows per-difficulty kill tallies on a collapsed raid header', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    const tallies = wrapper.findAll('.instance-toggle .pip.tally')
+    expect(tallies.map((t) => t.text())).toEqual(['1/1 N', '1/1 HC'])
+  })
+
+  it('expands a previous raid on click', async () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    const toggle = wrapper.find('.instance-toggle')
+    await toggle.trigger('click')
+
+    expect(toggle.attributes('aria-expanded')).toBe('true')
+    expect(wrapper.findAll('.boss-list')[1].attributes('style') || '').not.toContain(
+      'display: none',
+    )
+
+    await toggle.trigger('click')
+    expect(toggle.attributes('aria-expanded')).toBe('false')
+    expect(wrapper.findAll('.boss-list')[1].attributes('style')).toContain('display: none')
   })
 
   it('uses the "MX" label in pull text for a Mythic Flex raid', () => {
