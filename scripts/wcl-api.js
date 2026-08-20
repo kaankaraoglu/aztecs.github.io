@@ -6,7 +6,7 @@
  */
 
 const GUILD_ID = 18606
-const CURRENT_ZONE_IDS = [46, 50] // VS / DR / MQD + Sporefall (Midnight Season 1)
+const CURRENT_ZONE_IDS = [46, 50, 54] // Season 1: VS / DR / MQD + Sporefall. Season 2: The Venomous Abyss
 const CURRENT_ZONE_ID = CURRENT_ZONE_IDS[0]
 const CURRENT_MPLUS_ZONE_ID = 47 // Midnight Season 1 M+
 const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'

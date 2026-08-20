@@ -52,6 +52,16 @@ const RAID_INSTANCE_ENCOUNTERS = {
   'The Dreamrift': ['Chimaerus, the Undreamt God'],
   "March on Quel'Danas": ["Belo'ren, Child of Al'ar", 'Midnight Falls'],
   Sporefall: ['Rotmire'],
+  'The Venomous Abyss': [
+    "Nek'zali the Soulcoiler",
+    'Entombed Sentinels',
+    'The Lost Explorers',
+    'Vashnik the Malignant',
+    'Sszorak',
+    'The Twin Fangs',
+    'The Coiled Altar',
+    "Ula'tek",
+  ],
 }
 
 const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }
