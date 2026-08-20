@@ -17,6 +17,21 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 1705,
+      "topKeys": [
+        "+9 DON",
+        "+7 KR",
+        "+7 BV",
+        "+6 MR",
+        "+6 RLP",
+        "+6 VSA",
+        "+2 TOS"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Aerioth",
       "class": "priest",
       "score": 1703,
@@ -28,20 +43,6 @@
         "+6 BV",
         "+6 DON",
         "+6 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 1363,
-      "topKeys": [
-        "+7 BV",
-        "+6 MR",
-        "+6 RLP",
-        "+6 VSA",
-        "+4 KR",
-        "+2 TOS"
       ],
       "realmSlug": "alakir"
     },
@@ -155,7 +156,7 @@
       "level": 7,
       "timed": true,
       "team": [
-        "Amorrlan"
+        "Daruni"
       ]
     },
     {
@@ -183,5 +184,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T04:06:02.327Z"
+  "lastUpdated": "2026-08-20T05:01:41.109Z"
 }
