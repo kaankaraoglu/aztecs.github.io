@@ -696,7 +696,11 @@ function hasRoster(boss) {
   }
 
   .roster-inner {
-    overflow: hidden;
+    /* `clip`, not `hidden`: `hidden` makes this a scroll container, whose
+       max-content contribution is zero, so the wrapper's `1fr` track collapses
+       to 0 and the roster never appears. `clip` hides the overflow without
+       creating a scroll container. */
+    overflow: clip;
   }
 
   /* ── Footer ── */
