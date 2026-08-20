@@ -4,15 +4,32 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2217,
+      "score": 2542,
       "topKeys": [
         "+10 KR",
         "+10 AOF",
         "+10 BV",
         "+10 DON",
+        "+10 MR",
         "+10 TOS",
         "+8 RLP",
         "+8 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Aerioth",
+      "class": "priest",
+      "score": 2325,
+      "topKeys": [
+        "+12 MR",
+        "+11 AOF",
+        "+10 RLP",
+        "+9 DON",
+        "+7 TOS",
+        "+6 KR",
+        "+6 BV",
+        "+6 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -29,21 +46,6 @@
         "+6 RLP",
         "+6 VSA",
         "+6 TOS"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Aerioth",
-      "class": "priest",
-      "score": 1813,
-      "topKeys": [
-        "+10 RLP",
-        "+7 TOS",
-        "+6 MR",
-        "+6 KR",
-        "+6 BV",
-        "+6 DON",
-        "+6 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -133,6 +135,22 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Murder Row",
+      "level": 12,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
+      "dungeon": "Altar of Fangs",
+      "level": 11,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "The Blinding Vale",
       "level": 10,
       "timed": true,
@@ -142,14 +160,6 @@
     },
     {
       "dungeon": "Kings' Rest",
-      "level": 10,
-      "timed": true,
-      "team": [
-        "Blackmaira"
-      ]
-    },
-    {
-      "dungeon": "Altar of Fangs",
       "level": 10,
       "timed": true,
       "team": [
@@ -187,15 +197,7 @@
       "team": [
         "Blackmaira"
       ]
-    },
-    {
-      "dungeon": "Murder Row",
-      "level": 6,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
     }
   ],
-  "lastUpdated": "2026-08-20T19:53:32.555Z"
+  "lastUpdated": "2026-08-20T20:17:41.554Z"
 }
