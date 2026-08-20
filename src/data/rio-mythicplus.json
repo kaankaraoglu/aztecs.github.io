@@ -20,10 +20,10 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 2325,
+      "score": 2352,
       "topKeys": [
         "+12 MR",
-        "+11 AOF",
+        "+12 AOF",
         "+10 RLP",
         "+9 DON",
         "+7 TOS",
@@ -135,7 +135,7 @@
   ],
   "dungeonBests": [
     {
-      "dungeon": "Murder Row",
+      "dungeon": "Altar of Fangs",
       "level": 12,
       "timed": true,
       "team": [
@@ -143,8 +143,8 @@
       ]
     },
     {
-      "dungeon": "Altar of Fangs",
-      "level": 11,
+      "dungeon": "Murder Row",
+      "level": 12,
       "timed": true,
       "team": [
         "Aerioth"
@@ -199,5 +199,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T21:19:02.393Z"
+  "lastUpdated": "2026-08-20T21:51:11.028Z"
 }
