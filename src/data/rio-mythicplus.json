@@ -59,6 +59,16 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 393,
+      "topKeys": [
+        "+5 TOS",
+        "+2 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Sotray",
       "class": "priest",
       "score": 170,
@@ -138,19 +148,19 @@
       ]
     },
     {
-      "dungeon": "The Blinding Vale",
-      "level": 7,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
-    },
-    {
       "dungeon": "Kings' Rest",
       "level": 7,
       "timed": true,
       "team": [
         "Amorrlan"
+      ]
+    },
+    {
+      "dungeon": "The Blinding Vale",
+      "level": 7,
+      "timed": true,
+      "team": [
+        "Daruni"
       ]
     },
     {
@@ -170,5 +180,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-19T23:47:07.064Z"
+  "lastUpdated": "2026-08-20T00:36:47.625Z"
 }
