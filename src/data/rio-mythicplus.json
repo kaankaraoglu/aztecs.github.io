@@ -103,10 +103,10 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 559,
+      "score": 572,
       "topKeys": [
         "+5 BV",
-        "+2 KR",
+        "+3 KR",
         "+2 MR"
       ],
       "realmSlug": "alakir"
@@ -199,5 +199,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T20:17:41.554Z"
+  "lastUpdated": "2026-08-20T20:54:14.316Z"
 }
