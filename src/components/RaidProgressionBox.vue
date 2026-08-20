@@ -105,12 +105,12 @@
                 </div>
                 <div class="roster-wrapper" :class="{ expanded: expanded[boss.name] }">
                   <div
-                    v-show="expanded[boss.name] && hasRoster(boss)"
+                    v-if="revealed[boss.name] && hasRoster(boss)"
                     class="roster-inner"
+                    :inert="!expanded[boss.name] || undefined"
                     :aria-hidden="!expanded[boss.name]"
                   >
                     <RosterList
-                      v-if="expanded[boss.name] && hasRoster(boss)"
                       class="roster-panel"
                       :tanks="boss.roster?.tanks"
                       :healers="boss.roster?.healers"
@@ -190,6 +190,10 @@ const formattedUpdated = computed(() => {
 })
 
 const expanded = reactive({})
+// Rosters mount on first expand and stay mounted, so the collapse transition has
+// something to shrink. `inert` keeps the hidden ones out of the tab order.
+const revealed = reactive({})
+
 const expandedRaids = reactive({})
 
 /** The newest raid is always open; older tiers collapse to their header line. */
@@ -227,6 +231,7 @@ function raidTallies(raid) {
 function toggle(bossName) {
   expanded[bossName] = !expanded[bossName]
   if (expanded[bossName]) {
+    revealed[bossName] = true
     trackEvent('select_content', { content_type: 'boss_roster', item_id: bossName })
   }
 }
@@ -685,18 +690,40 @@ function hasRoster(boss) {
     transition: opacity 0.15s;
   }
 
+  /* The roster opens and shuts by transitioning its own height. The older
+     `grid-template-rows: 0fr -> 1fr` trick cannot work here: the wrapper's
+     height is indefinite, so both track sizes resolve to the roster's minimum
+     contribution, and the only way to force that to zero -- making the inner
+     element a scroll container with `overflow: hidden` -- zeroes the open
+     state too, leaving the roster invisible. */
   .roster-wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows $duration-normal $ease-out;
+    height: 0;
+    overflow: clip;
+    transition: height $duration-normal $ease-out;
 
     &.expanded {
-      grid-template-rows: 1fr;
+      height: auto;
     }
   }
 
-  .roster-inner {
-    overflow: hidden;
+  /* `height: auto` only interpolates where `interpolate-size` is supported.
+     Elsewhere, fall back to a capped max-height so the reveal still animates. */
+  @supports (interpolate-size: allow-keywords) {
+    .roster-wrapper {
+      interpolate-size: allow-keywords;
+    }
+  }
+
+  @supports not (interpolate-size: allow-keywords) {
+    .roster-wrapper {
+      height: auto;
+      max-height: 0;
+      transition: max-height $duration-normal $ease-out;
+
+      &.expanded {
+        max-height: 30rem;
+      }
+    }
   }
 
   /* ── Footer ── */
