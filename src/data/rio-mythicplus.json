@@ -90,6 +90,18 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 739,
+      "topKeys": [
+        "+5 BV",
+        "+3 KR",
+        "+2 AOF",
+        "+2 MR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Frosteyes",
       "class": "death-knight",
       "score": 643,
@@ -99,17 +111,6 @@
         "+2 RLP"
       ],
       "realmSlug": "xavius"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 572,
-      "topKeys": [
-        "+5 BV",
-        "+3 KR",
-        "+2 MR"
-      ],
-      "realmSlug": "alakir"
     },
     {
       "name": "Bagz",
@@ -123,12 +124,13 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Valorite",
-      "class": "death-knight",
-      "score": 397,
+      "name": "Sâmáar",
+      "class": "priest",
+      "score": 512,
       "topKeys": [
-        "+5 BV",
-        "+2 KR"
+        "+3 KR",
+        "+2 AOF",
+        "+2 MR"
       ],
       "realmSlug": "alakir"
     }
@@ -199,5 +201,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T21:51:11.028Z"
+  "lastUpdated": "2026-08-20T22:16:24.049Z"
 }
