@@ -17,21 +17,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Aerioth",
-      "class": "priest",
-      "score": 1728,
-      "topKeys": [
-        "+7 TOS",
-        "+6 MR",
-        "+6 KR",
-        "+6 RLP",
-        "+6 BV",
-        "+6 DON",
-        "+6 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Daruni",
       "class": "druid",
       "score": 1705,
@@ -121,6 +106,15 @@
         "+2 KR"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 170,
+      "topKeys": [
+        "+2 MR"
+      ],
+      "realmSlug": "burning-legion"
     }
   ],
   "dungeonBests": [
@@ -189,5 +183,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T11:50:50.676Z"
+  "lastUpdated": "2026-08-20T12:25:02.562Z"
 }
