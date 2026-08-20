@@ -9,6 +9,11 @@ concurrency:
   group: fetch-data
   cancel-in-progress: false
 
+# The checkout and the push both use secrets.PAT_TOKEN, so GITHUB_TOKEN needs
+# nothing.
+permissions:
+  contents: read
+
 jobs:
   fetch:
     name: Fetch & commit data
@@ -25,11 +30,28 @@ jobs:
 
       - run: npm ci
 
-      - name: Fetch all data
+      # Run each fetcher as its own step so one upstream outage does not cancel
+      # the other two, and so a failure is attributable in the run log.
+      - name: Fetch raid progression
+        id: wcl
+        continue-on-error: true
         env:
           WCL_CLIENT_ID: ${{ secrets.WCL_CLIENT_ID }}
           WCL_CLIENT_SECRET: ${{ secrets.WCL_CLIENT_SECRET }}
-        run: npm run fetch-data
+        run: node scripts/fetch-wcl-data.js
+
+      - name: Fetch Mythic+ data
+        id: rio
+        continue-on-error: true
+        run: node scripts/fetch-rio-data.js
+
+      - name: Fetch raid stats
+        id: stats
+        continue-on-error: true
+        env:
+          WCL_CLIENT_ID: ${{ secrets.WCL_CLIENT_ID }}
+          WCL_CLIENT_SECRET: ${{ secrets.WCL_CLIENT_SECRET }}
+        run: node scripts/fetch-wcl-stats.js
 
       - name: Commit and push if data changed
         run: |
@@ -38,4 +60,13 @@ jobs:
           git add src/data/wcl-progression.json src/data/wcl-stats.json src/data/rio-mythicplus.json
           git diff --cached --quiet && echo "No data changes" && exit 0
           git commit -m "chore: update fetched data"
-          git push
+          # main may have moved during the fetch; rebase rather than losing the run.
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+
+      - name: Fail if any fetch failed
+        if: steps.wcl.outcome == 'failure' || steps.rio.outcome == 'failure' || steps.stats.outcome == 'failure'
+        run: |
+          echo "wcl=${{ steps.wcl.outcome }} rio=${{ steps.rio.outcome }} stats=${{ steps.stats.outcome }}"
+          echo "One or more data fetches failed; the site is serving the last good data." >> "$GITHUB_STEP_SUMMARY"
+          exit 1

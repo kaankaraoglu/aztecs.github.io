@@ -21,7 +21,8 @@ export default defineConfig([
   },
 
   {
-    files: ['scripts/**/*.js'],
+    // Node-side files: build scripts and the Vite/ESLint config themselves.
+    files: ['scripts/**/*.js', '*.config.js'],
     languageOptions: {
       globals: {
         ...globals.node,

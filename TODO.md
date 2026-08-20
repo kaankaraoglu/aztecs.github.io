@@ -21,7 +21,7 @@
 
 ## Accessibility (a11y)
 
-- [x] **Hamburger menu** (`HeaderView.vue`) — Add `role="button"`, `aria-label`, and keyboard support (Enter/Space)
+- [x] **Hamburger menu** (`HeaderView.vue`) — It is a real `<button>` with `aria-label`, `aria-expanded` and `aria-controls`, so keyboard activation comes from the platform.
 - [x] **Boss expand** (`RaidProgressionBox.vue`) — Add `aria-expanded` attribute and keyboard support (Enter key to toggle)
 - [x] **ImageLightbox** — Add `role="dialog"`, `aria-modal="true"`, focus trap, and scroll lock (`document.body.style.overflow = 'hidden'`)
 - [x] **MythicPlusBox** — Add `aria-label` to timed/untimed checkmark symbols (currently reads as "check mark" / "cross mark" instead of "Timed" / "Not timed")
@@ -32,29 +32,29 @@
 
 ## Performance
 
-- [ ] **Resize kill images** — Three images are 5.9–8.4 MB originals (`liberation_of_undermine` 8.4 MB PNG, `glory_of_the_omega_raider` 8.4 MB, `manaforge_omega` 5.9 MB). Resize to max ~1920px width and generate WebP versions using `sharp` (already in devDependencies).
+- [x] **Resize kill images** — All kill screenshots are now at most 1920px wide. The five that were 1951-2560px were resampled, taking the set from 2.5 MB to 1.7 MB before build-time optimisation.
 - [ ] **Add WebP output to `ViteImageOptimizer`** — The plugin compresses JPEG/PNG but does not generate modern formats. Add `webp: {}` config for automatic conversion.
-- [ ] **Add `width`/`height` to kill card images** — Missing dimensions cause layout shift (CLS). Set explicit `width`/`height` on `<img>` in `KillCard.vue`.
-- [ ] **EmberParticles canvas resize** — Canvas is sized once on mount; does not update on window resize. Add a debounced `resize` listener or `ResizeObserver`.
-- [ ] **EmberParticles** — Throttle or pause animation on low-end devices / battery saver mode
+- [x] **Add `width`/`height` to kill card images** — Set on both `KillCard.vue` and the home page's latest-achievement images, which also gained `loading="lazy"`.
+- [x] **EmberParticles canvas resize** — A debounced `resize` listener re-sizes the canvas and re-tunes particle density.
+- [ ] **EmberParticles** — Throttle or pause animation on low-end devices / battery saver mode. (It already pauses on a hidden tab, on the light theme where the canvas is `display: none`, and under `prefers-reduced-motion`.)
 - [ ] **Kill images** — Consider lazy-loading imports in `kills.js` instead of eagerly importing all at module load
-- [ ] **RaidProgressionBox** — Lazy-render roster content (only mount when expanded) for large boss lists
-- [ ] **Reduce deploy frequency** — Cron runs every 30 minutes (48 deploys/day), but data only changes after raid nights. Reduce to every 2–4 hours or limit to raid-day windows to save CI minutes and API rate limits.
+- [x] **RaidProgressionBox** — Roster content is behind `v-if="expanded[boss.name] && hasRoster(boss)"`, so it only mounts when opened.
+- [x] **Reduce deploy frequency** — Fixed at the source rather than by changing the cadence. Roughly half the data commits carried no actual change: `rio-mythicplus.json` stamped a fresh `lastUpdated` every run, and WCL returns kill rosters in a shifting order, so the JSON differed byte-wise while the data was identical. Rosters are now sorted and `lastUpdated` carries over when the payload is unchanged, so a run that finds nothing new produces no commit and no deploy. Lowering the cron interval is still open (see IMPROVEMENTS.md).
 
 ## SEO & Meta
 
 - [x] **Add `robots.txt`** — Create `public/robots.txt` with `Allow: /` and `Sitemap: https://aztecs.se/sitemap.xml`
-- [x] **Add `sitemap.xml`** — Create `public/sitemap.xml` listing all 6 routes for better discoverability
+- [x] **Add `sitemap.xml`** — Generated at build time by `scripts/postbuild.js` from `src/data/site-routes.js`, so it covers every public route and cannot drift from the router.
 - [x] **Add `<link rel="canonical">`** — Point to `https://aztecs.se` to prevent duplicate indexing via the `github.io` subdomain
 - [x] **Per-route meta tags** — The router's `beforeEach` hook only updates `document.title`. Extend it to also set `<meta name="description">` and OG tags per route for better social sharing / SEO.
-- [x] **Add `<meta name="color-scheme" content="dark">`** — Tells the browser to render native UI elements (scrollbars, form inputs, selection) in dark mode, matching the site's dark theme.
+- [x] **Add `<meta name="color-scheme">`** — Set to `dark light`, since the site ships both themes; pinning it to `dark` left native scrollbars and form controls dark while the light theme was active. Paired with a `theme-color` for each scheme.
 - [x] **Add `<noscript>` fallback** — Add a minimal message in `index.html` for users with JavaScript disabled.
 - [x] **Audit font loading** — Noto Sans was loaded but unused; removed from Google Fonts import (only Cal Sans is used).
 
 ## CI / DX
 
 - [x] **Add `format:check` to CI** — The `format:check` script exists in `package.json` but isn't run in CI. A developer bypassing the pre-commit hook can land unformatted code.
-- [x] **Use a maintained GitHub Pages deploy action** — `deploy.yml` manually clones `gh-pages`, deletes contents, copies `dist/`, and pushes. Using `JamesIves/github-pages-deploy-action@v4` or `peaceiris/actions-gh-pages@v3` handles edge cases and is easier to maintain.
+- [ ] **Use a maintained GitHub Pages deploy action** — Still open: `deploy.yml` runs `git init` inside `dist/` and force-pushes an orphan history to `gh-pages`. `JamesIves/github-pages-deploy-action@v4` or `peaceiris/actions-gh-pages@v3` handles the edge cases. The workflow does now have a concurrency group and a least-privilege `permissions` block, so overlapping deploys no longer publish out of order.
 - [x] **Add bundle size visualization** — Configure `rollup-plugin-visualizer` to generate a report on builds, useful for tracking Firebase and other dependency sizes.
 - [x] **Explicit code splitting for Firebase** — Add `manualChunks` in `vite.config.js` `build.rollupOptions` to isolate Firebase into its own chunk.
 
@@ -68,3 +68,15 @@
   - **One-time setup (outside repo):** Cloudflare account + Worker, Turnstile site for `aztecs.se`, fine-grained GitHub PAT, `wrangler secret put` for both secrets, KV namespace for rate limiting, `wrangler deploy`.
   - **In-repo PR:** workflow file + Vue component + env var plumbing in GitHub Actions secrets.
   - **Open questions:** custom domain (`refresh.aztecs.se`) vs. `.workers.dev`; surface "last updated" timestamp from `wcl-progression.json` (not currently shown); button placement (progression only vs. also home).
+
+## Done in the codebase sweep
+
+Beyond the items checked off above, this pass also landed:
+
+- Every route except `/` was returning HTTP 404 on the live site. GitHub Pages answers unknown paths with `404.html` and a 404 status, so the sitemap advertised six URLs that crawlers were told did not exist. `scripts/postbuild.js` now writes a real `dist/<route>/index.html` per route, with that route's own title, description and canonical baked in.
+- `fetch-wcl-stats.js` only ever queried the first entry of `CURRENT_ZONE_IDS`, so raid records were frozen on Season 1 and could never show a kill from the current tier.
+- The raid box's "Updated" line was showing the Raider.IO fetch timestamp. Raid progression now carries its own.
+- The Discord OAuth `state` parameter was generated but never checked on callback. It is now stored in a `SameSite=Lax` cookie on the worker's origin and compared.
+- Buff coverage counted per class rather than per spec, so a Frost death knight marked Abomination Limb and Gorefiend's Grasp as covered.
+- Firebase was statically imported by `main.js`, so 41 KB of it was modulepreloaded on every page load even when analytics was switched off. Together with dropping the hand-written `reka-ui` / `@lucide/vue` chunks, eagerly-fetched JavaScript on first paint went from about 306 KB to 231 KB.
+- The Next Tier error banner rendered at `opacity: 0` and was never announced, so every failure on that page looked like nothing happening.

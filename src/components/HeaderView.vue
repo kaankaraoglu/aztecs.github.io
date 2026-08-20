@@ -9,21 +9,19 @@
 
     <nav class="nav">
       <div class="nav-header">
-        <div
+        <button
+          type="button"
           :class="['hamburger', { open: menuOpen }]"
-          role="button"
-          tabindex="0"
           :aria-label="menuOpen ? 'Close navigation menu' : 'Open navigation menu'"
           :aria-expanded="String(menuOpen)"
+          aria-controls="primary-nav"
           @click="toggleMenu"
-          @keydown.enter.prevent="toggleMenu"
-          @keydown.space.prevent="toggleMenu"
         >
           <span></span><span></span><span></span>
-        </div>
+        </button>
       </div>
 
-      <div :class="['nav-links', { open: menuOpen }]">
+      <div id="primary-nav" :class="['nav-links', { open: menuOpen }]">
         <RouterLink class="nav-link" to="/" @click="menuOpen = false">Home</RouterLink>
         <RouterLink class="nav-link" to="/next-tier" @click="menuOpen = false"
           >Next Tier</RouterLink
@@ -34,7 +32,16 @@
         <RouterLink class="nav-link" to="/raiding" @click="menuOpen = false">Raiding</RouterLink>
         <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
-        <DiscordIcon @click="openDiscordInvite" />
+        <a
+          class="discord-link"
+          :href="DISCORD_INVITE_URL"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Join the Aztecs Discord (opens in new tab)"
+          @click="trackEvent('click', { link_type: 'discord_invite' })"
+        >
+          <DiscordIcon />
+        </a>
         <AlertDialog v-model:open="flashbangOpen">
           <AlertDialogContent>
             <AlertDialogHeader>
@@ -50,10 +57,7 @@
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <label
-          class="theme-switch"
-          :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`"
-        >
+        <label class="theme-switch">
           <span class="theme-switch-icon moon" aria-hidden="true">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -71,6 +75,7 @@
           </span>
           <Switch
             class="theme-switch-control"
+            :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`"
             :model-value="theme === 'light'"
             @update:model-value="onSwitchChange"
           />
@@ -150,6 +155,10 @@ function shuffleArray(arr) {
 
 const menuOpen = ref(false)
 
+// A real anchor: window.open leaves the opened tab a live `window.opener`
+// handle, and a click handler cannot be middle-clicked or copied as a link.
+const DISCORD_INVITE_URL = 'https://discord.gg/GfmnD24VHa'
+
 const splashMessages = [
   'Tip to tip',
   'Rule #1: IGNORE Rhys',
@@ -191,12 +200,6 @@ function rotateSplash() {
   }, 500)
 }
 
-function openDiscordInvite() {
-  trackEvent('click', { link_type: 'discord_invite' })
-  const discordInviteUrl = 'https://discord.gg/GfmnD24VHa'
-  window.open(discordInviteUrl, '_blank')
-}
-
 function toggleMenu() {
   menuOpen.value = !menuOpen.value
   trackEvent('menu_toggle', { state: menuOpen.value ? 'open' : 'close' })
@@ -204,6 +207,9 @@ function toggleMenu() {
 
 onMounted(() => {
   currentSplash.value = shuffledSplashes[0]
+  // Text that swaps itself out every three seconds is exactly what
+  // prefers-reduced-motion is for; show one message and leave it.
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
   splashInterval = setInterval(rotateSplash, 3000)
 })
 
@@ -314,12 +320,26 @@ onBeforeUnmount(() => {
       color: var(--t-theme-switch-sun, $color-text-subtle);
     }
 
+    .discord-link {
+      display: flex;
+      align-items: center;
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--t-accent);
+      }
+    }
+
     .hamburger {
       display: none;
       flex-direction: column;
       gap: 4px;
       cursor: pointer;
       padding: $space-2;
+      background: none;
+      border: none;
+      color: inherit;
 
       span {
         display: block;

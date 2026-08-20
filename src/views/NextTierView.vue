@@ -11,7 +11,7 @@
 
     <BuffCoverage class="reveal" :covered-buffs="coveredBuffs" :missing-buffs="missingBuffs" />
 
-    <div v-if="error" class="error-banner reveal">
+    <div v-if="error" class="error-banner" role="alert">
       {{ error }}
     </div>
 

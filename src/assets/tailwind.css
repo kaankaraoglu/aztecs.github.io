@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Deliberately bound to a class this app never sets. Theming runs through the
+   [data-theme] custom properties below, so the shadcn primitives' inherited
+   `dark:` utilities must stay inert — without this line Tailwind's default
+   `dark` variant would fire on prefers-color-scheme and fight the toggle. */
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

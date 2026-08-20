@@ -56,7 +56,10 @@ watch(
 <style scoped lang="scss">
 @use '@/assets/styles/tokens' as *;
 
-:deep(.lightbox-overlay) {
+/* DialogContent renders through a teleport, so the scoped attribute never
+   lands on it and a `:deep()` at the top level had nothing to descend from.
+   The class is applied globally instead. */
+:global(.lightbox-overlay) {
   display: flex;
   align-items: center;
   justify-content: center;

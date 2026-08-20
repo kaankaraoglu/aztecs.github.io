@@ -1,4 +1,5 @@
 <script setup>
+import { useVModel } from '@vueuse/core'
 import { cn } from '@/lib/utils'
 
 const props = defineProps({
@@ -12,6 +13,14 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+// `:value` + `@input` fires mid-composition, so IME input (and anything else
+// that composes characters) fought the binding. `v-model` on the native input
+// defers until composition ends.
+const modelValue = useVModel(props, 'modelValue', emit, {
+  passive: true,
+  defaultValue: props.defaultValue,
+})
 </script>
 
 <template>
@@ -22,7 +31,6 @@ const emit = defineEmits(['update:modelValue'])
         props.class,
       )
     "
-    :value="modelValue ?? defaultValue"
-    @input="emit('update:modelValue', $event.target.value)"
+    v-model="modelValue"
   />
 </template>

@@ -3,7 +3,7 @@
     <div ref="cardRef" class="card" :style="tiltStyle">
       <div class="image-container">
         <div class="image-top-overlay">
-          <span id="raid-name" class="raid-name">{{ raidName }}</span>
+          <h2 class="raid-name">{{ raidName }}</h2>
         </div>
 
         <a

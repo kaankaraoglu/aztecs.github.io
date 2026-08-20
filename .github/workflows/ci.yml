@@ -4,6 +4,15 @@ on:
   pull_request:
     branches: [main]
 
+# One run per pull request: pushing a fixup supersedes the in-flight checks
+# instead of leaving four stale job statuses on the PR.
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   format:
     name: Format
@@ -27,7 +36,7 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm ci
-      - run: npx eslint . --max-warnings=0
+      - run: npm run lint:check
 
   test:
     name: Test

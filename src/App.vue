@@ -1,11 +1,12 @@
 <template>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <div class="noise-overlay" aria-hidden="true" />
   <EmberParticles />
   <Progress :model-value="loadProgress" class="top-progress" />
 
   <HeaderView />
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <RouterView v-slot="{ Component }">
       <Transition name="page" mode="out-in">
         <component :is="Component" />
@@ -196,6 +197,29 @@ html {
     transform: none;
     transition: none;
   }
+}
+
+.skip-link {
+  position: absolute;
+  left: $space-4;
+  top: -100%;
+  z-index: 1000;
+  padding: $space-2 $space-4;
+  background: $surface-2;
+  color: $color-text-primary;
+  border: 1px solid $color-border-accent;
+  border-radius: $radius-sm;
+  text-decoration: none;
+
+  &:focus {
+    top: $space-4;
+  }
+}
+
+// The skip link's target must not draw a focus ring of its own when the
+// browser moves focus there.
+main:focus {
+  outline: none;
 }
 
 :focus-visible {

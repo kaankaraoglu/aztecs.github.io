@@ -26,11 +26,14 @@
           <button class="sign-out-link" @click="$emit('signOut')">Sign out</button>
         </div>
         <div class="submission-display">
-          <span :class="existingSubmission.className" class="char-name">{{
+          <span :class="toClassColorCss(existingSubmission.className)" class="char-name">{{
             existingSubmission.characterName
           }}</span>
           <span class="spec-info">{{ specDisplayName }} · {{ roleDisplayName }}</span>
-          <div class="submission-actions">
+          <!-- Editing or removing needs an open tier; the worker rejects both
+               once signups close, and clicking Edit used to drop the user into
+               the "closed" branch with their signup hidden and no way back. -->
+          <div v-if="isOpen" class="submission-actions">
             <Button variant="outline" size="sm" @click="startEditing">Edit</Button>
             <Button variant="destructive" size="sm" @click="$emit('delete')">Remove</Button>
           </div>
@@ -47,14 +50,24 @@
           <button class="sign-out-link" @click="$emit('signOut')">Sign out</button>
         </div>
         <form class="signup-fields" @submit.prevent="handleSubmit">
-          <Input v-model="characterName" placeholder="Character name" required class="field" />
-          <select v-model="selectedClass" class="field native-select" required>
+          <label for="signup-character-name" class="sr-only">Character name</label>
+          <Input
+            id="signup-character-name"
+            v-model="characterName"
+            placeholder="Character name"
+            required
+            class="field"
+          />
+          <label for="signup-class" class="sr-only">Class</label>
+          <select id="signup-class" v-model="selectedClass" class="field native-select" required>
             <option value="" disabled>Select class</option>
             <option v-for="(cls, key) in WOW_CLASSES" :key="key" :value="key">
               {{ cls.name }}
             </option>
           </select>
+          <label for="signup-spec" class="sr-only">Spec</label>
           <select
+            id="signup-spec"
             v-model="selectedSpec"
             class="field native-select"
             required
@@ -67,6 +80,9 @@
           </select>
           <Button type="submit" :disabled="!canSubmit">
             {{ editing ? 'Update' : 'Submit' }} Signup
+          </Button>
+          <Button v-if="editing" type="button" variant="outline" @click="cancelEditing">
+            Cancel
           </Button>
         </form>
       </div>
@@ -86,6 +102,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { WOW_CLASSES } from '@/data/wow-classes.js'
+import { toClassColorCss } from '@/lib/utils'
 
 const props = defineProps({
   currentUser: { type: Object, default: null },
@@ -123,15 +140,31 @@ const roleDisplayName = computed(() => {
   return role.charAt(0).toUpperCase() + role.slice(1)
 })
 
-watch(selectedClass, () => {
-  selectedSpec.value = ''
+// Only reset the spec when the *user* changes class. `prev` is '' on the very
+// first assignment, which is what startEditing() does — an unconditional reset
+// wiped the spec it had just pre-filled and left Update disabled.
+watch(selectedClass, (cls, prev) => {
+  if (prev) selectedSpec.value = ''
 })
+
+// A tier closing mid-edit would otherwise strand the user on the closed badge
+// with `editing` stuck true until they reloaded.
+watch(
+  () => props.isOpen,
+  (open) => {
+    if (!open) editing.value = false
+  },
+)
 
 function startEditing() {
   editing.value = true
   characterName.value = props.existingSubmission?.characterName ?? ''
   selectedClass.value = props.existingSubmission?.className ?? ''
   selectedSpec.value = props.existingSubmission?.specName ?? ''
+}
+
+function cancelEditing() {
+  editing.value = false
 }
 
 function handleSubmit() {

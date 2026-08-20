@@ -18,12 +18,12 @@
         <TableBody>
           <TableRow v-for="sub in submissions" :key="sub.discordId">
             <TableCell class="col-char text-left">
-              <span :class="toCssClass(sub.className)" class="char-name">{{
+              <span :class="toClassColorCss(sub.className)" class="char-name">{{
                 sub.characterName
               }}</span>
             </TableCell>
             <TableCell class="col-class text-left">
-              <span :class="toCssClass(sub.className)">{{ getClassName(sub.className) }}</span>
+              <span :class="toClassColorCss(sub.className)">{{ getClassName(sub.className) }}</span>
             </TableCell>
             <TableCell class="col-spec text-left">{{
               getSpecName(sub.className, sub.specName)
@@ -64,6 +64,7 @@ import {
   TableCell,
 } from '@/components/ui/table'
 import { WOW_CLASSES } from '@/data/wow-classes.js'
+import { toClassColorCss } from '@/lib/utils'
 
 defineProps({
   submissions: { type: Array, required: true },
@@ -75,10 +76,6 @@ const emit = defineEmits(['delete'])
 function confirmDelete(sub) {
   const ok = window.confirm(`Remove ${sub.characterName}'s signup? This can't be undone.`)
   if (ok) emit('delete', sub.discordId)
-}
-
-function toCssClass(classKey) {
-  return classKey.replace(/([A-Z])/g, '-$1').toLowerCase()
 }
 
 function getClassName(classKey) {

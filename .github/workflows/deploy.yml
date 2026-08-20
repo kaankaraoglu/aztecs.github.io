@@ -5,6 +5,16 @@ on:
   push:
     branches: [main]
 
+# main receives pushes from merged PRs and from the data-fetch cron, so two
+# deploys routinely overlap. Both force-push an orphan history to gh-pages, and
+# whichever finishes last wins — cancel the superseded build instead.
+concurrency:
+  group: deploy-gh-pages
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     name: Build & deploy

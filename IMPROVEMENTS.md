@@ -1,62 +1,44 @@
 # Improvements
 
-A curated catalogue of opportunistic improvements for the aztecs.github.io codebase. These are next-step refinements — the project already has solid foundations (CI, tests, lint, image optimization, lazy routes, Turnstile-protected refresh).
-
-Items are grouped by category. Within each category, items are ordered **High → Medium → Low** priority. Each item references concrete files so the work can be picked up without re-investigation.
+A catalogue of open improvements for the aztecs.github.io codebase. Items are grouped by category and ordered High → Medium → Low within each group. Each one names the files involved so the work can be picked up without re-investigating.
 
 ---
 
-## Performance & Bundle
-
-- **[High]** `src/components/EmberParticles.vue` sets canvas size once on mount and never updates. Add a debounced `resize` listener (or `useResizeObserver` from `@vueuse/core`) so particle density re-tunes when the viewport changes (e.g. rotating a phone, resizing a window).
-- **[Medium]** Kill screenshots in `src/components/KillCard.vue` use `loading="lazy"` but have no `width`/`height` attributes → causes CLS as images load. Add intrinsic dimensions or an `aspect-ratio` CSS rule.
-- **[Medium]** `vite.config.js` `manualChunks` only splits Firebase. Add chunks for `reka-ui`, `@vueuse/core`, and `@lucide/vue` to shrink the main bundle's parse cost on first paint.
-
-## Accessibility
-
-- **[High]** `src/components/MythicPlusBox.vue` uses `<span role="img">✓/✗</span>` for status. Screen readers announce the literal glyph. Replace with `aria-label="Completed"` (or "Not completed") + `aria-hidden="true"` on the glyph, or use a proper icon component with sr-only text.
-- **[Medium]** `src/views/HomeView.vue` (around lines 33–42): an `<img>` with `role="button"` and `tabindex` is an anti-pattern. Wrap in a real `<button>` (transparent background) or `<a>` so native keyboard / screen-reader semantics apply.
-- **[Medium]** `src/components/ImageLightbox.vue` does not lock body scroll when open. Mobile users can scroll the page behind the overlay. Toggle `document.body.style.overflow = 'hidden'` on open and restore on close (or use `useScrollLock` from `@vueuse/core`).
-
-## UX: Empty & Error States
-
-- **[High]** No views render an error state when the WCL/RIO data fetch returns empty or errored. `HomeView.vue`, `RaidingView.vue`, and `AchievementsView.vue` should show a friendly "couldn't load data — try refreshing" panel when the relevant composable's data is empty **and** not loading.
-- **[Medium]** No toast/snackbar system. Form submits in `SignupForm.vue`, deletes in `SignupTable.vue`, and `RefreshDataButton.vue` rely on ephemeral inline state. Add a lightweight toast (reka-ui has one) or a small custom composable for success/failure messages that persist a few seconds.
-- **[Low]** `src/views/NotFoundView.vue` reads as generic boilerplate — the guild's voice comes through strongly elsewhere (About, In Memoriam). Rewrite with on-brand copy and a clear link back home.
-
-## Code Architecture
-
-- **[High]** `src/components/RaidProgressionBox.vue` is 624 lines. Extract a `BossRow.vue` (per-boss row + difficulty pills) and a `RosterAccordion.vue` (expandable kill roster). Keeps the parent focused on layout + data flow.
-- **[Medium]** `src/components/HeaderView.vue` (432 lines) mixes nav, theme switching, and splash-text rotation. Pull splash rotation into a `useSplashText.js` composable; consolidate any header-local theme logic into the existing `useTheme.js`.
-- **[Medium]** API base URLs are read via `import.meta.env.VITE_*` in multiple places (`useNextTierSignups.js`, `RefreshDataButton.vue`). Centralise in `src/lib/env.js` (or `src/constants.js`), with a runtime check that warns clearly if a required var is missing.
-
-## Testing
-
-- **[High]** `src/composables/useNextTierSignups.js` is the most complex and security-adjacent composable (Discord OAuth, JWT, CRUD) and has **no tests**. Add coverage for `handleAuthCallback`, token expiry, 401 handling, and optimistic update rollback on failed PUT/DELETE.
-- **[Medium]** No coverage thresholds. Add `npm run test:coverage` (vitest `--coverage`) and wire it into CI with a minimum threshold (e.g. 70% lines) to prevent regressions.
-- **[Medium]** Missing component specs: `MissingClassesBox`, `RecruitmentBox`, `RosterList`. Add per-view specs for `NextTierView` and `ContactView` form-validation paths — the monolithic `src/views/__tests__/views.spec.js` is too coarse.
-
-## SEO
-
-- **[Medium]** `public/sitemap.xml` is missing the `/next-tier` route and has no `<lastmod>` dates. Add the route and a build step (or commit hook) that updates `lastmod` from git history.
-- **[Low]** The router sets meta tags per-route but no JSON-LD. Add `Organization` structured data (guild name, URL, logo) and `BreadcrumbList` in `router.beforeEach` for richer search results.
-
 ## Security
 
-- **[High]** `workers/signup/src/index.js` Discord OAuth callback: confirm the `state` parameter is generated, stored (signed cookie or KV), **and compared** on callback. Exploration flagged this is generated but possibly not validated end-to-end — verify and lock down.
-- **[Medium]** `workers/signup/src/index.js` `characterName` input is trimmed but not length/charset-checked. Add server-side validation: max 12 chars, alphanumeric only (WoW character name rules). Don't rely on client-side checks alone.
+- **[High]** `workers/signup/src/index.js` stores a whole tier's signups in a single KV value, and both `handlePutSubmission` and `handleDeleteSubmission` read it, mutate it, and write it back. Cloudflare KV has no compare-and-set, so two signups that overlap in that window silently lose one of the two writes. The losing member sees themselves in the table right after submitting (their own `fetchSubmissions()` runs after their own write) and only finds out later that they are gone. Fix by keying each signup separately as `tier:${tierId}:${discordId}` and rebuilding the array in `handleGetSubmissions` with `SIGNUPS.list({ prefix })`. This changes the storage layout of a live service, so it needs a migration path that reads the legacy array key until the old data is gone.
+- **[Medium]** `GET /api/submissions` needs no authentication and returns each signup verbatim, including `discordId`, the permanent Discord snowflake. The frontend only uses that id to answer "is this row mine" (`useNextTierSignups.js`) and to target an admin delete (`SignupTable.vue`), and never displays it. Replacing it with a per-tier opaque handle (a truncated SHA-256 of `tierId + discordId`) keeps both call sites working without publishing a Discord-account-to-character mapping for the whole raid team.
+- **[Low]** The refresh worker's 10-minute limiter (`workers/refresh/src/index.js`) is a read-check-write against KV with no atomicity, and the timestamp is written only after the dispatch succeeds. Two requests landing together can both dispatch. The blast radius is a duplicate workflow run, so this is worth fixing only if it actually happens.
 
-## Developer Experience
+## UX: empty and error states
 
-- **[Medium]** No `typecheck` script despite extensive JSDoc and a configured `jsconfig.json`. Add `"typecheck": "vue-tsc --noEmit"` to `package.json` and a CI job to catch type drift early.
-- **[Medium]** Workers (`workers/signup/`, `workers/refresh/`) silently catch errors with no structured logging. Add `console.error` calls with request context (path, method, status) so Cloudflare tail logs are actionable when something breaks.
-- **[Low]** Pre-commit hook in `.husky/pre-commit` silently exits 0 if `node` is missing → bad commits can sneak through on misconfigured machines. Fail loudly if the toolchain isn't found.
+- **[High]** No view renders an error state when the WCL or RIO data is empty. `HomeView.vue`, `RaidingView.vue` and `AchievementsView.vue` should show a "couldn't load this, try refreshing" panel when the relevant composable has no data. The fetchers now degrade to stale data rather than blanking the file, so this only shows up after a genuinely empty first fetch, but the page currently renders as if nothing were wrong.
+- **[Medium]** There is no toast or snackbar. `SignupForm.vue`, `SignupTable.vue` and `RefreshDataButton.vue` each communicate success and failure through their own ephemeral inline state. A small shared composable (or reka-ui's toast) would let those messages persist for a few seconds and be announced once, consistently.
+- **[Low]** `src/views/NotFoundView.vue` reads as boilerplate. The guild's voice comes through strongly on About and In Memoriam, and the 404 page could use the same treatment.
 
-## Scripts & Data Fetching
+## Code architecture
 
-- **[Medium]** `scripts/fetch-wcl-data.js`, `fetch-wcl-stats.js`, and `fetch-rio-data.js` duplicate report-fetching and roster-processing logic. Extend `scripts/wcl-api.js` (already shared) so all fetchers use the same retry / rate-limit / pagination helpers.
-- **[Medium]** Fetchers return `EMPTY_OUTPUT` on any error → masks real failures from the 30-minute cron. Exit non-zero on unexpected errors (keep the soft-fail for legitimate "no data yet" cases), and emit a GitHub Actions job summary so failures are visible without trawling logs.
+- **[Medium]** `src/components/RaidProgressionBox.vue` is around 750 lines. A `BossRow.vue` (the per-boss row and its difficulty pips) and a `RosterAccordion.vue` (the expandable kill roster) would leave the parent handling layout and data flow.
+- **[Medium]** `src/components/HeaderView.vue` mixes navigation, theme switching and splash-text rotation. The splash rotation is self-contained enough to move into a `useSplashText.js` composable.
+- **[Medium]** `import.meta.env.VITE_*` is read directly in `useNextTierSignups.js` and `RefreshDataButton.vue`. A `src/lib/env.js` that reads them in one place, with a clear warning when a required var is missing, would make a misconfigured deploy diagnosable. Today a missing `VITE_REFRESH_WORKER_URL` just renders a button that does nothing when clicked.
+- **[Low]** `src/views/AboutView.vue` hand-rolls a second copy of the glass card that `InfoBox.vue` already provides.
 
-## CI / Ops
+## Performance
 
-- **[Low]** `.github/workflows/fetch-data.yml` runs every 30 minutes with no failure notification. Add a step that opens (or updates) a single GitHub issue when consecutive runs fail, so the maintainer notices without watching the Actions tab.
+- **[Medium]** `ViteImageOptimizer` compresses JPEG and PNG but does not emit modern formats. Adding a `webp` conversion for the remaining JPEG sources in `src/assets/images/kills/` would cut another chunk off the achievements page.
+- **[Medium]** `src/data/kills.js` imports every kill screenshot eagerly at module load. The home page only ever renders the newest two.
+- **[Low]** `EmberParticles.vue` pauses on tab visibility, on the light theme, and under `prefers-reduced-motion`, but still runs at full frame rate on low-end hardware and in battery-saver mode.
+
+## Testing and tooling
+
+- **[Medium]** `npm run test:coverage` exists but nothing enforces a floor. Wiring a minimum (say 70% lines) into CI would stop coverage sliding back.
+- **[Low]** There is no `typecheck` script despite extensive JSDoc and a configured `jsconfig.json`. `vue-tsc --noEmit` would catch type drift, at the cost of a new dev dependency.
+
+## Scripts and data fetching
+
+- **[Low]** `scripts/fetch-wcl-stats.js` still has two near-identical report loops (raid and M+) that differ only in which encounter-id set they filter by and which accumulators they write. The shared table and roster fetchers now live in `scripts/wcl-api.js`; unifying the loops as well would mean a boolean flag for the tank-name fetch that only the raid branch uses, which may not be worth it.
+- **[Low]** `.github/workflows/fetch-data.yml` runs every 30 minutes. Data only moves on raid nights, and the fetchers now produce identical bytes for identical data, so most runs are already no-ops. Dropping to every two hours outside raid windows would save CI minutes and WCL API points.
+
+## Styling
+
+- **[Low]** Several custom properties in `src/assets/styles/_theme.scss` and a handful of SCSS variables in `_variables.scss` are defined but never read. Worth a sweep before the next theme change.

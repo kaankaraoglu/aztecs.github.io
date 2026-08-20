@@ -38,3 +38,9 @@ for (const [filename, data] of stubs) {
     writeFileSync(filePath, JSON.stringify(data, null, 2))
   }
 }
+
+// jsdom has no layout, so the router's scrollBehavior floods the run with
+// "Not implemented: Window's scrollTo()". Stub it out.
+if (typeof window !== 'undefined') {
+  window.scrollTo = () => {}
+}

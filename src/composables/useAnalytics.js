@@ -1,4 +1,4 @@
-import { firebaseApp } from '@/firebase'
+import { getFirebaseApp } from '@/firebase'
 
 /**
  * Module-level singleton: resolves once with { analytics, logEvent }.
@@ -10,10 +10,12 @@ let analyticsPromise = null
 
 function getAnalyticsModule() {
   if (!analyticsPromise) {
-    analyticsPromise = import('firebase/analytics').then(({ getAnalytics, logEvent }) => ({
-      analytics: getAnalytics(firebaseApp),
-      logEvent,
-    }))
+    analyticsPromise = Promise.all([import('firebase/analytics'), getFirebaseApp()]).then(
+      ([{ getAnalytics, logEvent }, app]) => ({
+        analytics: getAnalytics(app),
+        logEvent,
+      }),
+    )
   }
   return analyticsPromise
 }

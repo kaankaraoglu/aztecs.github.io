@@ -6,7 +6,10 @@ import { onMounted, onUnmounted } from 'vue'
  * @param {import('vue').Ref<HTMLElement|null>} containerRef
  */
 export function useScrollReveal(containerRef) {
+  /** @type {IntersectionObserver | undefined} */
   let observer
+  /** @type {MutationObserver | undefined} */
+  let mutations
 
   onMounted(() => {
     observer = new IntersectionObserver(
@@ -22,8 +25,28 @@ export function useScrollReveal(containerRef) {
     )
 
     const container = containerRef.value ?? document.body
-    container.querySelectorAll('.reveal').forEach((el) => observer.observe(el))
+    const observeWithin = (root) => {
+      if (root.classList?.contains('reveal')) observer.observe(root)
+      root.querySelectorAll?.('.reveal').forEach((el) => observer.observe(el))
+    }
+
+    observeWithin(container)
+
+    // A single mount-time scan missed anything rendered later behind a `v-if` —
+    // most visibly the Next Tier error banner, which stayed at opacity 0
+    // forever because it was never observed.
+    mutations = new MutationObserver((records) => {
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (node.nodeType === 1) observeWithin(/** @type {Element} */ (node))
+        }
+      }
+    })
+    mutations.observe(container, { childList: true, subtree: true })
   })
 
-  onUnmounted(() => observer?.disconnect())
+  onUnmounted(() => {
+    observer?.disconnect()
+    mutations?.disconnect()
+  })
 }

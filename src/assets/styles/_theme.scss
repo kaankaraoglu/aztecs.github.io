@@ -47,6 +47,11 @@
   --t-accent-glow: rgba(255, 162, 3, 0.3);
   --t-accent-glow-strong: rgba(255, 162, 3, 0.6);
 
+  /* Status feedback. Item-quality colours are deliberately un-themed, so UI
+     status must not borrow them — #1eff00 on the light background is invisible. */
+  --t-status-success: #34d399;
+  --t-status-error: #f87171;
+
   /* Class-color override — priest is #fff which is invisible on light bg.
      Kept identical to dark here. */
   --t-class-priest: #ffffff;
@@ -112,6 +117,10 @@
   /* Neutral glow — very subtle in light mode */
   --t-accent-glow: rgba(9, 9, 11, 0.08);
   --t-accent-glow-strong: rgba(9, 9, 11, 0.2);
+
+  /* Darker pair so status text stays readable on the near-white surface. */
+  --t-status-success: #047857;
+  --t-status-error: #b91c1c;
 
   /* Priest needs to be readable against white */
   --t-class-priest: #09090b;

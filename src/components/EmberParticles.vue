@@ -1,5 +1,8 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { useTheme } from '@/composables/useTheme'
+
+const { theme } = useTheme()
 
 const canvasRef = ref(null)
 let animationId = null
@@ -74,17 +77,35 @@ onMounted(() => {
     p.y = Math.random() * canvas.height
   }
 
-  draw(canvas, ctx)
-
-  onVisibilityChange = () => {
-    if (document.hidden) {
+  // The guard matters: draw() reassigns animationId unconditionally, so a
+  // second start() would orphan the first loop and leave two running.
+  const start = () => {
+    if (!animationId) draw(canvas, ctx)
+  }
+  const stop = () => {
+    if (animationId) {
       cancelAnimationFrame(animationId)
       animationId = null
-    } else {
-      draw(canvas, ctx)
     }
   }
+
+  const shouldRun = () => theme.value === 'dark' && !document.hidden
+
+  if (shouldRun()) start()
+
+  onVisibilityChange = () => {
+    if (shouldRun()) start()
+    else stop()
+  }
   document.addEventListener('visibilitychange', onVisibilityChange)
+
+  // The light theme hides the canvas with `display: none`, but the loop knew
+  // nothing about it and kept clearing and repainting a full viewport at 60 fps
+  // for no visible output.
+  watch(theme, () => {
+    if (shouldRun()) start()
+    else stop()
+  })
 
   onResize = () => {
     clearTimeout(resizeTimeout)

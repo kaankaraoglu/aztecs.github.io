@@ -1,4 +1,29 @@
 const CONFIG_KEY = 'config:current'
+const STATE_COOKIE = 'aztecs_oauth_state'
+/** OAuth round-trip window. Long enough for a Discord login, short enough to be useless later. */
+const STATE_TTL_SECONDS = 600
+
+/** WoW character names: 2-12 letters, including the accented ones the realm allows. */
+const CHARACTER_NAME_PATTERN = /^[\p{L}]{2,12}$/u
+
+/** Class keys the signup form can send. Anything else is a malformed or hand-rolled request. */
+const ALLOWED_CLASSES = new Set([
+  'deathKnight',
+  'demonHunter',
+  'druid',
+  'evoker',
+  'hunter',
+  'mage',
+  'monk',
+  'paladin',
+  'priest',
+  'rogue',
+  'shaman',
+  'warlock',
+  'warrior',
+])
+
+const MAX_SPEC_NAME_LENGTH = 32
 
 export default {
   /**
@@ -27,7 +52,7 @@ export default {
         return handleDiscordRedirect(url, env)
       }
       if (path === '/auth/discord/callback' && method === 'GET') {
-        return await handleDiscordCallback(url, env)
+        return await handleDiscordCallback(url, env, request)
       }
       if (path === '/api/config' && method === 'GET') {
         return await handleGetConfig(env)
@@ -46,7 +71,9 @@ export default {
       }
 
       return corsResponse(env.FRONTEND_URL, 404, { error: 'Not found' })
-    } catch {
+    } catch (err) {
+      // Surfaces in `wrangler tail`; the client still gets a generic message.
+      console.error(`[signup] ${method} ${path} failed: ${err?.stack || err}`)
       return corsResponse(env.FRONTEND_URL, 500, { error: 'Internal server error' })
     }
   },
@@ -64,16 +91,59 @@ function handleDiscordRedirect(url, env) {
   discordUrl.searchParams.set('scope', 'identify')
   discordUrl.searchParams.set('state', state)
 
+  // The callback comes back to this same origin as a top-level GET, so a
+  // first-party SameSite=Lax cookie survives the Discord round trip. Without
+  // it the `state` we send is never checked, and an attacker can complete the
+  // flow with their own code and sign the victim into the attacker's account.
   return new Response(null, {
     status: 302,
-    headers: { Location: discordUrl.toString() },
+    headers: {
+      Location: discordUrl.toString(),
+      'Set-Cookie': `${STATE_COOKIE}=${state}; HttpOnly; Secure; SameSite=Lax; Path=/auth; Max-Age=${STATE_TTL_SECONDS}`,
+    },
   })
 }
 
-async function handleDiscordCallback(url, env) {
+/**
+ * Reads one cookie from a request's Cookie header.
+ * @param {Request} request
+ * @param {string} name
+ * @returns {string | null}
+ */
+function readCookie(request, name) {
+  const header = request.headers.get('Cookie')
+  if (!header) return null
+  for (const part of header.split(';')) {
+    const [key, ...rest] = part.trim().split('=')
+    if (key === name) return rest.join('=')
+  }
+  return null
+}
+
+/** Clears the state cookie once the round trip is over, successfully or not. */
+const CLEAR_STATE_COOKIE = `${STATE_COOKIE}=; HttpOnly; Secure; SameSite=Lax; Path=/auth; Max-Age=0`
+
+/**
+ * @param {string} location
+ * @returns {Response}
+ */
+function redirectClearingState(location) {
+  return new Response(null, {
+    status: 302,
+    headers: { Location: location, 'Set-Cookie': CLEAR_STATE_COOKIE },
+  })
+}
+
+async function handleDiscordCallback(url, env, request) {
   const code = url.searchParams.get('code')
   if (!code) {
-    return Response.redirect(`${env.FRONTEND_URL}/next-tier#error=missing_code`, 302)
+    return redirectClearingState(`${env.FRONTEND_URL}/next-tier#error=missing_code`)
+  }
+
+  const expectedState = readCookie(request, STATE_COOKIE)
+  const receivedState = url.searchParams.get('state')
+  if (!expectedState || !receivedState || !timingSafeEqual(expectedState, receivedState)) {
+    return redirectClearingState(`${env.FRONTEND_URL}/next-tier#error=invalid_state`)
   }
 
   const redirectUri = `${url.origin}/auth/discord/callback`
@@ -91,7 +161,7 @@ async function handleDiscordCallback(url, env) {
   })
 
   if (!tokenRes.ok) {
-    return Response.redirect(`${env.FRONTEND_URL}/next-tier#error=token_exchange_failed`, 302)
+    return redirectClearingState(`${env.FRONTEND_URL}/next-tier#error=token_exchange_failed`)
   }
 
   const tokenData = await tokenRes.json()
@@ -100,7 +170,7 @@ async function handleDiscordCallback(url, env) {
   })
 
   if (!userRes.ok) {
-    return Response.redirect(`${env.FRONTEND_URL}/next-tier#error=user_fetch_failed`, 302)
+    return redirectClearingState(`${env.FRONTEND_URL}/next-tier#error=user_fetch_failed`)
   }
 
   const user = await userRes.json()
@@ -109,7 +179,7 @@ async function handleDiscordCallback(url, env) {
     env.JWT_SECRET,
   )
 
-  return Response.redirect(`${env.FRONTEND_URL}/next-tier#token=${jwt}`, 302)
+  return redirectClearingState(`${env.FRONTEND_URL}/next-tier#token=${jwt}`)
 }
 
 // --- JWT ---
@@ -137,6 +207,16 @@ async function createJwt(payload, secret) {
 }
 
 async function verifyJwt(token, secret) {
+  try {
+    return await verifyJwtUnsafe(token, secret)
+  } catch {
+    // Malformed base64 or JSON in a hand-crafted token: not authenticated,
+    // not a server error.
+    return null
+  }
+}
+
+async function verifyJwtUnsafe(token, secret) {
   const parts = token.split('.')
   if (parts.length !== 3) return null
 
@@ -171,6 +251,22 @@ function base64url(input) {
   const bytes = typeof input === 'string' ? new TextEncoder().encode(input) : new Uint8Array(input)
   const binary = Array.from(bytes, (b) => String.fromCharCode(b)).join('')
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+
+/**
+ * Constant-time string comparison. Both values are compared over the length of
+ * the longer one so an early mismatch does not return faster.
+ * @param {string} a
+ * @param {string} b
+ * @returns {boolean}
+ */
+function timingSafeEqual(a, b) {
+  const length = Math.max(a.length, b.length)
+  let mismatch = a.length ^ b.length
+  for (let i = 0; i < length; i++) {
+    mismatch |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0)
+  }
+  return mismatch === 0
 }
 
 function base64urlDecode(str) {
@@ -212,8 +308,15 @@ async function handleGetConfig(env) {
 }
 
 async function handleAdminConfig(request, env) {
-  const authHeader = request.headers.get('Authorization')
-  if (authHeader !== `Bearer ${env.ADMIN_SECRET}`) {
+  // Without this guard an unset ADMIN_SECRET makes the literal header
+  // "Bearer undefined" a valid credential.
+  if (!env.ADMIN_SECRET) {
+    console.error('[signup] ADMIN_SECRET is not configured; refusing admin config write')
+    return corsResponse(env.FRONTEND_URL, 503, { error: 'Admin endpoint not configured' })
+  }
+
+  const authHeader = request.headers.get('Authorization') ?? ''
+  if (!timingSafeEqual(authHeader, `Bearer ${env.ADMIN_SECRET}`)) {
     return corsResponse(env.FRONTEND_URL, 401, { error: 'Unauthorized' })
   }
 
@@ -233,6 +336,34 @@ async function handleAdminConfig(request, env) {
 }
 
 // --- Submissions ---
+
+/**
+ * Validates a signup body server-side. The form already checks these, but the
+ * endpoint is reachable with any Bearer token and writes straight to a shared
+ * KV value, so an oversized or wrong-typed field would land in every reader's
+ * response.
+ * @param {any} body
+ * @returns {string | null} error message, or null when the body is acceptable
+ */
+function validateSubmission(body) {
+  if (!body || typeof body !== 'object') return 'Invalid JSON body'
+
+  const { characterName, className, specName } = body
+  if (typeof characterName !== 'string' || typeof className !== 'string') {
+    return 'characterName, className, and specName are required'
+  }
+  if (typeof specName !== 'string') {
+    return 'characterName, className, and specName are required'
+  }
+  if (!CHARACTER_NAME_PATTERN.test(characterName.trim())) {
+    return 'characterName must be 2-12 letters'
+  }
+  if (!ALLOWED_CLASSES.has(className)) return 'Unknown className'
+  if (specName.length === 0 || specName.length > MAX_SPEC_NAME_LENGTH) {
+    return 'Invalid specName'
+  }
+  return null
+}
 
 async function getCurrentTierId(env) {
   const config = await env.SIGNUPS.get(CONFIG_KEY, 'json')
@@ -260,10 +391,9 @@ async function handlePutSubmission(request, env) {
   }
 
   const body = await request.json().catch(() => null)
-  if (!body?.characterName || !body?.className || !body?.specName) {
-    return corsResponse(env.FRONTEND_URL, 400, {
-      error: 'characterName, className, and specName are required',
-    })
+  const invalid = validateSubmission(body)
+  if (invalid) {
+    return corsResponse(env.FRONTEND_URL, 400, { error: invalid })
   }
 
   const tierId = config.currentTierId

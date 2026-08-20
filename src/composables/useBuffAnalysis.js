@@ -13,27 +13,38 @@ import { WOW_CLASSES, RAID_BUFFS } from '@/data/wow-classes.js'
  * }}
  */
 export function useBuffAnalysis(submissions) {
-  const coveredBuffs = computed(() => {
-    const classCounts = new Map()
+  /**
+   * How many signed-up players actually bring each buff.
+   *
+   * Counted per spec, not per class: `RAID_BUFFS[x].classes` says which classes
+   * can bring a buff, but several are spec-locked (Abomination Limb and
+   * Gorefiend's Grasp are Blood-only), so a Frost death knight used to mark
+   * both as covered.
+   * @type {import('vue').ComputedRef<Map<string, number>>}
+   */
+  const buffProviderCounts = computed(() => {
+    const counts = new Map()
     for (const s of submissions.value) {
-      classCounts.set(s.className, (classCounts.get(s.className) || 0) + 1)
+      const specDef = WOW_CLASSES[s.className]?.specs?.[s.specName]
+      if (!specDef) continue
+      for (const buffKey of specDef.buffs ?? []) {
+        counts.set(buffKey, (counts.get(buffKey) || 0) + 1)
+      }
     }
-
-    return Object.values(RAID_BUFFS)
-      .filter((buff) => buff.classes.some((cls) => classCounts.has(cls)))
-      .map((buff) => ({
-        ...buff,
-        count: buff.classes.reduce((sum, cls) => sum + (classCounts.get(cls) || 0), 0),
-      }))
+    return counts
   })
 
-  const missingBuffs = computed(() => {
-    const submittedClasses = new Set(submissions.value.map((s) => s.className))
+  const coveredBuffs = computed(() =>
+    Object.entries(RAID_BUFFS)
+      .filter(([key]) => (buffProviderCounts.value.get(key) || 0) > 0)
+      .map(([key, buff]) => ({ ...buff, count: buffProviderCounts.value.get(key) })),
+  )
 
-    return Object.values(RAID_BUFFS).filter(
-      (buff) => !buff.classes.some((cls) => submittedClasses.has(cls)),
-    )
-  })
+  const missingBuffs = computed(() =>
+    Object.entries(RAID_BUFFS)
+      .filter(([key]) => (buffProviderCounts.value.get(key) || 0) === 0)
+      .map(([, buff]) => buff),
+  )
 
   const roleCounts = computed(() => {
     const counts = { tank: 0, healer: 0, melee: 0, ranged: 0 }
