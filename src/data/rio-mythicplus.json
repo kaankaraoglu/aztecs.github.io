@@ -61,9 +61,10 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 393,
+      "score": 563,
       "topKeys": [
         "+5 TOS",
+        "+2 VSA",
         "+2 KR"
       ],
       "realmSlug": "alakir"
@@ -132,7 +133,7 @@
       ]
     },
     {
-      "dungeon": "Ruby Life Pools",
+      "dungeon": "Voidscar Arena",
       "level": 8,
       "timed": true,
       "team": [
@@ -140,7 +141,7 @@
       ]
     },
     {
-      "dungeon": "Voidscar Arena",
+      "dungeon": "Ruby Life Pools",
       "level": 8,
       "timed": true,
       "team": [
@@ -180,5 +181,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T00:36:47.625Z"
+  "lastUpdated": "2026-08-20T02:37:43.157Z"
 }
