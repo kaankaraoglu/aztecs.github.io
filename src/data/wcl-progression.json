@@ -1,5 +1,5 @@
 {
-  "zone": "VS / DR / MQD / Sporefall",
+  "zone": "VS / DR / MQD / Sporefall / The Venomous Abyss / The Tidebound Grotto",
   "raids": [
     {
       "name": "The Voidspire",
@@ -1132,10 +1132,76 @@
           }
         }
       ]
+    },
+    {
+      "name": "The Tidebound Grotto",
+      "mythicFlex": true,
+      "bosses": [
+        {
+          "name": "Nymrissa Wavecaller",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        }
+      ]
+    },
+    {
+      "name": "The Venomous Abyss",
+      "mythicFlex": false,
+      "bosses": [
+        {
+          "name": "Nek'zali the Soulcoiler",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        },
+        {
+          "name": "Entombed Sentinels",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        },
+        {
+          "name": "Vashnik the Malignant",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        },
+        {
+          "name": "The Lost Explorers",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        },
+        {
+          "name": "Sszorak",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        },
+        {
+          "name": "The Twin Fangs",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        },
+        {
+          "name": "The Coiled Altar",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        },
+        {
+          "name": "Ula'tek",
+          "normal": false,
+          "heroic": false,
+          "mythic": false
+        }
+      ]
     }
   ],
   "summary": {
-    "total": 10,
+    "total": 19,
     "normal": 10,
     "heroic": 10,
     "mythic": 0
