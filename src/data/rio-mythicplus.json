@@ -2,6 +2,21 @@
   "season": "season-mn-2",
   "topRunners": [
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 2217,
+      "topKeys": [
+        "+10 KR",
+        "+10 AOF",
+        "+10 BV",
+        "+10 DON",
+        "+10 TOS",
+        "+8 RLP",
+        "+8 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 2070,
@@ -14,21 +29,6 @@
         "+6 RLP",
         "+6 VSA",
         "+6 TOS"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 1998,
-      "topKeys": [
-        "+10 BV",
-        "+10 DON",
-        "+10 TOS",
-        "+8 RLP",
-        "+8 VSA",
-        "+6 AOF",
-        "+4 KR"
       ],
       "realmSlug": "alakir"
     },
@@ -99,6 +99,17 @@
       "realmSlug": "xavius"
     },
     {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 559,
+      "topKeys": [
+        "+5 BV",
+        "+2 KR",
+        "+2 MR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Bagz",
       "class": "rogue",
       "score": 546,
@@ -106,16 +117,6 @@
         "+4 RLP",
         "+3 VSA",
         "+2 MR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 397,
-      "topKeys": [
-        "+5 BV",
-        "+2 KR"
       ],
       "realmSlug": "alakir"
     },
@@ -133,6 +134,22 @@
   "dungeonBests": [
     {
       "dungeon": "The Blinding Vale",
+      "level": 10,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
+    },
+    {
+      "dungeon": "Kings' Rest",
+      "level": 10,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
+    },
+    {
+      "dungeon": "Altar of Fangs",
       "level": 10,
       "timed": true,
       "team": [
@@ -164,27 +181,11 @@
       ]
     },
     {
-      "dungeon": "Altar of Fangs",
-      "level": 9,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
-    },
-    {
       "dungeon": "Voidscar Arena",
       "level": 8,
       "timed": true,
       "team": [
         "Blackmaira"
-      ]
-    },
-    {
-      "dungeon": "Kings' Rest",
-      "level": 7,
-      "timed": true,
-      "team": [
-        "Daruni"
       ]
     },
     {
@@ -196,5 +197,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-20T19:09:19.518Z"
+  "lastUpdated": "2026-08-20T19:53:32.555Z"
 }
