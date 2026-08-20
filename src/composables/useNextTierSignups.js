@@ -6,7 +6,7 @@ const TOKEN_KEY = 'aztecs-signup-jwt'
 /**
  * @typedef {{ discordId: string, discordUsername: string, isAdmin: boolean }} CurrentUser
  * @typedef {{
- *   discordId: string,
+ *   handle: string,
  *   discordUsername: string,
  *   characterName: string,
  *   className: string,
@@ -38,6 +38,47 @@ const loading = ref(false)
 const authError = ref(null)
 /** @type {import('vue').Ref<string | null>} */
 const requestError = ref(null)
+
+/**
+ * The signed-in member's pseudonym for the current tier.
+ *
+ * The public submissions list identifies people by a per-tier hash rather than
+ * their Discord id, so matching "which row is mine" means computing the same
+ * hash the worker does.
+ * @type {import('vue').Ref<string | null>}
+ */
+const myHandle = ref(null)
+
+/**
+ * Must match `submissionHandle` in workers/signup/src/index.js.
+ * @param {string} tierId
+ * @param {string} discordId
+ * @returns {Promise<string | null>} null when Web Crypto is unavailable
+ */
+export async function submissionHandle(tierId, discordId) {
+  try {
+    const bytes = new TextEncoder().encode(`${tierId}:${discordId}`)
+    const digest = await crypto.subtle.digest('SHA-256', bytes)
+    const binary = Array.from(new Uint8Array(digest), (b) => String.fromCharCode(b)).join('')
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '').slice(0, 22)
+  } catch {
+    // Web Crypto needs a secure context; fall back to the discordId match below.
+    return null
+  }
+}
+
+/**
+ * Recomputes the signed-in member's handle for the current tier.
+ *
+ * Deliberately awaited rather than driven by a watcher: the digest is async, so
+ * a watcher would leave a window where the member's own row is not recognised
+ * and the page briefly offers to create a signup they already have.
+ */
+async function refreshMyHandle() {
+  const user = currentUser.value
+  const tierId = config.value.currentTierId
+  myHandle.value = user && tierId ? await submissionHandle(tierId, user.discordId) : null
+}
 
 /**
  * localStorage throws rather than returning null when storage is blocked
@@ -114,14 +155,24 @@ function getAuthHeaders() {
 function clearSession() {
   safeRemoveItem(TOKEN_KEY)
   currentUser.value = null
+  myHandle.value = null
 }
 
 export function useNextTierSignups() {
   const error = computed(() => authError.value ?? requestError.value)
 
-  const existingSubmission = computed(
-    () => submissions.value.find((s) => s.discordId === currentUser.value?.discordId) ?? null,
-  )
+  const existingSubmission = computed(() => {
+    const rows = submissions.value
+    const handle = myHandle.value
+    const discordId = currentUser.value?.discordId
+    return (
+      (handle && rows.find((s) => s.handle === handle)) ||
+      // Tolerates a worker that still returns `discordId`, so the frontend and
+      // the worker can be deployed in either order.
+      (discordId && rows.find((s) => s.discordId === discordId)) ||
+      null
+    )
+  })
 
   const isAdmin = computed(() => currentUser.value?.isAdmin === true)
 
@@ -179,6 +230,7 @@ export function useNextTierSignups() {
         return
       }
       config.value = await res.json()
+      await refreshMyHandle()
     } catch {
       requestError.value = 'Unable to load signup configuration'
     }
@@ -200,6 +252,17 @@ export function useNextTierSignups() {
     } finally {
       loading.value = false
     }
+  }
+
+  /**
+   * @param {{ handle?: string, discordId?: string }} [submission]
+   * @returns {string} query string targeting another member's signup, or '' for one's own
+   */
+  function buildDeleteQuery(submission) {
+    if (!submission) return ''
+    if (submission.handle) return `?handle=${encodeURIComponent(submission.handle)}`
+    if (submission.discordId) return `?discordId=${encodeURIComponent(submission.discordId)}`
+    return ''
   }
 
   async function submitSignup({ characterName, className, specName }) {
@@ -227,16 +290,15 @@ export function useNextTierSignups() {
   }
 
   /**
-   * Remove a signup. Pass a `discordId` to remove another member's signup
+   * Remove a signup. Pass the submission row to remove another member's signup
    * (admin only); omit it to remove the current user's own signup.
-   * @param {string} [discordId]
+   * @param {{ handle?: string, discordId?: string }} [submission]
    */
-  async function deleteSignup(discordId) {
+  async function deleteSignup(submission) {
     requestError.value = null
     if (workerMissing()) return
     try {
-      const query =
-        typeof discordId === 'string' ? `?discordId=${encodeURIComponent(discordId)}` : ''
+      const query = buildDeleteQuery(submission)
       const res = await fetch(`${WORKER_URL}/api/submissions${query}`, {
         method: 'DELETE',
         headers: getAuthHeaders(),
@@ -275,6 +337,7 @@ export function useNextTierSignups() {
     isAdmin,
     loading,
     error,
+    myHandle,
     handleAuthCallback,
     fetchConfig,
     fetchSubmissions,

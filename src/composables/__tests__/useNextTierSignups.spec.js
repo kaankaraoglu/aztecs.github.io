@@ -464,7 +464,7 @@ describe('useNextTierSignups', () => {
   })
 
   describe('deleteSignup', () => {
-    it('encodes a given discordId into the query string', async () => {
+    it('encodes a given handle into the query string', async () => {
       const fetchMock = vi
         .fn()
         .mockResolvedValueOnce(jsonResponse({ ok: true }))
@@ -472,15 +472,28 @@ describe('useNextTierSignups', () => {
       vi.stubGlobal('fetch', fetchMock)
 
       const { deleteSignup } = await loadComposable()
-      await deleteSignup('12 34&56')
+      await deleteSignup({ handle: 'a b&c' })
+
+      expect(fetchMock.mock.calls[0][0]).toBe(`${WORKER_URL}/api/submissions?handle=a%20b%26c`)
+      expect(fetchMock.mock.calls[0][1].method).toBe('DELETE')
+    })
+
+    it('falls back to discordId for a row from a worker that predates handles', async () => {
+      const fetchMock = vi
+        .fn()
+        .mockResolvedValueOnce(jsonResponse({ ok: true }))
+        .mockResolvedValueOnce(jsonResponse([]))
+      vi.stubGlobal('fetch', fetchMock)
+
+      const { deleteSignup } = await loadComposable()
+      await deleteSignup({ discordId: '12 34&56' })
 
       expect(fetchMock.mock.calls[0][0]).toBe(
         `${WORKER_URL}/api/submissions?discordId=12%2034%2656`,
       )
-      expect(fetchMock.mock.calls[0][1].method).toBe('DELETE')
     })
 
-    it('omits the query entirely when no discordId is given', async () => {
+    it('omits the query entirely when no submission is given', async () => {
       const fetchMock = vi
         .fn()
         .mockResolvedValueOnce(jsonResponse({ ok: true }))
@@ -541,6 +554,66 @@ describe('useNextTierSignups', () => {
 
       signOut()
       expect(existingSubmission.value).toBeNull()
+    })
+
+    it('matches existingSubmission by handle once the tier id is known', async () => {
+      const { store } = stubStorage()
+      store.set(TOKEN_KEY, makeToken({ sub: '4242', username: 'kaank', exp: futureExp() }))
+
+      const { useNextTierSignups, submissionHandle } = await loadModule()
+      const mine = await submissionHandle('tier-1', '4242')
+      const theirs = await submissionHandle('tier-1', '1')
+
+      vi.stubGlobal(
+        'fetch',
+        vi.fn((url) =>
+          Promise.resolve(
+            String(url).endsWith('/api/config')
+              ? jsonResponse({ currentTierId: 'tier-1', tierName: 'Tier 1', isOpen: true })
+              : jsonResponse([
+                  { handle: theirs, characterName: 'Other' },
+                  { handle: mine, characterName: 'Aztec' },
+                ]),
+          ),
+        ),
+      )
+
+      const { fetchConfig, fetchSubmissions, existingSubmission } = useNextTierSignups()
+      await fetchConfig()
+      await fetchSubmissions()
+
+      expect(existingSubmission.value).toEqual({ handle: mine, characterName: 'Aztec' })
+    })
+
+    it('falls back to discordId for rows from a worker that predates handles', async () => {
+      const { store } = stubStorage()
+      store.set(TOKEN_KEY, makeToken({ sub: '4242', username: 'kaank', exp: futureExp() }))
+      vi.stubGlobal(
+        'fetch',
+        vi.fn().mockResolvedValue(
+          jsonResponse([
+            { discordId: '1', characterName: 'Other' },
+            { discordId: '4242', characterName: 'Aztec' },
+          ]),
+        ),
+      )
+
+      const { fetchSubmissions, existingSubmission } = await loadComposable()
+      await fetchSubmissions()
+
+      expect(existingSubmission.value).toEqual({ discordId: '4242', characterName: 'Aztec' })
+    })
+
+    it('produces a url-safe handle that matches the worker for the same inputs', async () => {
+      const { submissionHandle } = await loadModule()
+      // Pinned vector. `submissionHandle` in workers/signup/src/index.js must
+      // produce the same value or "is this row mine" silently stops matching.
+      expect(await submissionHandle('tier-1', '123456789012345678')).toBe('QuAt4iTGbdWO055Rb4ayle')
+      expect(await submissionHandle('tier-1', '123456789012345679')).toBe('pNC5Sh5dyDE2N55k4bw6Ne')
+      // Salted per tier, so the same member is not linkable across tiers.
+      expect(await submissionHandle('tier-2', '123456789012345678')).not.toBe(
+        'QuAt4iTGbdWO055Rb4ayle',
+      )
     })
 
     it('builds the Discord auth URL from the worker URL', async () => {

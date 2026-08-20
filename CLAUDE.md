@@ -196,6 +196,10 @@ Secrets (via `wrangler secret`): `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `
 
 The OAuth `state` value is stored in a `SameSite=Lax` cookie on the worker's own origin and compared on callback, so the flow rejects a code the user did not start.
 
+**Storage layout.** One KV key per signup, `tier:<tierId>:<handle>`, with the public projection duplicated into the key's metadata so `GET /api/submissions` answers from a single `list()`. A write touches only that member's own key, which is what keeps two people signing up at once from overwriting each other; KV has no compare-and-set, so the older single-array layout lost one of any two overlapping writes. A tier still stored as an array is migrated on the first write, guarded by a `migrated:<tierId>` marker, and is readable in the meantime.
+
+**`handle` is a per-tier pseudonym**, the first 22 characters of base64url(SHA-256(`tierId:discordId`)). The public list identifies members by it rather than by their Discord id, which never leaves the worker. `src/composables/useNextTierSignups.js` computes the same value client-side to answer "is this row mine"; the two implementations must agree, and `src/composables/__tests__/useNextTierSignups.spec.js` pins the algorithm to a known vector. `DELETE /api/submissions` takes `?handle=`, and still accepts `?discordId=` so the worker and the frontend can be deployed in either order.
+
 #### Refresh Worker (`workers/refresh/`, deployed to `refresh.aztecs.se`)
 
 Rate-limited (600s) endpoint that verifies a Turnstile CAPTCHA then dispatches the `fetch-data.yml` workflow.

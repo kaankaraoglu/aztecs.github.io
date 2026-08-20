@@ -6,9 +6,7 @@ A catalogue of open improvements for the aztecs.github.io codebase. Items are gr
 
 ## Security
 
-- **[High]** `workers/signup/src/index.js` stores a whole tier's signups in a single KV value, and both `handlePutSubmission` and `handleDeleteSubmission` read it, mutate it, and write it back. Cloudflare KV has no compare-and-set, so two signups that overlap in that window silently lose one of the two writes. The losing member sees themselves in the table right after submitting (their own `fetchSubmissions()` runs after their own write) and only finds out later that they are gone. Fix by keying each signup separately as `tier:${tierId}:${discordId}` and rebuilding the array in `handleGetSubmissions` with `SIGNUPS.list({ prefix })`. This changes the storage layout of a live service, so it needs a migration path that reads the legacy array key until the old data is gone.
-- **[Medium]** `GET /api/submissions` needs no authentication and returns each signup verbatim, including `discordId`, the permanent Discord snowflake. The frontend only uses that id to answer "is this row mine" (`useNextTierSignups.js`) and to target an admin delete (`SignupTable.vue`), and never displays it. Replacing it with a per-tier opaque handle (a truncated SHA-256 of `tierId + discordId`) keeps both call sites working without publishing a Discord-account-to-character mapping for the whole raid team.
-- **[Low]** The refresh worker's 10-minute limiter (`workers/refresh/src/index.js`) is a read-check-write against KV with no atomicity, and the timestamp is written only after the dispatch succeeds. Two requests landing together can both dispatch. The blast radius is a duplicate workflow run, so this is worth fixing only if it actually happens.
+- **[Low]** The refresh worker's 10-minute limiter (`workers/refresh/src/index.js`) claims its window before dispatching, which narrows the overlap to a single KV write, but KV still has no compare-and-set. Two requests landing inside that write would both dispatch. Closing it completely means a Durable Object, which is a lot of machinery for a duplicate workflow run.
 
 ## UX: empty and error states
 

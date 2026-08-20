@@ -58,17 +58,30 @@ async function handleRefresh(request, env) {
     }
   }
 
+  // Claim the window before dispatching rather than after. KV has no
+  // compare-and-set, so this cannot be fully atomic, but writing first narrows
+  // the overlap from "the whole GitHub round trip" to a single KV write.
+  const previousRefresh = lastRefresh
+  await env.RATE_LIMIT.put(RATE_LIMIT_KEY, String(Date.now()), {
+    expirationTtl: RATE_LIMIT_SECONDS,
+  })
+
   const dispatchResult = await dispatchWorkflow(env.GITHUB_TOKEN)
   if (!dispatchResult.ok) {
     console.error(
       `[refresh] workflow dispatch failed: ${dispatchResult.status} ${await dispatchResult.text().catch(() => '')}`,
     )
+    // Nothing was triggered, so hand the window back instead of locking the
+    // button for ten minutes over a failure the user did not cause.
+    if (previousRefresh) {
+      await env.RATE_LIMIT.put(RATE_LIMIT_KEY, previousRefresh, {
+        expirationTtl: RATE_LIMIT_SECONDS,
+      })
+    } else {
+      await env.RATE_LIMIT.delete(RATE_LIMIT_KEY)
+    }
     return corsResponse(502, { error: 'Failed to dispatch workflow' })
   }
-
-  await env.RATE_LIMIT.put(RATE_LIMIT_KEY, String(Date.now()), {
-    expirationTtl: RATE_LIMIT_SECONDS,
-  })
 
   return corsResponse(200, {
     message: 'Refresh triggered',

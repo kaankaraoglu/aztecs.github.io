@@ -16,7 +16,7 @@
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow v-for="sub in submissions" :key="sub.discordId">
+          <TableRow v-for="sub in submissions" :key="sub.handle ?? sub.discordId">
             <TableCell class="col-char text-left">
               <span :class="toClassColorCss(sub.className)" class="char-name">{{
                 sub.characterName
@@ -75,7 +75,7 @@ const emit = defineEmits(['delete'])
 
 function confirmDelete(sub) {
   const ok = window.confirm(`Remove ${sub.characterName}'s signup? This can't be undone.`)
-  if (ok) emit('delete', sub.discordId)
+  if (ok) emit('delete', sub)
 }
 
 function getClassName(classKey) {

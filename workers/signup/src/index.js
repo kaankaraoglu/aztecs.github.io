@@ -370,13 +370,142 @@ async function getCurrentTierId(env) {
   return config?.currentTierId ?? null
 }
 
+/**
+ * Per-tier pseudonym for a Discord user.
+ *
+ * The submissions list is public, and returning the raw Discord snowflake there
+ * published a Discord-account-to-character mapping for the whole raid team. The
+ * frontend only ever needs to answer "is this row mine" and "which row is the
+ * admin deleting", so it gets this instead. Salting with the tier id means the
+ * same person is not linkable across tiers.
+ * @param {string} tierId
+ * @param {string} discordId
+ * @returns {Promise<string>}
+ */
+async function submissionHandle(tierId, discordId) {
+  const digest = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(`${tierId}:${discordId}`),
+  )
+  return base64url(digest).slice(0, 22)
+}
+
+/** @param {string} tierId @param {string} handle */
+function submissionKey(tierId, handle) {
+  return `tier:${tierId}:${handle}`
+}
+
+/** Legacy single-value key: the whole tier as one JSON array. */
+function legacyTierKey(tierId) {
+  return `tier:${tierId}`
+}
+
+function migrationMarkerKey(tierId) {
+  return `migrated:${tierId}`
+}
+
+/**
+ * Strips the fields that must not leave the worker.
+ * @param {Record<string, any>} record
+ */
+function publicSubmission(record) {
+  return {
+    handle: record.handle,
+    discordUsername: record.discordUsername,
+    characterName: record.characterName,
+    className: record.className,
+    specName: record.specName,
+    submittedAt: record.submittedAt,
+    updatedAt: record.updatedAt,
+  }
+}
+
+/**
+ * Writes one signup. The public projection is duplicated into the key's
+ * metadata so `handleGetSubmissions` can answer from a single `list()` instead
+ * of one `get()` per signup.
+ * @param {any} env @param {string} tierId @param {Record<string, any>} record
+ */
+async function putSubmissionRecord(env, tierId, record) {
+  await env.SIGNUPS.put(submissionKey(tierId, record.handle), JSON.stringify(record), {
+    metadata: publicSubmission(record),
+  })
+}
+
+/** @param {any} env @param {string} tierId @returns {Promise<Array<Record<string, any>>>} */
+async function readLegacyTier(env, tierId) {
+  const legacy = await env.SIGNUPS.get(legacyTierKey(tierId), 'json')
+  return Array.isArray(legacy) ? legacy : []
+}
+
+/**
+ * Moves a tier off the single-array layout onto one key per signup.
+ *
+ * The array layout had no way to write one member's signup without rewriting
+ * everyone's, and KV has no compare-and-set, so two people signing up at the
+ * same time silently lost one of the two writes.
+ *
+ * Runs once per tier, guarded by a marker key, and only from the write paths.
+ * Two writes racing during that one-time window could resurrect a signup
+ * deleted in the same instant; a second delete clears it.
+ * @param {any} env @param {string} tierId
+ */
+async function ensureMigrated(env, tierId) {
+  if (await env.SIGNUPS.get(migrationMarkerKey(tierId))) return
+
+  const legacy = await readLegacyTier(env, tierId)
+  await Promise.all(
+    legacy
+      .filter((entry) => entry?.discordId)
+      .map(async (entry) => {
+        const handle = await submissionHandle(tierId, entry.discordId)
+        await putSubmissionRecord(env, tierId, { ...entry, handle })
+      }),
+  )
+
+  await env.SIGNUPS.put(migrationMarkerKey(tierId), '1')
+  await env.SIGNUPS.delete(legacyTierKey(tierId))
+  console.log(`[signup] migrated ${legacy.length} signup(s) for tier ${tierId} to per-key storage`)
+}
+
+/**
+ * Every signup for a tier, newest layout first, falling back to the legacy
+ * array for a tier that has not been written to since the migration landed.
+ * @param {any} env @param {string} tierId
+ */
+async function listSubmissions(env, tierId) {
+  const prefix = `${legacyTierKey(tierId)}:`
+  /** @type {Map<string, Record<string, any>>} */
+  const byHandle = new Map()
+
+  let cursor
+  do {
+    const page = await env.SIGNUPS.list({ prefix, cursor })
+    for (const key of page.keys) {
+      const handle = key.name.slice(prefix.length)
+      // Metadata is written alongside every value, but fall back to the value
+      // itself so a record written by an older revision still reads.
+      const record = key.metadata ?? (await env.SIGNUPS.get(key.name, 'json'))
+      if (record) byHandle.set(handle, publicSubmission({ ...record, handle }))
+    }
+    cursor = page.list_complete ? undefined : page.cursor
+  } while (cursor)
+
+  for (const entry of await readLegacyTier(env, tierId)) {
+    if (!entry?.discordId) continue
+    const handle = await submissionHandle(tierId, entry.discordId)
+    if (!byHandle.has(handle)) byHandle.set(handle, publicSubmission({ ...entry, handle }))
+  }
+
+  return [...byHandle.values()].sort((a, b) => a.submittedAt.localeCompare(b.submittedAt))
+}
+
 async function handleGetSubmissions(env) {
   const tierId = await getCurrentTierId(env)
   if (!tierId) {
     return corsResponse(env.FRONTEND_URL, 200, [])
   }
-  const submissions = await env.SIGNUPS.get(`tier:${tierId}`, 'json')
-  return corsResponse(env.FRONTEND_URL, 200, submissions ?? [])
+  return corsResponse(env.FRONTEND_URL, 200, await listSubmissions(env, tierId))
 }
 
 async function handlePutSubmission(request, env) {
@@ -397,28 +526,27 @@ async function handlePutSubmission(request, env) {
   }
 
   const tierId = config.currentTierId
-  const submissions = (await env.SIGNUPS.get(`tier:${tierId}`, 'json')) ?? []
-  const now = new Date().toISOString()
-  const existingIndex = submissions.findIndex((s) => s.discordId === user.sub)
+  await ensureMigrated(env, tierId)
 
-  const submission = {
+  const handle = await submissionHandle(tierId, user.sub)
+  // Reads only this member's own key, so a concurrent signup cannot be
+  // clobbered by this write.
+  const existing = await env.SIGNUPS.get(submissionKey(tierId, handle), 'json')
+  const now = new Date().toISOString()
+
+  const record = {
+    handle,
     discordId: user.sub,
     discordUsername: user.username,
     characterName: body.characterName.trim(),
     className: body.className,
     specName: body.specName,
-    submittedAt: existingIndex >= 0 ? submissions[existingIndex].submittedAt : now,
+    submittedAt: existing?.submittedAt ?? now,
     updatedAt: now,
   }
 
-  if (existingIndex >= 0) {
-    submissions[existingIndex] = submission
-  } else {
-    submissions.push(submission)
-  }
-
-  await env.SIGNUPS.put(`tier:${tierId}`, JSON.stringify(submissions))
-  return corsResponse(env.FRONTEND_URL, 200, submission)
+  await putSubmissionRecord(env, tierId, record)
+  return corsResponse(env.FRONTEND_URL, 200, publicSubmission(record))
 }
 
 async function handleDeleteSubmission(request, env) {
@@ -428,10 +556,22 @@ async function handleDeleteSubmission(request, env) {
   }
 
   const admin = isAdminUser(user.sub, env)
-  const targetId = new URL(request.url).searchParams.get('discordId')
+  const tierId = await getCurrentTierId(env)
+  if (!tierId) {
+    return corsResponse(env.FRONTEND_URL, 404, { error: 'No active tier' })
+  }
+
+  const params = new URL(request.url).searchParams
+  const ownHandle = await submissionHandle(tierId, user.sub)
+  // `discordId` is still accepted so an admin using the pre-handle frontend
+  // keeps working across the deploy.
+  const targetDiscordId = params.get('discordId')
+  const targetHandle =
+    params.get('handle') ??
+    (targetDiscordId ? await submissionHandle(tierId, targetDiscordId) : ownHandle)
 
   // Only admins may remove someone else's signup.
-  if (targetId && targetId !== user.sub && !admin) {
+  if (targetHandle !== ownHandle && !admin) {
     return corsResponse(env.FRONTEND_URL, 403, { error: 'Forbidden' })
   }
 
@@ -444,16 +584,9 @@ async function handleDeleteSubmission(request, env) {
     }
   }
 
-  const tierId = await getCurrentTierId(env)
-  if (!tierId) {
-    return corsResponse(env.FRONTEND_URL, 404, { error: 'No active tier' })
-  }
+  await ensureMigrated(env, tierId)
+  await env.SIGNUPS.delete(submissionKey(tierId, targetHandle))
 
-  const removeId = targetId ?? user.sub
-  const submissions = (await env.SIGNUPS.get(`tier:${tierId}`, 'json')) ?? []
-  const filtered = submissions.filter((s) => s.discordId !== removeId)
-
-  await env.SIGNUPS.put(`tier:${tierId}`, JSON.stringify(filtered))
   return corsResponse(env.FRONTEND_URL, 200, { deleted: true })
 }
 

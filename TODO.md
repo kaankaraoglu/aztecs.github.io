@@ -54,7 +54,7 @@
 ## CI / DX
 
 - [x] **Add `format:check` to CI** — The `format:check` script exists in `package.json` but isn't run in CI. A developer bypassing the pre-commit hook can land unformatted code.
-- [ ] **Use a maintained GitHub Pages deploy action** — Still open: `deploy.yml` runs `git init` inside `dist/` and force-pushes an orphan history to `gh-pages`. `JamesIves/github-pages-deploy-action@v4` or `peaceiris/actions-gh-pages@v3` handles the edge cases. The workflow does now have a concurrency group and a least-privilege `permissions` block, so overlapping deploys no longer publish out of order.
+- [x] **Use a maintained GitHub Pages deploy action** — `deploy.yml` uses `JamesIves/github-pages-deploy-action@v4` with `single-commit: true`. The custom domain moved to `public/CNAME`, so the build produces `dist/CNAME` and the workflow no longer writes it by hand.
 - [x] **Add bundle size visualization** — Configure `rollup-plugin-visualizer` to generate a report on builds, useful for tracking Firebase and other dependency sizes.
 - [x] **Explicit code splitting for Firebase** — Add `manualChunks` in `vite.config.js` `build.rollupOptions` to isolate Firebase into its own chunk.
 

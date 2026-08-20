@@ -97,13 +97,15 @@ describe('SignupTable', () => {
     expect(buttons[1].attributes('aria-label')).toBe('Remove Protodk')
   })
 
-  it('emits delete with the row discordId once the confirm is accepted', async () => {
+  it('emits delete with the whole row once the confirm is accepted', async () => {
     const confirm = vi.spyOn(window, 'confirm').mockReturnValue(true)
     const wrapper = mountTable({ isAdmin: true })
     await wrapper.findAll('tbody button')[1].trigger('click')
 
     expect(confirm).toHaveBeenCalledWith("Remove Protodk's signup? This can't be undone.")
-    expect(wrapper.emitted('delete')).toEqual([['222']])
+    // The row, not a bare id: the composable picks `handle` when the worker
+    // supplies one and falls back to `discordId` otherwise.
+    expect(wrapper.emitted('delete')[0][0]).toMatchObject({ discordId: '222' })
   })
 
   it('does not emit delete when the confirm is dismissed', async () => {
