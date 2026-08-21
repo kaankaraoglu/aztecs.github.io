@@ -20,14 +20,14 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 2422,
+      "score": 2520,
       "topKeys": [
+        "+12 TOS",
         "+12 MR",
         "+12 AOF",
         "+10 RLP",
         "+12 BV",
         "+9 DON",
-        "+7 TOS",
         "+6 KR",
         "+6 VSA"
       ],
@@ -159,6 +159,14 @@
       ]
     },
     {
+      "dungeon": "Temple of Sethraliss",
+      "level": 12,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "The Blinding Vale",
       "level": 12,
       "timed": false,
@@ -191,14 +199,6 @@
       ]
     },
     {
-      "dungeon": "Temple of Sethraliss",
-      "level": 10,
-      "timed": true,
-      "team": [
-        "Daruni"
-      ]
-    },
-    {
       "dungeon": "Voidscar Arena",
       "level": 8,
       "timed": true,
@@ -207,5 +207,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T19:06:13.332Z"
+  "lastUpdated": "2026-08-21T19:45:41.510Z"
 }
