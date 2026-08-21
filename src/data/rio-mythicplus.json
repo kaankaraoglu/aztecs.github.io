@@ -52,13 +52,13 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 1938,
+      "score": 1942,
       "topKeys": [
         "+10 TOS",
         "+10 RLP",
         "+10 AOF",
-        "+6 BV",
         "+6 VSA",
+        "+6 BV",
         "+6 KR",
         "+6 MR"
       ],
@@ -67,11 +67,11 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 1623,
+      "score": 1626,
       "topKeys": [
+        "+6 VSA",
         "+6 BV",
         "+6 TOS",
-        "+6 VSA",
         "+6 KR",
         "+6 MR",
         "+6 AOF",
@@ -95,10 +95,10 @@
     {
       "name": "Sâmáar",
       "class": "priest",
-      "score": 1244,
+      "score": 1246,
       "topKeys": [
-        "+6 TOS",
         "+6 VSA",
+        "+6 TOS",
         "+6 MR",
         "+3 KR",
         "+2 AOF",
@@ -109,34 +109,36 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 804,
+      "score": 1181,
       "topKeys": [
+        "+8 AOF",
+        "+7 TOS",
         "+5 BV",
         "+5 MR",
-        "+3 KR",
-        "+2 AOF"
+        "+3 KR"
       ],
       "realmSlug": "alakir"
     },
     {
-      "name": "Frosteyes",
+      "name": "Valorite",
       "class": "death-knight",
-      "score": 643,
+      "score": 940,
       "topKeys": [
-        "+6 BV",
-        "+5 VSA",
-        "+2 RLP"
+        "+8 AOF",
+        "+7 TOS",
+        "+5 BV",
+        "+2 KR"
       ],
-      "realmSlug": "xavius"
+      "realmSlug": "alakir"
     },
     {
-      "name": "Bagz",
-      "class": "rogue",
-      "score": 546,
+      "name": "Incendia",
+      "class": "mage",
+      "score": 770,
       "topKeys": [
-        "+4 RLP",
-        "+3 VSA",
-        "+2 MR"
+        "+8 AOF",
+        "+7 TOS",
+        "+5 MR"
       ],
       "realmSlug": "alakir"
     }
@@ -207,5 +209,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T19:45:41.510Z"
+  "lastUpdated": "2026-08-21T20:47:14.980Z"
 }
