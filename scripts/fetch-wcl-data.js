@@ -18,6 +18,7 @@ import {
   GUILD_ID,
   CURRENT_ZONE_IDS,
   CLASS_MAP,
+  toRealmSlug,
   getToken,
   graphql,
   fetchPlayerDetails,
@@ -81,7 +82,7 @@ const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }
 
 function mapPlayer(p) {
   const server = p.server || "Al'Akir"
-  const realmSlug = server.toLowerCase().replace(/'/g, '').replace(/\s+/g, '-')
+  const realmSlug = toRealmSlug(server)
   const type = p.type || ''
   return {
     name: p.name,

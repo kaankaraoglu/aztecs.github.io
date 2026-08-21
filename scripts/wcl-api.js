@@ -50,6 +50,27 @@ const CLASS_MAP = Object.freeze({
 })
 
 /**
+ * Converts a WCL realm name into the slug Blizzard's armory uses in character
+ * URLs.
+ *
+ * WCL reports a multi-word realm with the space already gone
+ * ("TwistingNether"), so splitting on whitespace alone yielded
+ * `/character/eu/twistingnether/...`, which the armory 404s. Split on the
+ * camel-case seam as well. That seam is a lowercase letter directly followed by
+ * an uppercase one, so "Al'Akir" is left alone and still slugs to `alakir`
+ * rather than `al-akir`.
+ * @param {string} server - Realm name as WCL reports it
+ * @returns {string} Armory realm slug
+ */
+function toRealmSlug(server) {
+  return server
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/'/g, '')
+    .replace(/\s+/g, '-')
+    .toLowerCase()
+}
+
+/**
  * Fetches an OAuth2 access token from Warcraft Logs.
  * Requires WCL_CLIENT_ID and WCL_CLIENT_SECRET env vars.
  * @param {string} logPrefix - Log prefix for identifying the calling script (e.g. '[wcl]')
@@ -199,6 +220,7 @@ export {
   CURRENT_ZONE_IDS,
   CURRENT_MPLUS_ZONE_ID,
   CLASS_MAP,
+  toRealmSlug,
   getToken,
   graphql,
   fetchReportTable,
