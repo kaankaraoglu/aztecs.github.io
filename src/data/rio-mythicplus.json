@@ -18,6 +18,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Aerioth",
+      "class": "priest",
+      "score": 2422,
+      "topKeys": [
+        "+12 MR",
+        "+12 AOF",
+        "+10 RLP",
+        "+12 BV",
+        "+9 DON",
+        "+7 TOS",
+        "+6 KR",
+        "+6 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 2362,
@@ -29,22 +45,6 @@
         "+9 RLP",
         "+9 DON",
         "+7 BV",
-        "+6 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Aerioth",
-      "class": "priest",
-      "score": 2352,
-      "topKeys": [
-        "+12 MR",
-        "+12 AOF",
-        "+10 RLP",
-        "+9 DON",
-        "+7 TOS",
-        "+6 KR",
-        "+6 BV",
         "+6 VSA"
       ],
       "realmSlug": "alakir"
@@ -159,6 +159,14 @@
       ]
     },
     {
+      "dungeon": "The Blinding Vale",
+      "level": 12,
+      "timed": false,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Kings' Rest",
       "level": 11,
       "timed": true,
@@ -191,14 +199,6 @@
       ]
     },
     {
-      "dungeon": "The Blinding Vale",
-      "level": 10,
-      "timed": true,
-      "team": [
-        "Blackmaira"
-      ]
-    },
-    {
       "dungeon": "Voidscar Arena",
       "level": 8,
       "timed": true,
@@ -207,5 +207,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T17:24:37.165Z"
+  "lastUpdated": "2026-08-21T19:06:13.332Z"
 }
