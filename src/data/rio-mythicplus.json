@@ -154,7 +154,7 @@
       ]
     },
     {
-      "dungeon": "The Blinding Vale",
+      "dungeon": "Den of Nalorakk",
       "level": 10,
       "timed": true,
       "team": [
@@ -170,14 +170,6 @@
       ]
     },
     {
-      "dungeon": "Temple of Sethraliss",
-      "level": 10,
-      "timed": true,
-      "team": [
-        "Blackmaira"
-      ]
-    },
-    {
       "dungeon": "Ruby Life Pools",
       "level": 10,
       "timed": true,
@@ -186,7 +178,15 @@
       ]
     },
     {
-      "dungeon": "Den of Nalorakk",
+      "dungeon": "Temple of Sethraliss",
+      "level": 10,
+      "timed": true,
+      "team": [
+        "Blackmaira"
+      ]
+    },
+    {
+      "dungeon": "The Blinding Vale",
       "level": 10,
       "timed": true,
       "team": [
@@ -202,5 +202,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T07:16:51.939Z"
+  "lastUpdated": "2026-08-21T08:04:41.543Z"
 }

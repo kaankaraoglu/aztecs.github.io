@@ -1,10 +1,10 @@
 {
-  "zone": "VS / DR / MQD",
+  "zone": "VS / DR / MQD / Sporefall / The Venomous Abyss / The Tidebound Grotto",
   "stats": {
     "mostDeaths": {
-      "name": "Aerioth",
-      "class": "priest",
-      "count": 195
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "count": 198
     },
     "highestDamageDone": {
       "name": "Aerioth",
