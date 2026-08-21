@@ -282,6 +282,30 @@ describe('RaidProgressionBox', () => {
     expect(bar.attributes('style')).toContain('width: 87.7%')
   })
 
+  it('reserves the mythic tally column for raids that have no mythic tier', () => {
+    const mixedRaids = [
+      {
+        name: 'Flex Raid',
+        mythicFlex: true,
+        bosses: [{ name: 'Flex Boss', normal: true, heroic: false, mythic: false }],
+      },
+      {
+        name: 'Plain Raid',
+        bosses: [{ name: 'Plain Boss', normal: true, heroic: true }],
+      },
+    ]
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mixedRaids, summary: { total: 2, normal: 2, heroic: 1, mythic: 0 } },
+    })
+    // Only the second raid collapses to a toggle, and it gets an empty third
+    // pip so its N and HC sit under the flex raid's.
+    const tallies = wrapper.findAll('.instance-toggle .pip.tally')
+    expect(tallies).toHaveLength(3)
+    expect(tallies[2].classes()).toContain('placeholder')
+    expect(tallies[2].text()).toBe('')
+    expect(tallies[2].attributes('aria-hidden')).toBe('true')
+  })
+
   it('uses the "MX" label in pull text for a Mythic Flex raid', () => {
     const flexRaids = [
       {
