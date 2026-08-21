@@ -44,7 +44,6 @@ const homeStubs = {
   RaidStatsBox: { template: '<div class="stub-raid-stats" />' },
   RaidProgressionBox: { template: '<div class="stub-raid-progression" />' },
   MythicPlusBox: { template: '<div class="stub-mythic-plus" />' },
-  MissingClassesBox: { template: '<div class="stub-missing-classes" />' },
   FlexMythicReadiness: { template: '<div class="stub-flex-mythic-readiness" />' },
   FadingDivider: { template: '<hr class="stub-divider" />' },
   ImageLightbox: { template: '<div class="stub-lightbox" />' },

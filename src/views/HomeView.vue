@@ -7,10 +7,11 @@
       </p>
     </section>
     <div class="content-wrapper">
-      <div class="next-tier-row">
-        <MissingClassesBox class="reveal" :submissions="submissions" />
-        <FlexMythicReadiness class="reveal" :submissions="submissions" />
-      </div>
+      <FlexMythicReadiness
+        class="reveal next-tier-box"
+        :submissions="submissions"
+        show-signup-link
+      />
       <RaidStatsBox class="reveal" />
       <FadingDivider />
       <div class="top-boxes">
@@ -67,7 +68,6 @@ import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import MythicPlusBox from '@/components/MythicPlusBox.vue'
 import RaidStatsBox from '@/components/RaidStatsBox.vue'
-import MissingClassesBox from '@/components/MissingClassesBox.vue'
 import FlexMythicReadiness from '@/components/next-tier/FlexMythicReadiness.vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
 import InfoBox from '@/components/InfoBox.vue'
@@ -147,25 +147,8 @@ onMounted(() => {
     }
   }
 
-  .next-tier-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: $space-6;
-    align-items: stretch;
+  .next-tier-box {
     margin-bottom: $space-6;
-
-    @include tablet {
-      grid-template-columns: 1fr;
-    }
-
-    > :deep(.missing-classes-box) {
-      margin-bottom: 0;
-      height: 100%;
-    }
-
-    > :only-child {
-      grid-column: 1 / -1;
-    }
   }
 
   .latest-achievements {

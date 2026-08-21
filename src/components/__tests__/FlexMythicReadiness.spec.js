@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 import FlexMythicReadiness from '@/components/next-tier/FlexMythicReadiness.vue'
+import { WOW_CLASSES } from '@/data/wow-classes.js'
+
+const ALL_CLASS_KEYS = Object.keys(WOW_CLASSES)
 
 function makeSubmission(className, characterName, specName = 'arms') {
   return { className, characterName, specName, handle: `${className}-${characterName}` }
@@ -23,12 +26,17 @@ function makeSubmissions(count) {
   })
 }
 
-const mountReadiness = (submissions) => mount(FlexMythicReadiness, { props: { submissions } })
+const mountReadiness = (submissions, props = {}) =>
+  mount(FlexMythicReadiness, {
+    props: { submissions, ...props },
+    global: { stubs: { RouterLink: RouterLinkStub } },
+  })
 
 const badgeText = (wrapper) => wrapper.find('.status-badge').text()
 const filledSlots = (wrapper) => wrapper.findAll('.slot--filled')
 const roleRows = (wrapper) => wrapper.findAll('.role-row')
 const roleLabels = (wrapper) => roleRows(wrapper).map((row) => row.find('.role-label').text())
+const pillNames = (wrapper) => wrapper.findAll('.class-pill').map((p) => p.text())
 
 describe('FlexMythicReadiness', () => {
   it('shows the full 15-player shortfall with zero signups', () => {
@@ -122,5 +130,75 @@ describe('FlexMythicReadiness', () => {
     await wrapper.setProps({ submissions: makeSubmissions(13) })
     expect(badgeText(wrapper)).toBe('Need 2 more')
     expect(wrapper.find('.count').classes()).toContain('text-short')
+  })
+
+  it('does not list missing classes when there are no submissions yet', () => {
+    const wrapper = mountReadiness([])
+    expect(wrapper.find('.missing-classes').exists()).toBe(false)
+    expect(wrapper.findAll('.class-pill')).toHaveLength(0)
+  })
+
+  it('does not list missing classes when every class is already signed up', () => {
+    const wrapper = mountReadiness(ALL_CLASS_KEYS.map((className) => ({ className })))
+    expect(wrapper.find('.missing-classes').exists()).toBe(false)
+  })
+
+  it('lists exactly the classes with no signup, by display name', () => {
+    const signedUp = ['warrior', 'paladin', 'hunter', 'rogue', 'priest', 'shaman']
+    const wrapper = mountReadiness(signedUp.map((className) => ({ className })))
+    const expected = ALL_CLASS_KEYS.filter((key) => !signedUp.includes(key)).map(
+      (key) => WOW_CLASSES[key].name,
+    )
+    expect(pillNames(wrapper)).toEqual(expected)
+    expect(pillNames(wrapper)).not.toContain('Warrior')
+  })
+
+  it('lists all but one class when a single player has signed up', () => {
+    const wrapper = mountReadiness([{ className: 'mage' }])
+    expect(wrapper.findAll('.class-pill')).toHaveLength(ALL_CLASS_KEYS.length - 1)
+    expect(pillNames(wrapper)).not.toContain('Mage')
+  })
+
+  it('counts duplicate signups of the same class once', () => {
+    const wrapper = mountReadiness([
+      { className: 'druid', characterName: 'Druid1' },
+      { className: 'druid', characterName: 'Druid2' },
+      { className: 'druid', characterName: 'Druid3' },
+    ])
+    expect(wrapper.findAll('.class-pill')).toHaveLength(ALL_CLASS_KEYS.length - 1)
+    expect(pillNames(wrapper)).not.toContain('Druid')
+  })
+
+  it('ignores submissions whose class is not a known WoW class', () => {
+    const wrapper = mountReadiness([{ className: 'tinker' }])
+    expect(wrapper.findAll('.class-pill')).toHaveLength(ALL_CLASS_KEYS.length)
+  })
+
+  it('gives each missing-class pill the kebab-case class-colour CSS class', () => {
+    const wrapper = mountReadiness([{ className: 'warrior' }])
+    const pills = wrapper.findAll('.class-pill')
+    const byName = new Map(pills.map((p) => [p.text(), p.classes()]))
+    expect(byName.get('Death Knight')).toContain('death-knight')
+    expect(byName.get('Demon Hunter')).toContain('demon-hunter')
+    expect(byName.get('Mage')).toContain('mage')
+  })
+
+  it('updates the missing-class list when submissions change', async () => {
+    const wrapper = mountReadiness([{ className: 'warrior' }])
+    expect(pillNames(wrapper)).toContain('Mage')
+    await wrapper.setProps({ submissions: [{ className: 'warrior' }, { className: 'mage' }] })
+    expect(pillNames(wrapper)).not.toContain('Mage')
+  })
+
+  it('hides the signup link by default', () => {
+    const wrapper = mountReadiness([{ className: 'warrior' }])
+    expect(wrapper.findComponent(RouterLinkStub).exists()).toBe(false)
+  })
+
+  it('renders the next-tier signup link when showSignupLink is set', () => {
+    const wrapper = mountReadiness([{ className: 'warrior' }], { showSignupLink: true })
+    const link = wrapper.findComponent(RouterLinkStub)
+    expect(link.props('to')).toBe('/next-tier')
+    expect(link.text()).toContain('Sign up for next tier')
   })
 })
