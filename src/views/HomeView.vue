@@ -9,7 +9,7 @@
     <div class="content-wrapper">
       <div class="next-tier-row">
         <MissingClassesBox class="reveal" :submissions="submissions" />
-        <FlexMythicReadiness class="reveal" :signup-count="submissions.length" />
+        <FlexMythicReadiness class="reveal" :submissions="submissions" />
       </div>
       <RaidStatsBox class="reveal" />
       <FadingDivider />
