@@ -287,12 +287,17 @@ const CLASS_DISPLAY = {
   warrior: 'Warrior',
 }
 
+/**
+ * `bestPercent` is the boss health left on the best pull, so a 10% best is 90%
+ * of the way to a kill. Fill the bar with the progress, not the remainder.
+ */
 function difficultyBars(boss) {
   const difficulties = ['normal', 'heroic', 'mythic']
   if (boss.bestPercent == null) return []
   const nextDiff = difficulties.find((d) => !boss[d])
   if (!nextDiff) return []
-  return [{ difficulty: nextDiff, width: `${boss.bestPercent}%` }]
+  const progress = Math.min(100, Math.max(0, 100 - boss.bestPercent))
+  return [{ difficulty: nextDiff, width: `${progress}%` }]
 }
 
 function playerTooltip(player) {
@@ -620,17 +625,6 @@ function hasRoster(boss) {
 
     @include tablet-sm {
       order: -1;
-    }
-
-    // Kill state was carried by colour alone. Strike through the difficulties
-    // that are not down so the row still reads without hue.
-    .pip {
-      text-decoration: line-through;
-      text-decoration-thickness: 1px;
-
-      &.active {
-        text-decoration: none;
-      }
     }
   }
 
