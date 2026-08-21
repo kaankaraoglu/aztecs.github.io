@@ -119,6 +119,8 @@ All routes are lazy-loaded. Vue Router 5 with hash-based page transitions (fade 
 
 Those static per-route files matter more than they look: GitHub Pages answers any path it has no file for with `404.html` **and an HTTP 404 status**, so before they existed every URL except `/` returned 404 to crawlers even though the page rendered fine for people.
 
+Each route is written twice, as `dist/<route>.html` and `dist/<route>/index.html`. Pages serves `/raiding` straight from `raiding.html`, which is the form the sitemap and the canonical tag both name; the directory copy keeps `/raiding/` working for anyone already holding that URL. Both carry the same canonical, so the duplicate resolves. Serving only the directory form made `/raiding` a 301 to `/raiding/`, which left the sitemap listing URLs that redirect.
+
 The router also sets `<title>`, meta description, Open Graph tags, Twitter cards, and canonical URL on each navigation, sets `robots: noindex` on the catch-all route, resets scroll position, and fires `page_view` analytics events.
 
 ### Components
