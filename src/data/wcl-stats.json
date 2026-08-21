@@ -2,16 +2,16 @@
   "zone": "VS / DR / MQD / Sporefall / The Venomous Abyss / The Tidebound Grotto",
   "stats": {
     "mostDeaths": {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "count": 198
-    },
-    "highestDamageDone": {
       "name": "Aerioth",
       "class": "priest",
-      "amount": 63381154,
-      "boss": "Crown of the Cosmos",
-      "report": "https://www.warcraftlogs.com/reports/YQXFLZT1Ah4KayDz"
+      "count": 203
+    },
+    "highestDamageDone": {
+      "name": "Meld",
+      "class": "hunter",
+      "amount": 65109192,
+      "boss": "The Lost Explorers",
+      "report": "https://www.warcraftlogs.com/reports/Agpx9hYz7T6n4wGc"
     },
     "highestDamageDoneMplus": {
       "name": "Valorite",
@@ -21,11 +21,11 @@
       "report": "https://www.warcraftlogs.com/reports/GXNJMmyfZkDw24PV"
     },
     "bestHealer": {
-      "name": "Proto",
-      "class": "evoker",
-      "amount": 63744949,
-      "boss": "Crown of the Cosmos",
-      "report": "https://www.warcraftlogs.com/reports/YQXFLZT1Ah4KayDz"
+      "name": "Olibb",
+      "class": "paladin",
+      "amount": 84208266,
+      "boss": "The Lost Explorers",
+      "report": "https://www.warcraftlogs.com/reports/Agpx9hYz7T6n4wGc"
     },
     "bestHealerMplus": {
       "name": "Éowyn",
