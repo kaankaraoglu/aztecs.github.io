@@ -42,6 +42,23 @@
       </span>
       <span class="label-min">{{ MIN_PLAYERS }} min &middot; {{ MAX_DISPLAY }} max</span>
     </div>
+
+    <div v-if="missingClasses.length > 0" class="missing-classes">
+      <p class="subsection-label">Classes We Need for Next Tier</p>
+      <div class="class-list">
+        <span
+          v-for="cls in missingClasses"
+          :key="cls.key"
+          :class="['class-pill', toClassColorCss(cls.key)]"
+        >
+          {{ cls.name }}
+        </span>
+      </div>
+    </div>
+
+    <router-link v-if="showSignupLink" to="/next-tier" class="signup-link"
+      >Sign up for next tier &rarr;</router-link
+    >
   </InfoBox>
 </template>
 
@@ -60,6 +77,9 @@ const MAX_DISPLAY = 25
 
 const props = defineProps({
   submissions: { type: Array, default: () => [] },
+  // The home page links back to the signup form; the signup page itself
+  // (next-tier) doesn't need a link to where it already is.
+  showSignupLink: { type: Boolean, default: false },
 })
 
 const signupCount = computed(() => props.submissions.length)
@@ -108,9 +128,21 @@ function slotTitle(sub) {
   const label = classDef ? `${classDef.name}${specDef ? ` ${specDef.name}` : ''}` : sub.className
   return `${sub.characterName} — ${label}`
 }
+
+const missingClasses = computed(() => {
+  // Before signups load, every class looks "missing" — the box would briefly
+  // claim the guild needs all thirteen.
+  if (props.submissions.length === 0) return []
+
+  const signedUpClasses = new Set(props.submissions.map((s) => s.className))
+  return Object.entries(WOW_CLASSES)
+    .filter(([key]) => !signedUpClasses.has(key))
+    .map(([key, def]) => ({ key, name: def.name }))
+})
 </script>
 
 <style scoped lang="scss">
+@use '@/assets/styles/_variables.scss' as *;
 @use '@/assets/styles/tokens' as *;
 
 .header-row {
@@ -217,6 +249,56 @@ function slotTitle(sub) {
 
   &.text-short {
     color: #f54545;
+  }
+}
+
+.missing-classes {
+  margin-top: $space-6;
+  padding-top: $space-4;
+  border-top: 1px solid $color-border;
+  text-align: center;
+}
+
+.subsection-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $color-text-subtle;
+  margin: 0 0 $space-4;
+}
+
+.class-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space-2;
+}
+
+.class-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  background: color-mix(in srgb, currentColor 15%, transparent);
+  cursor: default;
+}
+
+.signup-link {
+  display: block;
+  margin-top: $space-4;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $accent-color;
+  text-decoration: none;
+  transition: color $duration-fast $ease-default;
+
+  &:hover {
+    text-decoration: underline;
+    color: $accent-color-hover;
   }
 }
 </style>

@@ -127,11 +127,11 @@ The router also sets `<title>`, meta description, Open Graph tags, Twitter cards
 
 **Layout**: `HeaderView.vue`, `FooterView.vue`, `App.vue`
 
-**Home page**: `RaidProgressionBox.vue`, `MythicPlusBox.vue`, `RaidStatsBox.vue`, `MissingClassesBox.vue`, `KillCard.vue`
+**Home page**: `RaidProgressionBox.vue`, `MythicPlusBox.vue`, `RaidStatsBox.vue`, `KillCard.vue`
 
 **Utility**: `InfoBox.vue` (card container), `ImageLightbox.vue` (kill screenshot modal), `RosterList.vue`, `FadingDivider.vue`, `EmberParticles.vue` (canvas animation), `RefreshDataButton.vue` (Turnstile + worker)
 
-**Next-tier signup** (`components/next-tier/`): `TierHeader.vue`, `SignupForm.vue`, `SignupTable.vue`, `BuffCoverage.vue`, `RoleBalance.vue`, `FlexMythicReadiness.vue`
+**Next-tier signup** (`components/next-tier/`): `TierHeader.vue`, `SignupForm.vue`, `SignupTable.vue`, `BuffCoverage.vue`, `RoleBalance.vue`, `FlexMythicReadiness.vue` (role slot grid + missing-classes list, shown on the home page and the `/next-tier` page)
 
 ### Composables
 
