@@ -13,15 +13,24 @@
       <div v-for="row in roleRows" :key="row.role" class="role-row">
         <span class="role-label">{{ row.label }}</span>
         <div class="slot-row" role="list" :aria-label="`${row.label} signed up`">
-          <span
+          <HoverCard
             v-for="(sub, i) in row.submissions"
             :key="i"
-            role="listitem"
-            class="slot slot--filled"
-            :class="toClassColorCss(sub.className)"
-            :title="slotTitle(sub)"
-            :aria-label="slotTitle(sub)"
-          />
+            :open-delay="150"
+            :close-delay="80"
+          >
+            <HoverCardTrigger as-child>
+              <span
+                role="listitem"
+                class="slot slot--filled"
+                :class="toClassColorCss(sub.className)"
+                :aria-label="slotTitle(sub)"
+              />
+            </HoverCardTrigger>
+            <HoverCardContent class="w-auto text-sm px-3 py-1.5">{{
+              slotTitle(sub)
+            }}</HoverCardContent>
+          </HoverCard>
         </div>
       </div>
     </div>
@@ -40,6 +49,7 @@
 import { computed } from 'vue'
 import InfoBox from '@/components/InfoBox.vue'
 import { Badge } from '@/components/ui/badge'
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card'
 import { WOW_CLASSES } from '@/data/wow-classes.js'
 import { toClassColorCss } from '@/lib/utils'
 
@@ -162,28 +172,26 @@ function slotTitle(sub) {
 
 .slot-row {
   display: flex;
+  flex-wrap: wrap;
   flex: 1;
   gap: $space-1;
   min-width: 0;
 }
 
 .slot {
-  flex: 1 1 0;
-  min-width: 0;
+  flex: 0 0 auto;
+  display: block;
+  width: 1.5rem;
   height: 1.5rem;
   border-radius: $radius-sm;
   border: 1px solid var(--t-border);
   background: var(--t-surface-raised);
-  transition: transform $duration-fast $ease-default;
+  cursor: default;
 }
 
 .slot--filled {
   border-color: currentColor;
   background: color-mix(in srgb, currentColor 70%, transparent);
-
-  &:hover {
-    transform: scale(1.15);
-  }
 }
 
 .progress-labels {
