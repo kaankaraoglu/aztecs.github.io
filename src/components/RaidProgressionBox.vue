@@ -39,9 +39,17 @@
               <span
                 v-for="tally in raidTallies(raid)"
                 :key="tally.difficulty"
-                :class="['pip', 'tally', tally.difficulty, { active: tally.killed > 0 }]"
+                :class="[
+                  'pip',
+                  'tally',
+                  tally.difficulty,
+                  { active: tally.killed > 0, placeholder: tally.placeholder },
+                ]"
                 :title="tally.title"
-                >{{ tally.killed }}/{{ tally.total }} {{ tally.label }}</span
+                :aria-hidden="tally.placeholder || undefined"
+                ><template v-if="!tally.placeholder"
+                  >{{ tally.killed }}/{{ tally.total }} {{ tally.label }}</template
+                ></span
               >
             </span>
             <span class="expand-caret" :class="{ open: isRaidOpen(raid) }">&#9662;</span>
@@ -214,23 +222,41 @@ function toggleRaid(raidName) {
   }
 }
 
+/** True when any raid on the page shows a mythic tally, so every row reserves it. */
+const showsMythicTally = computed(
+  () => props.summary.mythic > 0 || props.raids.some((r) => r.mythicFlex),
+)
+
+function hasMythicTally(raid) {
+  return props.summary.mythic > 0 || !!raid.mythicFlex
+}
+
+/**
+ * One entry per tally column, in the same order for every raid. A raid with no
+ * mythic tier still gets a `placeholder` entry so its N and HC pips sit in the
+ * same columns as the rows that do have one.
+ */
 function raidTallies(raid) {
   const total = raid.bosses.length
   const tallies = [
     { difficulty: 'normal', label: 'N', title: 'Normal' },
     { difficulty: 'heroic', label: 'HC', title: 'Heroic' },
   ]
-  if (props.summary.mythic > 0 || raid.mythicFlex) {
-    tallies.push({
-      difficulty: 'mythic',
-      label: raid.mythicFlex ? 'MX' : 'M',
-      title: raid.mythicFlex ? 'Mythic Flex' : 'Mythic',
-    })
+  if (showsMythicTally.value) {
+    tallies.push(
+      hasMythicTally(raid)
+        ? {
+            difficulty: 'mythic',
+            label: raid.mythicFlex ? 'MX' : 'M',
+            title: raid.mythicFlex ? 'Mythic Flex' : 'Mythic',
+          }
+        : { difficulty: 'mythic', placeholder: true },
+    )
   }
   return tallies.map((t) => ({
     ...t,
     total,
-    killed: raid.bosses.filter((b) => b[t.difficulty]).length,
+    killed: t.placeholder ? 0 : raid.bosses.filter((b) => b[t.difficulty]).length,
   }))
 }
 
@@ -430,18 +456,55 @@ function hasRoster(boss) {
     .expand-caret {
       flex-shrink: 0;
     }
+
+    // Fixed-width tallies plus the raid name leave nothing on a phone, so drop
+    // the tallies onto their own line the way .boss-row already does.
+    @include tablet-sm {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      row-gap: 0.35rem;
+
+      .instance-name {
+        grid-column: 1;
+      }
+
+      .expand-caret {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      .instance-summary {
+        grid-column: 1 / -1;
+        justify-content: start;
+      }
+    }
   }
 
+  // Equal-width columns rather than shrink-to-fit, so the tallies line up down
+  // the list. `1` is a narrower glyph than the other digits, which was enough on
+  // its own to knock "1/1 N" out of line with "6/6 N".
   .instance-summary {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(3.6rem, auto);
     gap: 3px;
     flex-shrink: 0;
+
+    // The pips drop to 0.6em here, so the column floor comes down with them.
+    @include tablet-sm {
+      grid-auto-columns: minmax(3.3rem, auto);
+    }
   }
 
   .pip.tally {
     width: auto;
     padding: 0 0.4rem;
     letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+
+    &.placeholder {
+      visibility: hidden;
+    }
   }
 
   .boss-list {
