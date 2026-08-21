@@ -4,14 +4,14 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2542,
+      "score": 2544,
       "topKeys": [
         "+10 KR",
         "+10 AOF",
         "+10 BV",
         "+10 DON",
-        "+10 MR",
         "+10 TOS",
+        "+10 MR",
         "+8 RLP",
         "+8 VSA"
       ],
@@ -36,14 +36,14 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 2204,
+      "score": 2279,
       "topKeys": [
+        "+11 KR",
         "+9 AOF",
         "+9 TOS",
         "+9 RLP",
         "+9 DON",
         "+7 MR",
-        "+7 KR",
         "+7 BV",
         "+6 VSA"
       ],
@@ -159,15 +159,15 @@
       ]
     },
     {
-      "dungeon": "Den of Nalorakk",
-      "level": 10,
+      "dungeon": "Kings' Rest",
+      "level": 11,
       "timed": true,
       "team": [
-        "Blackmaira"
+        "Daruni"
       ]
     },
     {
-      "dungeon": "Kings' Rest",
+      "dungeon": "Den of Nalorakk",
       "level": 10,
       "timed": true,
       "team": [
@@ -207,5 +207,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T11:49:54.089Z"
+  "lastUpdated": "2026-08-21T15:35:21.468Z"
 }
