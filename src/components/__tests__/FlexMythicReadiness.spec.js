@@ -6,19 +6,29 @@ function makeSubmission(className, characterName, specName = 'arms') {
   return { className, characterName, specName, handle: `${className}-${characterName}` }
 }
 
+// Warrior arms is melee, mage frost is ranged, priest holy is a healer,
+// deathKnight frost is melee, druid guardian is a tank — cycling through
+// them exercises multiple roles and multiple slot colours at once.
 function makeSubmissions(count) {
-  // Cycle through a few classes so filled slots exercise more than one colour.
-  const classes = ['warrior', 'mage', 'priest', 'deathKnight', 'druid']
-  return Array.from({ length: count }, (_, i) =>
-    makeSubmission(classes[i % classes.length], `Player${i}`),
-  )
+  const specs = [
+    ['warrior', 'arms'],
+    ['mage', 'frost'],
+    ['priest', 'holy'],
+    ['deathKnight', 'frost'],
+    ['druid', 'guardian'],
+  ]
+  return Array.from({ length: count }, (_, i) => {
+    const [className, specName] = specs[i % specs.length]
+    return makeSubmission(className, `Player${i}`, specName)
+  })
 }
 
 const mountReadiness = (submissions) => mount(FlexMythicReadiness, { props: { submissions } })
 
 const badgeText = (wrapper) => wrapper.find('.status-badge').text()
 const filledSlots = (wrapper) => wrapper.findAll('.slot--filled')
-const emptySlots = (wrapper) => wrapper.findAll('.slot--empty')
+const roleRows = (wrapper) => wrapper.findAll('.role-row')
+const roleLabels = (wrapper) => roleRows(wrapper).map((row) => row.find('.role-label').text())
 
 describe('FlexMythicReadiness', () => {
   it('shows the full 15-player shortfall with zero signups', () => {
@@ -26,6 +36,7 @@ describe('FlexMythicReadiness', () => {
     expect(badgeText(wrapper)).toBe('Need 15 more')
     expect(wrapper.find('.status-badge').classes()).toContain('text-red-500')
     expect(filledSlots(wrapper)).toHaveLength(0)
+    expect(roleRows(wrapper)).toHaveLength(0)
   })
 
   it('counts down the shortfall below the threshold', () => {
@@ -52,46 +63,47 @@ describe('FlexMythicReadiness', () => {
     expect(badgeText(mountReadiness(makeSubmissions(20)))).toBe('Ready')
   })
 
-  it('always renders the maximum number of slots regardless of signup count', () => {
-    // Every slot is always in the DOM (empty or filled) so the grid never
-    // resizes as people sign up — only whether a slot is filled changes.
-    for (const count of [0, 5, 15, 25, 40]) {
+  it('renders one box per signup, with no empty placeholders', () => {
+    for (const count of [1, 5, 14]) {
       const wrapper = mountReadiness(makeSubmissions(count))
-      expect(wrapper.findAll('.slot')).toHaveLength(25)
+      expect(wrapper.findAll('.slot')).toHaveLength(count)
+      expect(filledSlots(wrapper)).toHaveLength(count)
     }
   })
 
-  it('fills exactly one slot per signup, up to the display max', () => {
-    expect(filledSlots(mountReadiness(makeSubmissions(1)))).toHaveLength(1)
-    expect(filledSlots(mountReadiness(makeSubmissions(14)))).toHaveLength(14)
-    expect(filledSlots(mountReadiness(makeSubmissions(25)))).toHaveLength(25)
-  })
-
-  it('caps filled slots at the display max when signups exceed it', () => {
+  it('caps the boxes shown at the display max when signups exceed it', () => {
     const wrapper = mountReadiness(makeSubmissions(40))
     expect(filledSlots(wrapper)).toHaveLength(25)
-    expect(emptySlots(wrapper)).toHaveLength(0)
     expect(badgeText(wrapper)).toBe('Ready')
   })
 
-  it('splits the grid into 15 required and 10 bonus slots', () => {
-    const wrapper = mountReadiness([])
-    expect(wrapper.find('.slot-grid--required').findAll('.slot')).toHaveLength(15)
-    expect(wrapper.find('.slot-grid--bonus').findAll('.slot')).toHaveLength(10)
+  it('groups boxes into one row per role, tanks first then healers then DPS', () => {
+    // 5 of each of tank/healer/melee/ranged: 5 tank, 5 healer, 10 dps.
+    const submissions = [
+      ...Array.from({ length: 5 }, (_, i) => makeSubmission('druid', `Tank${i}`, 'guardian')),
+      ...Array.from({ length: 5 }, (_, i) => makeSubmission('priest', `Healer${i}`, 'holy')),
+      ...Array.from({ length: 5 }, (_, i) => makeSubmission('warrior', `Melee${i}`, 'arms')),
+      ...Array.from({ length: 5 }, (_, i) => makeSubmission('mage', `Ranged${i}`, 'frost')),
+    ]
+    const wrapper = mountReadiness(submissions)
+    expect(roleLabels(wrapper)).toEqual(['Tanks', 'Healers', 'DPS'])
+
+    const rows = roleRows(wrapper)
+    expect(rows[0].findAll('.slot')).toHaveLength(5)
+    expect(rows[1].findAll('.slot')).toHaveLength(5)
+    expect(rows[2].findAll('.slot')).toHaveLength(10) // melee + ranged share the DPS row
+  })
+
+  it('omits a role row entirely when nobody of that role has signed up', () => {
+    const wrapper = mountReadiness([makeSubmission('priest', 'Solo', 'holy')])
+    expect(roleLabels(wrapper)).toEqual(['Healers'])
   })
 
   it('colours a filled slot with the signed-up player’s class', () => {
-    const wrapper = mountReadiness([makeSubmission('warlock', 'Gul’dan')])
+    const wrapper = mountReadiness([makeSubmission('warlock', 'Gul’dan', 'affliction')])
     const slot = wrapper.find('.slot--filled')
     expect(slot.classes()).toContain('warlock')
     expect(slot.attributes('title')).toContain('Gul’dan')
-  })
-
-  it('marks empty slots without a class colour or title', () => {
-    const wrapper = mountReadiness([])
-    const slot = wrapper.find('.slot--empty')
-    expect(slot.attributes('title')).toBeUndefined()
-    expect(slot.attributes('aria-label')).toBe('Open slot')
   })
 
   it('labels the current count and the minimum/maximum', () => {
