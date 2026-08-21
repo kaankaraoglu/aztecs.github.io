@@ -273,6 +273,15 @@ describe('RaidProgressionBox', () => {
     expect(wrapper.findAll('.boss-list')[1].attributes('style')).toContain('display: none')
   })
 
+  it('fills the progress bar with the health taken off, not the health left', () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    // Boss 2 sits at bestPercent 12.3, so the pull got 87.7% of the way there.
+    const bar = wrapper.find('.difficulty-bar')
+    expect(bar.attributes('style')).toContain('width: 87.7%')
+  })
+
   it('uses the "MX" label in pull text for a Mythic Flex raid', () => {
     const flexRaids = [
       {
