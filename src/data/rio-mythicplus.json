@@ -132,15 +132,15 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Incendia",
-      "class": "mage",
-      "score": 770,
+      "name": "Meld",
+      "class": "hunter",
+      "score": 830,
       "topKeys": [
-        "+8 AOF",
-        "+7 TOS",
-        "+5 MR"
+        "+10 RLP",
+        "+9 KR",
+        "+5 BV"
       ],
-      "realmSlug": "alakir"
+      "realmSlug": "twisting-nether"
     }
   ],
   "dungeonBests": [
@@ -209,5 +209,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T20:47:14.980Z"
+  "lastUpdated": "2026-08-21T21:14:44.490Z"
 }
