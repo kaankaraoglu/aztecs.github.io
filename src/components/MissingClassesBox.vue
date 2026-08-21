@@ -5,7 +5,7 @@
       <span
         v-for="cls in missingClasses"
         :key="cls.key"
-        :class="['class-pill', toCssClass(cls.key)]"
+        :class="['class-pill', toClassColorCss(cls.key)]"
       >
         {{ cls.name }}
       </span>
@@ -18,21 +18,22 @@
 import { computed } from 'vue'
 import { WOW_CLASSES } from '@/data/wow-classes.js'
 import InfoBox from '@/components/InfoBox.vue'
+import { toClassColorCss } from '@/lib/utils'
 
 const props = defineProps({
   submissions: { type: Array, required: true },
 })
 
 const missingClasses = computed(() => {
+  // Before signups load, every class looks "missing" — the home page briefly
+  // advertised that the guild needs all thirteen.
+  if (props.submissions.length === 0) return []
+
   const signedUpClasses = new Set(props.submissions.map((s) => s.className))
   return Object.entries(WOW_CLASSES)
     .filter(([key]) => !signedUpClasses.has(key))
     .map(([key, def]) => ({ key, name: def.name }))
 })
-
-function toCssClass(classKey) {
-  return classKey.replace(/([A-Z])/g, '-$1').toLowerCase()
-}
 </script>
 
 <style scoped lang="scss">

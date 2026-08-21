@@ -18,44 +18,75 @@ export default {
       return corsResponse(405, { error: 'Method not allowed' })
     }
 
-    const origin = request.headers.get('Origin')
-    if (origin !== ALLOWED_ORIGIN) {
-      return corsResponse(403, { error: 'Forbidden' })
+    try {
+      return await handleRefresh(request, env)
+    } catch (err) {
+      // A throw here previously escaped as a bare 500 with no CORS headers, so
+      // the browser reported an opaque network error instead of the message.
+      console.error(`[refresh] request failed: ${err?.stack || err}`)
+      return corsResponse(500, { error: 'Internal server error' })
     }
-
-    const body = await request.json().catch(() => null)
-    if (!body?.turnstileToken) {
-      return corsResponse(400, { error: 'Missing turnstile token' })
-    }
-
-    const turnstileValid = await verifyTurnstile(body.turnstileToken, env.TURNSTILE_SECRET, request)
-    if (!turnstileValid) {
-      return corsResponse(403, { error: 'Turnstile verification failed' })
-    }
-
-    const lastRefresh = await env.RATE_LIMIT.get(RATE_LIMIT_KEY)
-    if (lastRefresh) {
-      const elapsed = (Date.now() - Number(lastRefresh)) / 1000
-      if (elapsed < RATE_LIMIT_SECONDS) {
-        const retryAfter = Math.ceil(RATE_LIMIT_SECONDS - elapsed)
-        return corsResponse(429, { error: 'Rate limited', retryAfter })
-      }
-    }
-
-    const dispatchResult = await dispatchWorkflow(env.GITHUB_TOKEN)
-    if (!dispatchResult.ok) {
-      return corsResponse(502, { error: 'Failed to dispatch workflow' })
-    }
-
-    await env.RATE_LIMIT.put(RATE_LIMIT_KEY, String(Date.now()), {
-      expirationTtl: RATE_LIMIT_SECONDS,
-    })
-
-    return corsResponse(200, {
-      message: 'Refresh triggered',
-      actionsUrl: `https://github.com/${REPO}/actions/workflows/${WORKFLOW_FILE}`,
-    })
   },
+}
+
+/**
+ * @param {Request} request
+ * @param {{ GITHUB_TOKEN: string, TURNSTILE_SECRET: string, RATE_LIMIT: KVNamespace }} env
+ */
+async function handleRefresh(request, env) {
+  const origin = request.headers.get('Origin')
+  if (origin !== ALLOWED_ORIGIN) {
+    return corsResponse(403, { error: 'Forbidden' })
+  }
+
+  const body = await request.json().catch(() => null)
+  if (!body?.turnstileToken) {
+    return corsResponse(400, { error: 'Missing turnstile token' })
+  }
+
+  const turnstileValid = await verifyTurnstile(body.turnstileToken, env.TURNSTILE_SECRET, request)
+  if (!turnstileValid) {
+    return corsResponse(403, { error: 'Turnstile verification failed' })
+  }
+
+  const lastRefresh = await env.RATE_LIMIT.get(RATE_LIMIT_KEY)
+  if (lastRefresh) {
+    const elapsed = (Date.now() - Number(lastRefresh)) / 1000
+    if (elapsed < RATE_LIMIT_SECONDS) {
+      const retryAfter = Math.ceil(RATE_LIMIT_SECONDS - elapsed)
+      return corsResponse(429, { error: 'Rate limited', retryAfter })
+    }
+  }
+
+  // Claim the window before dispatching rather than after. KV has no
+  // compare-and-set, so this cannot be fully atomic, but writing first narrows
+  // the overlap from "the whole GitHub round trip" to a single KV write.
+  const previousRefresh = lastRefresh
+  await env.RATE_LIMIT.put(RATE_LIMIT_KEY, String(Date.now()), {
+    expirationTtl: RATE_LIMIT_SECONDS,
+  })
+
+  const dispatchResult = await dispatchWorkflow(env.GITHUB_TOKEN)
+  if (!dispatchResult.ok) {
+    console.error(
+      `[refresh] workflow dispatch failed: ${dispatchResult.status} ${await dispatchResult.text().catch(() => '')}`,
+    )
+    // Nothing was triggered, so hand the window back instead of locking the
+    // button for ten minutes over a failure the user did not cause.
+    if (previousRefresh) {
+      await env.RATE_LIMIT.put(RATE_LIMIT_KEY, previousRefresh, {
+        expirationTtl: RATE_LIMIT_SECONDS,
+      })
+    } else {
+      await env.RATE_LIMIT.delete(RATE_LIMIT_KEY)
+    }
+    return corsResponse(502, { error: 'Failed to dispatch workflow' })
+  }
+
+  return corsResponse(200, {
+    message: 'Refresh triggered',
+    actionsUrl: `https://github.com/${REPO}/actions/workflows/${WORKFLOW_FILE}`,
+  })
 }
 
 /**
@@ -74,6 +105,10 @@ async function verifyTurnstile(token, secret, request) {
       remoteip: request.headers.get('CF-Connecting-IP') || '',
     }),
   })
+  if (!response.ok) {
+    console.error(`[refresh] Turnstile siteverify returned ${response.status}`)
+    return false
+  }
   const result = await response.json()
   return result.success === true
 }

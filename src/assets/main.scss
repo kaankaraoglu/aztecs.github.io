@@ -1,5 +1,6 @@
 @use './styles/theme';
 @use './styles/variables' as *;
+@use './styles/tokens' as *;
 
 .info-box-heading {
   color: $accent-color;
@@ -41,4 +42,12 @@
 .prose-list li {
   padding-left: 0.25em;
   margin-bottom: 0.25em;
+}
+
+// Tailwind's animate-pulse drives the loading skeletons; the rest of the app
+// already honours the preference, so this closes the last gap.
+@include reduced-motion {
+  .animate-pulse {
+    animation: none;
+  }
 }

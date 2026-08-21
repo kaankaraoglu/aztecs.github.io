@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { raids, killMark } from '../progression.js'
+import { raids } from '../progression.js'
 
 describe('progression data', () => {
   it('raids is a non-empty array', () => {
@@ -23,15 +23,5 @@ describe('progression data', () => {
         expect(boss).toHaveProperty('heroic')
       }
     }
-  })
-})
-
-describe('killMark', () => {
-  it('returns skull emoji for true', () => {
-    expect(killMark(true)).toBe('💀')
-  })
-
-  it('returns dash for false', () => {
-    expect(killMark(false)).toBe('-')
   })
 })

@@ -18,11 +18,13 @@ import { loadEnv } from './load-env.js'
 import { writeFallback } from './write-fallback.js'
 import {
   GUILD_ID,
-  CURRENT_ZONE_ID,
+  CURRENT_ZONE_IDS,
   CURRENT_MPLUS_ZONE_ID,
   CLASS_MAP,
   getToken,
   graphql,
+  fetchReportTable,
+  fetchPlayerDetails,
 } from './wcl-api.js'
 
 loadEnv()
@@ -80,108 +82,30 @@ const EMPTY_OUTPUT = {
 }
 
 /**
- * Fetches deaths table for specific boss fights in a report.
- * @param {string} token
- * @param {string} code
- * @param {number[]} fightIDs - only boss encounter fight IDs
- * Returns array of death event entries.
- */
-async function fetchDeaths(token, code, fightIDs) {
-  if (fightIDs.length === 0) return []
-
-  const query = `{
-    reportData {
-      report(code: "${code}") {
-        table(dataType: Deaths, fightIDs: [${fightIDs.join(',')}])
-      }
-    }
-  }`
-
-  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
-  const raw = result.data?.reportData?.report?.table
-  if (!raw) return []
-
-  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
-  return parsed?.data?.entries || []
-}
-
-/**
- * Fetches tank names across given fights in a report (via playerDetails).
+ * Tank names across the given fights, used to exclude tanks from the death tally.
  * @param {string} token
  * @param {string} code
  * @param {number[]} fightIDs
  * @returns {Promise<Set<string>>}
  */
 async function fetchTankNames(token, code, fightIDs) {
-  if (fightIDs.length === 0) return new Set()
-
-  const query = `{
-    reportData {
-      report(code: "${code}") {
-        playerDetails(fightIDs: [${fightIDs.join(',')}])
-      }
-    }
-  }`
-
-  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
-  const raw = result.data?.reportData?.report?.playerDetails
-  if (!raw) return new Set()
-
-  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
-  const tanks = parsed?.data?.playerDetails?.tanks || []
-  return new Set(tanks.map((t) => t.name).filter(Boolean))
+  const pd = await fetchPlayerDetails(token, code, fightIDs, LOG_PREFIX)
+  return new Set((pd?.tanks || []).map((t) => t.name).filter(Boolean))
 }
 
 /**
- * Fetches damage done table for specific boss fights in a report.
- * @param {string} token
- * @param {string} code
- * @param {number[]} fightIDs - only boss encounter fight IDs
- * Returns array of { name, type, total } entries.
+ * Shapes a winning table entry into the record the UI renders.
+ * @param {{ name: string, type: string, total: number, reportCode: string, bossName: string } | null} entry
  */
-async function fetchDamageDone(token, code, fightIDs) {
-  if (fightIDs.length === 0) return []
-
-  const query = `{
-    reportData {
-      report(code: "${code}") {
-        table(dataType: DamageDone, fightIDs: [${fightIDs.join(',')}])
-      }
-    }
-  }`
-
-  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
-  const raw = result.data?.reportData?.report?.table
-  if (!raw) return []
-
-  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
-  return parsed?.data?.entries || []
-}
-
-/**
- * Fetches healing done table for specific boss fights in a report.
- * @param {string} token
- * @param {string} code
- * @param {number[]} fightIDs - only boss encounter fight IDs
- * @returns {Promise<Array<{ name: string, type: string, total: number }>>}
- */
-async function fetchHealingDone(token, code, fightIDs) {
-  if (fightIDs.length === 0) return []
-
-  const query = `{
-    reportData {
-      report(code: "${code}") {
-        table(dataType: Healing, fightIDs: [${fightIDs.join(',')}])
-      }
-    }
-  }`
-
-  const result = await graphql(token, query, { logPrefix: LOG_PREFIX })
-  const raw = result.data?.reportData?.report?.table
-  if (!raw) return []
-
-  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
-  return parsed?.data?.entries || []
+function toRecord(entry) {
+  if (!entry) return null
+  return {
+    name: entry.name,
+    class: CLASS_MAP[entry.type] || entry.type.toLowerCase() || null,
+    amount: entry.total,
+    boss: entry.bossName || null,
+    report: `https://www.warcraftlogs.com/reports/${entry.reportCode}`,
+  }
 }
 
 /**
@@ -190,29 +114,57 @@ async function fetchHealingDone(token, code, fightIDs) {
  */
 async function fetchStats(token, guildMembers) {
   const filterByGuild = guildMembers.size > 0
-  // Fetch zone info (name + encounter IDs) for both raid and M+ zones,
-  // plus all reports for each zone, in a single GraphQL call.
-  const reportsQuery = `{
-    worldData {
-      raidZone: zone(id: ${CURRENT_ZONE_ID}) {
-        name
-        encounters { id }
+
+  // One query per raid zone — the same shape fetch-wcl-data.js uses, and for the
+  // same reason: a single query spanning every tracked zone exceeds WCL's
+  // per-request complexity limit.
+  const zoneNames = []
+  /** @type {Set<number>} */
+  const raidEncounterIDs = new Set()
+  /** @type {Map<string, { code: string, startTime: number, fights: any[] }>} */
+  const raidReportsByCode = new Map()
+
+  for (const zoneId of CURRENT_ZONE_IDS) {
+    const zoneQuery = `{
+      worldData {
+        raidZone: zone(id: ${zoneId}) {
+          name
+          encounters { id }
+        }
       }
+      reportData {
+        raidReports: reports(guildID: ${GUILD_ID}, zoneID: ${zoneId}, limit: ${REPORT_LIMIT}) {
+          data {
+            code
+            startTime
+            fights {
+              id
+              name
+              encounterID
+            }
+          }
+        }
+      }
+    }`
+
+    const zoneResult = await graphql(token, zoneQuery, { logPrefix: LOG_PREFIX })
+    const zone = zoneResult.data?.worldData?.raidZone
+    if (zone?.name) zoneNames.push(zone.name)
+    for (const encounter of zone?.encounters || []) raidEncounterIDs.add(encounter.id)
+
+    // A raid session can span two zones and come back from both queries.
+    for (const report of zoneResult.data?.reportData?.raidReports?.data || []) {
+      if (!raidReportsByCode.has(report.code)) raidReportsByCode.set(report.code, report)
+    }
+  }
+
+  const mplusQuery = `{
+    worldData {
       mplusZone: zone(id: ${CURRENT_MPLUS_ZONE_ID}) {
         encounters { id }
       }
     }
     reportData {
-      raidReports: reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_ZONE_ID}, limit: ${REPORT_LIMIT}) {
-        data {
-          code
-          fights {
-            id
-            name
-            encounterID
-          }
-        }
-      }
       mplusReports: reports(guildID: ${GUILD_ID}, zoneID: ${CURRENT_MPLUS_ZONE_ID}, limit: ${REPORT_LIMIT}) {
         data {
           code
@@ -226,21 +178,24 @@ async function fetchStats(token, guildMembers) {
     }
   }`
 
-  const reportsResult = await graphql(token, reportsQuery, { logPrefix: LOG_PREFIX })
-  const zoneName = reportsResult.data?.worldData?.raidZone?.name || null
+  const mplusResult = await graphql(token, mplusQuery, { logPrefix: LOG_PREFIX })
+  const zoneName = zoneNames.length ? zoneNames.join(' / ') : null
 
-  // Build encounter ID sets for filtering fights in mixed reports
-  /** @type {Set<number>} */
-  const raidEncounterIDs = new Set(
-    (reportsResult.data?.worldData?.raidZone?.encounters || []).map((e) => e.id),
-  )
   /** @type {Set<number>} */
   const mplusEncounterIDs = new Set(
-    (reportsResult.data?.worldData?.mplusZone?.encounters || []).map((e) => e.id),
+    (mplusResult.data?.worldData?.mplusZone?.encounters || []).map((e) => e.id),
   )
 
-  const raidReports = reportsResult.data?.reportData?.raidReports?.data || []
-  const mplusReports = reportsResult.data?.reportData?.mplusReports?.data || []
+  // Newest first, then capped: unioning four zones can otherwise push this well
+  // past REPORT_LIMIT, and each report costs two table queries per boss fight.
+  const raidReports = [...raidReportsByCode.values()]
+    .sort((a, b) => b.startTime - a.startTime)
+    .slice(0, REPORT_LIMIT)
+  const mplusReports = mplusResult.data?.reportData?.mplusReports?.data || []
+
+  console.log(
+    `${LOG_PREFIX} Zones: ${zoneName}, ${raidReports.length} raid reports, ${mplusReports.length} M+ reports`,
+  )
 
   // ── Raid accumulators ──
   /** @type {Map<string, { type: string, total: number }>} */
@@ -275,7 +230,7 @@ async function fetchStats(token, guildMembers) {
         const bossFightIDs = bossFights.map((f) => f.id)
         // Fetch deaths and tank roster for all boss fights
         const [allDeathEntries, tankNames] = await Promise.all([
-          fetchDeaths(token, code, bossFightIDs),
+          fetchReportTable(token, code, bossFightIDs, 'Deaths', LOG_PREFIX),
           fetchTankNames(token, code, bossFightIDs),
         ])
 
@@ -296,8 +251,8 @@ async function fetchStats(token, guildMembers) {
         // so we get highest single-fight values, not summed across all fights
         for (const fight of bossFights) {
           const [fightDamage, fightHealing] = await Promise.all([
-            fetchDamageDone(token, code, [fight.id]),
-            fetchHealingDone(token, code, [fight.id]),
+            fetchReportTable(token, code, [fight.id], 'DamageDone', LOG_PREFIX),
+            fetchReportTable(token, code, [fight.id], 'Healing', LOG_PREFIX),
           ])
 
           for (const entry of fightDamage) {
@@ -348,8 +303,8 @@ async function fetchStats(token, guildMembers) {
 
         for (const fight of bossFights) {
           const [fightDamage, fightHealing] = await Promise.all([
-            fetchDamageDone(token, code, [fight.id]),
-            fetchHealingDone(token, code, [fight.id]),
+            fetchReportTable(token, code, [fight.id], 'DamageDone', LOG_PREFIX),
+            fetchReportTable(token, code, [fight.id], 'Healing', LOG_PREFIX),
           ])
 
           for (const entry of fightDamage) {
@@ -396,79 +351,29 @@ async function fetchStats(token, guildMembers) {
     }
   }
 
-  // --- Highest Damage Done ---
-  let highestDamageDone = null
-  if (highestDamageDoneEntry) {
-    highestDamageDone = {
-      name: highestDamageDoneEntry.name,
-      class:
-        CLASS_MAP[highestDamageDoneEntry.type] || highestDamageDoneEntry.type.toLowerCase() || null,
-      amount: highestDamageDoneEntry.total,
-      boss: highestDamageDoneEntry.bossName || null,
-      report: `https://www.warcraftlogs.com/reports/${highestDamageDoneEntry.reportCode}`,
-    }
-  }
-
-  // --- Best Healer ---
-  let bestHealer = null
-  if (bestHealerEntry) {
-    bestHealer = {
-      name: bestHealerEntry.name,
-      class: CLASS_MAP[bestHealerEntry.type] || bestHealerEntry.type.toLowerCase() || null,
-      amount: bestHealerEntry.total,
-      boss: bestHealerEntry.bossName || null,
-      report: `https://www.warcraftlogs.com/reports/${bestHealerEntry.reportCode}`,
-    }
-  }
-
-  // --- Highest Damage Done in M+ ---
-  let highestDamageDoneMplus = null
-  if (highestDamageDoneMplusEntry) {
-    highestDamageDoneMplus = {
-      name: highestDamageDoneMplusEntry.name,
-      class:
-        CLASS_MAP[highestDamageDoneMplusEntry.type] ||
-        highestDamageDoneMplusEntry.type.toLowerCase() ||
-        null,
-      amount: highestDamageDoneMplusEntry.total,
-      boss: highestDamageDoneMplusEntry.bossName || null,
-      report: `https://www.warcraftlogs.com/reports/${highestDamageDoneMplusEntry.reportCode}`,
-    }
-  }
-
-  // --- Best Healer in M+ ---
-  let bestHealerMplus = null
-  if (bestHealerMplusEntry) {
-    bestHealerMplus = {
-      name: bestHealerMplusEntry.name,
-      class:
-        CLASS_MAP[bestHealerMplusEntry.type] || bestHealerMplusEntry.type.toLowerCase() || null,
-      amount: bestHealerMplusEntry.total,
-      boss: bestHealerMplusEntry.bossName || null,
-      report: `https://www.warcraftlogs.com/reports/${bestHealerMplusEntry.reportCode}`,
-    }
-  }
-
   return {
     zone: zoneName,
     stats: {
       mostDeaths,
-      highestDamageDone,
-      highestDamageDoneMplus,
-      bestHealer,
-      bestHealerMplus,
+      highestDamageDone: toRecord(highestDamageDoneEntry),
+      highestDamageDoneMplus: toRecord(highestDamageDoneMplusEntry),
+      bestHealer: toRecord(bestHealerEntry),
+      bestHealerMplus: toRecord(bestHealerMplusEntry),
     },
   }
 }
 
 async function main() {
-  const token = await getToken(LOG_PREFIX)
-  if (!token) {
-    writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, LOG_PREFIX, 'No credentials')
-    return
-  }
-
   try {
+    // Inside the try so a DNS blip or timeout during the token request also
+    // degrades to stale data instead of an unhandled rejection.
+    const token = await getToken(LOG_PREFIX)
+    if (!token) {
+      writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, LOG_PREFIX, 'No credentials')
+      if (IS_CI) process.exitCode = 1
+      return
+    }
+
     const guildMembers = await fetchGuildRoster()
     const data = await fetchStats(token, guildMembers)
     writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2) + '\n')
@@ -481,7 +386,12 @@ async function main() {
     )
   } catch (err) {
     writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, LOG_PREFIX, `Failed to fetch stats: ${err.message}`)
+    // Automated runs must go red; a local run without credentials should not.
+    if (IS_CI) process.exitCode = 1
   }
 }
 
-main()
+main().catch((err) => {
+  console.error(`${LOG_PREFIX} Unexpected failure: ${err.message}`)
+  process.exitCode = 1
+})

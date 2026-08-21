@@ -1,6 +1,10 @@
 .DS_Store
 node_modules
 /dist
+/stats.html
+
+# Wrangler build/deploy artifacts
+.wrangler
 
 
 # Fetched data (committed by fetch-data workflow)

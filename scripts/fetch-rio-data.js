@@ -12,7 +12,7 @@
  * Usage: node scripts/fetch-rio-data.js
  */
 
-import { writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { writeFallback } from './write-fallback.js'
@@ -48,10 +48,18 @@ function toKebabClass(className) {
 
 function formatTopKeys(runs) {
   if (!runs || runs.length === 0) return []
-  return runs
-    .slice()
-    .sort((a, b) => b.score - a.score)
-    .map((run) => `+${run.mythic_level} ${run.short_name || run.dungeon}`)
+  return (
+    runs
+      .slice()
+      // Name is the tie-break so equal-score runs keep a stable order between
+      // fetches; without it the committed JSON churns on every cron run.
+      .sort((a, b) => b.score - a.score || keyLabel(a).localeCompare(keyLabel(b), 'en'))
+      .map(keyLabel)
+  )
+}
+
+function keyLabel(run) {
+  return `+${run.mythic_level} ${run.short_name || run.dungeon}`
 }
 
 async function fetchJson(url) {
@@ -93,6 +101,29 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+/**
+ * Writes the M+ file, reusing the previous `lastUpdated` when the payload is
+ * unchanged. A fresh stamp on every run would otherwise defeat the
+ * "commit only if data changed" guard in fetch-data.yml and trigger a full
+ * deploy every 30 minutes. The stamp therefore reads as "when the M+ data last
+ * changed", which is what the UI's "Updated …" line should mean anyway.
+ * @param {{ season: string | null, topRunners: any[], dungeonBests: any[] }} payload
+ */
+function writeOutput(payload) {
+  let lastUpdated = new Date().toISOString()
+  try {
+    const { lastUpdated: prevStamp, ...prevPayload } = JSON.parse(
+      readFileSync(OUTPUT_PATH, 'utf-8'),
+    )
+    if (prevStamp && JSON.stringify(prevPayload) === JSON.stringify(payload)) {
+      lastUpdated = prevStamp
+    }
+  } catch {
+    /* no readable previous file — keep the fresh stamp */
+  }
+  writeFileSync(OUTPUT_PATH, JSON.stringify({ ...payload, lastUpdated }, null, 2) + '\n')
+}
+
 async function main() {
   try {
     // Phase 1: Get guild member list
@@ -101,6 +132,7 @@ async function main() {
 
     if (members.length === 0) {
       writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, '[rio]', 'No guild members found')
+      if (IS_CI) process.exitCode = 1
       return
     }
 
@@ -206,7 +238,7 @@ async function main() {
 
     const topRunners = scoredMembers
       .slice()
-      .sort((a, b) => b.score - a.score)
+      .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, 'en'))
       .slice(0, 10)
 
     // Build dungeon bests
@@ -230,17 +262,22 @@ async function main() {
       }
     }
 
-    const dungeonBests = [...dungeonMap.values()].sort((a, b) => b.level - a.level)
+    const dungeonBests = [...dungeonMap.values()].sort(
+      (a, b) => b.level - a.level || a.dungeon.localeCompare(b.dungeon, 'en'),
+    )
 
-    const output = { season, topRunners, dungeonBests, lastUpdated: new Date().toISOString() }
-
-    writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2) + '\n')
+    writeOutput({ season, topRunners, dungeonBests })
     console.log(
       `[rio] Wrote M+ data: ${topRunners.length} top runners, ${dungeonBests.length} dungeon bests`,
     )
   } catch (err) {
     writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, '[rio]', `Failed to fetch M+ data: ${err.message}`)
+    // Automated runs must go red; a local run without network access should not.
+    if (IS_CI) process.exitCode = 1
   }
 }
 
-main()
+main().catch((err) => {
+  console.error(`[rio] Unexpected failure: ${err.message}`)
+  process.exitCode = 1
+})

@@ -1,8 +1,6 @@
 import './assets/tailwind.css'
 import './assets/main.scss'
 
-import { firebaseApp } from './firebase'
-
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -28,15 +26,11 @@ if (
   import.meta.env.VITE_FIREBASE_MEASUREMENT_ID !== ''
 ) {
   const loadAnalytics = () => {
-    import('firebase/analytics')
-      .then(({ getAnalytics }) => {
-        try {
-          getAnalytics(firebaseApp)
-        } catch (e) {
-          console.warn('Firebase Analytics initialization failed:', e)
-        }
-      })
-      .catch((err) => console.warn('Failed to lazy-load Firebase Analytics:', err))
+    Promise.all([import('firebase/analytics'), import('./firebase')])
+      .then(([{ getAnalytics }, { getFirebaseApp }]) =>
+        getFirebaseApp().then((app) => getAnalytics(app)),
+      )
+      .catch((err) => console.warn('Failed to initialize Firebase Analytics:', err))
   }
 
   if ('requestIdleCallback' in window) {

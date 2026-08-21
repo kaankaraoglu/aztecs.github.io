@@ -9,17 +9,27 @@
  * Usage: node scripts/fetch-wcl-data.js
  */
 
-import { writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import { loadEnv } from './load-env.js'
 import { writeFallback } from './write-fallback.js'
-import { GUILD_ID, CURRENT_ZONE_IDS, CLASS_MAP, getToken, graphql } from './wcl-api.js'
+import {
+  GUILD_ID,
+  CURRENT_ZONE_IDS,
+  CLASS_MAP,
+  getToken,
+  graphql,
+  fetchPlayerDetails,
+} from './wcl-api.js'
 
 loadEnv()
 
 const IS_CI = !!process.env.CI
-const REPORT_LIMIT = IS_CI ? 50 : 10
+// Progression is recomputed wholesale from this window, so a smaller local
+// window would rewrite the committed file with fewer kills. Keep local and CI
+// identical unless WCL_REPORT_LIMIT explicitly opts out.
+const REPORT_LIMIT = Number(process.env.WCL_REPORT_LIMIT) || 50
 
 const LOG_PREFIX = '[wcl]'
 
@@ -31,6 +41,7 @@ const EMPTY_OUTPUT = {
   raids: [],
   summary: { total: 0, normal: 0, heroic: 0, mythic: 0 },
   latestReport: null,
+  lastUpdated: null,
 }
 
 // Raid instances whose mythic tier is the "Mythic Flex" difficulty. Their mythic
@@ -71,38 +82,36 @@ const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }
 function mapPlayer(p) {
   const server = p.server || "Al'Akir"
   const realmSlug = server.toLowerCase().replace(/'/g, '').replace(/\s+/g, '-')
+  const type = p.type || ''
   return {
     name: p.name,
-    class: CLASS_MAP[p.type] || p.type.toLowerCase(),
+    class: CLASS_MAP[type] || type.toLowerCase(),
     spec: p.specs?.[0]?.spec || null,
-    armory: `https://worldofwarcraft.blizzard.com/en-gb/character/eu/${realmSlug}/${encodeURIComponent(p.name.toLowerCase())}`,
+    armory: `https://worldofwarcraft.blizzard.com/en-gb/character/eu/${realmSlug}/${encodeURIComponent(String(p.name).toLowerCase())}`,
   }
+}
+
+/**
+ * WCL returns each role's players in an arbitrary order that shifts between
+ * requests. Sorting by name keeps the committed JSON stable, so a cron run that
+ * fetched identical data produces no diff and therefore no deploy.
+ * @param {any[]} players
+ */
+function sortedRole(players) {
+  return (players || []).map(mapPlayer).sort((a, b) => a.name.localeCompare(b.name, 'en'))
 }
 
 /**
  * Fetches playerDetails for a specific fight, returning roster grouped by role.
  */
 async function fetchRoster(token, reportCode, fightId) {
-  const query = `{
-    reportData {
-      report(code: "${reportCode}") {
-        playerDetails(fightIDs: [${fightId}])
-      }
-    }
-  }`
-
-  const result = await graphql(token, query)
-  const raw = result.data?.reportData?.report?.playerDetails
-  if (!raw) return null
-
-  const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw
-  const pd = parsed?.data?.playerDetails
+  const pd = await fetchPlayerDetails(token, reportCode, [fightId], LOG_PREFIX)
   if (!pd) return null
 
   return {
-    tanks: (pd.tanks || []).map(mapPlayer),
-    healers: (pd.healers || []).map(mapPlayer),
-    dps: (pd.dps || []).map(mapPlayer),
+    tanks: sortedRole(pd.tanks),
+    healers: sortedRole(pd.healers),
+    dps: sortedRole(pd.dps),
   }
 }
 
@@ -306,23 +315,48 @@ async function fetchProgression(token) {
     ? `https://www.warcraftlogs.com/reports/${reports[0].code}`
     : null
 
-  return { zone: zoneName, raids, summary, latestReport }
+  return { zone: zoneName, raids, summary, latestReport, lastUpdated: new Date().toISOString() }
+}
+
+/**
+ * Writes the progression file, reusing the previous `lastUpdated` when nothing
+ * else changed. Without this, the stamp alone would produce a fresh commit —
+ * and therefore a full deploy — on every cron run.
+ * @param {{ lastUpdated: string }} data
+ */
+function writeOutput(data) {
+  const { lastUpdated, ...payload } = data
+  let stamp = lastUpdated
+  try {
+    const { lastUpdated: prevStamp, ...prevPayload } = JSON.parse(
+      readFileSync(OUTPUT_PATH, 'utf-8'),
+    )
+    if (prevStamp && JSON.stringify(prevPayload) === JSON.stringify(payload)) {
+      stamp = prevStamp
+    }
+  } catch {
+    /* no readable previous file — keep the fresh stamp */
+  }
+  writeFileSync(OUTPUT_PATH, JSON.stringify({ ...payload, lastUpdated: stamp }, null, 2) + '\n')
 }
 
 async function main() {
-  const token = await getToken(LOG_PREFIX)
-  if (!token) {
-    writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, LOG_PREFIX, 'No credentials')
-    return
-  }
-
   try {
+    // Inside the try so a DNS blip or timeout during the token request also
+    // degrades to stale data instead of an unhandled rejection.
+    const token = await getToken(LOG_PREFIX)
+    if (!token) {
+      writeFallback(OUTPUT_PATH, EMPTY_OUTPUT, LOG_PREFIX, 'No credentials')
+      if (IS_CI) process.exitCode = 1
+      return
+    }
+
     const data = await fetchProgression(token)
     const bosses = data.raids.flatMap((r) => r.bosses)
     const killed = bosses.filter((b) => b.normal || b.heroic || b.mythic).length
     const rosterCount = bosses.filter((b) => b.roster).length
 
-    writeFileSync(OUTPUT_PATH, JSON.stringify(data, null, 2) + '\n')
+    writeOutput(data)
     console.log(
       `${LOG_PREFIX} Wrote progression: ${killed}/${bosses.length} bosses killed, ` +
         `${rosterCount} rosters, ` +
@@ -335,7 +369,12 @@ async function main() {
       LOG_PREFIX,
       `Failed to fetch progression: ${err.message}`,
     )
+    // Automated runs must go red; a local run without credentials should not.
+    if (IS_CI) process.exitCode = 1
   }
 }
 
-main()
+main().catch((err) => {
+  console.error(`${LOG_PREFIX} Unexpected failure: ${err.message}`)
+  process.exitCode = 1
+})

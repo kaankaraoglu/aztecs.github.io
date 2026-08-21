@@ -2,20 +2,28 @@
  * Shared Warcraft Logs API utilities used by all WCL build-time scripts.
  *
  * Provides OAuth2 token retrieval, GraphQL client with retry logic,
- * WoW class name mapping, and common guild/API constants.
+ * report table/playerDetails helpers, WoW class name mapping, and common
+ * guild/API constants.
  */
 
 const GUILD_ID = 18606
 // Season 1: VS / DR / MQD (46) + Sporefall (50). Season 2: The Venomous Abyss (54) +
 // The Tidebound Grotto (57).
 const CURRENT_ZONE_IDS = [46, 50, 54, 57]
-const CURRENT_ZONE_ID = CURRENT_ZONE_IDS[0]
 const CURRENT_MPLUS_ZONE_ID = 47 // Midnight Season 1 M+
 const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
 const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
 
 /** Default timeout for individual fetch requests (30 seconds). */
 const REQUEST_TIMEOUT_MS = 30_000
+
+/**
+ * Upper bound on a single retry sleep. WCL meters points over a rolling hour,
+ * so a `Retry-After` can be several minutes — long enough to park the fetcher
+ * past the next cron tick. Cap it and let the retries run out into the
+ * caller's writeFallback path instead.
+ */
+const MAX_RETRY_DELAY_MS = 30_000
 
 /**
  * Maps WCL class names to the CSS class names used for styling.
@@ -55,7 +63,13 @@ async function getToken(logPrefix = '[wcl]') {
   const res = await fetch(TOKEN_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}`,
+    // URLSearchParams percent-encodes the credentials; a secret containing
+    // '&' or '+' would otherwise corrupt the body.
+    body: new URLSearchParams({
+      grant_type: 'client_credentials',
+      client_id: clientId,
+      client_secret: clientSecret,
+    }),
     signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   })
 
@@ -64,16 +78,22 @@ async function getToken(logPrefix = '[wcl]') {
     return null
   }
 
-  return (await res.json()).access_token
+  const token = (await res.json()).access_token
+  if (!token) {
+    console.warn(`${logPrefix} Token response contained no access_token`)
+    return null
+  }
+  return token
 }
 
 /**
- * Sends a GraphQL query to the Warcraft Logs API with retry on 5xx errors.
+ * Sends a GraphQL query to the Warcraft Logs API, retrying on 5xx and on 429
+ * rate limits. Honours `Retry-After` when present, capped at MAX_RETRY_DELAY_MS.
  * @param {string} token - OAuth2 access token
  * @param {string} query - GraphQL query string
  * @param {{ retries?: number, logPrefix?: string }} [options]
  * @returns {Promise<any>} Parsed JSON response
- * @throws {Error} On non-retryable HTTP errors or GraphQL errors
+ * @throws {Error} On non-retryable HTTP errors, GraphQL errors, or exhausted retries
  */
 async function graphql(token, query, { retries = 3, logPrefix = '[wcl]' } = {}) {
   for (let attempt = 1; attempt <= retries; attempt++) {
@@ -87,8 +107,14 @@ async function graphql(token, query, { retries = 3, logPrefix = '[wcl]' } = {}) 
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     })
 
-    if (res.status >= 500 && attempt < retries) {
-      const delay = 1000 * 2 ** (attempt - 1)
+    if ((res.status === 429 || res.status >= 500) && attempt < retries) {
+      const retryAfter = Number(res.headers.get('Retry-After'))
+      const delay = Math.min(
+        Number.isFinite(retryAfter) && retryAfter > 0
+          ? retryAfter * 1000
+          : 1000 * 2 ** (attempt - 1),
+        MAX_RETRY_DELAY_MS,
+      )
       console.warn(
         `${logPrefix} GraphQL ${res.status}, retrying in ${delay}ms (${attempt}/${retries})`,
       )
@@ -101,14 +127,76 @@ async function graphql(token, query, { retries = 3, logPrefix = '[wcl]' } = {}) 
     if (data.errors?.length) throw new Error(data.errors[0].message)
     return data
   }
+
+  throw new Error(`GraphQL request failed: retries exhausted after ${retries} attempts`)
+}
+
+/**
+ * Unwraps a WCL report field that the API returns as a JSON-encoded string.
+ * @param {unknown} raw
+ * @returns {any}
+ */
+function parseReportField(raw) {
+  if (!raw) return null
+  return typeof raw === 'string' ? JSON.parse(raw) : raw
+}
+
+/**
+ * Fetches one of the report `table` datasets for a set of fights.
+ * @param {string} token
+ * @param {string} code - report code
+ * @param {number[]} fightIDs
+ * @param {'Deaths' | 'DamageDone' | 'Healing'} dataType
+ * @param {string} [logPrefix]
+ * @returns {Promise<Array<Record<string, any>>>} table entries, or [] when unavailable
+ */
+async function fetchReportTable(token, code, fightIDs, dataType, logPrefix = '[wcl]') {
+  if (fightIDs.length === 0) return []
+
+  const query = `{
+    reportData {
+      report(code: "${code}") {
+        table(dataType: ${dataType}, fightIDs: [${fightIDs.join(',')}])
+      }
+    }
+  }`
+
+  const result = await graphql(token, query, { logPrefix })
+  const parsed = parseReportField(result.data?.reportData?.report?.table)
+  return parsed?.data?.entries || []
+}
+
+/**
+ * Fetches the role-grouped playerDetails payload for a set of fights.
+ * @param {string} token
+ * @param {string} code - report code
+ * @param {number[]} fightIDs
+ * @param {string} [logPrefix]
+ * @returns {Promise<{ tanks?: any[], healers?: any[], dps?: any[] } | null>}
+ */
+async function fetchPlayerDetails(token, code, fightIDs, logPrefix = '[wcl]') {
+  if (fightIDs.length === 0) return null
+
+  const query = `{
+    reportData {
+      report(code: "${code}") {
+        playerDetails(fightIDs: [${fightIDs.join(',')}])
+      }
+    }
+  }`
+
+  const result = await graphql(token, query, { logPrefix })
+  const parsed = parseReportField(result.data?.reportData?.report?.playerDetails)
+  return parsed?.data?.playerDetails || null
 }
 
 export {
   GUILD_ID,
-  CURRENT_ZONE_ID,
   CURRENT_ZONE_IDS,
   CURRENT_MPLUS_ZONE_ID,
   CLASS_MAP,
   getToken,
   graphql,
+  fetchReportTable,
+  fetchPlayerDetails,
 }

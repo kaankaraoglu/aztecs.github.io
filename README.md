@@ -51,52 +51,59 @@ npm run dev
 
 ### Commands
 
-| Command              | Description                                         |
-| -------------------- | --------------------------------------------------- |
-| `npm run dev`        | Fetch latest data, then start dev server            |
-| `npm run build`      | Production build (skips fetch if `SKIP_DATA_FETCH`) |
-| `npm test`           | Run all tests (Vitest)                              |
-| `npm run test:watch` | Watch mode                                          |
-| `npm run lint`       | ESLint with auto-fix                                |
-| `npm run format`     | Prettier format all files                           |
-| `npm run fetch-data` | Fetch WCL + RIO + stats data manually               |
+| Command                 | Description                                         |
+| ----------------------- | --------------------------------------------------- |
+| `npm run dev`           | Fetch latest data, then start dev server            |
+| `npm run build`         | Production build (skips fetch if `SKIP_DATA_FETCH`) |
+| `npm test`              | Run all tests (Vitest)                              |
+| `npm run test:watch`    | Watch mode                                          |
+| `npm run lint`          | ESLint with auto-fix                                |
+| `npm run lint:check`    | ESLint zero-warning gate (what CI runs)             |
+| `npm run format`        | Prettier format all files                           |
+| `npm run fetch-data`    | Fetch WCL + RIO + stats data manually               |
+| `npm run test:coverage` | Run tests with a coverage report                    |
+| `npm run build:analyze` | Build and write a bundle report to `stats.html`     |
 
 ### Environment Variables
 
-| Variable                  | Required    | Description                                      |
-| ------------------------- | ----------- | ------------------------------------------------ |
-| `WCL_CLIENT_ID`           | Deploy only | Warcraft Logs OAuth client ID                    |
-| `WCL_CLIENT_SECRET`       | Deploy only | Warcraft Logs OAuth client secret                |
-| `VITE_FIREBASE_*`         | Deploy only | Firebase Analytics config (7 vars)               |
-| `VITE_REFRESH_WORKER_URL` | Deploy only | Cloudflare Worker URL for on-demand data refresh |
-| `VITE_TURNSTILE_SITE_KEY` | Deploy only | Cloudflare Turnstile site key for bot protection |
+| Variable                  | Required    | Description                                         |
+| ------------------------- | ----------- | --------------------------------------------------- |
+| `WCL_CLIENT_ID`           | Deploy only | Warcraft Logs OAuth client ID                       |
+| `WCL_CLIENT_SECRET`       | Deploy only | Warcraft Logs OAuth client secret                   |
+| `VITE_FIREBASE_*`         | Deploy only | Firebase Analytics config (7 vars)                  |
+| `VITE_REFRESH_WORKER_URL` | Deploy only | Cloudflare Worker URL for on-demand data refresh    |
+| `VITE_TURNSTILE_SITE_KEY` | Deploy only | Cloudflare Turnstile site key for bot protection    |
+| `VITE_SIGNUP_WORKER_URL`  | Deploy only | Cloudflare Worker URL backing the next-tier signups |
 
 ## Architecture
 
 ```
 src/
-├── assets/styles/       # SCSS variables, WoW class colors, shared partials
+├── assets/styles/       # SCSS variables, WoW class colors, design tokens, theme
 ├── components/          # Reusable components (HeaderView, KillCard, InfoBox, etc.)
-│   ├── ui/              # Base UI primitives
-│   └── refresh/         # Refresh data button + Turnstile integration
+│   ├── ui/              # Base UI primitives (shadcn/reka style)
+│   └── next-tier/       # Signup form, table, buff coverage, role balance
 ├── composables/         # Composition API hooks
 │   ├── useProgression   # Raid progression from WCL data
 │   ├── useMythicPlus    # M+ data from Raider.IO
 │   ├── useRaidStats     # Raid DPS/HPS statistics
+│   ├── useBuffAnalysis  # Raid buff coverage and role counts from signups
+│   ├── useNextTierSignups # Discord OAuth + signup CRUD
 │   ├── useAnalytics     # Firebase Analytics (prod only)
 │   ├── useTheme         # Dark/light theme toggle
 │   ├── useScrollReveal  # Scroll-based reveal animations
 │   └── useTiltEffect    # Card tilt interaction
-├── data/                # Static kills, progression fallback, fetched JSON
+├── data/                # Static kills, progression fallback, route list, fetched JSON
 ├── views/               # Route-level pages
 │   ├── HomeView         # Landing page
-│   ├── RaidingView      # Raid progression + stats
+│   ├── RaidingView      # Raid schedule + loot rules
 │   ├── AchievementsView # Kill archive
+│   ├── NextTierView     # Next tier signups
 │   ├── AboutView        # Guild info
 │   ├── ContactView      # Contact page
 │   ├── InMemoriamView   # Memorial page
 │   └── NotFoundView     # 404 page
-└── router/              # Vue Router with per-route titles
+└── router/              # Vue Router, built from src/data/site-routes.js
 
 scripts/
 ├── fetch-wcl-data.js    # Fetch raid progression from WCL GraphQL API
@@ -104,9 +111,12 @@ scripts/
 ├── fetch-wcl-stats.js   # Fetch raid statistics from WCL
 ├── fetch-wcl-history.js # Fetch historical WCL data
 ├── wcl-api.js           # Shared WCL OAuth + GraphQL client
+├── write-fallback.js    # Keep the last good JSON when a fetch produces nothing
+├── postbuild.js         # 404.html, per-route HTML, sitemap.xml
 └── load-env.js          # Environment variable loader
 
 workers/
+├── signup/              # Discord OAuth + next-tier signup API
 └── refresh/             # Cloudflare Worker for on-demand data refresh
 ```
 
@@ -138,12 +148,12 @@ If WCL data is empty at runtime, `useProgression` falls back to the static `prog
 
 | Workflow           | Trigger                 | What it does                                    |
 | ------------------ | ----------------------- | ----------------------------------------------- |
-| **PR Checks**      | Pull requests to `main` | Lint, test, build (3 parallel jobs)             |
+| **PR Checks**      | Pull requests to `main` | Format, lint, test, build (4 parallel jobs)     |
 | **Build & Deploy** | Push to `main`          | Build with committed data, deploy to `gh-pages` |
 | **Fetch Data**     | Every 30 min + manual   | Fetch WCL/RIO data, commit if changed           |
 | **Refresh Data**   | Manual (via Worker)     | Triggers Fetch Data workflow on demand          |
 
-Data fetching and deployment are decoupled: `fetch-data.yml` commits updated JSON to `main`, which triggers `deploy.yml` automatically.
+Data fetching and deployment are decoupled: `fetch-data.yml` commits updated JSON to `main`, which triggers `deploy.yml` automatically. The fetchers write byte-identical output for identical data, so a cron run that finds nothing new produces no commit and no deploy.
 
 ## Contributing
 

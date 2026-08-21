@@ -10,7 +10,7 @@ vi.mock('firebase/analytics', () => ({
 }))
 
 vi.mock('@/firebase', () => ({
-  firebaseApp: 'mock-firebase-app',
+  getFirebaseApp: () => Promise.resolve('mock-firebase-app'),
 }))
 
 const { useAnalytics } = await import('../useAnalytics')

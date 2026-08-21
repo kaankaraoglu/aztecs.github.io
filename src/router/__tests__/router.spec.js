@@ -88,12 +88,93 @@ describe('Router — navigation guard', () => {
   it('unknown route sets document.title to "Aztecs"', async () => {
     await router.push('/some/unknown/path')
     await router.isReady()
-    expect(document.title).toBe('Aztecs')
+    expect(document.title).toBe('Aztecs - Page Not Found')
   })
 
   it('/wow-kills redirect resolves document.title to achievements title', async () => {
     await router.push('/wow-kills')
     await router.isReady()
     expect(document.title).toBe('Aztecs - Achievements')
+  })
+})
+
+describe('Router — head metadata', () => {
+  const metaContent = (selector) => document.querySelector(selector)?.getAttribute('content')
+
+  beforeEach(async () => {
+    document.head.innerHTML = ''
+    await router.push('/__reset__')
+    await router.isReady()
+  })
+
+  it('navigating to /about writes that route description and Open Graph tags', async () => {
+    await router.push('/about')
+
+    const description = "Learn about Aztecs, a Horde guild on Al'Akir (EU) raiding since 2005."
+    expect(metaContent('meta[name="description"]')).toBe(description)
+    expect(metaContent('meta[property="og:title"]')).toBe('Aztecs - About Us')
+    expect(metaContent('meta[property="og:description"]')).toBe(description)
+    expect(metaContent('meta[property="og:url"]')).toBe('https://aztecs.se/about')
+  })
+
+  it('navigating to /about writes the twitter tags', async () => {
+    await router.push('/about')
+
+    expect(metaContent('meta[name="twitter:title"]')).toBe('Aztecs - About Us')
+    expect(metaContent('meta[name="twitter:description"]')).toBe(
+      "Learn about Aztecs, a Horde guild on Al'Akir (EU) raiding since 2005.",
+    )
+  })
+
+  it('twitter tags use `name`, never `property`, and are never duplicated', async () => {
+    await router.push('/about')
+    await router.push('/raiding')
+
+    expect(document.querySelectorAll('meta[name="twitter:title"]')).toHaveLength(1)
+    expect(document.querySelectorAll('meta[name="twitter:description"]')).toHaveLength(1)
+    expect(document.querySelectorAll('meta[property="twitter:title"]')).toHaveLength(0)
+    expect(document.querySelectorAll('meta[property="twitter:description"]')).toHaveLength(0)
+    expect(metaContent('meta[name="twitter:title"]')).toBe('Aztecs - Raiding')
+  })
+
+  it('og:url uses a bare slash on the home route', async () => {
+    await router.push('/')
+    expect(metaContent('meta[property="og:url"]')).toBe('https://aztecs.se/')
+  })
+
+  it('canonical link tracks the route and stays a single element', async () => {
+    await router.push('/contact')
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
+      'https://aztecs.se/contact',
+    )
+
+    await router.push('/next-tier')
+    expect(document.querySelectorAll('link[rel="canonical"]')).toHaveLength(1)
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
+      'https://aztecs.se/next-tier',
+    )
+  })
+
+  it('the catch-all route adds a noindex robots tag', async () => {
+    await router.push('/no/such/page')
+    expect(metaContent('meta[name="robots"]')).toBe('noindex')
+  })
+
+  it('navigating from the catch-all back to a real route removes the robots tag', async () => {
+    await router.push('/no/such/page')
+    expect(document.querySelectorAll('meta[name="robots"]')).toHaveLength(1)
+
+    await router.push('/achievements')
+    expect(document.querySelector('meta[name="robots"]')).toBeNull()
+  })
+
+  it('/wow-kills redirects to /achievements and takes its metadata', async () => {
+    await router.push('/wow-kills')
+
+    expect(router.currentRoute.value.path).toBe('/achievements')
+    expect(metaContent('meta[property="og:url"]')).toBe('https://aztecs.se/achievements')
+    expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
+      'https://aztecs.se/achievements',
+    )
   })
 })

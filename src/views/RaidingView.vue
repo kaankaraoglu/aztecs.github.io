@@ -1,5 +1,6 @@
 <template>
   <div ref="containerRef" class="raiding-view content-wrapper">
+    <h1 class="sr-only">Raiding</h1>
     <div class="side-by-side">
       <InfoBox class="schedule reveal">
         <h2 class="info-box-heading">Raid Schedule</h2>

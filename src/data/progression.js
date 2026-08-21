@@ -111,8 +111,3 @@ export const raids = [
     ],
   },
 ]
-
-/** @param {boolean} killed @returns {string} */
-export function killMark(killed) {
-  return killed ? '💀' : '-'
-}

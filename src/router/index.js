@@ -1,85 +1,45 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { SITE_ROUTES, DEFAULT_DESCRIPTION, SITE_ORIGIN } from '@/data/site-routes.js'
 
-const HomeView = () => import('@/views/HomeView.vue')
-const ContactView = () => import('@/views/ContactView.vue')
-const RaidingView = () => import('@/views/RaidingView.vue')
-const AchievementsView = () => import('@/views/AchievementsView.vue')
-const AboutView = () => import('@/views/AboutView.vue')
-const InMemoriamView = () => import('@/views/InMemoriamView.vue')
-const NextTierView = () => import('@/views/NextTierView.vue')
-
-const DEFAULT_DESCRIPTION =
-  "Aztecs - an established Horde guild on Al'Akir since 2005. Raiding, Mythic+, and good times."
+const VIEWS = {
+  '/': () => import('@/views/HomeView.vue'),
+  '/contact': () => import('@/views/ContactView.vue'),
+  '/raiding': () => import('@/views/RaidingView.vue'),
+  '/achievements': () => import('@/views/AchievementsView.vue'),
+  '/about': () => import('@/views/AboutView.vue'),
+  '/in-memoriam': () => import('@/views/InMemoriamView.vue'),
+  '/next-tier': () => import('@/views/NextTierView.vue'),
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/',
-      component: HomeView,
-      meta: {
-        title: "Aztecs - Horde Guild on Al'Akir",
-        description: DEFAULT_DESCRIPTION,
-      },
-    },
-    {
-      path: '/contact',
-      component: ContactView,
-      meta: {
-        title: 'Aztecs - Contact & Roster',
-        description:
-          "Get in touch with Aztecs or browse our current roster. Horde guild on Al'Akir (EU).",
-      },
-    },
-    {
-      path: '/raiding',
-      component: RaidingView,
-      meta: {
-        title: 'Aztecs - Raiding',
-        description:
-          "Live raid progression, boss kills, and Mythic+ rankings for Aztecs on Al'Akir (EU).",
-      },
-    },
-    {
-      path: '/achievements',
-      component: AchievementsView,
-      meta: {
-        title: 'Aztecs - Achievements',
-        description:
-          'Our proudest raid achievements, boss kills, and guild milestones throughout the years.',
-      },
-    },
-    {
-      path: '/about',
-      component: AboutView,
-      meta: {
-        title: 'Aztecs - About Us',
-        description: "Learn about Aztecs, a Horde guild on Al'Akir (EU) raiding since 2005.",
-      },
-    },
+    // Built from the same list the sitemap and the prerendered HTML use, so a
+    // new route cannot ship with a stale sitemap or an unindexable URL.
+    ...SITE_ROUTES.map(({ path, title, description }) => ({
+      path,
+      component: VIEWS[path],
+      meta: { title, description },
+    })),
     { path: '/wow-kills', redirect: '/achievements' },
-    {
-      path: '/in-memoriam',
-      component: InMemoriamView,
-      meta: {
-        title: 'Aztecs - In Memoriam',
-        description: "Remembering the friends and guildmates we've lost along the way.",
-      },
-    },
-    {
-      path: '/next-tier',
-      component: NextTierView,
-      meta: {
-        title: 'Aztecs - Next Tier Signups',
-        description: "Sign up for the next raid tier with Aztecs on Al'Akir (EU).",
-      },
-    },
     {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: () => import('@/views/NotFoundView.vue'),
+      meta: {
+        title: 'Aztecs - Page Not Found',
+        description: "That page doesn't exist. Head back to the Aztecs home page.",
+        noindex: true,
+      },
     },
   ],
+  // Without this, following a link from halfway down one page lands halfway
+  // down the next. Browser back/forward still restores the saved position.
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) return savedPosition
+    if (to.hash) return { el: to.hash, behavior: 'smooth' }
+    return { top: 0 }
+  },
 })
 
 /**
@@ -87,7 +47,10 @@ const router = createRouter({
  * @param {string} content
  */
 function setMetaTag(name, content) {
-  const attr = name.startsWith('og:') || name.startsWith('twitter:') ? 'property' : 'name'
+  // Only og:* uses `property`. Twitter's card spec uses `name`, and index.html
+  // declares them that way — selecting on `property` appended a second, unread
+  // copy of every twitter tag and left the real one frozen on the home page.
+  const attr = name.startsWith('og:') ? 'property' : 'name'
   let el = document.querySelector(`meta[${attr}="${name}"]`)
   if (el) {
     el.setAttribute('content', content)
@@ -99,12 +62,34 @@ function setMetaTag(name, content) {
   }
 }
 
+/**
+ * Adds or removes `<meta name="robots" content="noindex">`.
+ * @param {boolean} noindex
+ */
+function setRobots(noindex) {
+  const existing = document.querySelector('meta[name="robots"]')
+  if (!noindex) {
+    existing?.remove()
+    return
+  }
+  if (existing) {
+    existing.setAttribute('content', 'noindex')
+    return
+  }
+  const el = document.createElement('meta')
+  el.setAttribute('name', 'robots')
+  el.setAttribute('content', 'noindex')
+  document.head.appendChild(el)
+}
+
 router.beforeEach((to) => {
   const title = to.meta.title || 'Aztecs'
   const description = to.meta.description || DEFAULT_DESCRIPTION
-  const canonicalUrl = `https://aztecs.se${to.path === '/' ? '/' : to.path}`
+  const canonicalUrl = `${SITE_ORIGIN}${to.path === '/' ? '/' : to.path}`
 
   document.title = title
+
+  setRobots(to.meta.noindex === true)
 
   setMetaTag('description', description)
 

@@ -3,7 +3,7 @@
     class="refresh-btn"
     :class="state"
     :disabled="state !== 'idle'"
-    :aria-label="ariaLabel"
+    aria-label="Refresh progression data"
     @click="handleRefresh"
   >
     <svg
@@ -22,6 +22,19 @@
     </svg>
     <span class="refresh-label">{{ label }}</span>
   </button>
+  <!-- Rewriting the button's own aria-label announces nothing, so outcomes go
+       through a live region instead. -->
+  <span class="sr-only" role="status" aria-live="polite">{{
+    state === 'idle' ? '' : statusMessage
+  }}</span>
+  <a
+    v-if="state === 'success' && actionsUrl"
+    class="refresh-run-link"
+    :href="actionsUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    >View run<span class="sr-only"> (opens in new tab)</span></a
+  >
   <div ref="turnstileRef" class="turnstile-widget"></div>
 </template>
 
@@ -42,14 +55,16 @@ const turnstileRef = ref(null)
 let turnstileWidgetId = null
 /** @type {number | null} */
 let countdownTimer = null
+/** @type {number | null} */
+let resetTimer = null
 
 const { trackEvent } = useAnalytics()
 
 const STATE_MESSAGES = {
-  idle: { label: 'Refresh', ariaLabel: 'Refresh progression data' },
-  submitting: { label: 'Refreshing…', ariaLabel: 'Refreshing progression data…' },
-  success: { label: 'Triggered!', ariaLabel: 'Data refresh triggered successfully' },
-  error: { label: 'Failed', ariaLabel: 'Data refresh failed, try again later' },
+  idle: { label: 'Refresh', status: 'Refresh progression data' },
+  submitting: { label: 'Refreshing…', status: 'Refreshing progression data…' },
+  success: { label: 'Triggered!', status: 'Data refresh triggered successfully' },
+  error: { label: 'Failed', status: 'Data refresh failed, try again later' },
 }
 
 const label = computed(() => {
@@ -57,10 +72,10 @@ const label = computed(() => {
   return STATE_MESSAGES[state.value]?.label ?? STATE_MESSAGES.idle.label
 })
 
-const ariaLabel = computed(() => {
+const statusMessage = computed(() => {
   if (state.value === 'rate-limited')
     return `Rate limited, retry in ${formatCountdown(retryCountdown.value)}`
-  return STATE_MESSAGES[state.value]?.ariaLabel ?? STATE_MESSAGES.idle.ariaLabel
+  return STATE_MESSAGES[state.value]?.status ?? STATE_MESSAGES.idle.status
 })
 
 /**
@@ -171,7 +186,8 @@ async function handleRefresh() {
 }
 
 function scheduleReset() {
-  setTimeout(() => {
+  resetTimer = window.setTimeout(() => {
+    resetTimer = null
     state.value = 'idle'
     resetTurnstile()
   }, 4000)
@@ -190,6 +206,9 @@ onMounted(() => {
 onUnmounted(() => {
   if (countdownTimer != null) {
     clearInterval(countdownTimer)
+  }
+  if (resetTimer != null) {
+    clearTimeout(resetTimer)
   }
   if (turnstileWidgetId != null && window.turnstile) {
     window.turnstile.remove(turnstileWidgetId)
@@ -231,13 +250,13 @@ onUnmounted(() => {
   }
 
   &.success {
-    color: $quality-uncommon;
-    border-color: rgba($quality-uncommon, 0.3);
+    color: var(--t-status-success);
+    border-color: color-mix(in srgb, var(--t-status-success) 30%, transparent);
   }
 
   &.error {
-    color: $color-red;
-    border-color: rgba($color-red, 0.3);
+    color: var(--t-status-error);
+    border-color: color-mix(in srgb, var(--t-status-error) 30%, transparent);
   }
 
   &.rate-limited {
@@ -251,6 +270,25 @@ onUnmounted(() => {
 
   &.spinning {
     animation: spin 1s linear infinite;
+  }
+}
+
+@include reduced-motion {
+  .refresh-icon.spinning {
+    animation: none;
+  }
+}
+
+.refresh-run-link {
+  margin-left: $space-2;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: $accent-color;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 

@@ -2,9 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/src/assets/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark" />
+    <!-- Both schemes: the site ships a light theme, and pinning this to `dark`
+         left native scrollbars and form controls dark while it was active. -->
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta
       name="description"
       content="Aztecs - an established Horde guild on Al'Akir since 2005. Raiding, Mythic+, and good times."
@@ -17,13 +21,18 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Aztecs" />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:title" content="Aztecs - Horde Guild on Al'Akir" />
     <meta
       property="og:description"
       content="Aztecs - an established Horde guild on Al'Akir since 2005. Raiding, Mythic+, and good times."
     />
-    <meta property="og:url" content="https://aztecs.se" />
+    <meta property="og:url" content="https://aztecs.se/" />
     <meta property="og:image" content="https://aztecs.se/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Aztecs guild banner" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -33,6 +42,19 @@
       content="Aztecs - an established Horde guild on Al'Akir since 2005. Raiding, Mythic+, and good times."
     />
     <meta name="twitter:image" content="https://aztecs.se/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Aztecs",
+        "url": "https://aztecs.se/",
+        "logo": "https://aztecs.se/og-image.png",
+        "foundingDate": "2005",
+        "description": "An established Horde guild on Al'Akir (EU), raiding since 2005.",
+        "sameAs": ["https://www.warcraftlogs.com/guild/eu/alakir/aztecs"]
+      }
+    </script>
 
     <title>Aztecs</title>
   </head>

@@ -1,5 +1,6 @@
 <template>
   <div ref="containerRef" class="achievements-view content-wrapper reveal-stagger">
+    <h1 class="sr-only">Achievements</h1>
     <KillCard
       v-for="(kill, idx) in kills"
       :key="kill.raidName + '-' + idx"

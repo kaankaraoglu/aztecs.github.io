@@ -28,18 +28,23 @@
       <p class="section-label">LATEST ACHIEVEMENTS</p>
       <div class="latest-achievements">
         <div v-for="kill in latestKills" :key="kill.raidName" class="latest-achievement reveal">
-          <p class="achievement-name">{{ kill.raidName }}</p>
-          <img
-            :src="kill.imageUrl"
-            :alt="kill.raidName"
+          <h2 class="achievement-name">{{ kill.raidName }}</h2>
+          <button
+            type="button"
+            class="achievement-button"
             :aria-label="`View full screenshot of ${kill.raidName}`"
-            class="achievement-image"
-            role="button"
-            tabindex="0"
             @click="lightboxSrc = kill.imageUrl"
-            @keydown.enter="lightboxSrc = kill.imageUrl"
-            @keydown.space.prevent="lightboxSrc = kill.imageUrl"
-          />
+          >
+            <img
+              :src="kill.imageUrl"
+              :alt="`${kill.raidName} screenshot`"
+              class="achievement-image"
+              width="1920"
+              height="1080"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
         </div>
       </div>
       <ImageLightbox
@@ -56,7 +61,6 @@
 import { ref, onMounted } from 'vue'
 import { kills } from '@/data/kills.js'
 import { useProgression } from '@/composables/useProgression.js'
-import { useMythicPlus } from '@/composables/useMythicPlus.js'
 import { useNextTierSignups } from '@/composables/useNextTierSignups.js'
 import { useScrollReveal } from '@/composables/useScrollReveal.js'
 import FadingDivider from '@/components/FadingDivider.vue'
@@ -71,8 +75,7 @@ import InfoBox from '@/components/InfoBox.vue'
 const containerRef = ref(null)
 useScrollReveal(containerRef)
 
-const { raids, summary, latestReport } = useProgression()
-const { lastUpdated } = useMythicPlus()
+const { raids, summary, latestReport, lastUpdated } = useProgression()
 const { submissions, fetchSubmissions } = useNextTierSignups()
 const latestKills = kills.slice(0, 2)
 const lightboxSrc = ref('')
@@ -189,7 +192,17 @@ onMounted(() => {
         font-size: 1.05em;
       }
     }
+    .achievement-button {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: zoom-in;
+    }
+
     .achievement-image {
+      display: block;
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;

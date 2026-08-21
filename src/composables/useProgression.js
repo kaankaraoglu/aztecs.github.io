@@ -49,6 +49,10 @@ export function useProgression() {
   /** @type {import('vue').Ref<ProgressSummary>} */
   const summary = ref(computeSummary(allRaids))
   const latestReport = hasWclData ? wclData.latestReport || null : null
+  // When the raid data itself was last refreshed. The home page used to show
+  // the Raider.IO M+ timestamp here, which could advertise a fresh fetch over
+  // hours-old progression.
+  const lastUpdated = hasWclData ? wclData.lastUpdated || null : null
 
-  return { raids, summary, latestReport }
+  return { raids, summary, latestReport, lastUpdated }
 }

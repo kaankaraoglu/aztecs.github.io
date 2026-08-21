@@ -5,6 +5,16 @@ on:
   push:
     branches: [main]
 
+# main receives pushes from merged PRs and from the data-fetch cron, so two
+# deploys routinely overlap. Both force-push an orphan history to gh-pages, and
+# whichever finishes last wins — cancel the superseded build instead.
+concurrency:
+  group: deploy-gh-pages
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     name: Build & deploy
@@ -32,13 +42,11 @@ jobs:
           VITE_SIGNUP_WORKER_URL: ${{ secrets.VITE_SIGNUP_WORKER_URL }}
         run: npm run build
 
+      # `public/CNAME` is copied into dist by the build, so the custom domain
+      # survives every deploy without the workflow writing it.
       - name: Deploy to gh-pages
-        run: |
-          echo "aztecs.se" > dist/CNAME
-          cd dist
-          git init
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Deploy to gh-pages"
-          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
+          single-commit: true

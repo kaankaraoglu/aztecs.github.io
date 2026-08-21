@@ -9,10 +9,13 @@
     "dev": "vite",
     "prebuild": "node -e \"if(!process.env.SKIP_DATA_FETCH){process.exit(1)}\" || npm run fetch-data",
     "build": "vite build",
-    "postbuild": "cp dist/index.html dist/404.html || copy dist/index.html dist/404.html",
+    "build:analyze": "ANALYZE=1 vite build",
+    "postbuild": "node scripts/postbuild.js",
     "preview": "vite preview",
     "lint": "eslint . --fix",
+    "lint:check": "eslint . --max-warnings=0",
     "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
@@ -34,6 +37,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@vitejs/plugin-vue": "^6.0.7",
+    "@vitest/coverage-v8": "^4.1.11",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/test-utils": "^2.4.6",
     "eslint": "^10.6.0",

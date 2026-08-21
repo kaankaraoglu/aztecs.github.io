@@ -49,12 +49,28 @@
           <div v-show="isRaidOpen(raid)" class="boss-list">
             <div v-for="boss in raid.bosses" :key="boss.name" class="boss-line">
               <span class="boss-status">
-                <span :class="['pip', 'normal', { active: boss.normal }]" title="Normal">N</span>
-                <span :class="['pip', 'heroic', { active: boss.heroic }]" title="Heroic">HC</span>
+                <span
+                  :class="['pip', 'normal', { active: boss.normal }]"
+                  title="Normal"
+                  role="img"
+                  :aria-label="`Normal: ${boss.normal ? 'killed' : 'not killed'}`"
+                  >N</span
+                >
+                <span
+                  :class="['pip', 'heroic', { active: boss.heroic }]"
+                  title="Heroic"
+                  role="img"
+                  :aria-label="`Heroic: ${boss.heroic ? 'killed' : 'not killed'}`"
+                  >HC</span
+                >
                 <span
                   v-if="summary.mythic > 0 || raid.mythicFlex"
                   :class="['pip', 'mythic', { active: boss.mythic }]"
                   :title="raid.mythicFlex ? 'Mythic Flex' : 'Mythic'"
+                  role="img"
+                  :aria-label="`${raid.mythicFlex ? 'Mythic Flex' : 'Mythic'}: ${
+                    boss.mythic ? 'killed' : 'not killed'
+                  }`"
                   >{{ raid.mythicFlex ? 'MX' : 'M' }}</span
                 >
               </span>
@@ -82,7 +98,7 @@
                   :role="hasRoster(boss) ? 'button' : undefined"
                   :aria-expanded="hasRoster(boss) ? String(!!expanded[boss.name]) : undefined"
                   :aria-label="hasRoster(boss) ? `${boss.name} kill roster` : undefined"
-                  @click="toggle(boss.name)"
+                  @click="hasRoster(boss) && toggle(boss.name)"
                   @keydown.enter.prevent="hasRoster(boss) && toggle(boss.name)"
                   @keydown.space.prevent="hasRoster(boss) && toggle(boss.name)"
                 >
@@ -154,6 +170,7 @@ import RefreshDataButton from '@/components/RefreshDataButton.vue'
 import RosterList from '@/components/RosterList.vue'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAnalytics } from '@/composables/useAnalytics'
+import { formatUpdatedAt } from '@/lib/format'
 
 const { trackEvent } = useAnalytics()
 
@@ -176,18 +193,7 @@ const props = defineProps({
   },
 })
 
-const formattedUpdated = computed(() => {
-  if (!props.lastUpdated) return null
-  const date = new Date(props.lastUpdated)
-  if (Number.isNaN(date.getTime())) return null
-  return date.toLocaleString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-})
+const formattedUpdated = computed(() => formatUpdatedAt(props.lastUpdated))
 
 const expanded = reactive({})
 // Rosters mount on first expand and stay mounted, so the collapse transition has
@@ -246,7 +252,11 @@ function formatDate(isoString) {
   const d = new Date(isoString)
   const month = d.toLocaleDateString('en-US', { month: 'long' })
   const day = d.getDate()
-  return `${month} ${day}${ordinalSuffix(day)}`
+  const year = d.getFullYear()
+  const dayLabel = `${month} ${day}${ordinalSuffix(day)}`
+  // Older tiers are reachable through the collapsible rows, so a bare
+  // "March 29th" no longer says which year the kill happened.
+  return year === new Date().getFullYear() ? dayLabel : `${dayLabel} ${year}`
 }
 
 function pullsText(boss, mythicFlex = false) {
@@ -611,6 +621,17 @@ function hasRoster(boss) {
     @include tablet-sm {
       order: -1;
     }
+
+    // Kill state was carried by colour alone. Strike through the difficulties
+    // that are not down so the row still reads without hue.
+    .pip {
+      text-decoration: line-through;
+      text-decoration-thickness: 1px;
+
+      &.active {
+        text-decoration: none;
+      }
+    }
   }
 
   .pip {
@@ -623,7 +644,8 @@ function hasRoster(boss) {
     font-size: 0.65em;
     font-weight: 700;
     background: rgba(var(--t-text-primary-rgb), 0.03);
-    color: rgba(var(--t-text-primary-rgb), 0.15);
+    // 0.15 alpha was below the contrast floor even for decorative text.
+    color: rgba(var(--t-text-primary-rgb), 0.45);
     transition:
       background $duration-fast,
       color $duration-fast;

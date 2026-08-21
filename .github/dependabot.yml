@@ -11,3 +11,10 @@ updates:
     # Check the npm registry for updates every day (weekdays)
     schedule:
       interval: 'daily'
+
+  # Keeps the pinned action majors in .github/workflows/ from silently drifting
+  # into a deprecated release.
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'

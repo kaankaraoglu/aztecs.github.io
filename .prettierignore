@@ -2,3 +2,6 @@
 src/data/rio-mythicplus.json
 src/data/wcl-progression.json
 src/data/wcl-stats.json
+
+# Wrangler build/deploy artifacts
+.wrangler

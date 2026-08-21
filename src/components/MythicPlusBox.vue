@@ -58,6 +58,7 @@
 import { computed } from 'vue'
 import InfoBox from '@/components/InfoBox.vue'
 import { useMythicPlus } from '@/composables/useMythicPlus'
+import { formatUpdatedAt } from '@/lib/format'
 
 const { topRunners, dungeonBests, lastUpdated, hasData } = useMythicPlus()
 
@@ -69,18 +70,7 @@ function keyLevel(key) {
   return m ? Number(m[1]) : 0
 }
 
-const formattedUpdated = computed(() => {
-  if (!lastUpdated) return null
-  const date = new Date(lastUpdated)
-  if (Number.isNaN(date.getTime())) return null
-  return date.toLocaleString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-})
+const formattedUpdated = computed(() => formatUpdatedAt(lastUpdated))
 </script>
 
 <style lang="scss" scoped>

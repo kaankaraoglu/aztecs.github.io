@@ -1,5 +1,8 @@
 <template>
-  <button class="discord-btn" aria-label="Discord" type="button">
+  <!-- Presentational only. The caller supplies the interactive element and the
+       accessible name; rendering a button here meant a button nested inside the
+       header's link. -->
+  <span class="discord-icon" aria-hidden="true">
     <svg class="discord-svg" viewBox="0 -28.5 256 256" preserveAspectRatio="xMidYMid">
       <path
         class="discord-svg-path"
@@ -8,31 +11,23 @@
         fill-rule="nonzero"
       ></path>
     </svg>
-  </button>
+  </span>
 </template>
 
 <style scoped lang="scss">
-.discord-btn {
+.discord-icon {
   font-size: 1.2em;
-  appearance: none;
-  cursor: pointer;
   position: relative;
-  background: none;
-  border: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--t-text-primary);
 
+  // Widens the hit area of whatever interactive element wraps this icon.
   &::before {
     content: '';
     position: absolute;
     inset: -0.5rem;
-  }
-
-  &:hover {
-    color: var(--t-accent);
   }
 }
 

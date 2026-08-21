@@ -15,6 +15,9 @@
               class="buff-pill"
               :title="buff.description"
             >
+              <span class="sr-only">{{
+                buff.count === 1 ? 'Covered by one player: ' : 'Covered: '
+              }}</span>
               {{ buff.name }}
               <span class="buff-meta">
                 <span class="buff-class">{{ classNames(buff.classes) }}</span>
@@ -28,6 +31,7 @@
               class="buff-pill"
               :title="buff.description"
             >
+              <span class="sr-only">Missing: </span>
               {{ buff.name }}
               <span class="buff-class">{{ classNames(buff.classes) }}</span>
             </Badge>
@@ -44,6 +48,9 @@
               class="buff-pill"
               :title="buff.description"
             >
+              <span class="sr-only">{{
+                buff.count === 1 ? 'Covered by one player: ' : 'Covered: '
+              }}</span>
               {{ buff.name }}
               <span class="buff-meta">
                 <span class="buff-class">{{ classNames(buff.classes) }}</span>
@@ -57,6 +64,7 @@
               class="buff-pill"
               :title="buff.description"
             >
+              <span class="sr-only">Missing: </span>
               {{ buff.name }}
               <span class="buff-class">{{ classNames(buff.classes) }}</span>
             </Badge>
@@ -175,7 +183,7 @@ function gridRows(count) {
 .buff-count {
   font-size: 0.6875rem;
   font-weight: 700;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(var(--t-text-primary-rgb), 0.15);
   border-radius: 9999px;
   min-width: 1.25rem;
   height: 1.25rem;

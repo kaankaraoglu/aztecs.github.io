@@ -21,6 +21,8 @@ const classes = computed(() => cn('info-box', !props.noHover && 'info-box--hover
 </template>
 
 <style scoped lang="scss">
+@use '@/assets/styles/tokens' as *;
+
 .info-box {
   position: relative;
   border-radius: 20px;
@@ -32,14 +34,14 @@ const classes = computed(() => cn('info-box', !props.noHover && 'info-box--hover
   padding: 1.5rem;
   box-sizing: border-box;
   transition:
-    background 250ms ease,
-    border-color 250ms ease,
-    box-shadow 250ms ease,
-    transform 250ms ease;
+    background $duration-normal $ease-default,
+    border-color $duration-normal $ease-default,
+    box-shadow $duration-normal $ease-default,
+    transform $duration-normal $ease-default;
 
-  @media (max-width: 600px) {
-    padding: 1rem;
-    border-radius: 16px;
+  @include mobile {
+    padding: $space-4;
+    border-radius: $radius-lg;
   }
 }
 

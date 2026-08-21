@@ -120,14 +120,7 @@ const renderedGroups = computed(() => {
   }
 }
 
-/* Comma separators via CSS for linked variant */
-a.player::after {
-  content: ',';
-  color: rgba(var(--t-text-primary-rgb), 0.12);
-  text-decoration: none;
-}
-
-a.player:last-of-type::after {
-  content: '';
-}
+/* No comma separators in the linked variant: each anchor sits alone in its own
+   <li>, so a `:last-of-type` exception would match every one of them. The
+   unlinked variant renders its separators in the template instead. */
 </style>
