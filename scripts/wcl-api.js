@@ -7,9 +7,13 @@
  */
 
 const GUILD_ID = 18606
-// Season 1: VS / DR / MQD (46) + Sporefall (50). Season 2: The Venomous Abyss (54) +
+// Season 1: VS / DR / MQD (46) + Sporefall (50). Season 2: The Venomous Abyss (53) +
 // The Tidebound Grotto (57).
-const CURRENT_ZONE_IDS = [46, 50, 54, 57]
+//
+// WCL lists a second zone also named "The Venomous Abyss" at id 54; guild reports
+// land in 53, so 54 returns nothing. Confirm an id against a real report's
+// /zone/rankings/<id> link before adding it here, not against the zone's name.
+const CURRENT_ZONE_IDS = [46, 50, 53, 57]
 const CURRENT_MPLUS_ZONE_ID = 47 // Midnight Season 1 M+
 const TOKEN_URL = 'https://www.warcraftlogs.com/oauth/token'
 const API_URL = 'https://www.warcraftlogs.com/api/v2/client'
