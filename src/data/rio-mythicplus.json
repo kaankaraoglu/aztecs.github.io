@@ -2,6 +2,22 @@
   "season": "season-mn-2",
   "topRunners": [
     {
+      "name": "Aerioth",
+      "class": "priest",
+      "score": 2568,
+      "topKeys": [
+        "+12 TOS",
+        "+12 MR",
+        "+12 AOF",
+        "+11 DON",
+        "+10 RLP",
+        "+12 BV",
+        "+6 KR",
+        "+6 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 2544,
@@ -14,22 +30,6 @@
         "+10 MR",
         "+8 RLP",
         "+8 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Aerioth",
-      "class": "priest",
-      "score": 2520,
-      "topKeys": [
-        "+12 TOS",
-        "+12 MR",
-        "+12 AOF",
-        "+10 RLP",
-        "+12 BV",
-        "+9 DON",
-        "+6 KR",
-        "+6 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -188,19 +188,19 @@
       ]
     },
     {
+      "dungeon": "Den of Nalorakk",
+      "level": 11,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Kings' Rest",
       "level": 11,
       "timed": true,
       "team": [
         "Daruni"
-      ]
-    },
-    {
-      "dungeon": "Den of Nalorakk",
-      "level": 10,
-      "timed": true,
-      "team": [
-        "Blackmaira"
       ]
     },
     {
@@ -220,5 +220,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T21:46:31.603Z"
+  "lastUpdated": "2026-08-21T22:48:23.947Z"
 }
