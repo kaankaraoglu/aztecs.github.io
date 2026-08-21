@@ -10,35 +10,19 @@
     </div>
 
     <div class="slots">
-      <div class="slot-grid slot-grid--required" role="list" aria-label="Core raid slots">
-        <span
-          v-for="(slot, i) in requiredSlots"
-          :key="`req-${i}`"
-          role="listitem"
-          class="slot"
-          :class="
-            slot.filled ? ['slot--filled', toClassColorCss(slot.sub.className)] : 'slot--empty'
-          "
-          :title="slot.filled ? slotTitle(slot.sub) : undefined"
-          :aria-label="slot.filled ? slotTitle(slot.sub) : 'Open slot'"
-        />
-      </div>
-      <div
-        class="slot-grid slot-grid--bonus"
-        role="list"
-        aria-label="Bonus raid slots beyond the minimum"
-      >
-        <span
-          v-for="(slot, i) in bonusSlots"
-          :key="`bonus-${i}`"
-          role="listitem"
-          class="slot"
-          :class="
-            slot.filled ? ['slot--filled', toClassColorCss(slot.sub.className)] : 'slot--empty'
-          "
-          :title="slot.filled ? slotTitle(slot.sub) : undefined"
-          :aria-label="slot.filled ? slotTitle(slot.sub) : 'Open bonus slot'"
-        />
+      <div v-for="row in roleRows" :key="row.role" class="role-row">
+        <span class="role-label">{{ row.label }}</span>
+        <div class="slot-row" role="list" :aria-label="`${row.label} signed up`">
+          <span
+            v-for="(sub, i) in row.submissions"
+            :key="i"
+            role="listitem"
+            class="slot slot--filled"
+            :class="toClassColorCss(sub.className)"
+            :title="slotTitle(sub)"
+            :aria-label="slotTitle(sub)"
+          />
+        </div>
       </div>
     </div>
 
@@ -72,7 +56,7 @@ const signupCount = computed(() => props.submissions.length)
 const isReady = computed(() => signupCount.value >= MIN_PLAYERS)
 const needed = computed(() => Math.max(0, MIN_PLAYERS - signupCount.value))
 
-// Grouping by class turns the grid into readable blocks of colour instead of
+// Grouping by class turns each row into readable blocks of colour instead of
 // a shuffle that changes shape on every reload (submissions come back in KV
 // key order, not signup order).
 const sortedSubmissions = computed(() =>
@@ -82,15 +66,31 @@ const sortedSubmissions = computed(() =>
   ),
 )
 
-function slotAt(index) {
-  const sub = sortedSubmissions.value[index]
-  return sub ? { filled: true, sub } : { filled: false }
-}
+// Beyond the max display count, extra signups are still counted (badge,
+// "signed up" label) but stop appearing as boxes — otherwise a big bench
+// list would make the grid grow without bound.
+const displayedSubmissions = computed(() => sortedSubmissions.value.slice(0, MAX_DISPLAY))
 
-const requiredSlots = computed(() => Array.from({ length: MIN_PLAYERS }, (_, i) => slotAt(i)))
-const bonusSlots = computed(() =>
-  Array.from({ length: MAX_DISPLAY - MIN_PLAYERS }, (_, i) => slotAt(MIN_PLAYERS + i)),
-)
+const ROLE_ROW_LABELS = { tank: 'Tanks', healer: 'Healers', dps: 'DPS' }
+
+// Melee and ranged share the DPS row — the box grid tracks raid composition
+// at a glance, not a full spec breakdown.
+const roleRows = computed(() => {
+  const buckets = { tank: [], healer: [], dps: [] }
+  for (const sub of displayedSubmissions.value) {
+    const specDef = WOW_CLASSES[sub.className]?.specs?.[sub.specName]
+    if (!specDef) continue
+    const role = specDef.role in buckets ? specDef.role : 'dps'
+    buckets[role].push(sub)
+  }
+  return Object.entries(buckets)
+    .filter(([, submissions]) => submissions.length > 0)
+    .map(([role, submissions]) => ({
+      role,
+      label: ROLE_ROW_LABELS[role],
+      submissions,
+    }))
+})
 
 function slotTitle(sub) {
   const classDef = WOW_CLASSES[sub.className]
@@ -143,26 +143,38 @@ function slotTitle(sub) {
 .slots {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: $space-3;
+  gap: $space-2;
   margin: $space-2 0 $space-4;
 }
 
-.slot-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1.5rem);
-  grid-auto-rows: 1.5rem;
+.role-row {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.role-label {
+  flex: 0 0 3.5rem;
+  font-size: 0.75rem;
+  color: $color-text-subtle;
+  text-align: right;
+}
+
+.slot-row {
+  display: flex;
+  flex: 1;
   gap: $space-1;
+  min-width: 0;
 }
 
 .slot {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 1.5rem;
   border-radius: $radius-sm;
   border: 1px solid var(--t-border);
   background: var(--t-surface-raised);
-  transition:
-    background $duration-fast $ease-default,
-    border-color $duration-fast $ease-default,
-    transform $duration-fast $ease-default;
+  transition: transform $duration-fast $ease-default;
 }
 
 .slot--filled {
@@ -170,13 +182,8 @@ function slotTitle(sub) {
   background: color-mix(in srgb, currentColor 70%, transparent);
 
   &:hover {
-    transform: scale(1.2);
+    transform: scale(1.15);
   }
-}
-
-.slot-grid--bonus .slot--empty {
-  border-style: dashed;
-  opacity: 0.6;
 }
 
 .progress-labels {
