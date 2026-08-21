@@ -26,6 +26,13 @@ function setMockStats(overrides) {
 }
 
 describe('RaidStatsBox', () => {
+  it('renders a single combined section with one heading', () => {
+    setMockStats({})
+    const wrapper = mount(RaidStatsBox)
+    expect(wrapper.findAll('.stats-section-label')).toHaveLength(1)
+    expect(wrapper.find('.stats-section-label').text()).toBe('HALL OF FAME & SHAME')
+  })
+
   it('shows "No data yet." for all empty stats', () => {
     setMockStats({})
     const wrapper = mount(RaidStatsBox)
@@ -45,7 +52,7 @@ describe('RaidStatsBox', () => {
     })
     const wrapper = mount(RaidStatsBox)
     const cards = wrapper.findAll('.stat-card')
-    const deathCard = cards[5]
+    const deathCard = cards[4]
     expect(deathCard.find('.stat-name').text()).toBe('Proto')
     expect(deathCard.find('.stat-name').classes()).toContain('evoker')
     expect(deathCard.find('.stat-value').text()).toBe('15 deaths')
