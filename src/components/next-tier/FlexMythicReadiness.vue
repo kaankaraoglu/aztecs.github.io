@@ -9,9 +9,37 @@
       </Badge>
     </div>
 
-    <div class="progress-track">
-      <div class="progress-fill" :class="{ ready: isReady }" :style="{ width: progressPct }" />
-      <div class="progress-threshold" :style="{ left: thresholdPct }" />
+    <div class="slots">
+      <div class="slot-grid slot-grid--required" role="list" aria-label="Core raid slots">
+        <span
+          v-for="(slot, i) in requiredSlots"
+          :key="`req-${i}`"
+          role="listitem"
+          class="slot"
+          :class="
+            slot.filled ? ['slot--filled', toClassColorCss(slot.sub.className)] : 'slot--empty'
+          "
+          :title="slot.filled ? slotTitle(slot.sub) : undefined"
+          :aria-label="slot.filled ? slotTitle(slot.sub) : 'Open slot'"
+        />
+      </div>
+      <div
+        class="slot-grid slot-grid--bonus"
+        role="list"
+        aria-label="Bonus raid slots beyond the minimum"
+      >
+        <span
+          v-for="(slot, i) in bonusSlots"
+          :key="`bonus-${i}`"
+          role="listitem"
+          class="slot"
+          :class="
+            slot.filled ? ['slot--filled', toClassColorCss(slot.sub.className)] : 'slot--empty'
+          "
+          :title="slot.filled ? slotTitle(slot.sub) : undefined"
+          :aria-label="slot.filled ? slotTitle(slot.sub) : 'Open bonus slot'"
+        />
+      </div>
     </div>
 
     <div class="progress-labels">
@@ -19,7 +47,7 @@
         <span class="count" :class="isReady ? 'text-ready' : 'text-short'">{{ signupCount }}</span>
         signed up
       </span>
-      <span class="label-min">{{ MIN_PLAYERS }} min</span>
+      <span class="label-min">{{ MIN_PLAYERS }} min &middot; {{ MAX_DISPLAY }} max</span>
     </div>
   </InfoBox>
 </template>
@@ -28,21 +56,48 @@
 import { computed } from 'vue'
 import InfoBox from '@/components/InfoBox.vue'
 import { Badge } from '@/components/ui/badge'
+import { WOW_CLASSES } from '@/data/wow-classes.js'
+import { toClassColorCss } from '@/lib/utils'
 
+// A flex mythic raid needs at least 15 to fill three groups; up to 25 (five
+// groups) fit on the roster as bench/flex cover.
 const MIN_PLAYERS = 15
 const MAX_DISPLAY = 25
 
 const props = defineProps({
-  signupCount: { type: Number, required: true },
+  submissions: { type: Array, default: () => [] },
 })
 
-const isReady = computed(() => props.signupCount >= MIN_PLAYERS)
-const needed = computed(() => Math.max(0, MIN_PLAYERS - props.signupCount))
-const progressPct = computed(() => {
-  const pct = Math.min((props.signupCount / MAX_DISPLAY) * 100, 100)
-  return `${pct}%`
-})
-const thresholdPct = computed(() => `${(MIN_PLAYERS / MAX_DISPLAY) * 100}%`)
+const signupCount = computed(() => props.submissions.length)
+const isReady = computed(() => signupCount.value >= MIN_PLAYERS)
+const needed = computed(() => Math.max(0, MIN_PLAYERS - signupCount.value))
+
+// Grouping by class turns the grid into readable blocks of colour instead of
+// a shuffle that changes shape on every reload (submissions come back in KV
+// key order, not signup order).
+const sortedSubmissions = computed(() =>
+  [...props.submissions].sort(
+    (a, b) =>
+      a.className.localeCompare(b.className) || a.characterName.localeCompare(b.characterName),
+  ),
+)
+
+function slotAt(index) {
+  const sub = sortedSubmissions.value[index]
+  return sub ? { filled: true, sub } : { filled: false }
+}
+
+const requiredSlots = computed(() => Array.from({ length: MIN_PLAYERS }, (_, i) => slotAt(i)))
+const bonusSlots = computed(() =>
+  Array.from({ length: MAX_DISPLAY - MIN_PLAYERS }, (_, i) => slotAt(MIN_PLAYERS + i)),
+)
+
+function slotTitle(sub) {
+  const classDef = WOW_CLASSES[sub.className]
+  const specDef = classDef?.specs?.[sub.specName]
+  const label = classDef ? `${classDef.name}${specDef ? ` ${specDef.name}` : ''}` : sub.className
+  return `${sub.characterName} — ${label}`
+}
 </script>
 
 <style scoped lang="scss">
@@ -85,34 +140,43 @@ const thresholdPct = computed(() => `${(MIN_PLAYERS / MAX_DISPLAY) * 100}%`)
   }
 }
 
-.progress-track {
-  position: relative;
-  height: 8px;
-  background: var(--t-surface-raised);
-  border-radius: 9999px;
-  overflow: visible;
-  margin-bottom: $space-2;
+.slots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+  margin: $space-2 0 $space-4;
 }
 
-.progress-fill {
-  height: 100%;
-  border-radius: 9999px;
-  background: #f54545;
-  transition: width 0.5s ease;
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1.5rem);
+  grid-auto-rows: 1.5rem;
+  gap: $space-1;
+}
 
-  &.ready {
-    background: #50c878;
+.slot {
+  border-radius: $radius-sm;
+  border: 1px solid var(--t-border);
+  background: var(--t-surface-raised);
+  transition:
+    background $duration-fast $ease-default,
+    border-color $duration-fast $ease-default,
+    transform $duration-fast $ease-default;
+}
+
+.slot--filled {
+  border-color: currentColor;
+  background: color-mix(in srgb, currentColor 70%, transparent);
+
+  &:hover {
+    transform: scale(1.2);
   }
 }
 
-.progress-threshold {
-  position: absolute;
-  top: -3px;
-  width: 2px;
-  height: 14px;
-  background: $color-text-subtle;
-  border-radius: 1px;
-  transform: translateX(-50%);
+.slot-grid--bonus .slot--empty {
+  border-style: dashed;
+  opacity: 0.6;
 }
 
 .progress-labels {

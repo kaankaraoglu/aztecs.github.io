@@ -7,7 +7,7 @@
       :signup-count="submissions.length"
     />
 
-    <FlexMythicReadiness class="reveal" :signup-count="submissions.length" />
+    <FlexMythicReadiness class="reveal" :submissions="submissions" />
 
     <BuffCoverage class="reveal" :covered-buffs="coveredBuffs" :missing-buffs="missingBuffs" />
 
