@@ -36,13 +36,13 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 2362,
+      "score": 2374,
       "topKeys": [
         "+11 KR",
         "+10 TOS",
         "+10 MR",
+        "+10 RLP",
         "+9 AOF",
-        "+9 RLP",
         "+9 DON",
         "+7 BV",
         "+6 VSA"
@@ -52,29 +52,90 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 1942,
+      "score": 2226,
       "topKeys": [
         "+10 TOS",
         "+10 RLP",
         "+10 AOF",
+        "+10 KR",
+        "+8 MR",
         "+6 VSA",
         "+6 BV",
-        "+6 KR",
-        "+6 MR"
+        "+3 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 1863,
+      "topKeys": [
+        "+9 TOS",
+        "+8 MR",
+        "+8 AOF",
+        "+6 VSA",
+        "+5 BV",
+        "+3 KR",
+        "+3 DON",
+        "+2 RLP"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Sâmáar",
+      "class": "priest",
+      "score": 1727,
+      "topKeys": [
+        "+9 TOS",
+        "+6 RLP",
+        "+6 VSA",
+        "+6 MR",
+        "+3 KR",
+        "+3 DON",
+        "+2 AOF",
+        "+4 BV"
       ],
       "realmSlug": "alakir"
     },
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 1626,
+      "score": 1701,
       "topKeys": [
+        "+6 RLP",
         "+6 VSA",
         "+6 BV",
         "+6 TOS",
         "+6 KR",
         "+6 MR",
-        "+6 AOF",
+        "+6 AOF"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Incendia",
+      "class": "mage",
+      "score": 1452,
+      "topKeys": [
+        "+9 TOS",
+        "+8 MR",
+        "+8 AOF",
+        "+6 VSA",
+        "+3 DON",
+        "+2 RLP"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Agro",
+      "class": "warrior",
+      "score": 1329,
+      "topKeys": [
+        "+9 TOS",
+        "+8 MR",
+        "+5 BV",
+        "+3 DON",
+        "+2 KR",
         "+2 RLP"
       ],
       "realmSlug": "alakir"
@@ -91,56 +152,6 @@
         "+2 BV"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sâmáar",
-      "class": "priest",
-      "score": 1246,
-      "topKeys": [
-        "+6 VSA",
-        "+6 TOS",
-        "+6 MR",
-        "+3 KR",
-        "+2 AOF",
-        "+4 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 1181,
-      "topKeys": [
-        "+8 AOF",
-        "+7 TOS",
-        "+5 BV",
-        "+5 MR",
-        "+3 KR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Valorite",
-      "class": "death-knight",
-      "score": 940,
-      "topKeys": [
-        "+8 AOF",
-        "+7 TOS",
-        "+5 BV",
-        "+2 KR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Meld",
-      "class": "hunter",
-      "score": 830,
-      "topKeys": [
-        "+10 RLP",
-        "+9 KR",
-        "+5 BV"
-      ],
-      "realmSlug": "twisting-nether"
     }
   ],
   "dungeonBests": [
@@ -195,9 +206,9 @@
     {
       "dungeon": "Ruby Life Pools",
       "level": 10,
-      "timed": true,
+      "timed": false,
       "team": [
-        "Aerioth"
+        "Daruni"
       ]
     },
     {
@@ -209,5 +220,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T21:14:44.490Z"
+  "lastUpdated": "2026-08-21T21:46:31.603Z"
 }
