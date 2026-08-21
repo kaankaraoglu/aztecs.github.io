@@ -381,11 +381,16 @@ function hasRoster(boss) {
 
   .difficulty-section {
     break-inside: avoid;
-    margin-bottom: $space-4;
+    // Column flex rather than margins so the 0.3rem below the heading is
+    // skipped when the boss list is collapsed away. Raid-to-raid spacing is the
+    // parent's gap alone; a margin here stacked on top of it.
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
   }
 
   .instance-name {
-    margin: 0 0 0.3rem;
+    margin: 0;
     font-size: 0.8em;
     font-weight: 700;
     text-transform: uppercase;
@@ -399,7 +404,6 @@ function hasRoster(boss) {
     align-items: center;
     gap: $space-3;
     width: 100%;
-    margin-bottom: 0.3rem;
     padding: 0.5rem 0.6rem;
     background: $surface-2;
     border: none;
