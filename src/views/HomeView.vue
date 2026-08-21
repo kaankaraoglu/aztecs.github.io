@@ -147,8 +147,21 @@ onMounted(() => {
     }
   }
 
+  // Sized to two Hall of Fame & Shame cards so the box lines up with that
+  // grid below it. That grid is repeat(4, 1fr) with a $space-4 gap, so two
+  // cards plus the gap between them comes to 50% minus half a gap. The
+  // column count drops at $desktop-sm and $tablet, so the width follows.
   .next-tier-box {
-    margin-bottom: $space-6;
+    max-width: calc(50% - #{$space-4} * 0.5);
+    margin: 0 auto $space-6;
+
+    @include desktop-sm {
+      max-width: calc(200% / 3 - #{$space-4} / 3);
+    }
+
+    @include tablet {
+      max-width: 100%;
+    }
   }
 
   .latest-achievements {
