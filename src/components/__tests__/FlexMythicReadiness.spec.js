@@ -99,11 +99,12 @@ describe('FlexMythicReadiness', () => {
     expect(roleLabels(wrapper)).toEqual(['Healers'])
   })
 
-  it('colours a filled slot with the signed-up player’s class', () => {
+  it('colours a filled slot with the signed-up player’s class and names them for hover/screen readers', () => {
     const wrapper = mountReadiness([makeSubmission('warlock', 'Gul’dan', 'affliction')])
     const slot = wrapper.find('.slot--filled')
     expect(slot.classes()).toContain('warlock')
-    expect(slot.attributes('title')).toContain('Gul’dan')
+    expect(slot.attributes('title')).toBeUndefined()
+    expect(slot.attributes('aria-label')).toContain('Gul’dan')
   })
 
   it('labels the current count and the minimum/maximum', () => {
