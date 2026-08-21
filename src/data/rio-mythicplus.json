@@ -36,11 +36,11 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 2279,
+      "score": 2310,
       "topKeys": [
         "+11 KR",
+        "+10 TOS",
         "+9 AOF",
-        "+9 TOS",
         "+9 RLP",
         "+9 DON",
         "+7 MR",
@@ -187,7 +187,7 @@
       "level": 10,
       "timed": true,
       "team": [
-        "Blackmaira"
+        "Daruni"
       ]
     },
     {
@@ -207,5 +207,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-21T15:35:21.468Z"
+  "lastUpdated": "2026-08-21T16:59:09.912Z"
 }
