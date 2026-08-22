@@ -21,8 +21,9 @@ export default defineConfig([
   },
 
   {
-    // Node-side files: build scripts and the Vite/ESLint config themselves.
-    files: ['scripts/**/*.js', '*.config.js'],
+    // Node-side files: build scripts, the Vite/ESLint config themselves, and
+    // Claude Code project hooks (also Node scripts, run outside the browser).
+    files: ['scripts/**/*.js', '*.config.js', '.claude/hooks/**/*.mjs'],
     languageOptions: {
       globals: {
         ...globals.node,
