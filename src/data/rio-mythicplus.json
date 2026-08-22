@@ -66,6 +66,20 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Amorrlan",
+      "class": "demon-hunter",
+      "score": 1891,
+      "topKeys": [
+        "+11 BV",
+        "+10 AOF",
+        "+10 TOS",
+        "+10 KR",
+        "+9 RLP",
+        "+8 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Phruity",
       "class": "druid",
       "score": 1863,
@@ -78,20 +92,6 @@
         "+3 KR",
         "+3 DON",
         "+2 RLP"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Amorrlan",
-      "class": "demon-hunter",
-      "score": 1785,
-      "topKeys": [
-        "+10 AOF",
-        "+10 TOS",
-        "+10 KR",
-        "+9 RLP",
-        "+8 VSA",
-        "+5 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -221,5 +221,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-22T10:47:14.963Z"
+  "lastUpdated": "2026-08-22T12:17:42.573Z"
 }
