@@ -49,8 +49,6 @@ src/
 │   └── styles/             # _variables.scss, _tokens.scss, _theme.scss
 ├── components/
 │   ├── icons/              # RoleIcon.vue, DiscordIcon.vue
-│   ├── next-tier/          # Signup feature: TierHeader, SignupForm, SignupTable,
-│   │                       #   BuffCoverage, RoleBalance, FlexMythicReadiness
 │   ├── ui/                 # Shadcn/Reka UI primitives (Alert, Dialog, Button,
 │   │                       #   Card, Badge, Input, Progress, Switch, Table,
 │   │                       #   Select, HoverCard, Skeleton)
@@ -58,7 +56,7 @@ src/
 │   └── *.vue               # Layout/feature components (see list below)
 ├── composables/
 │   ├── __tests__/          # Composable unit tests
-│   └── *.js                # 9 composables (see list below)
+│   └── *.js                # 7 composables (see list below)
 ├── data/
 │   ├── __tests__/          # Data validation tests
 │   ├── site-routes.js      # Public route list: titles, descriptions, sitemap priorities
@@ -72,7 +70,7 @@ src/
 │   └── setup.js            # Vitest global setup (stubs missing JSON files)
 ├── views/
 │   ├── __tests__/          # View tests
-│   └── *.vue               # 8 page-level views
+│   └── *.vue               # 7 page-level views
 ├── App.vue                 # Root layout + page transitions + EmberParticles
 ├── firebase.js             # Firebase initialization
 └── main.js                 # App entry point, lazy Firebase in prod
@@ -89,7 +87,6 @@ scripts/
 └── __tests__/              # Tests for the script helpers
 
 workers/
-├── signup/                 # Discord OAuth + signup form API (signup.aztecs.se)
 └── refresh/                # Rate-limited workflow dispatch trigger (refresh.aztecs.se)
 
 .github/workflows/
@@ -111,7 +108,6 @@ All routes are lazy-loaded. Vue Router 5 with hash-based page transitions (fade 
 | `/achievements`     | AchievementsView  | Aztecs - Achievements           |
 | `/about`            | AboutView         | Aztecs - About Us               |
 | `/in-memoriam`      | InMemoriamView    | Aztecs - In Memoriam            |
-| `/next-tier`        | NextTierView      | Aztecs - Next Tier Signups      |
 | `/wow-kills`        | → `/achievements` | (redirect)                      |
 | `/:pathMatch(.*)* ` | NotFoundView      | —                               |
 
@@ -131,21 +127,17 @@ The router also sets `<title>`, meta description, Open Graph tags, Twitter cards
 
 **Utility**: `InfoBox.vue` (card container), `ImageLightbox.vue` (kill screenshot modal), `RosterList.vue`, `FadingDivider.vue`, `EmberParticles.vue` (canvas animation), `RefreshDataButton.vue` (Turnstile + worker)
 
-**Next-tier signup** (`components/next-tier/`): `TierHeader.vue`, `SignupForm.vue`, `SignupTable.vue`, `BuffCoverage.vue`, `RoleBalance.vue`, `FlexMythicReadiness.vue` (role slot grid + missing-classes list, shown on the home page and the `/next-tier` page)
-
 ### Composables
 
-| File                    | Purpose                                                                                                      |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `useProgression.js`     | Raid progression — reads `wcl-progression.json` (falls back to `progression.js`), then appends `upcoming.js` |
-| `useMythicPlus.js`      | M+ season/dungeon data from `rio-mythicplus.json`                                                            |
-| `useRaidStats.js`       | Deaths/DPS/healing records from `wcl-stats.json`                                                             |
-| `useBuffAnalysis.js`    | Computes covered vs. missing raid buffs + role counts from signups                                           |
-| `useNextTierSignups.js` | Full signup flow: Discord OAuth, JWT, CRUD via signup worker API                                             |
-| `useAnalytics.js`       | Firebase Analytics wrapper — lazy, silent, no-ops outside production                                         |
-| `useTheme.js`           | Dark/light theme toggle — persists to localStorage, sets `data-theme` on `<html>`                            |
-| `useScrollReveal.js`    | IntersectionObserver-based scroll-triggered reveal animations                                                |
-| `useTiltEffect.js`      | 3D mouse-tilt effect (desktop only, respects `prefers-reduced-motion`)                                       |
+| File                 | Purpose                                                                                                      |
+| -------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `useProgression.js`  | Raid progression — reads `wcl-progression.json` (falls back to `progression.js`), then appends `upcoming.js` |
+| `useMythicPlus.js`   | M+ season/dungeon data from `rio-mythicplus.json`                                                            |
+| `useRaidStats.js`    | Deaths/DPS/healing records from `wcl-stats.json`                                                             |
+| `useAnalytics.js`    | Firebase Analytics wrapper — lazy, silent, no-ops outside production                                         |
+| `useTheme.js`        | Dark/light theme toggle — persists to localStorage, sets `data-theme` on `<html>`                            |
+| `useScrollReveal.js` | IntersectionObserver-based scroll-triggered reveal animations                                                |
+| `useTiltEffect.js`   | 3D mouse-tilt effect (desktop only, respects `prefers-reduced-motion`)                                       |
 
 ### Data Flow for Raid Progression
 
@@ -179,28 +171,6 @@ The **RefreshDataButton** component in the progression header lets users trigger
 | `src/data/wcl-stats.json`       | Build-time fetched — aggregated raid statistics                       |
 
 ### Cloudflare Workers
-
-#### Signup Worker (`workers/signup/`, deployed to `signup.aztecs.se`)
-
-Discord OAuth + signup CRUD backed by Cloudflare KV (`SIGNUPS` namespace).
-
-| Endpoint                     | Description                             |
-| ---------------------------- | --------------------------------------- |
-| `GET /auth/discord`          | Redirect to Discord OAuth               |
-| `GET /auth/discord/callback` | Callback — issues JWT                   |
-| `GET /api/config`            | Current tier config (id, name, isOpen)  |
-| `PUT /api/admin/config`      | Update config (requires `ADMIN_SECRET`) |
-| `GET /api/submissions`       | List all signups for current tier       |
-| `PUT /api/submissions`       | Create/update signup (requires JWT)     |
-| `DELETE /api/submissions`    | Remove signup (requires JWT)            |
-
-Secrets (via `wrangler secret`): `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`, `JWT_SECRET`, `ADMIN_SECRET`, `ADMIN_DISCORD_IDS`, `FRONTEND_URL`
-
-The OAuth `state` value is stored in a `SameSite=Lax` cookie on the worker's own origin and compared on callback, so the flow rejects a code the user did not start.
-
-**Storage layout.** One KV key per signup, `tier:<tierId>:<handle>`, with the public projection duplicated into the key's metadata so `GET /api/submissions` answers from a single `list()`. A write touches only that member's own key, which is what keeps two people signing up at once from overwriting each other; KV has no compare-and-set, so the older single-array layout lost one of any two overlapping writes. A tier still stored as an array is migrated on the first write, guarded by a `migrated:<tierId>` marker, and is readable in the meantime.
-
-**`handle` is a per-tier pseudonym**, the first 22 characters of base64url(SHA-256(`tierId:discordId`)). The public list identifies members by it rather than by their Discord id, which never leaves the worker. `src/composables/useNextTierSignups.js` computes the same value client-side to answer "is this row mine"; the two implementations must agree, and `src/composables/__tests__/useNextTierSignups.spec.js` pins the algorithm to a known vector. `DELETE /api/submissions` takes `?handle=`, and still accepts `?discordId=` so the worker and the frontend can be deployed in either order.
 
 #### Refresh Worker (`workers/refresh/`, deployed to `refresh.aztecs.se`)
 
@@ -246,7 +216,6 @@ Build-time only (not exposed to browser):
 Runtime (Vite `VITE_` prefix, exposed to browser):
 
 - `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_FIREBASE_MEASUREMENT_ID`
-- `VITE_SIGNUP_WORKER_URL` — base URL for the signup Cloudflare Worker
 - `VITE_REFRESH_WORKER_URL` — base URL for the refresh Cloudflare Worker
 - `VITE_TURNSTILE_SITE_KEY` — Cloudflare Turnstile public key
 

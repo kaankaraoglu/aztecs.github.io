@@ -7,11 +7,6 @@
       </p>
     </section>
     <div class="content-wrapper">
-      <FlexMythicReadiness
-        class="reveal next-tier-box"
-        :submissions="submissions"
-        show-signup-link
-      />
       <RaidStatsBox class="reveal" />
       <FadingDivider />
       <div class="top-boxes">
@@ -59,16 +54,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { kills } from '@/data/kills.js'
 import { useProgression } from '@/composables/useProgression.js'
-import { useNextTierSignups } from '@/composables/useNextTierSignups.js'
 import { useScrollReveal } from '@/composables/useScrollReveal.js'
 import FadingDivider from '@/components/FadingDivider.vue'
 import RaidProgressionBox from '@/components/RaidProgressionBox.vue'
 import MythicPlusBox from '@/components/MythicPlusBox.vue'
 import RaidStatsBox from '@/components/RaidStatsBox.vue'
-import FlexMythicReadiness from '@/components/next-tier/FlexMythicReadiness.vue'
 import ImageLightbox from '@/components/ImageLightbox.vue'
 import InfoBox from '@/components/InfoBox.vue'
 
@@ -76,13 +69,8 @@ const containerRef = ref(null)
 useScrollReveal(containerRef)
 
 const { raids, summary, latestReport, lastUpdated } = useProgression()
-const { submissions, fetchSubmissions } = useNextTierSignups()
 const latestKills = kills.slice(0, 2)
 const lightboxSrc = ref('')
-
-onMounted(() => {
-  fetchSubmissions()
-})
 </script>
 
 <style lang="scss" scoped>
@@ -144,23 +132,6 @@ onMounted(() => {
 
     @include tablet {
       grid-template-columns: 1fr;
-    }
-  }
-
-  // Sized to two Hall of Fame & Shame cards so the box lines up with that
-  // grid below it. That grid is repeat(4, 1fr) with a $space-4 gap, so two
-  // cards plus the gap between them comes to 50% minus half a gap. The
-  // column count drops at $desktop-sm and $tablet, so the width follows.
-  .next-tier-box {
-    max-width: calc(50% - #{$space-4} * 0.5);
-    margin: 0 auto $space-6;
-
-    @include desktop-sm {
-      max-width: calc(200% / 3 - #{$space-4} / 3);
-    }
-
-    @include tablet {
-      max-width: 100%;
     }
   }
 

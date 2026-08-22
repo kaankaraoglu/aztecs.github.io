@@ -15,8 +15,8 @@ const routes = router.options.routes
 describe('Router — route definitions', () => {
   const findRoute = (path) => routes.find((r) => r.path === path)
 
-  it('defines exactly 9 routes', () => {
-    expect(routes).toHaveLength(9)
+  it('defines exactly 8 routes', () => {
+    expect(routes).toHaveLength(8)
   })
 
   it.each([
@@ -26,7 +26,6 @@ describe('Router — route definitions', () => {
     ['/achievements', 'Aztecs - Achievements'],
     ['/about', 'Aztecs - About Us'],
     ['/in-memoriam', 'Aztecs - In Memoriam'],
-    ['/next-tier', 'Aztecs - Next Tier Signups'],
   ])('%s has correct meta title', (path, expectedTitle) => {
     expect(findRoute(path)?.meta?.title).toBe(expectedTitle)
   })
@@ -43,7 +42,7 @@ describe('Router — route definitions', () => {
 })
 
 describe('Router — lazy-loading', () => {
-  it.each(['/', '/contact', '/raiding', '/achievements', '/about', '/in-memoriam', '/next-tier'])(
+  it.each(['/', '/contact', '/raiding', '/achievements', '/about', '/in-memoriam'])(
     '%s component is a lazy factory function',
     (path) => {
       const route = routes.find((r) => r.path === path)
@@ -78,7 +77,6 @@ describe('Router — navigation guard', () => {
     ['/achievements', 'Aztecs - Achievements'],
     ['/about', 'Aztecs - About Us'],
     ['/in-memoriam', 'Aztecs - In Memoriam'],
-    ['/next-tier', 'Aztecs - Next Tier Signups'],
   ])('navigating to %s sets document.title to "%s"', async (path, expectedTitle) => {
     await router.push(path)
     await router.isReady()
@@ -148,10 +146,10 @@ describe('Router — head metadata', () => {
       'https://aztecs.se/contact',
     )
 
-    await router.push('/next-tier')
+    await router.push('/raiding')
     expect(document.querySelectorAll('link[rel="canonical"]')).toHaveLength(1)
     expect(document.querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(
-      'https://aztecs.se/next-tier',
+      'https://aztecs.se/raiding',
     )
   })
 

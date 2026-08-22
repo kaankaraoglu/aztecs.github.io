@@ -11,14 +11,14 @@ A catalogue of open improvements for the aztecs.github.io codebase. Items are gr
 ## UX: empty and error states
 
 - **[High]** No view renders an error state when the WCL or RIO data is empty. `HomeView.vue`, `RaidingView.vue` and `AchievementsView.vue` should show a "couldn't load this, try refreshing" panel when the relevant composable has no data. The fetchers now degrade to stale data rather than blanking the file, so this only shows up after a genuinely empty first fetch, but the page currently renders as if nothing were wrong.
-- **[Medium]** There is no toast or snackbar. `SignupForm.vue`, `SignupTable.vue` and `RefreshDataButton.vue` each communicate success and failure through their own ephemeral inline state. A small shared composable (or reka-ui's toast) would let those messages persist for a few seconds and be announced once, consistently.
+- **[Medium]** There is no toast or snackbar. `RefreshDataButton.vue` communicates success and failure through its own ephemeral inline state. A small shared composable (or reka-ui's toast) would let those messages persist for a few seconds and be announced once, consistently.
 - **[Low]** `src/views/NotFoundView.vue` reads as boilerplate. The guild's voice comes through strongly on About and In Memoriam, and the 404 page could use the same treatment.
 
 ## Code architecture
 
 - **[Medium]** `src/components/RaidProgressionBox.vue` is around 750 lines. A `BossRow.vue` (the per-boss row and its difficulty pips) and a `RosterAccordion.vue` (the expandable kill roster) would leave the parent handling layout and data flow.
 - **[Medium]** `src/components/HeaderView.vue` mixes navigation, theme switching and splash-text rotation. The splash rotation is self-contained enough to move into a `useSplashText.js` composable.
-- **[Medium]** `import.meta.env.VITE_*` is read directly in `useNextTierSignups.js` and `RefreshDataButton.vue`. A `src/lib/env.js` that reads them in one place, with a clear warning when a required var is missing, would make a misconfigured deploy diagnosable. Today a missing `VITE_REFRESH_WORKER_URL` just renders a button that does nothing when clicked.
+- **[Medium]** `import.meta.env.VITE_*` is read directly in `RefreshDataButton.vue`. A `src/lib/env.js` that reads them in one place, with a clear warning when a required var is missing, would make a misconfigured deploy diagnosable. Today a missing `VITE_REFRESH_WORKER_URL` just renders a button that does nothing when clicked.
 - **[Low]** `src/views/AboutView.vue` hand-rolls a second copy of the glass card that `InfoBox.vue` already provides.
 
 ## Performance
