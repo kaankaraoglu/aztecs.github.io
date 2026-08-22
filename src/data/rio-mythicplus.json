@@ -68,14 +68,14 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 1891,
+      "score": 1929,
       "topKeys": [
         "+11 BV",
         "+10 AOF",
         "+10 TOS",
+        "+10 VSA",
         "+10 KR",
-        "+9 RLP",
-        "+8 VSA"
+        "+9 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -221,5 +221,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-22T14:45:47.305Z"
+  "lastUpdated": "2026-08-22T16:47:55.894Z"
 }
