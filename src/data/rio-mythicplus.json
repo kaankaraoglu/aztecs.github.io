@@ -4,14 +4,14 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 2568,
+      "score": 2628,
       "topKeys": [
+        "+12 BV",
         "+12 TOS",
         "+12 MR",
         "+12 AOF",
         "+11 DON",
         "+10 RLP",
-        "+12 BV",
         "+6 KR",
         "+6 VSA"
       ],
@@ -182,7 +182,7 @@
     {
       "dungeon": "The Blinding Vale",
       "level": 12,
-      "timed": false,
+      "timed": true,
       "team": [
         "Aerioth"
       ]
@@ -220,5 +220,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-22T07:08:32.934Z"
+  "lastUpdated": "2026-08-22T08:55:55.283Z"
 }
