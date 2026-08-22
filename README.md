@@ -66,14 +66,13 @@ npm run dev
 
 ### Environment Variables
 
-| Variable                  | Required    | Description                                         |
-| ------------------------- | ----------- | --------------------------------------------------- |
-| `WCL_CLIENT_ID`           | Deploy only | Warcraft Logs OAuth client ID                       |
-| `WCL_CLIENT_SECRET`       | Deploy only | Warcraft Logs OAuth client secret                   |
-| `VITE_FIREBASE_*`         | Deploy only | Firebase Analytics config (7 vars)                  |
-| `VITE_REFRESH_WORKER_URL` | Deploy only | Cloudflare Worker URL for on-demand data refresh    |
-| `VITE_TURNSTILE_SITE_KEY` | Deploy only | Cloudflare Turnstile site key for bot protection    |
-| `VITE_SIGNUP_WORKER_URL`  | Deploy only | Cloudflare Worker URL backing the next-tier signups |
+| Variable                  | Required    | Description                                      |
+| ------------------------- | ----------- | ------------------------------------------------ |
+| `WCL_CLIENT_ID`           | Deploy only | Warcraft Logs OAuth client ID                    |
+| `WCL_CLIENT_SECRET`       | Deploy only | Warcraft Logs OAuth client secret                |
+| `VITE_FIREBASE_*`         | Deploy only | Firebase Analytics config (7 vars)               |
+| `VITE_REFRESH_WORKER_URL` | Deploy only | Cloudflare Worker URL for on-demand data refresh |
+| `VITE_TURNSTILE_SITE_KEY` | Deploy only | Cloudflare Turnstile site key for bot protection |
 
 ## Architecture
 
@@ -81,14 +80,11 @@ npm run dev
 src/
 ├── assets/styles/       # SCSS variables, WoW class colors, design tokens, theme
 ├── components/          # Reusable components (HeaderView, KillCard, InfoBox, etc.)
-│   ├── ui/              # Base UI primitives (shadcn/reka style)
-│   └── next-tier/       # Signup form, table, buff coverage, role balance
+│   └── ui/              # Base UI primitives (shadcn/reka style)
 ├── composables/         # Composition API hooks
 │   ├── useProgression   # Raid progression from WCL data
 │   ├── useMythicPlus    # M+ data from Raider.IO
 │   ├── useRaidStats     # Raid DPS/HPS statistics
-│   ├── useBuffAnalysis  # Raid buff coverage and role counts from signups
-│   ├── useNextTierSignups # Discord OAuth + signup CRUD
 │   ├── useAnalytics     # Firebase Analytics (prod only)
 │   ├── useTheme         # Dark/light theme toggle
 │   ├── useScrollReveal  # Scroll-based reveal animations
@@ -98,7 +94,6 @@ src/
 │   ├── HomeView         # Landing page
 │   ├── RaidingView      # Raid schedule + loot rules
 │   ├── AchievementsView # Kill archive
-│   ├── NextTierView     # Next tier signups
 │   ├── AboutView        # Guild info
 │   ├── ContactView      # Contact page
 │   ├── InMemoriamView   # Memorial page
@@ -116,7 +111,6 @@ scripts/
 └── load-env.js          # Environment variable loader
 
 workers/
-├── signup/              # Discord OAuth + next-tier signup API
 └── refresh/             # Cloudflare Worker for on-demand data refresh
 ```
 

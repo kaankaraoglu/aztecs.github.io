@@ -8,7 +8,6 @@ const VIEWS = {
   '/achievements': () => import('@/views/AchievementsView.vue'),
   '/about': () => import('@/views/AboutView.vue'),
   '/in-memoriam': () => import('@/views/InMemoriamView.vue'),
-  '/next-tier': () => import('@/views/NextTierView.vue'),
 }
 
 const router = createRouter({

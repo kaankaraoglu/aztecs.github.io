@@ -37,12 +37,6 @@ export const SITE_ROUTES = Object.freeze([
     priority: '0.8',
   },
   {
-    path: '/next-tier',
-    title: 'Aztecs - Next Tier Signups',
-    description: "Sign up for the next raid tier with Aztecs on Al'Akir (EU).",
-    priority: '0.8',
-  },
-  {
     path: '/contact',
     title: 'Aztecs - Contact & Roster',
     description:
