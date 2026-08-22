@@ -4,15 +4,15 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 2796,
+      "score": 2823,
       "topKeys": [
         "+12 BV",
         "+12 KR",
         "+12 RLP",
         "+12 TOS",
+        "+12 DON",
         "+12 MR",
         "+12 AOF",
-        "+11 DON",
         "+6 VSA"
       ],
       "realmSlug": "alakir"
@@ -165,6 +165,14 @@
       ]
     },
     {
+      "dungeon": "Den of Nalorakk",
+      "level": 12,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Kings' Rest",
       "level": 12,
       "timed": true,
@@ -205,14 +213,6 @@
       ]
     },
     {
-      "dungeon": "Den of Nalorakk",
-      "level": 11,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "Voidscar Arena",
       "level": 10,
       "timed": false,
@@ -221,5 +221,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-22T16:47:55.894Z"
+  "lastUpdated": "2026-08-22T20:12:05.479Z"
 }
