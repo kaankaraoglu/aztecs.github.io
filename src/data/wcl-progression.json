@@ -2033,9 +2033,9 @@
           "heroic": false,
           "mythic": false,
           "pullsByDifficulty": {
-            "normal": 4
+            "normal": 11
           },
-          "bestPercent": 71.4
+          "bestPercent": 52.89
         }
       ]
     }
@@ -2047,5 +2047,5 @@
     "mythic": 0
   },
   "latestReport": "https://www.warcraftlogs.com/reports/bZ1vWJATCKQ32kVr",
-  "lastUpdated": "2026-08-23T19:41:42.084Z"
+  "lastUpdated": "2026-08-23T20:09:53.806Z"
 }
