@@ -4,15 +4,15 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 2823,
+      "score": 2825,
       "topKeys": [
         "+12 BV",
         "+12 KR",
         "+12 RLP",
         "+12 TOS",
         "+12 DON",
-        "+12 MR",
         "+12 AOF",
+        "+12 MR",
         "+6 VSA"
       ],
       "realmSlug": "alakir"
@@ -223,5 +223,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-23T13:09:25.740Z"
+  "lastUpdated": "2026-08-23T15:13:21.691Z"
 }
