@@ -1139,9 +1139,117 @@
       "bosses": [
         {
           "name": "Nymrissa Wavecaller",
-          "normal": false,
+          "normal": true,
           "heroic": false,
-          "mythic": false
+          "mythic": false,
+          "killedAt": "2026-08-23T17:04:29.811Z",
+          "pullsByDifficulty": {
+            "normal": 1
+          },
+          "roster": {
+            "tanks": [
+              {
+                "name": "Agro",
+                "class": "warrior",
+                "spec": "Protection",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
+              },
+              {
+                "name": "Phruity",
+                "class": "druid",
+                "spec": "Guardian",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
+              }
+            ],
+            "healers": [
+              {
+                "name": "Miranne",
+                "class": "shaman",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/miranne"
+              },
+              {
+                "name": "Sâmáar",
+                "class": "priest",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
+              },
+              {
+                "name": "Zultharek",
+                "class": "shaman",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/zultharek"
+              }
+            ],
+            "dps": [
+              {
+                "name": "Aerioth",
+                "class": "priest",
+                "spec": "Shadow",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
+              },
+              {
+                "name": "Amorrlan",
+                "class": "demon-hunter",
+                "spec": "Havoc",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/amorrlan"
+              },
+              {
+                "name": "Blackmaira",
+                "class": "paladin",
+                "spec": "Retribution",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
+              },
+              {
+                "name": "Daruni",
+                "class": "druid",
+                "spec": "Balance",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
+              },
+              {
+                "name": "Flootskaft",
+                "class": "shaman",
+                "spec": "Elemental",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/flootskaft"
+              },
+              {
+                "name": "Frosteyes",
+                "class": "death-knight",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
+              },
+              {
+                "name": "Kentoz",
+                "class": "druid",
+                "spec": "Balance",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/stormreaver/kentoz"
+              },
+              {
+                "name": "Meld",
+                "class": "hunter",
+                "spec": "BeastMastery",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/twisting-nether/meld"
+              },
+              {
+                "name": "Shaw",
+                "class": "rogue",
+                "spec": "Subtlety",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/shaw"
+              },
+              {
+                "name": "Snifs",
+                "class": "mage",
+                "spec": "Arcane",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/snifs"
+              },
+              {
+                "name": "Valorite",
+                "class": "death-knight",
+                "spec": "Unholy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
+              }
+            ]
+          }
         }
       ]
     },
@@ -1704,10 +1812,10 @@
   ],
   "summary": {
     "total": 19,
-    "normal": 15,
+    "normal": 16,
     "heroic": 10,
     "mythic": 0
   },
-  "latestReport": "https://www.warcraftlogs.com/reports/Agpx9hYz7T6n4wGc",
-  "lastUpdated": "2026-08-21T09:13:26.872Z"
+  "latestReport": "https://www.warcraftlogs.com/reports/bZ1vWJATCKQ32kVr",
+  "lastUpdated": "2026-08-23T17:11:26.964Z"
 }
