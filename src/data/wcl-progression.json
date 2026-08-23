@@ -1913,9 +1913,9 @@
           "heroic": false,
           "mythic": false,
           "pullsByDifficulty": {
-            "normal": 5
+            "normal": 7
           },
-          "bestPercent": 9.69
+          "bestPercent": 5.09
         },
         {
           "name": "Ula'tek",
@@ -1933,5 +1933,5 @@
     "mythic": 0
   },
   "latestReport": "https://www.warcraftlogs.com/reports/bZ1vWJATCKQ32kVr",
-  "lastUpdated": "2026-08-23T18:53:33.858Z"
+  "lastUpdated": "2026-08-23T19:14:14.600Z"
 }
