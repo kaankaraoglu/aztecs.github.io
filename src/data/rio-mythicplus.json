@@ -20,7 +20,7 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2544,
+      "score": 2567,
       "topKeys": [
         "+10 KR",
         "+10 AOF",
@@ -28,8 +28,8 @@
         "+10 DON",
         "+10 TOS",
         "+10 MR",
-        "+8 RLP",
-        "+8 VSA"
+        "+10 RLP",
+        "+9 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -52,15 +52,47 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 2226,
+      "score": 2416,
       "topKeys": [
         "+10 TOS",
         "+10 RLP",
+        "+10 DON",
         "+10 AOF",
         "+10 KR",
+        "+9 VSA",
         "+8 MR",
+        "+6 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 2072,
+      "topKeys": [
+        "+10 DON",
+        "+9 RLP",
         "+6 VSA",
         "+6 BV",
+        "+6 TOS",
+        "+6 KR",
+        "+6 MR",
+        "+6 AOF"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 2047,
+      "topKeys": [
+        "+10 RLP",
+        "+9 TOS",
+        "+9 VSA",
+        "+8 MR",
+        "+8 AOF",
+        "+5 BV",
+        "+3 KR",
         "+3 DON"
       ],
       "realmSlug": "alakir"
@@ -80,49 +112,33 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 1863,
+      "name": "Valorite",
+      "class": "death-knight",
+      "score": 1860,
       "topKeys": [
-        "+9 TOS",
-        "+8 MR",
+        "+10 RLP",
+        "+9 VSA",
         "+8 AOF",
-        "+6 VSA",
+        "+7 KR",
+        "+7 TOS",
         "+5 BV",
-        "+3 KR",
-        "+3 DON",
-        "+2 RLP"
+        "+5 MR"
       ],
       "realmSlug": "alakir"
     },
     {
       "name": "Sâmáar",
       "class": "priest",
-      "score": 1727,
+      "score": 1836,
       "topKeys": [
+        "+10 RLP",
         "+9 TOS",
-        "+6 RLP",
-        "+6 VSA",
+        "+9 VSA",
         "+6 MR",
         "+3 KR",
         "+3 DON",
         "+2 AOF",
         "+4 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 1701,
-      "topKeys": [
-        "+6 RLP",
-        "+6 VSA",
-        "+6 BV",
-        "+6 TOS",
-        "+6 KR",
-        "+6 MR",
-        "+6 AOF"
       ],
       "realmSlug": "alakir"
     },
@@ -136,20 +152,6 @@
         "+8 AOF",
         "+6 VSA",
         "+3 DON",
-        "+2 RLP"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 1329,
-      "topKeys": [
-        "+9 TOS",
-        "+8 MR",
-        "+5 BV",
-        "+3 DON",
-        "+2 KR",
         "+2 RLP"
       ],
       "realmSlug": "alakir"
@@ -221,5 +223,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-22T20:12:05.479Z"
+  "lastUpdated": "2026-08-23T13:09:25.740Z"
 }
