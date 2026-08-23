@@ -4,7 +4,7 @@
     "mostDeaths": {
       "name": "Aerioth",
       "class": "priest",
-      "count": 209
+      "count": 214
     },
     "highestDamageDone": {
       "name": "Daruni",
@@ -21,11 +21,11 @@
       "report": "https://www.warcraftlogs.com/reports/GXNJMmyfZkDw24PV"
     },
     "bestHealer": {
-      "name": "Olibb",
-      "class": "paladin",
-      "amount": 84208266,
-      "boss": "The Lost Explorers",
-      "report": "https://www.warcraftlogs.com/reports/Agpx9hYz7T6n4wGc"
+      "name": "Zultharek",
+      "class": "shaman",
+      "amount": 89059951,
+      "boss": "The Coiled Altar",
+      "report": "https://www.warcraftlogs.com/reports/bZ1vWJATCKQ32kVr"
     },
     "bestHealerMplus": {
       "name": "Éowyn",
