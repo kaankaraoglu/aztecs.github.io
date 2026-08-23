@@ -4,14 +4,14 @@
     "mostDeaths": {
       "name": "Aerioth",
       "class": "priest",
-      "count": 203
+      "count": 207
     },
     "highestDamageDone": {
-      "name": "Meld",
-      "class": "hunter",
-      "amount": 65109192,
-      "boss": "The Lost Explorers",
-      "report": "https://www.warcraftlogs.com/reports/Agpx9hYz7T6n4wGc"
+      "name": "Daruni",
+      "class": "druid",
+      "amount": 75583981,
+      "boss": "Nymrissa Wavecaller",
+      "report": "https://www.warcraftlogs.com/reports/bZ1vWJATCKQ32kVr"
     },
     "highestDamageDoneMplus": {
       "name": "Valorite",
