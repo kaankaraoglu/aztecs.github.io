@@ -82,6 +82,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 2208,
+      "topKeys": [
+        "+10 DON",
+        "+10 KR",
+        "+10 VSA",
+        "+9 RLP",
+        "+6 BV",
+        "+6 TOS",
+        "+6 MR",
+        "+6 AOF"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Phruity",
       "class": "druid",
       "score": 2096,
@@ -94,22 +110,6 @@
         "+5 BV",
         "+3 KR",
         "+3 DON"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 2072,
-      "topKeys": [
-        "+10 DON",
-        "+9 RLP",
-        "+6 VSA",
-        "+6 BV",
-        "+6 TOS",
-        "+6 KR",
-        "+6 MR",
-        "+6 AOF"
       ],
       "realmSlug": "alakir"
     },
@@ -221,9 +221,9 @@
       "level": 10,
       "timed": false,
       "team": [
-        "Daruni"
+        "Shaw"
       ]
     }
   ],
-  "lastUpdated": "2026-08-24T17:55:36.696Z"
+  "lastUpdated": "2026-08-24T19:09:07.401Z"
 }
