@@ -130,6 +130,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Agro",
+      "class": "warrior",
+      "score": 2047,
+      "topKeys": [
+        "+10 AOF",
+        "+9 TOS",
+        "+8 MR",
+        "+8 DON",
+        "+6 VSA",
+        "+5 RLP",
+        "+5 BV",
+        "+2 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Sâmáar",
       "class": "priest",
       "score": 1836,
@@ -142,21 +158,6 @@
         "+3 DON",
         "+2 AOF",
         "+4 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 1811,
-      "topKeys": [
-        "+10 AOF",
-        "+9 TOS",
-        "+8 MR",
-        "+8 DON",
-        "+5 RLP",
-        "+5 BV",
-        "+2 KR"
       ],
       "realmSlug": "alakir"
     }
@@ -227,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-24T22:50:59.126Z"
+  "lastUpdated": "2026-08-24T23:14:32.492Z"
 }
