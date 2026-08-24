@@ -52,12 +52,12 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 2416,
+      "score": 2421,
       "topKeys": [
+        "+10 AOF",
         "+10 TOS",
         "+10 RLP",
         "+10 DON",
-        "+10 AOF",
         "+10 KR",
         "+9 VSA",
         "+8 MR",
@@ -68,16 +68,32 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2223,
+      "score": 2385,
       "topKeys": [
+        "+10 AOF",
         "+10 RLP",
+        "+9 MR",
+        "+10 KR",
         "+9 BV",
         "+9 VSA",
         "+9 DON",
-        "+8 AOF",
-        "+7 KR",
-        "+7 TOS",
-        "+5 MR"
+        "+7 TOS"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 2096,
+      "topKeys": [
+        "+10 AOF",
+        "+10 RLP",
+        "+9 TOS",
+        "+9 VSA",
+        "+8 MR",
+        "+5 BV",
+        "+3 KR",
+        "+3 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -94,22 +110,6 @@
         "+6 KR",
         "+6 MR",
         "+6 AOF"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 2047,
-      "topKeys": [
-        "+10 RLP",
-        "+9 TOS",
-        "+9 VSA",
-        "+8 MR",
-        "+8 AOF",
-        "+5 BV",
-        "+3 KR",
-        "+3 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -144,15 +144,16 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Incendia",
-      "class": "mage",
-      "score": 1452,
+      "name": "Agro",
+      "class": "warrior",
+      "score": 1655,
       "topKeys": [
+        "+10 AOF",
         "+9 TOS",
         "+8 MR",
-        "+8 AOF",
-        "+6 VSA",
+        "+5 BV",
         "+3 DON",
+        "+2 KR",
         "+2 RLP"
       ],
       "realmSlug": "alakir"
@@ -224,5 +225,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-23T16:14:07.319Z"
+  "lastUpdated": "2026-08-24T17:55:36.696Z"
 }
