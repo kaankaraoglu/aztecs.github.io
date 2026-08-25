@@ -132,16 +132,16 @@
     {
       "name": "Agro",
       "class": "warrior",
-      "score": 2047,
+      "score": 2152,
       "topKeys": [
         "+10 AOF",
         "+9 TOS",
         "+8 MR",
         "+8 DON",
+        "+8 KR",
         "+6 VSA",
         "+5 RLP",
-        "+5 BV",
-        "+2 KR"
+        "+5 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-25T19:08:56.872Z"
+  "lastUpdated": "2026-08-25T19:53:50.875Z"
 }
