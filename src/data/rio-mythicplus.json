@@ -50,6 +50,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Zultharek",
+      "class": "shaman",
+      "score": 2465,
+      "topKeys": [
+        "+11 VSA",
+        "+10 AOF",
+        "+10 TOS",
+        "+10 RLP",
+        "+10 DON",
+        "+10 KR",
+        "+8 MR",
+        "+6 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 2436,
@@ -62,22 +78,6 @@
         "+9 AOF",
         "+9 DON",
         "+7 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Zultharek",
-      "class": "shaman",
-      "score": 2421,
-      "topKeys": [
-        "+10 AOF",
-        "+10 TOS",
-        "+10 RLP",
-        "+10 DON",
-        "+10 KR",
-        "+9 VSA",
-        "+8 MR",
-        "+6 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -221,12 +221,12 @@
     },
     {
       "dungeon": "Voidscar Arena",
-      "level": 10,
-      "timed": false,
+      "level": 11,
+      "timed": true,
       "team": [
-        "Shaw"
+        "Zultharek"
       ]
     }
   ],
-  "lastUpdated": "2026-08-24T23:14:32.492Z"
+  "lastUpdated": "2026-08-25T03:25:17.547Z"
 }
