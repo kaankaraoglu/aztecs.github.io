@@ -4,16 +4,16 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 2923,
+      "score": 2958,
       "topKeys": [
         "+12 BV",
         "+12 KR",
         "+12 TOS",
         "+12 RLP",
         "+12 DON",
+        "+12 VSA",
         "+12 AOF",
-        "+12 MR",
-        "+10 VSA"
+        "+12 MR"
       ],
       "realmSlug": "alakir"
     },
@@ -221,12 +221,12 @@
     },
     {
       "dungeon": "Voidscar Arena",
-      "level": 11,
+      "level": 12,
       "timed": true,
       "team": [
-        "Zultharek"
+        "Aerioth"
       ]
     }
   ],
-  "lastUpdated": "2026-08-25T19:53:50.875Z"
+  "lastUpdated": "2026-08-25T20:17:09.240Z"
 }
