@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 2217,
+      "topKeys": [
+        "+10 AOF",
+        "+10 KR",
+        "+10 RLP",
+        "+9 TOS",
+        "+9 VSA",
+        "+8 MR",
+        "+5 BV",
+        "+3 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Shaw",
       "class": "rogue",
       "score": 2208,
@@ -110,22 +126,6 @@
         "+6 TOS",
         "+6 MR",
         "+6 AOF"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 2096,
-      "topKeys": [
-        "+10 AOF",
-        "+10 RLP",
-        "+9 TOS",
-        "+9 VSA",
-        "+8 MR",
-        "+5 BV",
-        "+3 KR",
-        "+3 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -148,13 +148,13 @@
     {
       "name": "Sâmáar",
       "class": "priest",
-      "score": 1836,
+      "score": 1956,
       "topKeys": [
+        "+10 KR",
         "+10 RLP",
         "+9 TOS",
         "+9 VSA",
         "+6 MR",
-        "+3 KR",
         "+3 DON",
         "+2 AOF",
         "+4 BV"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-25T03:25:17.547Z"
+  "lastUpdated": "2026-08-25T19:08:56.872Z"
 }
