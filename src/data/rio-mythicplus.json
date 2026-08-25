@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Agro",
+      "class": "warrior",
+      "score": 2221,
+      "topKeys": [
+        "+10 AOF",
+        "+9 BV",
+        "+9 TOS",
+        "+8 MR",
+        "+8 DON",
+        "+8 KR",
+        "+6 VSA",
+        "+5 RLP"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Phruity",
       "class": "druid",
       "score": 2217,
@@ -126,22 +142,6 @@
         "+6 TOS",
         "+6 MR",
         "+6 AOF"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 2152,
-      "topKeys": [
-        "+10 AOF",
-        "+9 TOS",
-        "+8 MR",
-        "+8 DON",
-        "+8 KR",
-        "+6 VSA",
-        "+5 RLP",
-        "+5 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-25T20:17:09.240Z"
+  "lastUpdated": "2026-08-25T21:18:08.417Z"
 }
