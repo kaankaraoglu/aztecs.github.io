@@ -20,7 +20,7 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 2595,
+      "score": 2623,
       "topKeys": [
         "+11 BV",
         "+10 MR",
@@ -29,7 +29,7 @@
         "+10 AOF",
         "+10 TOS",
         "+10 VSA",
-        "+9 RLP"
+        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-25T21:18:08.417Z"
+  "lastUpdated": "2026-08-26T03:31:46.982Z"
 }
