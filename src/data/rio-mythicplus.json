@@ -20,7 +20,7 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 2623,
+      "score": 2632,
       "topKeys": [
         "+11 BV",
         "+10 MR",
@@ -36,14 +36,14 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2609,
+      "score": 2630,
       "topKeys": [
+        "+11 BV",
         "+10 AOF",
         "+10 MR",
+        "+10 DON",
         "+10 KR",
         "+10 RLP",
-        "+10 BV",
-        "+10 DON",
         "+10 TOS",
         "+9 VSA"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-26T18:12:14.714Z"
+  "lastUpdated": "2026-08-26T20:21:34.422Z"
 }
