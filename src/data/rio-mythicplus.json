@@ -36,12 +36,12 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2630,
+      "score": 2632,
       "topKeys": [
         "+11 BV",
         "+10 AOF",
-        "+10 MR",
         "+10 DON",
+        "+10 MR",
         "+10 KR",
         "+10 RLP",
         "+10 TOS",
@@ -68,12 +68,12 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 2436,
+      "score": 2464,
       "topKeys": [
         "+11 KR",
+        "+10 VSA",
         "+10 TOS",
         "+10 MR",
-        "+10 VSA",
         "+10 RLP",
         "+9 AOF",
         "+9 DON",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-26T20:21:34.422Z"
+  "lastUpdated": "2026-08-26T23:51:07.399Z"
 }
