@@ -4,23 +4,39 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3007,
+      "score": 3053,
       "topKeys": [
+        "+15 DON",
         "+14 VSA",
         "+13 MR",
         "+12 BV",
         "+12 KR",
         "+12 TOS",
         "+12 RLP",
-        "+12 DON",
         "+12 AOF"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 2663,
+      "topKeys": [
+        "+11 BV",
+        "+10 AOF",
+        "+10 DON",
+        "+10 MR",
+        "+10 KR",
+        "+10 RLP",
+        "+10 VSA",
+        "+10 TOS"
       ],
       "realmSlug": "alakir"
     },
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 2632,
+      "score": 2633,
       "topKeys": [
         "+11 BV",
         "+10 MR",
@@ -34,18 +50,18 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 2632,
+      "name": "Valorite",
+      "class": "death-knight",
+      "score": 2511,
       "topKeys": [
-        "+11 BV",
+        "+10 VSA",
+        "+10 KR",
         "+10 AOF",
         "+10 DON",
-        "+10 MR",
-        "+10 KR",
         "+10 RLP",
+        "+9 MR",
         "+10 TOS",
-        "+9 VSA"
+        "+9 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -82,18 +98,18 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Valorite",
-      "class": "death-knight",
-      "score": 2418,
+      "name": "Phruity",
+      "class": "druid",
+      "score": 2251,
       "topKeys": [
         "+10 VSA",
         "+10 AOF",
-        "+10 RLP",
-        "+9 MR",
         "+10 KR",
-        "+9 BV",
-        "+9 DON",
-        "+7 TOS"
+        "+10 RLP",
+        "+9 TOS",
+        "+8 MR",
+        "+5 BV",
+        "+3 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -110,22 +126,6 @@
         "+8 KR",
         "+6 VSA",
         "+5 RLP"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 2217,
-      "topKeys": [
-        "+10 AOF",
-        "+10 KR",
-        "+10 RLP",
-        "+9 TOS",
-        "+9 VSA",
-        "+8 MR",
-        "+5 BV",
-        "+3 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -164,6 +164,14 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Den of Nalorakk",
+      "level": 15,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Voidscar Arena",
       "level": 14,
       "timed": true,
@@ -181,14 +189,6 @@
     },
     {
       "dungeon": "Altar of Fangs",
-      "level": 12,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "Den of Nalorakk",
       "level": 12,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-26T23:51:07.399Z"
+  "lastUpdated": "2026-08-27T17:02:41.551Z"
 }
