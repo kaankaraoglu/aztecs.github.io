@@ -4,15 +4,15 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3053,
+      "score": 3129,
       "topKeys": [
+        "+16 RLP",
         "+15 DON",
+        "+14 MR",
         "+14 VSA",
-        "+13 MR",
         "+12 BV",
         "+12 KR",
         "+12 TOS",
-        "+12 RLP",
         "+12 AOF"
       ],
       "realmSlug": "alakir"
@@ -50,34 +50,34 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Zultharek",
+      "class": "shaman",
+      "score": 2550,
+      "topKeys": [
+        "+11 VSA",
+        "+10 BV",
+        "+10 AOF",
+        "+10 TOS",
+        "+10 RLP",
+        "+10 DON",
+        "+10 KR",
+        "+8 MR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2511,
+      "score": 2541,
       "topKeys": [
         "+10 VSA",
+        "+10 BV",
         "+10 KR",
         "+10 AOF",
         "+10 DON",
         "+10 RLP",
         "+9 MR",
-        "+10 TOS",
-        "+9 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Zultharek",
-      "class": "shaman",
-      "score": 2465,
-      "topKeys": [
-        "+11 VSA",
-        "+10 AOF",
-        "+10 TOS",
-        "+10 RLP",
-        "+10 DON",
-        "+10 KR",
-        "+8 MR",
-        "+6 BV"
+        "+10 TOS"
       ],
       "realmSlug": "alakir"
     },
@@ -100,16 +100,32 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2251,
+      "score": 2353,
       "topKeys": [
         "+10 VSA",
+        "+10 BV",
         "+10 AOF",
         "+10 KR",
         "+10 RLP",
         "+9 TOS",
         "+8 MR",
-        "+5 BV",
         "+3 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 2328,
+      "topKeys": [
+        "+11 DON",
+        "+11 AOF",
+        "+10 KR",
+        "+10 VSA",
+        "+9 RLP",
+        "+6 BV",
+        "+6 TOS",
+        "+6 MR"
       ],
       "realmSlug": "alakir"
     },
@@ -130,39 +146,31 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 2208,
-      "topKeys": [
-        "+10 DON",
-        "+10 KR",
-        "+10 VSA",
-        "+9 RLP",
-        "+6 BV",
-        "+6 TOS",
-        "+6 MR",
-        "+6 AOF"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Sâmáar",
       "class": "priest",
-      "score": 1956,
+      "score": 2119,
       "topKeys": [
+        "+10 BV",
         "+10 KR",
         "+10 RLP",
         "+9 TOS",
         "+9 VSA",
         "+6 MR",
         "+3 DON",
-        "+2 AOF",
-        "+4 BV"
+        "+2 AOF"
       ],
       "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
+    {
+      "dungeon": "Ruby Life Pools",
+      "level": 16,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
     {
       "dungeon": "Den of Nalorakk",
       "level": 15,
@@ -172,7 +180,7 @@
       ]
     },
     {
-      "dungeon": "Voidscar Arena",
+      "dungeon": "Murder Row",
       "level": 14,
       "timed": true,
       "team": [
@@ -180,8 +188,8 @@
       ]
     },
     {
-      "dungeon": "Murder Row",
-      "level": 13,
+      "dungeon": "Voidscar Arena",
+      "level": 14,
       "timed": true,
       "team": [
         "Aerioth"
@@ -197,14 +205,6 @@
     },
     {
       "dungeon": "Kings' Rest",
-      "level": 12,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "Ruby Life Pools",
       "level": 12,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-27T17:02:41.551Z"
+  "lastUpdated": "2026-08-28T01:35:17.516Z"
 }
