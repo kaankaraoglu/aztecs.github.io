@@ -4,16 +4,32 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3129,
+      "score": 3236,
       "topKeys": [
         "+16 RLP",
         "+15 DON",
         "+14 MR",
+        "+14 TOS",
+        "+14 BV",
         "+14 VSA",
-        "+12 BV",
-        "+12 KR",
-        "+12 TOS",
-        "+12 AOF"
+        "+14 KR",
+        "+14 AOF"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Valorite",
+      "class": "death-knight",
+      "score": 2754,
+      "topKeys": [
+        "+12 RLP",
+        "+12 VSA",
+        "+12 MR",
+        "+10 TOS",
+        "+10 BV",
+        "+10 KR",
+        "+10 AOF",
+        "+10 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -50,34 +66,18 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Valorite",
-      "class": "death-knight",
-      "score": 2616,
-      "topKeys": [
-        "+12 VSA",
-        "+10 TOS",
-        "+10 BV",
-        "+10 KR",
-        "+10 AOF",
-        "+10 DON",
-        "+10 RLP",
-        "+9 MR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 2616,
+      "score": 2621,
       "topKeys": [
         "+11 VSA",
         "+10 BV",
+        "+10 DON",
         "+10 AOF",
         "+10 MR",
         "+10 TOS",
         "+10 KR",
-        "+10 RLP",
-        "+10 DON"
+        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -180,7 +180,39 @@
       ]
     },
     {
+      "dungeon": "Altar of Fangs",
+      "level": 14,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
+      "dungeon": "Kings' Rest",
+      "level": 14,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Murder Row",
+      "level": 14,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
+      "dungeon": "Temple of Sethraliss",
+      "level": 14,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
+      "dungeon": "The Blinding Vale",
       "level": 14,
       "timed": true,
       "team": [
@@ -194,39 +226,7 @@
       "team": [
         "Aerioth"
       ]
-    },
-    {
-      "dungeon": "Altar of Fangs",
-      "level": 12,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "Kings' Rest",
-      "level": 12,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "Temple of Sethraliss",
-      "level": 12,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "The Blinding Vale",
-      "level": 12,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
     }
   ],
-  "lastUpdated": "2026-08-28T13:30:50.690Z"
+  "lastUpdated": "2026-08-28T23:10:32.584Z"
 }
