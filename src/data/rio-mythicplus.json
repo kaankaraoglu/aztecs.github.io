@@ -20,16 +20,32 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2754,
+      "score": 2790,
       "topKeys": [
         "+12 RLP",
         "+12 VSA",
+        "+12 TOS",
         "+12 MR",
-        "+10 TOS",
         "+10 BV",
         "+10 KR",
         "+10 AOF",
         "+10 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Zultharek",
+      "class": "shaman",
+      "score": 2687,
+      "topKeys": [
+        "+12 RLP",
+        "+11 KR",
+        "+11 VSA",
+        "+10 BV",
+        "+10 MR",
+        "+10 DON",
+        "+10 AOF",
+        "+10 TOS"
       ],
       "realmSlug": "alakir"
     },
@@ -66,32 +82,16 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Zultharek",
-      "class": "shaman",
-      "score": 2621,
-      "topKeys": [
-        "+11 VSA",
-        "+10 BV",
-        "+10 DON",
-        "+10 AOF",
-        "+10 MR",
-        "+10 TOS",
-        "+10 KR",
-        "+10 RLP"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Daruni",
       "class": "druid",
-      "score": 2464,
+      "score": 2494,
       "topKeys": [
         "+11 KR",
         "+10 VSA",
+        "+10 AOF",
         "+10 TOS",
         "+10 MR",
         "+10 RLP",
-        "+9 AOF",
         "+9 DON",
         "+7 BV"
       ],
@@ -116,15 +116,15 @@
     {
       "name": "Sâmáar",
       "class": "priest",
-      "score": 2379,
+      "score": 2407,
       "topKeys": [
         "+10 BV",
         "+10 MR",
         "+10 KR",
+        "+10 VSA",
         "+10 AOF",
         "+10 RLP",
         "+9 TOS",
-        "+9 VSA",
         "+3 DON"
       ],
       "realmSlug": "alakir"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-29T11:15:06.833Z"
+  "lastUpdated": "2026-08-29T15:42:38.966Z"
 }
