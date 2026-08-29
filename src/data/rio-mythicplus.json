@@ -4,12 +4,12 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3236,
+      "score": 3254,
       "topKeys": [
         "+16 RLP",
+        "+15 TOS",
         "+15 DON",
         "+14 MR",
-        "+14 TOS",
         "+14 BV",
         "+14 VSA",
         "+14 KR",
@@ -52,12 +52,12 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2663,
+      "score": 2664,
       "topKeys": [
         "+11 BV",
         "+10 AOF",
-        "+10 DON",
         "+10 MR",
+        "+10 DON",
         "+10 KR",
         "+10 RLP",
         "+10 VSA",
@@ -68,7 +68,7 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 2634,
+      "score": 2636,
       "topKeys": [
         "+11 BV",
         "+10 MR",
@@ -94,6 +94,22 @@
         "+10 RLP",
         "+9 DON",
         "+7 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 2422,
+      "topKeys": [
+        "+11 DON",
+        "+11 AOF",
+        "+10 KR",
+        "+10 BV",
+        "+10 RLP",
+        "+10 VSA",
+        "+6 TOS",
+        "+6 MR"
       ],
       "realmSlug": "alakir"
     },
@@ -126,22 +142,6 @@
         "+10 RLP",
         "+9 TOS",
         "+3 DON"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 2328,
-      "topKeys": [
-        "+11 DON",
-        "+11 AOF",
-        "+10 KR",
-        "+10 VSA",
-        "+9 RLP",
-        "+6 BV",
-        "+6 TOS",
-        "+6 MR"
       ],
       "realmSlug": "alakir"
     },
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "Temple of Sethraliss",
+      "level": 15,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Altar of Fangs",
       "level": 14,
       "timed": true,
@@ -204,14 +212,6 @@
       ]
     },
     {
-      "dungeon": "Temple of Sethraliss",
-      "level": 14,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "The Blinding Vale",
       "level": 14,
       "timed": true,
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-29T15:42:38.966Z"
+  "lastUpdated": "2026-08-29T19:00:24.780Z"
 }
