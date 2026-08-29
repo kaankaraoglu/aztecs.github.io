@@ -4,12 +4,12 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3254,
+      "score": 3264,
       "topKeys": [
         "+16 RLP",
         "+15 TOS",
+        "+15 MR",
         "+15 DON",
-        "+14 MR",
         "+14 BV",
         "+14 VSA",
         "+14 KR",
@@ -82,6 +82,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 2557,
+      "topKeys": [
+        "+10 VSA",
+        "+10 BV",
+        "+10 AOF",
+        "+10 MR",
+        "+10 KR",
+        "+10 DON",
+        "+10 RLP",
+        "+9 TOS"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 2494,
@@ -110,22 +126,6 @@
         "+10 VSA",
         "+6 TOS",
         "+6 MR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 2417,
-      "topKeys": [
-        "+10 VSA",
-        "+10 BV",
-        "+10 AOF",
-        "+10 MR",
-        "+10 KR",
-        "+10 RLP",
-        "+9 TOS",
-        "+3 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "Murder Row",
+      "level": 15,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Temple of Sethraliss",
       "level": 15,
       "timed": true,
@@ -204,14 +212,6 @@
       ]
     },
     {
-      "dungeon": "Murder Row",
-      "level": 14,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "The Blinding Vale",
       "level": 14,
       "timed": true,
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-29T19:00:24.780Z"
+  "lastUpdated": "2026-08-29T21:31:36.826Z"
 }
