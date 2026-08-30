@@ -4,7 +4,7 @@
     "mostDeaths": {
       "name": "Aerioth",
       "class": "priest",
-      "count": 221
+      "count": 225
     },
     "highestDamageDone": {
       "name": "Daruni",
@@ -21,11 +21,11 @@
       "report": "https://www.warcraftlogs.com/reports/GXNJMmyfZkDw24PV"
     },
     "bestHealer": {
-      "name": "Zultharek",
-      "class": "shaman",
-      "amount": 89059951,
-      "boss": "The Coiled Altar",
-      "report": "https://www.warcraftlogs.com/reports/bZ1vWJATCKQ32kVr"
+      "name": "Sâmáar",
+      "class": "priest",
+      "amount": 92799670,
+      "boss": "Ula'tek",
+      "report": "https://www.warcraftlogs.com/reports/P6KQm9b28WjqNxYt"
     },
     "bestHealerMplus": {
       "name": "Éowyn",
