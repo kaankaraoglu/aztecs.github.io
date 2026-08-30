@@ -4,14 +4,14 @@
     "mostDeaths": {
       "name": "Aerioth",
       "class": "priest",
-      "count": 225
+      "count": 237
     },
     "highestDamageDone": {
-      "name": "Daruni",
-      "class": "druid",
-      "amount": 75583981,
-      "boss": "Nymrissa Wavecaller",
-      "report": "https://www.warcraftlogs.com/reports/bZ1vWJATCKQ32kVr"
+      "name": "Blackmaira",
+      "class": "paladin",
+      "amount": 96494242,
+      "boss": "Vashnik the Malignant",
+      "report": "https://www.warcraftlogs.com/reports/P6KQm9b28WjqNxYt"
     },
     "highestDamageDoneMplus": {
       "name": "Valorite",
@@ -23,8 +23,8 @@
     "bestHealer": {
       "name": "Sâmáar",
       "class": "priest",
-      "amount": 92799670,
-      "boss": "Ula'tek",
+      "amount": 139260194,
+      "boss": "Entombed Sentinels",
       "report": "https://www.warcraftlogs.com/reports/P6KQm9b28WjqNxYt"
     },
     "bestHealerMplus": {
