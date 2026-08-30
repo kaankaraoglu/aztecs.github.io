@@ -36,10 +36,10 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 2687,
+      "score": 2715,
       "topKeys": [
+        "+12 KR",
         "+12 RLP",
-        "+11 KR",
         "+11 VSA",
         "+10 BV",
         "+10 MR",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-30T13:53:53.656Z"
+  "lastUpdated": "2026-08-30T22:52:31.038Z"
 }
