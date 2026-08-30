@@ -82,6 +82,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 2563,
+      "topKeys": [
+        "+11 KR",
+        "+10 TOS",
+        "+10 VSA",
+        "+10 AOF",
+        "+10 BV",
+        "+10 MR",
+        "+10 RLP",
+        "+9 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Phruity",
       "class": "druid",
       "score": 2557,
@@ -94,22 +110,6 @@
         "+10 DON",
         "+10 RLP",
         "+9 TOS"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 2556,
-      "topKeys": [
-        "+11 KR",
-        "+10 VSA",
-        "+10 AOF",
-        "+10 BV",
-        "+10 TOS",
-        "+10 MR",
-        "+10 RLP",
-        "+9 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-30T08:27:11.134Z"
+  "lastUpdated": "2026-08-30T13:53:53.656Z"
 }
