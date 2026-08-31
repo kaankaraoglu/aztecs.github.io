@@ -20,13 +20,13 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2790,
+      "score": 2827,
       "topKeys": [
         "+12 RLP",
         "+12 VSA",
         "+12 TOS",
         "+12 MR",
-        "+10 BV",
+        "+12 BV",
         "+10 KR",
         "+10 AOF",
         "+10 DON"
@@ -84,16 +84,16 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 2563,
+      "score": 2613,
       "topKeys": [
         "+11 KR",
         "+10 TOS",
         "+10 VSA",
         "+10 AOF",
         "+10 BV",
+        "+10 DON",
         "+10 MR",
-        "+10 RLP",
-        "+9 DON"
+        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-31T01:00:19.968Z"
+  "lastUpdated": "2026-08-31T14:34:39.017Z"
 }
