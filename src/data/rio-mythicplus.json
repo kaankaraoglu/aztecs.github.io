@@ -4,16 +4,16 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3264,
+      "score": 3293,
       "topKeys": [
         "+16 RLP",
         "+15 TOS",
         "+15 MR",
         "+15 DON",
-        "+14 BV",
-        "+14 VSA",
-        "+14 KR",
-        "+14 AOF"
+        "+15 BV",
+        "+15 KR",
+        "+14 AOF",
+        "+14 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -114,6 +114,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sâmáar",
+      "class": "priest",
+      "score": 2545,
+      "topKeys": [
+        "+10 BV",
+        "+10 MR",
+        "+10 KR",
+        "+10 VSA",
+        "+10 DON",
+        "+10 AOF",
+        "+10 RLP",
+        "+9 TOS"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Shaw",
       "class": "rogue",
       "score": 2422,
@@ -126,22 +142,6 @@
         "+10 VSA",
         "+6 TOS",
         "+6 MR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Sâmáar",
-      "class": "priest",
-      "score": 2407,
-      "topKeys": [
-        "+10 BV",
-        "+10 MR",
-        "+10 KR",
-        "+10 VSA",
-        "+10 AOF",
-        "+10 RLP",
-        "+9 TOS",
-        "+3 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "Kings' Rest",
+      "level": 15,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Murder Row",
       "level": 15,
       "timed": true,
@@ -196,23 +204,15 @@
       ]
     },
     {
-      "dungeon": "Altar of Fangs",
-      "level": 14,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "Kings' Rest",
-      "level": 14,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "The Blinding Vale",
+      "level": 15,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
+      "dungeon": "Altar of Fangs",
       "level": 14,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-08-31T14:34:39.017Z"
+  "lastUpdated": "2026-08-31T23:59:35.444Z"
 }
