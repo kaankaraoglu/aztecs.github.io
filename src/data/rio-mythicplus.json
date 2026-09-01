@@ -4,16 +4,16 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3306,
+      "score": 3321,
       "topKeys": [
         "+16 RLP",
         "+15 TOS",
+        "+15 AOF",
         "+15 MR",
         "+15 DON",
         "+15 VSA",
         "+15 BV",
-        "+15 KR",
-        "+14 AOF"
+        "+15 KR"
       ],
       "realmSlug": "alakir"
     },
@@ -172,6 +172,14 @@
       ]
     },
     {
+      "dungeon": "Altar of Fangs",
+      "level": 15,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Den of Nalorakk",
       "level": 15,
       "timed": true,
@@ -218,15 +226,7 @@
       "team": [
         "Aerioth"
       ]
-    },
-    {
-      "dungeon": "Altar of Fangs",
-      "level": 14,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
     }
   ],
-  "lastUpdated": "2026-09-01T17:31:53.327Z"
+  "lastUpdated": "2026-09-01T20:05:46.854Z"
 }
