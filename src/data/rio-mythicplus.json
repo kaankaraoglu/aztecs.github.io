@@ -36,7 +36,7 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 2716,
+      "score": 2717,
       "topKeys": [
         "+12 KR",
         "+12 RLP",
@@ -44,8 +44,8 @@
         "+10 BV",
         "+10 MR",
         "+10 DON",
-        "+10 AOF",
-        "+10 TOS"
+        "+10 TOS",
+        "+10 AOF"
       ],
       "realmSlug": "alakir"
     },
@@ -100,32 +100,32 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2557,
+      "score": 2588,
       "topKeys": [
         "+10 VSA",
         "+10 BV",
+        "+10 TOS",
         "+10 AOF",
         "+10 MR",
         "+10 KR",
         "+10 DON",
-        "+10 RLP",
-        "+9 TOS"
+        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
     {
       "name": "Sâmáar",
       "class": "priest",
-      "score": 2545,
+      "score": 2577,
       "topKeys": [
         "+10 BV",
+        "+10 TOS",
         "+10 MR",
         "+10 KR",
         "+10 VSA",
         "+10 DON",
         "+10 AOF",
-        "+10 RLP",
-        "+9 TOS"
+        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-01T22:42:11.878Z"
+  "lastUpdated": "2026-09-02T00:40:32.230Z"
 }
