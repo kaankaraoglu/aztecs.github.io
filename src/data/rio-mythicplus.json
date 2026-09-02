@@ -52,16 +52,16 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2667,
+      "score": 2689,
       "topKeys": [
+        "+11 TOS",
         "+11 BV",
+        "+10 DON",
         "+10 AOF",
         "+10 KR",
         "+10 MR",
-        "+10 DON",
         "+10 RLP",
-        "+10 VSA",
-        "+10 TOS"
+        "+10 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -84,14 +84,14 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 2636,
+      "score": 2657,
       "topKeys": [
+        "+11 TOS",
         "+11 BV",
         "+10 MR",
         "+10 KR",
         "+10 DON",
         "+10 AOF",
-        "+10 TOS",
         "+10 VSA",
         "+10 RLP"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-02T17:33:03.915Z"
+  "lastUpdated": "2026-09-02T20:17:56.373Z"
 }

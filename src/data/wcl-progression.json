@@ -1140,27 +1140,26 @@
         {
           "name": "Nymrissa Wavecaller",
           "normal": true,
-          "heroic": false,
+          "heroic": true,
           "mythic": false,
-          "killedAt": "2026-08-23T17:04:29.811Z",
+          "killedAt": "2026-09-02T18:09:08.607Z",
           "pullsByDifficulty": {
             "normal": 1,
-            "heroic": 5
+            "heroic": 7
           },
-          "bestPercent": 18.34,
           "roster": {
             "tanks": [
-              {
-                "name": "Agro",
-                "class": "warrior",
-                "spec": "Protection",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
-              },
               {
                 "name": "Phruity",
                 "class": "druid",
                 "spec": "Guardian",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
+              },
+              {
+                "name": "Sherwin",
+                "class": "death-knight",
+                "spec": "Blood",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/stormreaver/sherwin"
               }
             ],
             "healers": [
@@ -1171,16 +1170,16 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/miranne"
               },
               {
+                "name": "Olibb",
+                "class": "paladin",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/olibb"
+              },
+              {
                 "name": "Sâmáar",
                 "class": "priest",
                 "spec": "Holy",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
-              },
-              {
-                "name": "Zultharek",
-                "class": "shaman",
-                "spec": "Restoration",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/zultharek"
               }
             ],
             "dps": [
@@ -1221,6 +1220,12 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
               },
               {
+                "name": "Incendia",
+                "class": "mage",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/incendia"
+              },
+              {
                 "name": "Kentoz",
                 "class": "druid",
                 "spec": "Balance",
@@ -1249,6 +1254,18 @@
                 "class": "death-knight",
                 "spec": "Unholy",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
+              },
+              {
+                "name": "Zereb",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/zereb"
+              },
+              {
+                "name": "Zultharek",
+                "class": "shaman",
+                "spec": "Elemental",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/zultharek"
               }
             ]
           }
@@ -1721,9 +1738,9 @@
           "killedAt": "2026-08-19T19:44:27.717Z",
           "pullsByDifficulty": {
             "normal": 2,
-            "heroic": 4
+            "heroic": 8
           },
-          "bestPercent": 76.43,
+          "bestPercent": 64.48,
           "roster": {
             "tanks": [
               {
@@ -2177,9 +2194,9 @@
   "summary": {
     "total": 19,
     "normal": 19,
-    "heroic": 14,
+    "heroic": 15,
     "mythic": 0
   },
-  "latestReport": "https://www.warcraftlogs.com/reports/P6KQm9b28WjqNxYt",
-  "lastUpdated": "2026-08-30T20:13:32.373Z"
+  "latestReport": "https://www.warcraftlogs.com/reports/r2QG4qhdRxBAjfz7",
+  "lastUpdated": "2026-09-02T20:14:02.208Z"
 }
