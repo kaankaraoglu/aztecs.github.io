@@ -4,11 +4,11 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3338,
+      "score": 3351,
       "topKeys": [
+        "+16 TOS",
         "+16 RLP",
         "+16 KR",
-        "+15 TOS",
         "+15 AOF",
         "+15 MR",
         "+15 DON",
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "Temple of Sethraliss",
+      "level": 16,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Altar of Fangs",
       "level": 15,
       "timed": true,
@@ -204,14 +212,6 @@
       ]
     },
     {
-      "dungeon": "Temple of Sethraliss",
-      "level": 15,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "The Blinding Vale",
       "level": 15,
       "timed": true,
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-02T22:44:49.965Z"
+  "lastUpdated": "2026-09-03T09:59:50.287Z"
 }
