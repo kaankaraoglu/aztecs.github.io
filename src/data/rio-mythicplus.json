@@ -4,16 +4,16 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3351,
+      "score": 3369,
       "topKeys": [
         "+16 TOS",
         "+16 RLP",
+        "+16 AOF",
         "+16 KR",
-        "+15 AOF",
+        "+15 BV",
         "+15 MR",
         "+15 DON",
-        "+15 VSA",
-        "+15 BV"
+        "+15 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -164,6 +164,14 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Altar of Fangs",
+      "level": 16,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Kings' Rest",
       "level": 16,
       "timed": true,
@@ -182,14 +190,6 @@
     {
       "dungeon": "Temple of Sethraliss",
       "level": 16,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "Altar of Fangs",
-      "level": 15,
       "timed": true,
       "team": [
         "Aerioth"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-03T14:06:40.984Z"
+  "lastUpdated": "2026-09-03T17:56:39.581Z"
 }
