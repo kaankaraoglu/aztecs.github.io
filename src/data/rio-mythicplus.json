@@ -4,13 +4,13 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3369,
+      "score": 3378,
       "topKeys": [
         "+16 TOS",
         "+16 RLP",
         "+16 AOF",
         "+16 KR",
-        "+15 BV",
+        "+16 BV",
         "+15 MR",
         "+15 DON",
         "+15 VSA"
@@ -34,6 +34,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 2718,
+      "topKeys": [
+        "+12 MR",
+        "+12 KR",
+        "+10 TOS",
+        "+10 VSA",
+        "+10 RLP",
+        "+10 AOF",
+        "+10 BV",
+        "+10 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Zultharek",
       "class": "shaman",
       "score": 2717,
@@ -46,22 +62,6 @@
         "+10 DON",
         "+10 TOS",
         "+10 AOF"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 2690,
-      "topKeys": [
-        "+12 MR",
-        "+12 KR",
-        "+10 TOS",
-        "+10 VSA",
-        "+10 AOF",
-        "+10 BV",
-        "+10 DON",
-        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -196,6 +196,14 @@
       ]
     },
     {
+      "dungeon": "The Blinding Vale",
+      "level": 16,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Den of Nalorakk",
       "level": 15,
       "timed": true,
@@ -212,14 +220,6 @@
       ]
     },
     {
-      "dungeon": "The Blinding Vale",
-      "level": 15,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "Voidscar Arena",
       "level": 15,
       "timed": true,
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-04T05:00:16.284Z"
+  "lastUpdated": "2026-09-04T13:39:09.440Z"
 }
