@@ -34,6 +34,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Zultharek",
+      "class": "shaman",
+      "score": 2749,
+      "topKeys": [
+        "+12 VSA",
+        "+12 KR",
+        "+12 RLP",
+        "+10 BV",
+        "+10 MR",
+        "+10 DON",
+        "+10 TOS",
+        "+10 AOF"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 2739,
@@ -66,22 +82,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Zultharek",
-      "class": "shaman",
-      "score": 2717,
-      "topKeys": [
-        "+12 KR",
-        "+12 RLP",
-        "+11 VSA",
-        "+10 BV",
-        "+10 MR",
-        "+10 DON",
-        "+10 TOS",
-        "+10 AOF"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Amorrlan",
       "class": "demon-hunter",
       "score": 2715,
@@ -94,6 +94,22 @@
         "+10 DON",
         "+10 VSA",
         "+10 RLP"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 2616,
+      "topKeys": [
+        "+12 KR",
+        "+11 DON",
+        "+11 AOF",
+        "+10 MR",
+        "+10 RLP",
+        "+10 BV",
+        "+10 VSA",
+        "+6 TOS"
       ],
       "realmSlug": "alakir"
     },
@@ -126,22 +142,6 @@
         "+10 DON",
         "+10 AOF",
         "+10 RLP"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 2495,
-      "topKeys": [
-        "+12 KR",
-        "+11 DON",
-        "+11 AOF",
-        "+10 VSA",
-        "+10 BV",
-        "+10 RLP",
-        "+6 TOS",
-        "+6 MR"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-04T21:56:39.236Z"
+  "lastUpdated": "2026-09-04T23:33:26.755Z"
 }
