@@ -4,16 +4,16 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3406,
+      "score": 3434,
       "topKeys": [
+        "+17 DON",
         "+16 MR",
         "+16 TOS",
         "+16 RLP",
         "+16 AOF",
         "+16 KR",
         "+16 BV",
-        "+16 DON",
-        "+15 VSA"
+        "+16 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -30,6 +30,22 @@
         "+10 KR",
         "+10 AOF",
         "+10 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 2739,
+      "topKeys": [
+        "+13 AOF",
+        "+11 TOS",
+        "+11 BV",
+        "+10 DON",
+        "+10 KR",
+        "+10 MR",
+        "+10 RLP",
+        "+10 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -66,32 +82,16 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 2688,
-      "topKeys": [
-        "+11 TOS",
-        "+11 BV",
-        "+10 DON",
-        "+10 AOF",
-        "+10 KR",
-        "+10 MR",
-        "+10 RLP",
-        "+10 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 2656,
+      "score": 2715,
       "topKeys": [
+        "+13 AOF",
         "+11 TOS",
         "+11 BV",
         "+10 MR",
         "+10 KR",
         "+10 DON",
-        "+10 AOF",
         "+10 VSA",
         "+10 RLP"
       ],
@@ -164,15 +164,15 @@
   ],
   "dungeonBests": [
     {
-      "dungeon": "Altar of Fangs",
-      "level": 16,
+      "dungeon": "Den of Nalorakk",
+      "level": 17,
       "timed": true,
       "team": [
         "Aerioth"
       ]
     },
     {
-      "dungeon": "Den of Nalorakk",
+      "dungeon": "Altar of Fangs",
       "level": 16,
       "timed": true,
       "team": [
@@ -221,12 +221,12 @@
     },
     {
       "dungeon": "Voidscar Arena",
-      "level": 15,
+      "level": 16,
       "timed": true,
       "team": [
         "Aerioth"
       ]
     }
   ],
-  "lastUpdated": "2026-09-04T19:48:46.027Z"
+  "lastUpdated": "2026-09-04T21:56:39.236Z"
 }
