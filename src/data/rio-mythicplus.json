@@ -68,7 +68,7 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2689,
+      "score": 2688,
       "topKeys": [
         "+11 TOS",
         "+11 BV",
@@ -84,7 +84,7 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 2657,
+      "score": 2656,
       "topKeys": [
         "+11 TOS",
         "+11 BV",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-04T00:37:11.644Z"
+  "lastUpdated": "2026-09-04T05:00:16.284Z"
 }
