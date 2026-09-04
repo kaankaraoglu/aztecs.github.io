@@ -132,14 +132,14 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 2422,
+      "score": 2495,
       "topKeys": [
+        "+12 KR",
         "+11 DON",
         "+11 AOF",
-        "+10 KR",
+        "+10 VSA",
         "+10 BV",
         "+10 RLP",
-        "+10 VSA",
         "+6 TOS",
         "+6 MR"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-04T17:16:10.424Z"
+  "lastUpdated": "2026-09-04T19:48:46.027Z"
 }
