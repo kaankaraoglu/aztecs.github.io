@@ -50,6 +50,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 2690,
+      "topKeys": [
+        "+12 MR",
+        "+12 KR",
+        "+10 TOS",
+        "+10 VSA",
+        "+10 AOF",
+        "+10 BV",
+        "+10 DON",
+        "+10 RLP"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 2689,
@@ -62,22 +78,6 @@
         "+10 MR",
         "+10 RLP",
         "+10 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 2663,
-      "topKeys": [
-        "+12 MR",
-        "+11 KR",
-        "+10 TOS",
-        "+10 VSA",
-        "+10 AOF",
-        "+10 BV",
-        "+10 DON",
-        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-03T17:56:39.581Z"
+  "lastUpdated": "2026-09-04T00:37:11.644Z"
 }
