@@ -146,18 +146,18 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 2221,
+      "name": "Sevenwunter",
+      "class": "demon-hunter",
+      "score": 2266,
       "topKeys": [
+        "+11 BV",
         "+10 AOF",
-        "+9 BV",
-        "+9 TOS",
-        "+8 MR",
+        "+10 VSA",
+        "+10 RLP",
+        "+8 TOS",
         "+8 DON",
-        "+8 KR",
-        "+6 VSA",
-        "+5 RLP"
+        "+5 MR",
+        "+5 KR"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-04T23:33:26.755Z"
+  "lastUpdated": "2026-09-05T10:50:05.743Z"
 }
