@@ -50,6 +50,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 2745,
+      "topKeys": [
+        "+12 KR",
+        "+12 TOS",
+        "+11 DON",
+        "+11 AOF",
+        "+10 MR",
+        "+10 RLP",
+        "+10 BV",
+        "+10 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 2739,
@@ -98,22 +114,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 2616,
-      "topKeys": [
-        "+12 KR",
-        "+11 DON",
-        "+11 AOF",
-        "+10 MR",
-        "+10 RLP",
-        "+10 BV",
-        "+10 VSA",
-        "+6 TOS"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Phruity",
       "class": "druid",
       "score": 2588,
@@ -148,16 +148,16 @@
     {
       "name": "Sevenwunter",
       "class": "demon-hunter",
-      "score": 2266,
+      "score": 2382,
       "topKeys": [
         "+11 BV",
+        "+10 KR",
         "+10 AOF",
         "+10 VSA",
         "+10 RLP",
         "+8 TOS",
         "+8 DON",
-        "+5 MR",
-        "+5 KR"
+        "+5 MR"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-05T10:50:05.743Z"
+  "lastUpdated": "2026-09-05T13:38:02.483Z"
 }
