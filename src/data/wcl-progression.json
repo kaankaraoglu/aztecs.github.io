@@ -1848,25 +1848,26 @@
         {
           "name": "The Twin Fangs",
           "normal": true,
-          "heroic": false,
+          "heroic": true,
           "mythic": false,
-          "killedAt": "2026-08-23T17:55:18.322Z",
+          "killedAt": "2026-09-06T19:24:56.294Z",
           "pullsByDifficulty": {
-            "normal": 2
+            "normal": 2,
+            "heroic": 13
           },
           "roster": {
             "tanks": [
-              {
-                "name": "Agro",
-                "class": "warrior",
-                "spec": "Protection",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
-              },
               {
                 "name": "Phruity",
                 "class": "druid",
                 "spec": "Guardian",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
+              },
+              {
+                "name": "Valorite",
+                "class": "death-knight",
+                "spec": "Blood",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               }
             ],
             "healers": [
@@ -1955,12 +1956,6 @@
                 "class": "mage",
                 "spec": "Arcane",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/snifs"
-              },
-              {
-                "name": "Valorite",
-                "class": "death-knight",
-                "spec": "Unholy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               }
             ]
           }
@@ -1972,8 +1967,10 @@
           "mythic": false,
           "killedAt": "2026-08-23T19:10:33.963Z",
           "pullsByDifficulty": {
-            "normal": 8
+            "normal": 8,
+            "heroic": 2
           },
+          "bestPercent": 73.14,
           "roster": {
             "tanks": [
               {
@@ -2199,9 +2196,9 @@
   "summary": {
     "total": 19,
     "normal": 19,
-    "heroic": 16,
+    "heroic": 17,
     "mythic": 0
   },
   "latestReport": "https://www.warcraftlogs.com/reports/J296Y8DBtKgpkxNT",
-  "lastUpdated": "2026-09-06T17:57:33.349Z"
+  "lastUpdated": "2026-09-06T19:53:22.480Z"
 }

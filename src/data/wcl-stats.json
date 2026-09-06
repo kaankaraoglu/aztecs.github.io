@@ -4,14 +4,14 @@
     "mostDeaths": {
       "name": "Aerioth",
       "class": "priest",
-      "count": 251
+      "count": 257
     },
     "highestDamageDone": {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "amount": 96494242,
-      "boss": "Vashnik the Malignant",
-      "report": "https://www.warcraftlogs.com/reports/P6KQm9b28WjqNxYt"
+      "name": "Aerioth",
+      "class": "priest",
+      "amount": 100822368,
+      "boss": "The Twin Fangs",
+      "report": "https://www.warcraftlogs.com/reports/J296Y8DBtKgpkxNT"
     },
     "highestDamageDoneMplus": {
       "name": "Valorite",
@@ -23,9 +23,9 @@
     "bestHealer": {
       "name": "Sâmáar",
       "class": "priest",
-      "amount": 139260194,
-      "boss": "Entombed Sentinels",
-      "report": "https://www.warcraftlogs.com/reports/P6KQm9b28WjqNxYt"
+      "amount": 149023814,
+      "boss": "The Twin Fangs",
+      "report": "https://www.warcraftlogs.com/reports/J296Y8DBtKgpkxNT"
     },
     "bestHealerMplus": {
       "name": "Éowyn",
