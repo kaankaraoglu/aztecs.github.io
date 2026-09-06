@@ -1,0 +1,1 @@
+import{E as e,F as t,J as n}from"./index-CBYfBM2x.js";var r={},i={class:`fading-divider`};function a(e,r){return n(),t(`hr`,i)}var o=e(r,[[`render`,a],[`__scopeId`,`data-v-eb4c5b2b`]]);export{o as t};
