@@ -1733,14 +1733,13 @@
         {
           "name": "Sszorak",
           "normal": true,
-          "heroic": false,
+          "heroic": true,
           "mythic": false,
-          "killedAt": "2026-08-19T19:44:27.717Z",
+          "killedAt": "2026-09-06T17:38:57.131Z",
           "pullsByDifficulty": {
             "normal": 2,
-            "heroic": 8
+            "heroic": 14
           },
-          "bestPercent": 64.48,
           "roster": {
             "tanks": [
               {
@@ -1758,22 +1757,28 @@
             ],
             "healers": [
               {
+                "name": "Flootskaft",
+                "class": "shaman",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/flootskaft"
+              },
+              {
                 "name": "Miranne",
                 "class": "shaman",
                 "spec": "Restoration",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/miranne"
               },
               {
-                "name": "Olibb",
-                "class": "paladin",
+                "name": "Sâmáar",
+                "class": "priest",
                 "spec": "Holy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/olibb"
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/s%C3%A2m%C3%A1ar"
               },
               {
-                "name": "Samaari",
-                "class": "monk",
-                "spec": "Mistweaver",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/samaari"
+                "name": "Zultharek",
+                "class": "shaman",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/zultharek"
               }
             ],
             "dps": [
@@ -1782,12 +1787,6 @@
                 "class": "priest",
                 "spec": "Shadow",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
-              },
-              {
-                "name": "Agro",
-                "class": "warrior",
-                "spec": "Arms",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
               },
               {
                 "name": "Amorrlan",
@@ -1802,12 +1801,6 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
               },
               {
-                "name": "Chaos",
-                "class": "warlock",
-                "spec": "Affliction",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/chaos"
-              },
-              {
                 "name": "Daruni",
                 "class": "druid",
                 "spec": "Balance",
@@ -1818,6 +1811,18 @@
                 "class": "death-knight",
                 "spec": "Frost",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/xavius/frosteyes"
+              },
+              {
+                "name": "Incendia",
+                "class": "mage",
+                "spec": "Frost",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/incendia"
+              },
+              {
+                "name": "Kentoz",
+                "class": "druid",
+                "spec": "Balance",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/stormreaver/kentoz"
               },
               {
                 "name": "Meld",
@@ -1832,10 +1837,10 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/shaw"
               },
               {
-                "name": "Synthia",
-                "class": "demon-hunter",
-                "spec": "Devourer",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/synthia"
+                "name": "Snifs",
+                "class": "mage",
+                "spec": "Arcane",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/snifs"
               }
             ]
           }
@@ -2194,9 +2199,9 @@
   "summary": {
     "total": 19,
     "normal": 19,
-    "heroic": 15,
+    "heroic": 16,
     "mythic": 0
   },
-  "latestReport": "https://www.warcraftlogs.com/reports/r2QG4qhdRxBAjfz7",
-  "lastUpdated": "2026-09-02T20:14:02.208Z"
+  "latestReport": "https://www.warcraftlogs.com/reports/J296Y8DBtKgpkxNT",
+  "lastUpdated": "2026-09-06T17:57:33.349Z"
 }
