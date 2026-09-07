@@ -116,32 +116,32 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2588,
+      "score": 2614,
       "topKeys": [
         "+10 VSA",
         "+10 BV",
+        "+10 RLP",
         "+10 TOS",
         "+10 AOF",
         "+10 MR",
         "+10 KR",
-        "+10 DON",
-        "+10 RLP"
+        "+10 DON"
       ],
       "realmSlug": "alakir"
     },
     {
       "name": "Sâmáar",
       "class": "priest",
-      "score": 2577,
+      "score": 2602,
       "topKeys": [
         "+10 BV",
+        "+10 RLP",
         "+10 TOS",
         "+10 MR",
         "+10 KR",
         "+10 VSA",
         "+10 DON",
-        "+10 AOF",
-        "+10 RLP"
+        "+10 AOF"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-07T18:01:13.089Z"
+  "lastUpdated": "2026-09-07T21:11:24.079Z"
 }
