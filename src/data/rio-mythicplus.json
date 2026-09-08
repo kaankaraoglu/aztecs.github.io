@@ -4,15 +4,15 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3474,
+      "score": 3488,
       "topKeys": [
         "+18 KR",
         "+17 DON",
+        "+17 BV",
         "+16 VSA",
         "+16 MR",
         "+16 TOS",
         "+16 RLP",
-        "+16 BV",
         "+16 AOF"
       ],
       "realmSlug": "alakir"
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "The Blinding Vale",
+      "level": 17,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Altar of Fangs",
       "level": 16,
       "timed": true,
@@ -212,14 +220,6 @@
       ]
     },
     {
-      "dungeon": "The Blinding Vale",
-      "level": 16,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "Voidscar Arena",
       "level": 16,
       "timed": true,
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-08T15:38:12.817Z"
+  "lastUpdated": "2026-09-08T19:10:09.013Z"
 }
