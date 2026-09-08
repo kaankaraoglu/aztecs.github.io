@@ -4,15 +4,15 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3488,
+      "score": 3502,
       "topKeys": [
         "+18 KR",
         "+17 DON",
+        "+17 MR",
         "+17 BV",
-        "+16 VSA",
-        "+16 MR",
-        "+16 TOS",
         "+16 RLP",
+        "+16 VSA",
+        "+16 TOS",
         "+16 AOF"
       ],
       "realmSlug": "alakir"
@@ -116,16 +116,16 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2614,
+      "score": 2619,
       "topKeys": [
+        "+10 TOS",
         "+10 VSA",
         "+10 BV",
         "+10 RLP",
-        "+10 TOS",
         "+10 AOF",
         "+10 MR",
-        "+10 KR",
-        "+10 DON"
+        "+10 DON",
+        "+10 KR"
       ],
       "realmSlug": "alakir"
     },
@@ -180,6 +180,14 @@
       ]
     },
     {
+      "dungeon": "Murder Row",
+      "level": 17,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "The Blinding Vale",
       "level": 17,
       "timed": true,
@@ -189,14 +197,6 @@
     },
     {
       "dungeon": "Altar of Fangs",
-      "level": 16,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "Murder Row",
       "level": 16,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-08T19:10:09.013Z"
+  "lastUpdated": "2026-09-08T22:00:44.105Z"
 }
