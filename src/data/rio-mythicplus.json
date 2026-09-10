@@ -52,7 +52,7 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 2835,
+      "score": 2837,
       "topKeys": [
         "+12 VSA",
         "+12 KR",
@@ -116,11 +116,11 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2619,
+      "score": 2622,
       "topKeys": [
+        "+10 BV",
         "+10 TOS",
         "+10 VSA",
-        "+10 BV",
         "+10 RLP",
         "+10 AOF",
         "+10 MR",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-09T22:09:12.242Z"
+  "lastUpdated": "2026-09-10T00:25:10.733Z"
 }
