@@ -20,15 +20,15 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2904,
+      "score": 2923,
       "topKeys": [
         "+12 RLP",
         "+12 VSA",
         "+12 AOF",
         "+12 MR",
         "+12 TOS",
+        "+12 DON",
         "+12 BV",
-        "+11 DON",
         "+10 KR"
       ],
       "realmSlug": "alakir"
@@ -68,15 +68,31 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2747,
+      "score": 2790,
       "topKeys": [
+        "+13 BV",
         "+13 AOF",
         "+11 TOS",
-        "+11 BV",
         "+10 DON",
         "+10 VSA",
         "+10 KR",
         "+10 MR",
+        "+10 RLP"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Amorrlan",
+      "class": "demon-hunter",
+      "score": 2759,
+      "topKeys": [
+        "+13 BV",
+        "+13 AOF",
+        "+11 TOS",
+        "+10 MR",
+        "+10 KR",
+        "+10 DON",
+        "+10 VSA",
         "+10 RLP"
       ],
       "realmSlug": "alakir"
@@ -94,22 +110,6 @@
         "+10 AOF",
         "+10 BV",
         "+10 DON"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Amorrlan",
-      "class": "demon-hunter",
-      "score": 2715,
-      "topKeys": [
-        "+13 AOF",
-        "+11 TOS",
-        "+11 BV",
-        "+10 MR",
-        "+10 KR",
-        "+10 DON",
-        "+10 VSA",
-        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-10T17:29:22.859Z"
+  "lastUpdated": "2026-09-10T19:58:27.732Z"
 }
