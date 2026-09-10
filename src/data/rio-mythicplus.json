@@ -20,16 +20,32 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2856,
+      "score": 2904,
       "topKeys": [
         "+12 RLP",
         "+12 VSA",
+        "+12 AOF",
         "+12 MR",
         "+12 TOS",
         "+12 BV",
         "+11 DON",
-        "+10 KR",
-        "+10 AOF"
+        "+10 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 2858,
+      "topKeys": [
+        "+12 RLP",
+        "+12 KR",
+        "+12 TOS",
+        "+12 AOF",
+        "+12 MR",
+        "+11 DON",
+        "+10 BV",
+        "+10 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -144,22 +160,6 @@
         "+8 TOS"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 2430,
-      "topKeys": [
-        "+12 AOF",
-        "+10 MR",
-        "+10 DON",
-        "+10 VSA",
-        "+10 TOS",
-        "+7 BV",
-        "+6 RLP",
-        "+6 KR"
-      ],
-      "realmSlug": "burning-legion"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-10T05:00:11.665Z"
+  "lastUpdated": "2026-09-10T09:23:45.383Z"
 }
