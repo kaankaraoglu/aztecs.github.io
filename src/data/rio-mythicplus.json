@@ -18,22 +18,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 2858,
-      "topKeys": [
-        "+12 RLP",
-        "+12 KR",
-        "+12 TOS",
-        "+12 AOF",
-        "+12 MR",
-        "+11 DON",
-        "+10 BV",
-        "+10 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 2856,
@@ -68,16 +52,16 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2739,
+      "score": 2747,
       "topKeys": [
         "+13 AOF",
         "+11 TOS",
         "+11 BV",
         "+10 DON",
+        "+10 VSA",
         "+10 KR",
         "+10 MR",
-        "+10 RLP",
-        "+10 VSA"
+        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -116,9 +100,9 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2622,
+      "score": 2660,
       "topKeys": [
-        "+10 BV",
+        "+12 BV",
         "+10 TOS",
         "+10 VSA",
         "+10 RLP",
@@ -160,6 +144,22 @@
         "+8 TOS"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 2430,
+      "topKeys": [
+        "+12 AOF",
+        "+10 MR",
+        "+10 DON",
+        "+10 VSA",
+        "+10 TOS",
+        "+7 BV",
+        "+6 RLP",
+        "+6 KR"
+      ],
+      "realmSlug": "burning-legion"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-10T00:25:10.733Z"
+  "lastUpdated": "2026-09-10T05:00:11.665Z"
 }
