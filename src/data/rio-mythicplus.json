@@ -130,6 +130,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 2613,
+      "topKeys": [
+        "+12 AOF",
+        "+10 MR",
+        "+10 DON",
+        "+10 VSA",
+        "+10 TOS",
+        "+10 KR",
+        "+10 RLP",
+        "+7 BV"
+      ],
+      "realmSlug": "burning-legion"
+    },
+    {
       "name": "Sâmáar",
       "class": "priest",
       "score": 2602,
@@ -142,22 +158,6 @@
         "+10 VSA",
         "+10 DON",
         "+10 AOF"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Sevenwunter",
-      "class": "demon-hunter",
-      "score": 2602,
-      "topKeys": [
-        "+12 VSA",
-        "+11 BV",
-        "+10 KR",
-        "+10 AOF",
-        "+10 MR",
-        "+10 DON",
-        "+10 RLP",
-        "+8 TOS"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-11T00:19:51.474Z"
+  "lastUpdated": "2026-09-11T04:56:41.974Z"
 }
