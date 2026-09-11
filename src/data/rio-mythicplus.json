@@ -18,6 +18,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 2925,
+      "topKeys": [
+        "+15 KR",
+        "+14 TOS",
+        "+12 RLP",
+        "+12 MR",
+        "+12 AOF",
+        "+11 DON",
+        "+10 BV",
+        "+10 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 2923,
@@ -34,29 +50,13 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 2858,
-      "topKeys": [
-        "+12 RLP",
-        "+12 KR",
-        "+12 TOS",
-        "+12 AOF",
-        "+12 MR",
-        "+11 DON",
-        "+10 BV",
-        "+10 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 2837,
+      "score": 2888,
       "topKeys": [
+        "+15 KR",
+        "+13 AOF",
         "+12 VSA",
-        "+12 KR",
-        "+12 AOF",
         "+12 MR",
         "+12 RLP",
         "+10 BV",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-11T04:56:41.974Z"
+  "lastUpdated": "2026-09-11T09:17:11.892Z"
 }
