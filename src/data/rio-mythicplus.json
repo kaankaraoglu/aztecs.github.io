@@ -4,14 +4,14 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3516,
+      "score": 3525,
       "topKeys": [
         "+18 KR",
         "+17 DON",
         "+17 TOS",
         "+17 MR",
+        "+17 RLP",
         "+17 BV",
-        "+16 RLP",
         "+16 VSA",
         "+16 AOF"
       ],
@@ -188,6 +188,14 @@
       ]
     },
     {
+      "dungeon": "Ruby Life Pools",
+      "level": 17,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
       "dungeon": "Temple of Sethraliss",
       "level": 17,
       "timed": true,
@@ -212,14 +220,6 @@
       ]
     },
     {
-      "dungeon": "Ruby Life Pools",
-      "level": 16,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "Voidscar Arena",
       "level": 16,
       "timed": true,
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-10T19:58:27.732Z"
+  "lastUpdated": "2026-09-11T00:19:51.474Z"
 }
