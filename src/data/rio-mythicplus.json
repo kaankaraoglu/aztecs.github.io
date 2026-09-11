@@ -4,16 +4,16 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3525,
+      "score": 3550,
       "topKeys": [
         "+18 KR",
         "+17 DON",
         "+17 TOS",
+        "+17 AOF",
         "+17 MR",
+        "+17 VSA",
         "+17 RLP",
-        "+17 BV",
-        "+16 VSA",
-        "+16 AOF"
+        "+17 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -68,14 +68,14 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2790,
+      "score": 2797,
       "topKeys": [
         "+13 BV",
         "+13 AOF",
         "+11 TOS",
+        "+11 KR",
         "+10 DON",
         "+10 VSA",
-        "+10 KR",
         "+10 MR",
         "+10 RLP"
       ],
@@ -100,11 +100,11 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 2718,
+      "score": 2755,
       "topKeys": [
         "+12 MR",
+        "+12 TOS",
         "+12 KR",
-        "+10 TOS",
         "+10 VSA",
         "+10 RLP",
         "+10 AOF",
@@ -112,6 +112,22 @@
         "+10 DON"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 2708,
+      "topKeys": [
+        "+12 AOF",
+        "+11 BV",
+        "+10 MR",
+        "+10 DON",
+        "+10 VSA",
+        "+10 TOS",
+        "+10 KR",
+        "+10 RLP"
+      ],
+      "realmSlug": "burning-legion"
     },
     {
       "name": "Phruity",
@@ -128,22 +144,6 @@
         "+10 KR"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 2613,
-      "topKeys": [
-        "+12 AOF",
-        "+10 MR",
-        "+10 DON",
-        "+10 VSA",
-        "+10 TOS",
-        "+10 KR",
-        "+10 RLP",
-        "+7 BV"
-      ],
-      "realmSlug": "burning-legion"
     },
     {
       "name": "Sâmáar",
@@ -166,6 +166,14 @@
     {
       "dungeon": "Kings' Rest",
       "level": 18,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
+    {
+      "dungeon": "Altar of Fangs",
+      "level": 17,
       "timed": true,
       "team": [
         "Aerioth"
@@ -212,21 +220,13 @@
       ]
     },
     {
-      "dungeon": "Altar of Fangs",
-      "level": 16,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "Voidscar Arena",
-      "level": 16,
+      "level": 17,
       "timed": true,
       "team": [
         "Aerioth"
       ]
     }
   ],
-  "lastUpdated": "2026-09-11T09:17:11.892Z"
+  "lastUpdated": "2026-09-11T17:41:44.604Z"
 }
