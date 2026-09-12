@@ -20,13 +20,13 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2964,
+      "score": 2978,
       "topKeys": [
+        "+13 TOS",
         "+12 RLP",
         "+12 VSA",
         "+12 AOF",
         "+12 MR",
-        "+12 TOS",
         "+12 KR",
         "+12 DON",
         "+12 BV"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-12T08:58:04.041Z"
+  "lastUpdated": "2026-09-12T15:52:37.653Z"
 }
