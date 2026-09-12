@@ -36,14 +36,14 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 2925,
+      "score": 2956,
       "topKeys": [
         "+15 KR",
         "+14 TOS",
         "+12 RLP",
         "+12 MR",
         "+12 AOF",
-        "+11 DON",
+        "+12 DON",
         "+10 BV",
         "+10 VSA"
       ],
@@ -68,16 +68,16 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2797,
+      "score": 2800,
       "topKeys": [
         "+13 BV",
         "+13 AOF",
         "+11 TOS",
         "+11 KR",
         "+10 DON",
+        "+10 RLP",
         "+10 VSA",
-        "+10 MR",
-        "+10 RLP"
+        "+10 MR"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-11T22:07:26.268Z"
+  "lastUpdated": "2026-09-12T08:58:04.041Z"
 }
