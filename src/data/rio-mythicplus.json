@@ -84,7 +84,7 @@
     {
       "name": "Amorrlan",
       "class": "demon-hunter",
-      "score": 2777,
+      "score": 2778,
       "topKeys": [
         "+13 BV",
         "+13 AOF",
@@ -146,18 +146,18 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Sâmáar",
-      "class": "priest",
-      "score": 2602,
+      "name": "Sevenwunter",
+      "class": "demon-hunter",
+      "score": 2616,
       "topKeys": [
-        "+10 BV",
-        "+10 RLP",
-        "+10 TOS",
-        "+10 MR",
+        "+12 VSA",
+        "+11 AOF",
+        "+11 BV",
         "+10 KR",
-        "+10 VSA",
+        "+10 MR",
         "+10 DON",
-        "+10 AOF"
+        "+10 RLP",
+        "+8 TOS"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-13T14:33:37.967Z"
+  "lastUpdated": "2026-09-13T17:36:11.503Z"
 }
