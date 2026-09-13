@@ -4,12 +4,12 @@
     "mostDeaths": {
       "name": "Aerioth",
       "class": "priest",
-      "count": 268
+      "count": 279
     },
     "highestDamageDone": {
       "name": "Aerioth",
       "class": "priest",
-      "amount": 101296923,
+      "amount": 102768741,
       "boss": "The Twin Fangs",
       "report": "https://www.warcraftlogs.com/reports/ZNQW9RkBycPg7Awt"
     },
@@ -23,9 +23,9 @@
     "bestHealer": {
       "name": "Sâmáar",
       "class": "priest",
-      "amount": 149023814,
-      "boss": "The Twin Fangs",
-      "report": "https://www.warcraftlogs.com/reports/J296Y8DBtKgpkxNT"
+      "amount": 157430189,
+      "boss": "The Coiled Altar",
+      "report": "https://www.warcraftlogs.com/reports/ZNQW9RkBycPg7Awt"
     },
     "bestHealerMplus": {
       "name": "Éowyn",
