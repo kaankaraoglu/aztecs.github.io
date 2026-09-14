@@ -4,13 +4,13 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3567,
+      "score": 3569,
       "topKeys": [
         "+18 MR",
         "+18 KR",
         "+17 DON",
-        "+17 TOS",
         "+17 AOF",
+        "+17 TOS",
         "+17 VSA",
         "+17 RLP",
         "+17 BV"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-14T16:48:52.099Z"
+  "lastUpdated": "2026-09-14T23:35:07.421Z"
 }
