@@ -11,8 +11,8 @@
         "+17 DON",
         "+17 AOF",
         "+17 TOS",
-        "+17 VSA",
         "+17 RLP",
+        "+17 VSA",
         "+17 BV"
       ],
       "realmSlug": "alakir"
@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Amorrlan",
+      "class": "demon-hunter",
+      "score": 2778,
+      "topKeys": [
+        "+13 BV",
+        "+13 AOF",
+        "+11 TOS",
+        "+10 DON",
+        "+10 MR",
+        "+10 KR",
+        "+10 VSA",
+        "+10 RLP"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 2755,
@@ -142,22 +158,6 @@
         "+10 DON",
         "+10 RLP",
         "+8 TOS"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Sâmáar",
-      "class": "priest",
-      "score": 2602,
-      "topKeys": [
-        "+10 BV",
-        "+10 RLP",
-        "+10 TOS",
-        "+10 MR",
-        "+10 KR",
-        "+10 VSA",
-        "+10 DON",
-        "+10 AOF"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-15T02:19:04.317Z"
+  "lastUpdated": "2026-09-15T17:28:26.419Z"
 }
