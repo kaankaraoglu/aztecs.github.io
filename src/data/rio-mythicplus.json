@@ -66,6 +66,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 2846,
+      "topKeys": [
+        "+13 BV",
+        "+13 AOF",
+        "+12 MR",
+        "+11 TOS",
+        "+11 KR",
+        "+10 DON",
+        "+10 RLP",
+        "+10 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Phruity",
       "class": "druid",
       "score": 2845,
@@ -78,22 +94,6 @@
         "+10 VSA",
         "+10 AOF",
         "+10 KR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 2800,
-      "topKeys": [
-        "+13 BV",
-        "+13 AOF",
-        "+11 TOS",
-        "+11 KR",
-        "+10 DON",
-        "+10 RLP",
-        "+10 VSA",
-        "+10 MR"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-15T17:28:26.419Z"
+  "lastUpdated": "2026-09-16T19:12:33.937Z"
 }
