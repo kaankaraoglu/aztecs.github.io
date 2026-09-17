@@ -52,16 +52,16 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2978,
+      "score": 2985,
       "topKeys": [
         "+13 TOS",
         "+12 RLP",
         "+12 VSA",
         "+12 AOF",
+        "+12 BV",
         "+12 MR",
         "+12 KR",
-        "+12 DON",
-        "+12 BV"
+        "+12 DON"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-16T19:12:33.937Z"
+  "lastUpdated": "2026-09-17T19:09:06.346Z"
 }
