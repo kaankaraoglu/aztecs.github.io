@@ -36,12 +36,12 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 2991,
+      "score": 3037,
       "topKeys": [
         "+15 KR",
-        "+13 AOF",
+        "+14 AOF",
+        "+14 RLP",
         "+12 MR",
-        "+12 RLP",
         "+12 DON",
         "+12 TOS",
         "+12 VSA",
@@ -68,15 +68,15 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2846,
+      "score": 2927,
       "topKeys": [
+        "+14 AOF",
+        "+14 RLP",
         "+13 BV",
-        "+13 AOF",
         "+12 MR",
         "+11 TOS",
         "+11 KR",
         "+10 DON",
-        "+10 RLP",
         "+10 VSA"
       ],
       "realmSlug": "alakir"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-17T19:09:06.346Z"
+  "lastUpdated": "2026-09-17T22:19:12.967Z"
 }
