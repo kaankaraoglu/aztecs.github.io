@@ -4,11 +4,11 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3569,
+      "score": 3582,
       "topKeys": [
+        "+18 DON",
         "+18 MR",
         "+18 KR",
-        "+17 DON",
         "+17 AOF",
         "+17 TOS",
         "+17 RLP",
@@ -62,6 +62,22 @@
         "+12 MR",
         "+12 KR",
         "+12 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 2927,
+      "topKeys": [
+        "+14 AOF",
+        "+14 RLP",
+        "+13 BV",
+        "+12 MR",
+        "+11 TOS",
+        "+11 KR",
+        "+10 DON",
+        "+10 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -144,25 +160,17 @@
         "+8 TOS"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sâmáar",
-      "class": "priest",
-      "score": 2606,
-      "topKeys": [
-        "+10 BV",
-        "+10 RLP",
-        "+10 TOS",
-        "+10 AOF",
-        "+10 MR",
-        "+10 KR",
-        "+10 VSA",
-        "+10 DON"
-      ],
-      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
+    {
+      "dungeon": "Den of Nalorakk",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
+    },
     {
       "dungeon": "Kings' Rest",
       "level": 18,
@@ -181,14 +189,6 @@
     },
     {
       "dungeon": "Altar of Fangs",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
-      "dungeon": "Den of Nalorakk",
       "level": 17,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-18T09:58:15.467Z"
+  "lastUpdated": "2026-09-18T13:59:48.558Z"
 }
