@@ -84,14 +84,14 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2845,
+      "score": 2889,
       "topKeys": [
         "+12 MR",
         "+12 RLP",
+        "+12 VSA",
         "+12 DON",
         "+12 TOS",
         "+12 BV",
-        "+10 VSA",
         "+10 AOF",
         "+10 KR"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-18T13:59:48.558Z"
+  "lastUpdated": "2026-09-18T17:28:29.841Z"
 }
