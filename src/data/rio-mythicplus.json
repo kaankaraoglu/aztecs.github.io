@@ -66,22 +66,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 2927,
-      "topKeys": [
-        "+14 AOF",
-        "+14 RLP",
-        "+13 BV",
-        "+12 MR",
-        "+11 TOS",
-        "+11 KR",
-        "+10 DON",
-        "+10 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Phruity",
       "class": "druid",
       "score": 2845,
@@ -160,6 +144,22 @@
         "+8 TOS"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Sâmáar",
+      "class": "priest",
+      "score": 2606,
+      "topKeys": [
+        "+10 BV",
+        "+10 RLP",
+        "+10 TOS",
+        "+10 AOF",
+        "+10 MR",
+        "+10 KR",
+        "+10 VSA",
+        "+10 DON"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-17T22:19:12.967Z"
+  "lastUpdated": "2026-09-18T09:58:15.467Z"
 }
