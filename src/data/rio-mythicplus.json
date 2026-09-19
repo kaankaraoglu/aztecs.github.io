@@ -18,6 +18,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Zultharek",
+      "class": "shaman",
+      "score": 3115,
+      "topKeys": [
+        "+15 MR",
+        "+15 DON",
+        "+15 KR",
+        "+14 AOF",
+        "+14 RLP",
+        "+12 TOS",
+        "+12 VSA",
+        "+10 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Shaw",
       "class": "rogue",
       "score": 3077,
@@ -30,22 +46,6 @@
         "+12 DON",
         "+12 VSA",
         "+12 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Zultharek",
-      "class": "shaman",
-      "score": 3076,
-      "topKeys": [
-        "+15 MR",
-        "+15 KR",
-        "+14 AOF",
-        "+14 RLP",
-        "+12 DON",
-        "+12 TOS",
-        "+12 VSA",
-        "+10 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-19T16:38:01.120Z"
+  "lastUpdated": "2026-09-19T19:04:36.056Z"
 }
