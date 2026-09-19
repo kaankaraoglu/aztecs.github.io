@@ -4,14 +4,14 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3582,
+      "score": 3586,
       "topKeys": [
         "+18 DON",
         "+18 MR",
         "+18 KR",
+        "+17 RLP",
         "+17 AOF",
         "+17 TOS",
-        "+17 RLP",
         "+17 VSA",
         "+17 BV"
       ],
@@ -20,12 +20,12 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 3037,
+      "score": 3077,
       "topKeys": [
+        "+15 MR",
         "+15 KR",
         "+14 TOS",
         "+12 RLP",
-        "+12 MR",
         "+12 AOF",
         "+12 DON",
         "+12 VSA",
@@ -36,12 +36,12 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 3037,
+      "score": 3076,
       "topKeys": [
+        "+15 MR",
         "+15 KR",
         "+14 AOF",
         "+14 RLP",
-        "+12 MR",
         "+12 DON",
         "+12 TOS",
         "+12 VSA",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-19T13:16:31.840Z"
+  "lastUpdated": "2026-09-19T16:38:01.120Z"
 }
