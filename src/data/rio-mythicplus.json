@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 2797,
+      "topKeys": [
+        "+12 DON",
+        "+12 KR",
+        "+12 AOF",
+        "+11 BV",
+        "+10 MR",
+        "+10 VSA",
+        "+10 TOS",
+        "+10 RLP"
+      ],
+      "realmSlug": "burning-legion"
+    },
+    {
       "name": "Amorrlan",
       "class": "demon-hunter",
       "score": 2778,
@@ -130,32 +146,16 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 2709,
-      "topKeys": [
-        "+12 AOF",
-        "+11 BV",
-        "+10 DON",
-        "+10 MR",
-        "+10 VSA",
-        "+10 TOS",
-        "+10 KR",
-        "+10 RLP"
-      ],
-      "realmSlug": "burning-legion"
-    },
-    {
       "name": "Sevenwunter",
       "class": "demon-hunter",
-      "score": 2683,
+      "score": 2700,
       "topKeys": [
         "+12 VSA",
         "+11 TOS",
+        "+11 MR",
         "+11 AOF",
         "+11 BV",
         "+10 KR",
-        "+10 MR",
         "+10 DON",
         "+10 RLP"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-18T22:02:24.254Z"
+  "lastUpdated": "2026-09-19T13:16:31.840Z"
 }
