@@ -148,11 +148,11 @@
     {
       "name": "Sevenwunter",
       "class": "demon-hunter",
-      "score": 2700,
+      "score": 2722,
       "topKeys": [
         "+12 VSA",
+        "+12 MR",
         "+11 TOS",
-        "+11 MR",
         "+11 AOF",
         "+11 BV",
         "+10 KR",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-20T02:11:10.842Z"
+  "lastUpdated": "2026-09-20T07:51:05.524Z"
 }
