@@ -4,14 +4,14 @@
     "mostDeaths": {
       "name": "Aerioth",
       "class": "priest",
-      "count": 286
+      "count": 300
     },
     "highestDamageDone": {
-      "name": "Aerioth",
-      "class": "priest",
-      "amount": 102768741,
-      "boss": "The Twin Fangs",
-      "report": "https://www.warcraftlogs.com/reports/ZNQW9RkBycPg7Awt"
+      "name": "Blackmaira",
+      "class": "paladin",
+      "amount": 108500305,
+      "boss": "The Coiled Altar",
+      "report": "https://www.warcraftlogs.com/reports/HJnABXtbhZM4gC9v"
     },
     "highestDamageDoneMplus": {
       "name": "Valorite",

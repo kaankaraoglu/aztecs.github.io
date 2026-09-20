@@ -1963,35 +1963,40 @@
         {
           "name": "The Coiled Altar",
           "normal": true,
-          "heroic": false,
+          "heroic": true,
           "mythic": false,
-          "killedAt": "2026-08-23T19:10:33.963Z",
+          "killedAt": "2026-09-20T18:21:06.052Z",
           "pullsByDifficulty": {
             "normal": 8,
-            "heroic": 23
+            "heroic": 35
           },
-          "bestPercent": 4.2,
           "roster": {
             "tanks": [
-              {
-                "name": "Agro",
-                "class": "warrior",
-                "spec": "Protection",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
-              },
               {
                 "name": "Phruity",
                 "class": "druid",
                 "spec": "Guardian",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
+              },
+              {
+                "name": "Valorite",
+                "class": "death-knight",
+                "spec": "Blood",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               }
             ],
             "healers": [
               {
-                "name": "Miranne",
+                "name": "Flootskaft",
                 "class": "shaman",
                 "spec": "Restoration",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/miranne"
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/flootskaft"
+              },
+              {
+                "name": "Olibb",
+                "class": "paladin",
+                "spec": "Holy",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/olibb"
               },
               {
                 "name": "Sâmáar",
@@ -2014,6 +2019,12 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/aerioth"
               },
               {
+                "name": "Agro",
+                "class": "warrior",
+                "spec": "Arms",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/agro"
+              },
+              {
                 "name": "Amorrlan",
                 "class": "demon-hunter",
                 "spec": "Havoc",
@@ -2026,16 +2037,16 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
               },
               {
+                "name": "Cefria",
+                "class": "warlock",
+                "spec": "Affliction",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/cefria"
+              },
+              {
                 "name": "Daruni",
                 "class": "druid",
                 "spec": "Balance",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/daruni"
-              },
-              {
-                "name": "Flootskaft",
-                "class": "shaman",
-                "spec": "Elemental",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/flootskaft"
               },
               {
                 "name": "Frosteyes",
@@ -2056,10 +2067,10 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/stormreaver/kentoz"
               },
               {
-                "name": "Meld",
-                "class": "hunter",
-                "spec": "BeastMastery",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/twisting-nether/meld"
+                "name": "Oroi",
+                "class": "demon-hunter",
+                "spec": "Havoc",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/oroi"
               },
               {
                 "name": "Shaw",
@@ -2072,12 +2083,6 @@
                 "class": "mage",
                 "spec": "Arcane",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/snifs"
-              },
-              {
-                "name": "Valorite",
-                "class": "death-knight",
-                "spec": "Unholy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               }
             ]
           }
@@ -2089,8 +2094,10 @@
           "mythic": false,
           "killedAt": "2026-08-30T17:05:27.227Z",
           "pullsByDifficulty": {
-            "normal": 15
+            "normal": 15,
+            "heroic": 5
           },
+          "bestPercent": 65.03,
           "roster": {
             "tanks": [
               {
@@ -2196,9 +2203,9 @@
   "summary": {
     "total": 19,
     "normal": 19,
-    "heroic": 17,
+    "heroic": 18,
     "mythic": 0
   },
-  "latestReport": "https://www.warcraftlogs.com/reports/1LjWmbdcxfVMtTzP",
-  "lastUpdated": "2026-09-16T19:10:59.021Z"
+  "latestReport": "https://www.warcraftlogs.com/reports/HJnABXtbhZM4gC9v",
+  "lastUpdated": "2026-09-20T19:10:14.321Z"
 }
