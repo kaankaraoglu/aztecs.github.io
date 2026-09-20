@@ -66,6 +66,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 2934,
+      "topKeys": [
+        "+12 MR",
+        "+12 RLP",
+        "+12 VSA",
+        "+12 DON",
+        "+12 TOS",
+        "+12 KR",
+        "+12 BV",
+        "+10 AOF"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 2927,
@@ -78,22 +94,6 @@
         "+11 KR",
         "+10 DON",
         "+10 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 2889,
-      "topKeys": [
-        "+12 MR",
-        "+12 RLP",
-        "+12 VSA",
-        "+12 DON",
-        "+12 TOS",
-        "+12 BV",
-        "+10 AOF",
-        "+10 KR"
       ],
       "realmSlug": "alakir"
     },
@@ -148,12 +148,12 @@
     {
       "name": "Sevenwunter",
       "class": "demon-hunter",
-      "score": 2722,
+      "score": 2747,
       "topKeys": [
         "+12 VSA",
+        "+12 AOF",
         "+12 MR",
         "+11 TOS",
-        "+11 AOF",
         "+11 BV",
         "+10 KR",
         "+10 DON",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-20T07:51:05.524Z"
+  "lastUpdated": "2026-09-20T12:45:17.222Z"
 }
