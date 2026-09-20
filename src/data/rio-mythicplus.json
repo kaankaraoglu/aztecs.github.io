@@ -20,7 +20,7 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 3115,
+      "score": 3155,
       "topKeys": [
         "+15 MR",
         "+15 DON",
@@ -28,8 +28,8 @@
         "+14 AOF",
         "+14 RLP",
         "+12 TOS",
-        "+12 VSA",
-        "+10 BV"
+        "+12 BV",
+        "+12 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-19T19:04:36.056Z"
+  "lastUpdated": "2026-09-20T02:11:10.842Z"
 }
