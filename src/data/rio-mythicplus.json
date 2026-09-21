@@ -100,14 +100,14 @@
     {
       "name": "Sotray",
       "class": "priest",
-      "score": 2798,
+      "score": 2838,
       "topKeys": [
         "+12 DON",
         "+12 KR",
         "+12 AOF",
+        "+12 VSA",
         "+11 BV",
         "+10 MR",
-        "+10 VSA",
         "+10 TOS",
         "+10 RLP"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-20T19:11:52.041Z"
+  "lastUpdated": "2026-09-21T02:11:33.526Z"
 }
