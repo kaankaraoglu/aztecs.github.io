@@ -114,6 +114,22 @@
       "realmSlug": "burning-legion"
     },
     {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 2793,
+      "topKeys": [
+        "+12 MR",
+        "+12 TOS",
+        "+12 KR",
+        "+12 RLP",
+        "+10 VSA",
+        "+10 AOF",
+        "+10 BV",
+        "+10 DON"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Sevenwunter",
       "class": "demon-hunter",
       "score": 2786,
@@ -142,22 +158,6 @@
         "+10 KR",
         "+10 VSA",
         "+10 RLP"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 2755,
-      "topKeys": [
-        "+12 MR",
-        "+12 TOS",
-        "+12 KR",
-        "+10 VSA",
-        "+10 RLP",
-        "+10 AOF",
-        "+10 BV",
-        "+10 DON"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-21T08:05:35.733Z"
+  "lastUpdated": "2026-09-22T12:25:34.470Z"
 }
