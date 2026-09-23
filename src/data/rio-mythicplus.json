@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 2879,
+      "topKeys": [
+        "+12 DON",
+        "+12 KR",
+        "+12 AOF",
+        "+12 TOS",
+        "+12 VSA",
+        "+11 BV",
+        "+10 MR",
+        "+10 RLP"
+      ],
+      "realmSlug": "burning-legion"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 2838,
@@ -112,22 +128,6 @@
         "+10 DON"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 2838,
-      "topKeys": [
-        "+12 DON",
-        "+12 KR",
-        "+12 AOF",
-        "+12 VSA",
-        "+11 BV",
-        "+10 MR",
-        "+10 TOS",
-        "+10 RLP"
-      ],
-      "realmSlug": "burning-legion"
     },
     {
       "name": "Sevenwunter",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-23T01:36:16.987Z"
+  "lastUpdated": "2026-09-23T06:55:40.846Z"
 }
