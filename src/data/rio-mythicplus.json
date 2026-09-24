@@ -4,15 +4,15 @@
     {
       "name": "Aerioth",
       "class": "priest",
-      "score": 3586,
+      "score": 3591,
       "topKeys": [
         "+18 DON",
         "+18 MR",
         "+18 KR",
+        "+17 VSA",
         "+17 RLP",
         "+17 AOF",
         "+17 TOS",
-        "+17 VSA",
         "+17 BV"
       ],
       "realmSlug": "alakir"
@@ -52,16 +52,16 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 2991,
+      "score": 3046,
       "topKeys": [
         "+14 AOF",
         "+14 RLP",
         "+14 VSA",
+        "+13 DON",
         "+13 BV",
         "+12 MR",
         "+11 TOS",
-        "+11 KR",
-        "+10 DON"
+        "+11 KR"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-24T12:25:54.601Z"
+  "lastUpdated": "2026-09-24T17:25:37.241Z"
 }
