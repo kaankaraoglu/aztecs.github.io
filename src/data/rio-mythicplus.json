@@ -68,14 +68,14 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 2985,
+      "score": 2991,
       "topKeys": [
         "+13 TOS",
+        "+12 MR",
         "+12 RLP",
         "+12 VSA",
         "+12 AOF",
         "+12 BV",
-        "+12 MR",
         "+12 KR",
         "+12 DON"
       ],
@@ -84,13 +84,13 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2935,
+      "score": 2949,
       "topKeys": [
+        "+13 TOS",
         "+12 MR",
         "+12 RLP",
         "+12 VSA",
         "+12 DON",
-        "+12 TOS",
         "+12 KR",
         "+12 BV",
         "+10 AOF"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-23T20:34:39.066Z"
+  "lastUpdated": "2026-09-24T06:59:11.000Z"
 }
