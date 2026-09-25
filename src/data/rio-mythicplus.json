@@ -132,15 +132,15 @@
     {
       "name": "Sevenwunter",
       "class": "demon-hunter",
-      "score": 2786,
+      "score": 2801,
       "topKeys": [
         "+12 VSA",
         "+12 AOF",
         "+12 MR",
+        "+11 KR",
         "+11 TOS",
         "+11 RLP",
         "+11 BV",
-        "+10 KR",
         "+10 DON"
       ],
       "realmSlug": "alakir"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-24T17:25:37.241Z"
+  "lastUpdated": "2026-09-25T21:46:02.756Z"
 }
