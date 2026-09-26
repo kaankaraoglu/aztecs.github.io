@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 2932,
+      "topKeys": [
+        "+12 DON",
+        "+12 RLP",
+        "+12 KR",
+        "+12 AOF",
+        "+12 TOS",
+        "+12 VSA",
+        "+11 BV",
+        "+10 MR"
+      ],
+      "realmSlug": "burning-legion"
+    },
+    {
       "name": "Agro",
       "class": "warrior",
       "score": 2898,
@@ -112,22 +128,6 @@
         "+10 RLP"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 2879,
-      "topKeys": [
-        "+12 DON",
-        "+12 KR",
-        "+12 AOF",
-        "+12 TOS",
-        "+12 VSA",
-        "+11 BV",
-        "+10 MR",
-        "+10 RLP"
-      ],
-      "realmSlug": "burning-legion"
     },
     {
       "name": "Daruni",
@@ -148,12 +148,12 @@
     {
       "name": "Sevenwunter",
       "class": "demon-hunter",
-      "score": 2801,
+      "score": 2836,
       "topKeys": [
+        "+13 KR",
         "+12 VSA",
         "+12 AOF",
         "+12 MR",
-        "+11 KR",
         "+11 TOS",
         "+11 RLP",
         "+11 BV",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-26T00:16:45.791Z"
+  "lastUpdated": "2026-09-26T14:11:00.915Z"
 }
