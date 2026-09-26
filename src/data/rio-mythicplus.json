@@ -66,6 +66,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 2993,
+      "topKeys": [
+        "+13 TOS",
+        "+12 MR",
+        "+12 RLP",
+        "+12 VSA",
+        "+12 DON",
+        "+12 AOF",
+        "+12 KR",
+        "+12 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 2991,
@@ -82,18 +98,18 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 2949,
+      "name": "Agro",
+      "class": "warrior",
+      "score": 2898,
       "topKeys": [
-        "+13 TOS",
-        "+12 MR",
-        "+12 RLP",
         "+12 VSA",
-        "+12 DON",
-        "+12 KR",
         "+12 BV",
-        "+10 AOF"
+        "+12 MR",
+        "+12 DON",
+        "+12 AOF",
+        "+12 TOS",
+        "+11 KR",
+        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -142,22 +158,6 @@
         "+11 RLP",
         "+11 BV",
         "+10 DON"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Amorrlan",
-      "class": "demon-hunter",
-      "score": 2779,
-      "topKeys": [
-        "+13 BV",
-        "+13 AOF",
-        "+11 TOS",
-        "+10 DON",
-        "+10 MR",
-        "+10 KR",
-        "+10 VSA",
-        "+10 RLP"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-09-25T21:46:02.756Z"
+  "lastUpdated": "2026-09-26T00:16:45.791Z"
 }
