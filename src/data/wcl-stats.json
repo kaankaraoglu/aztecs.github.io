@@ -4,14 +4,14 @@
     "mostDeaths": {
       "name": "Aerioth",
       "class": "priest",
-      "count": 315
+      "count": 323
     },
     "highestDamageDone": {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "amount": 108500305,
-      "boss": "The Coiled Altar",
-      "report": "https://www.warcraftlogs.com/reports/HJnABXtbhZM4gC9v"
+      "name": "Shaw",
+      "class": "rogue",
+      "amount": 120298676,
+      "boss": "Ula'tek",
+      "report": "https://www.warcraftlogs.com/reports/Btn6Zw3P2YMmQR8r"
     },
     "highestDamageDoneMplus": {
       "name": "Valorite",
@@ -23,9 +23,9 @@
     "bestHealer": {
       "name": "Sâmáar",
       "class": "priest",
-      "amount": 157430189,
-      "boss": "The Coiled Altar",
-      "report": "https://www.warcraftlogs.com/reports/ZNQW9RkBycPg7Awt"
+      "amount": 170471157,
+      "boss": "Ula'tek",
+      "report": "https://www.warcraftlogs.com/reports/Btn6Zw3P2YMmQR8r"
     },
     "bestHealerMplus": {
       "name": "Éowyn",
