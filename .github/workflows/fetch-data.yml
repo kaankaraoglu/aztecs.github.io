@@ -9,7 +9,7 @@ concurrency:
   group: fetch-data
   cancel-in-progress: false
 
-# The checkout and the push both use secrets.PAT_TOKEN, so GITHUB_TOKEN needs
+# The checkout and the push both use secrets.UNIVERSAL_PAT, so GITHUB_TOKEN needs
 # nothing.
 permissions:
   contents: read
@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          token: ${{ secrets.PAT_TOKEN }}
+          token: ${{ secrets.UNIVERSAL_PAT }}
 
       - uses: actions/setup-node@v7
         with:
