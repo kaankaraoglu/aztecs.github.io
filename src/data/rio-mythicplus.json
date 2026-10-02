@@ -50,6 +50,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 3065,
+      "topKeys": [
+        "+16 KR",
+        "+14 AOF",
+        "+12 DON",
+        "+12 MR",
+        "+12 RLP",
+        "+12 TOS",
+        "+12 VSA",
+        "+11 BV"
+      ],
+      "realmSlug": "burning-legion"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 3053,
@@ -64,22 +80,6 @@
         "+11 TOS"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 3040,
-      "topKeys": [
-        "+16 KR",
-        "+12 DON",
-        "+12 MR",
-        "+12 RLP",
-        "+12 AOF",
-        "+12 TOS",
-        "+12 VSA",
-        "+11 BV"
-      ],
-      "realmSlug": "burning-legion"
     },
     {
       "name": "Valorite",
@@ -114,6 +114,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 2930,
+      "topKeys": [
+        "+12 VSA",
+        "+12 AOF",
+        "+12 DON",
+        "+12 MR",
+        "+12 TOS",
+        "+12 KR",
+        "+12 RLP",
+        "+10 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Agro",
       "class": "warrior",
       "score": 2898,
@@ -142,22 +158,6 @@
         "+10 DON",
         "+10 KR",
         "+10 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 2883,
-      "topKeys": [
-        "+12 VSA",
-        "+12 AOF",
-        "+12 MR",
-        "+12 TOS",
-        "+12 KR",
-        "+12 RLP",
-        "+10 BV",
-        "+10 DON"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-02T21:36:41.009Z"
+  "lastUpdated": "2026-10-02T23:39:05.890Z"
 }
