@@ -66,6 +66,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 3040,
+      "topKeys": [
+        "+16 KR",
+        "+12 DON",
+        "+12 MR",
+        "+12 RLP",
+        "+12 AOF",
+        "+12 TOS",
+        "+12 VSA",
+        "+11 BV"
+      ],
+      "realmSlug": "burning-legion"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 3010,
@@ -96,22 +112,6 @@
         "+12 BV"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 2985,
-      "topKeys": [
-        "+12 DON",
-        "+12 MR",
-        "+12 RLP",
-        "+12 AOF",
-        "+12 TOS",
-        "+12 KR",
-        "+12 VSA",
-        "+11 BV"
-      ],
-      "realmSlug": "burning-legion"
     },
     {
       "name": "Agro",
@@ -148,14 +148,14 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 2838,
+      "score": 2883,
       "topKeys": [
         "+12 VSA",
+        "+12 AOF",
         "+12 MR",
         "+12 TOS",
         "+12 KR",
         "+12 RLP",
-        "+10 AOF",
         "+10 BV",
         "+10 DON"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-01T13:38:38.530Z"
+  "lastUpdated": "2026-10-02T21:36:41.009Z"
 }
