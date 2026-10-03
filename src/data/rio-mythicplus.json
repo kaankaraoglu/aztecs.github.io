@@ -132,16 +132,16 @@
     {
       "name": "Daruni",
       "class": "druid",
-      "score": 2930,
+      "score": 2974,
       "topKeys": [
         "+12 VSA",
         "+12 AOF",
+        "+12 BV",
         "+12 DON",
         "+12 MR",
         "+12 TOS",
         "+12 KR",
-        "+12 RLP",
-        "+10 BV"
+        "+12 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-03T08:43:50.193Z"
+  "lastUpdated": "2026-10-03T14:05:51.763Z"
 }
