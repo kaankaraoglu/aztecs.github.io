@@ -84,13 +84,13 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 3010,
+      "score": 3026,
       "topKeys": [
-        "+13 TOS",
         "+13 VSA",
+        "+13 RLP",
+        "+13 TOS",
         "+12 MR",
         "+12 KR",
-        "+12 RLP",
         "+12 AOF",
         "+12 BV",
         "+12 DON"
@@ -114,6 +114,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Agro",
+      "class": "warrior",
+      "score": 2977,
+      "topKeys": [
+        "+13 VSA",
+        "+13 RLP",
+        "+12 AOF",
+        "+12 BV",
+        "+12 MR",
+        "+12 DON",
+        "+12 TOS",
+        "+11 KR"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Daruni",
       "class": "druid",
       "score": 2930,
@@ -126,22 +142,6 @@
         "+12 KR",
         "+12 RLP",
         "+10 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 2898,
-      "topKeys": [
-        "+12 VSA",
-        "+12 BV",
-        "+12 MR",
-        "+12 DON",
-        "+12 AOF",
-        "+12 TOS",
-        "+11 KR",
-        "+10 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-02T23:39:05.890Z"
+  "lastUpdated": "2026-10-03T08:43:50.193Z"
 }
