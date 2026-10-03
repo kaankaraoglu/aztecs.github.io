@@ -146,20 +146,20 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Amorrlan",
-      "class": "demon-hunter",
-      "score": 2889,
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 2930,
       "topKeys": [
-        "+13 BV",
-        "+13 AOF",
-        "+12 MR",
-        "+12 TOS",
+        "+14 MR",
         "+12 RLP",
-        "+10 DON",
-        "+10 KR",
-        "+10 VSA"
+        "+12 TOS",
+        "+12 DON",
+        "+12 BV",
+        "+12 KR",
+        "+10 VSA",
+        "+10 AOF"
       ],
-      "realmSlug": "alakir"
+      "realmSlug": "xavius"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-03T14:05:51.763Z"
+  "lastUpdated": "2026-10-03T18:07:53.668Z"
 }
