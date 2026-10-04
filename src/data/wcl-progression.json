@@ -2095,7 +2095,7 @@
           "killedAt": "2026-08-30T17:05:27.227Z",
           "pullsByDifficulty": {
             "normal": 15,
-            "heroic": 41
+            "heroic": 42
           },
           "bestPercent": 19.29,
           "roster": {
@@ -2206,6 +2206,6 @@
     "heroic": 18,
     "mythic": 0
   },
-  "latestReport": "https://www.warcraftlogs.com/reports/T3tvpJYCWbD2L7rf",
-  "lastUpdated": "2026-09-30T20:37:02.939Z"
+  "latestReport": "https://www.warcraftlogs.com/reports/wHNtydrqCFXYWAxz",
+  "lastUpdated": "2026-10-04T17:10:18.179Z"
 }
