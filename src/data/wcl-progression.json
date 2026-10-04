@@ -2095,9 +2095,9 @@
           "killedAt": "2026-08-30T17:05:27.227Z",
           "pullsByDifficulty": {
             "normal": 15,
-            "heroic": 42
+            "heroic": 64
           },
-          "bestPercent": 19.29,
+          "bestPercent": 10.11,
           "roster": {
             "tanks": [
               {
@@ -2207,5 +2207,5 @@
     "mythic": 0
   },
   "latestReport": "https://www.warcraftlogs.com/reports/wHNtydrqCFXYWAxz",
-  "lastUpdated": "2026-10-04T17:10:18.179Z"
+  "lastUpdated": "2026-10-04T20:16:07.061Z"
 }
