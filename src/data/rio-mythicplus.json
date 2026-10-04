@@ -52,11 +52,11 @@
     {
       "name": "Sotray",
       "class": "priest",
-      "score": 3065,
+      "score": 3096,
       "topKeys": [
         "+16 KR",
+        "+15 DON",
         "+14 AOF",
-        "+12 DON",
         "+12 MR",
         "+12 RLP",
         "+12 TOS",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-03T18:07:53.668Z"
+  "lastUpdated": "2026-10-04T23:22:24.169Z"
 }
