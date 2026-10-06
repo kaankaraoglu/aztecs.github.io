@@ -20,16 +20,16 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 3201,
+      "score": 3282,
       "topKeys": [
+        "+16 MR",
         "+15 VSA",
-        "+15 MR",
         "+15 DON",
+        "+15 TOS",
         "+15 KR",
+        "+14 BV",
         "+14 AOF",
-        "+14 RLP",
-        "+12 TOS",
-        "+12 BV"
+        "+14 RLP"
       ],
       "realmSlug": "alakir"
     },
@@ -146,20 +146,20 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 2930,
+      "name": "Chaos",
+      "class": "warlock",
+      "score": 2960,
       "topKeys": [
-        "+14 MR",
+        "+13 KR",
+        "+13 AOF",
+        "+13 VSA",
         "+12 RLP",
-        "+12 TOS",
         "+12 DON",
         "+12 BV",
-        "+12 KR",
-        "+10 VSA",
-        "+10 AOF"
+        "+11 TOS",
+        "+10 MR"
       ],
-      "realmSlug": "xavius"
+      "realmSlug": "skullcrusher"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-05T09:20:39.064Z"
+  "lastUpdated": "2026-10-06T19:15:59.325Z"
 }
