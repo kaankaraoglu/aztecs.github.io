@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Chaos",
+      "class": "warlock",
+      "score": 3000,
+      "topKeys": [
+        "+13 KR",
+        "+13 AOF",
+        "+13 VSA",
+        "+12 RLP",
+        "+12 DON",
+        "+12 MR",
+        "+12 BV",
+        "+11 TOS"
+      ],
+      "realmSlug": "skullcrusher"
+    },
+    {
       "name": "Phruity",
       "class": "druid",
       "score": 2993,
@@ -144,22 +160,6 @@
         "+12 RLP"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Chaos",
-      "class": "warlock",
-      "score": 2960,
-      "topKeys": [
-        "+13 KR",
-        "+13 AOF",
-        "+13 VSA",
-        "+12 RLP",
-        "+12 DON",
-        "+12 BV",
-        "+11 TOS",
-        "+10 MR"
-      ],
-      "realmSlug": "skullcrusher"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-06T19:15:59.325Z"
+  "lastUpdated": "2026-10-06T23:14:44.659Z"
 }
