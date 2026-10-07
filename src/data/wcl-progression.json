@@ -2090,14 +2090,13 @@
         {
           "name": "Ula'tek",
           "normal": true,
-          "heroic": false,
+          "heroic": true,
           "mythic": false,
-          "killedAt": "2026-08-30T17:05:27.227Z",
+          "killedAt": "2026-10-07T19:37:24.613Z",
           "pullsByDifficulty": {
             "normal": 15,
-            "heroic": 64
+            "heroic": 72
           },
-          "bestPercent": 10.11,
           "roster": {
             "tanks": [
               {
@@ -2107,13 +2106,25 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/phruity"
               },
               {
-                "name": "Sherwin",
+                "name": "Valorite",
                 "class": "death-knight",
                 "spec": "Blood",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/stormreaver/sherwin"
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
               }
             ],
             "healers": [
+              {
+                "name": "Flootskaft",
+                "class": "shaman",
+                "spec": "Restoration",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/flootskaft"
+              },
+              {
+                "name": "Kiyanne",
+                "class": "evoker",
+                "spec": "Preservation",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/kiyanne"
+              },
               {
                 "name": "Olibb",
                 "class": "paladin",
@@ -2159,6 +2170,18 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/blackmaira"
               },
               {
+                "name": "Cefria",
+                "class": "warlock",
+                "spec": "Demonology",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/cefria"
+              },
+              {
+                "name": "Chaos",
+                "class": "warlock",
+                "spec": "Affliction",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/skullcrusher/chaos"
+              },
+              {
                 "name": "Daruni",
                 "class": "druid",
                 "spec": "Balance",
@@ -2177,22 +2200,28 @@
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/incendia"
               },
               {
+                "name": "Kentoz",
+                "class": "druid",
+                "spec": "Balance",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/stormreaver/kentoz"
+              },
+              {
+                "name": "Oroi",
+                "class": "demon-hunter",
+                "spec": "Havoc",
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/oroi"
+              },
+              {
                 "name": "Shaw",
                 "class": "rogue",
-                "spec": "Subtlety",
+                "spec": "Assassination",
                 "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/shaw"
               },
               {
-                "name": "Snifs",
-                "class": "mage",
-                "spec": "Arcane",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/chromaggus/snifs"
-              },
-              {
-                "name": "Valorite",
+                "name": "Sherwin",
                 "class": "death-knight",
                 "spec": "Unholy",
-                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/alakir/valorite"
+                "armory": "https://worldofwarcraft.blizzard.com/en-gb/character/eu/stormreaver/sherwin"
               }
             ]
           }
@@ -2203,9 +2232,9 @@
   "summary": {
     "total": 19,
     "normal": 19,
-    "heroic": 18,
+    "heroic": 19,
     "mythic": 0
   },
-  "latestReport": "https://www.warcraftlogs.com/reports/wHNtydrqCFXYWAxz",
-  "lastUpdated": "2026-10-04T20:16:07.061Z"
+  "latestReport": "https://www.warcraftlogs.com/reports/1QkXctvR9DwHdMNp",
+  "lastUpdated": "2026-10-07T21:41:29.188Z"
 }
