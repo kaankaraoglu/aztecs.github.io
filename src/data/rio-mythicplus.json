@@ -34,6 +34,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Shaw",
+      "class": "rogue",
+      "score": 3162,
+      "topKeys": [
+        "+15 VSA",
+        "+15 MR",
+        "+15 RLP",
+        "+15 KR",
+        "+14 TOS",
+        "+12 AOF",
+        "+12 DON",
+        "+12 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Sotray",
       "class": "priest",
       "score": 3126,
@@ -50,32 +66,16 @@
       "realmSlug": "burning-legion"
     },
     {
-      "name": "Shaw",
-      "class": "rogue",
-      "score": 3124,
-      "topKeys": [
-        "+15 VSA",
-        "+15 MR",
-        "+15 KR",
-        "+14 TOS",
-        "+12 RLP",
-        "+12 AOF",
-        "+12 DON",
-        "+12 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 3053,
+      "score": 3061,
       "topKeys": [
         "+14 AOF",
         "+14 RLP",
         "+14 VSA",
         "+13 DON",
         "+13 BV",
-        "+12 MR",
+        "+13 MR",
         "+11 KR",
         "+11 TOS"
       ],
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-06T23:14:44.659Z"
+  "lastUpdated": "2026-10-08T20:46:58.426Z"
 }
