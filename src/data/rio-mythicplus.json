@@ -100,7 +100,7 @@
     {
       "name": "Chaos",
       "class": "warlock",
-      "score": 3000,
+      "score": 3021,
       "topKeys": [
         "+13 KR",
         "+13 AOF",
@@ -109,7 +109,7 @@
         "+12 DON",
         "+12 MR",
         "+12 BV",
-        "+11 TOS"
+        "+12 TOS"
       ],
       "realmSlug": "skullcrusher"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-08T20:46:58.426Z"
+  "lastUpdated": "2026-10-09T14:03:21.346Z"
 }
