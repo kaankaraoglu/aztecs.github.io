@@ -34,6 +34,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 3204,
+      "topKeys": [
+        "+18 TOS",
+        "+16 KR",
+        "+15 DON",
+        "+15 RLP",
+        "+14 AOF",
+        "+12 MR",
+        "+12 VSA",
+        "+11 BV"
+      ],
+      "realmSlug": "burning-legion"
+    },
+    {
       "name": "Shaw",
       "class": "rogue",
       "score": 3162,
@@ -48,22 +64,6 @@
         "+12 BV"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 3126,
-      "topKeys": [
-        "+16 KR",
-        "+15 DON",
-        "+15 RLP",
-        "+14 AOF",
-        "+12 MR",
-        "+12 TOS",
-        "+12 VSA",
-        "+11 BV"
-      ],
-      "realmSlug": "burning-legion"
     },
     {
       "name": "Blackmaira",
@@ -84,16 +84,16 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 3026,
+      "score": 3052,
       "topKeys": [
+        "+13 DON",
         "+13 VSA",
         "+13 RLP",
         "+13 TOS",
         "+12 MR",
-        "+12 KR",
         "+12 AOF",
-        "+12 BV",
-        "+12 DON"
+        "+12 KR",
+        "+12 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -116,18 +116,34 @@
     {
       "name": "Phruity",
       "class": "druid",
-      "score": 2993,
+      "score": 3017,
       "topKeys": [
+        "+13 DON",
         "+13 TOS",
+        "+12 AOF",
         "+12 MR",
         "+12 RLP",
         "+12 VSA",
-        "+12 DON",
-        "+12 AOF",
         "+12 KR",
         "+12 BV"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 2996,
+      "topKeys": [
+        "+14 MR",
+        "+13 DON",
+        "+12 RLP",
+        "+12 TOS",
+        "+12 AOF",
+        "+12 BV",
+        "+12 KR",
+        "+10 VSA"
+      ],
+      "realmSlug": "xavius"
     },
     {
       "name": "Agro",
@@ -142,22 +158,6 @@
         "+12 DON",
         "+12 TOS",
         "+11 KR"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 2974,
-      "topKeys": [
-        "+12 VSA",
-        "+12 AOF",
-        "+12 BV",
-        "+12 DON",
-        "+12 MR",
-        "+12 TOS",
-        "+12 KR",
-        "+12 RLP"
       ],
       "realmSlug": "alakir"
     }
@@ -196,15 +196,15 @@
       ]
     },
     {
-      "dungeon": "Altar of Fangs",
-      "level": 17,
+      "dungeon": "Temple of Sethraliss",
+      "level": 18,
       "timed": true,
       "team": [
-        "Aerioth"
+        "Sotray"
       ]
     },
     {
-      "dungeon": "Temple of Sethraliss",
+      "dungeon": "Altar of Fangs",
       "level": 17,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-09T14:03:21.346Z"
+  "lastUpdated": "2026-10-09T23:26:26.451Z"
 }
