@@ -18,6 +18,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Sotray",
+      "class": "priest",
+      "score": 3305,
+      "topKeys": [
+        "+18 DON",
+        "+18 TOS",
+        "+16 MR",
+        "+16 KR",
+        "+15 RLP",
+        "+14 AOF",
+        "+12 VSA",
+        "+11 BV"
+      ],
+      "realmSlug": "burning-legion"
+    },
+    {
       "name": "Zultharek",
       "class": "shaman",
       "score": 3282,
@@ -34,20 +50,20 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 3258,
+      "name": "Frugals",
+      "class": "shaman",
+      "score": 3186,
       "topKeys": [
-        "+18 TOS",
-        "+16 MR",
-        "+16 KR",
+        "+16 AOF",
+        "+16 TOS",
+        "+15 MR",
         "+15 DON",
-        "+15 RLP",
-        "+14 AOF",
-        "+12 VSA",
-        "+11 BV"
+        "+13 KR",
+        "+13 VSA",
+        "+12 RLP",
+        "+12 BV"
       ],
-      "realmSlug": "burning-legion"
+      "realmSlug": "genjuros"
     },
     {
       "name": "Shaw",
@@ -68,11 +84,11 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 3133,
+      "score": 3158,
       "topKeys": [
+        "+16 AOF",
         "+15 KR",
         "+14 RLP",
-        "+14 AOF",
         "+14 VSA",
         "+13 DON",
         "+13 BV",
@@ -96,6 +112,22 @@
         "+12 KR"
       ],
       "realmSlug": "xavius"
+    },
+    {
+      "name": "Amorrlan",
+      "class": "demon-hunter",
+      "score": 3053,
+      "topKeys": [
+        "+16 AOF",
+        "+15 KR",
+        "+14 RLP",
+        "+13 BV",
+        "+12 MR",
+        "+12 TOS",
+        "+10 DON",
+        "+10 VSA"
+      ],
+      "realmSlug": "alakir"
     },
     {
       "name": "Valorite",
@@ -128,38 +160,6 @@
         "+12 TOS"
       ],
       "realmSlug": "skullcrusher"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 3017,
-      "topKeys": [
-        "+13 DON",
-        "+13 TOS",
-        "+12 AOF",
-        "+12 MR",
-        "+12 RLP",
-        "+12 VSA",
-        "+12 KR",
-        "+12 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Amorrlan",
-      "class": "demon-hunter",
-      "score": 3011,
-      "topKeys": [
-        "+15 KR",
-        "+14 RLP",
-        "+13 BV",
-        "+13 AOF",
-        "+12 MR",
-        "+12 TOS",
-        "+10 DON",
-        "+10 VSA"
-      ],
-      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -168,7 +168,7 @@
       "level": 18,
       "timed": true,
       "team": [
-        "Aerioth"
+        "Sotray"
       ]
     },
     {
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-10T19:05:30.750Z"
+  "lastUpdated": "2026-10-10T22:48:18.763Z"
 }
