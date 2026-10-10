@@ -36,14 +36,14 @@
     {
       "name": "Sotray",
       "class": "priest",
-      "score": 3204,
+      "score": 3258,
       "topKeys": [
         "+18 TOS",
+        "+16 MR",
         "+16 KR",
         "+15 DON",
         "+15 RLP",
         "+14 AOF",
-        "+12 MR",
         "+12 VSA",
         "+11 BV"
       ],
@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 3051,
+      "topKeys": [
+        "+14 MR",
+        "+13 DON",
+        "+13 VSA",
+        "+12 RLP",
+        "+12 TOS",
+        "+12 AOF",
+        "+12 BV",
+        "+12 KR"
+      ],
+      "realmSlug": "xavius"
+    },
+    {
       "name": "Chaos",
       "class": "warlock",
       "score": 3021,
@@ -128,22 +144,6 @@
         "+12 BV"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 2996,
-      "topKeys": [
-        "+14 MR",
-        "+13 DON",
-        "+12 RLP",
-        "+12 TOS",
-        "+12 AOF",
-        "+12 BV",
-        "+12 KR",
-        "+10 VSA"
-      ],
-      "realmSlug": "xavius"
     },
     {
       "name": "Agro",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-09T23:26:26.451Z"
+  "lastUpdated": "2026-10-10T14:57:09.130Z"
 }
