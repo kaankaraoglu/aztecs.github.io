@@ -68,18 +68,34 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 3061,
+      "score": 3133,
       "topKeys": [
-        "+14 AOF",
+        "+15 KR",
         "+14 RLP",
+        "+14 AOF",
         "+14 VSA",
         "+13 DON",
         "+13 BV",
         "+13 MR",
-        "+11 KR",
         "+11 TOS"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 3072,
+      "topKeys": [
+        "+14 TOS",
+        "+14 MR",
+        "+13 DON",
+        "+13 VSA",
+        "+12 RLP",
+        "+12 AOF",
+        "+12 BV",
+        "+12 KR"
+      ],
+      "realmSlug": "xavius"
     },
     {
       "name": "Valorite",
@@ -96,22 +112,6 @@
         "+12 BV"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 3051,
-      "topKeys": [
-        "+14 MR",
-        "+13 DON",
-        "+13 VSA",
-        "+12 RLP",
-        "+12 TOS",
-        "+12 AOF",
-        "+12 BV",
-        "+12 KR"
-      ],
-      "realmSlug": "xavius"
     },
     {
       "name": "Chaos",
@@ -146,18 +146,18 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 2977,
+      "name": "Amorrlan",
+      "class": "demon-hunter",
+      "score": 3011,
       "topKeys": [
-        "+13 VSA",
-        "+13 RLP",
-        "+12 AOF",
-        "+12 BV",
+        "+15 KR",
+        "+14 RLP",
+        "+13 BV",
+        "+13 AOF",
         "+12 MR",
-        "+12 DON",
         "+12 TOS",
-        "+11 KR"
+        "+10 DON",
+        "+10 VSA"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-10T14:57:09.130Z"
+  "lastUpdated": "2026-10-10T19:05:30.750Z"
 }
