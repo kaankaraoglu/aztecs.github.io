@@ -20,14 +20,14 @@
     {
       "name": "Sotray",
       "class": "priest",
-      "score": 3305,
+      "score": 3347,
       "topKeys": [
         "+18 DON",
         "+18 TOS",
+        "+17 AOF",
         "+16 MR",
         "+16 KR",
         "+15 RLP",
-        "+14 AOF",
         "+12 VSA",
         "+11 BV"
       ],
@@ -148,12 +148,12 @@
     {
       "name": "Chaos",
       "class": "warlock",
-      "score": 3021,
+      "score": 3031,
       "topKeys": [
+        "+13 RLP",
         "+13 KR",
         "+13 AOF",
         "+13 VSA",
-        "+12 RLP",
         "+12 DON",
         "+12 MR",
         "+12 BV",
@@ -208,7 +208,7 @@
       "level": 17,
       "timed": true,
       "team": [
-        "Aerioth"
+        "Sotray"
       ]
     },
     {
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-10T22:48:18.763Z"
+  "lastUpdated": "2026-10-11T14:18:20.083Z"
 }
