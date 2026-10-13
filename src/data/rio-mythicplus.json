@@ -20,29 +20,29 @@
     {
       "name": "Sotray",
       "class": "priest",
-      "score": 3375,
+      "score": 3522,
       "topKeys": [
         "+18 MR",
         "+18 DON",
         "+18 TOS",
         "+17 AOF",
+        "+16 BV",
         "+16 KR",
-        "+15 RLP",
-        "+12 VSA",
-        "+11 BV"
+        "+16 VSA",
+        "+15 RLP"
       ],
       "realmSlug": "burning-legion"
     },
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 3315,
+      "score": 3328,
       "topKeys": [
         "+16 KR",
         "+16 DON",
         "+16 MR",
+        "+16 TOS",
         "+15 VSA",
-        "+15 TOS",
         "+14 BV",
         "+14 AOF",
         "+14 RLP"
@@ -130,6 +130,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Chaos",
+      "class": "warlock",
+      "score": 3052,
+      "topKeys": [
+        "+14 AOF",
+        "+13 RLP",
+        "+13 KR",
+        "+13 VSA",
+        "+12 DON",
+        "+12 MR",
+        "+12 BV",
+        "+12 TOS"
+      ],
+      "realmSlug": "skullcrusher"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 3052,
@@ -144,22 +160,6 @@
         "+12 BV"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Chaos",
-      "class": "warlock",
-      "score": 3048,
-      "topKeys": [
-        "+14 AOF",
-        "+13 RLP",
-        "+13 KR",
-        "+13 VSA",
-        "+12 DON",
-        "+12 MR",
-        "+12 BV",
-        "+12 TOS"
-      ],
-      "realmSlug": "skullcrusher"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-12T19:35:52.905Z"
+  "lastUpdated": "2026-10-13T01:45:59.200Z"
 }
