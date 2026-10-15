@@ -130,6 +130,22 @@
       "realmSlug": "xavius"
     },
     {
+      "name": "Chaos",
+      "class": "warlock",
+      "score": 3067,
+      "topKeys": [
+        "+14 KR",
+        "+14 AOF",
+        "+13 RLP",
+        "+13 VSA",
+        "+12 DON",
+        "+12 MR",
+        "+12 BV",
+        "+12 TOS"
+      ],
+      "realmSlug": "skullcrusher"
+    },
+    {
       "name": "Amorrlan",
       "class": "demon-hunter",
       "score": 3053,
@@ -144,22 +160,6 @@
         "+10 VSA"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Chaos",
-      "class": "warlock",
-      "score": 3052,
-      "topKeys": [
-        "+14 AOF",
-        "+13 RLP",
-        "+13 KR",
-        "+13 VSA",
-        "+12 DON",
-        "+12 MR",
-        "+12 BV",
-        "+12 TOS"
-      ],
-      "realmSlug": "skullcrusher"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-15T06:04:40.250Z"
+  "lastUpdated": "2026-10-15T19:35:31.277Z"
 }
