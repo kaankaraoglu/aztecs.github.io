@@ -3,7 +3,8 @@
  * Writes to src/data/wcl-progression.json with per-boss data including:
  * - Kill status per difficulty (Normal/Heroic/Mythic)
  * - Kill date, pull count, best % on unkilled bosses
- * - Full kill roster grouped by role (tanks/healers/dps) with class and spec
+ * - Roster grouped by role (tanks/healers/dps) with class and spec, taken from the first kill,
+ *   or from the best pull for bosses not killed on any difficulty
  *
  * Requires WCL_CLIENT_ID and WCL_CLIENT_SECRET env vars.
  * Usage: node scripts/fetch-wcl-data.js
@@ -202,6 +203,8 @@ async function fetchProgression(token) {
           bestPercent: null,
           killReportCode: null,
           killFightId: null,
+          bestReportCode: null,
+          bestFightId: null,
         })
       }
 
@@ -219,6 +222,8 @@ async function fetchProgression(token) {
         const pct = fight.fightPercentage
         if (pct != null && (entry.bestPercent === null || pct < entry.bestPercent)) {
           entry.bestPercent = pct
+          entry.bestReportCode = report.code
+          entry.bestFightId = fight.id
         }
       }
     }
@@ -230,28 +235,48 @@ async function fetchProgression(token) {
     `${LOG_PREFIX} Processed ${reports.length} reports: ${bossCount} bosses tracked, ${killedCount} difficulty kills found`,
   )
 
-  // Phase 2: fetch playerDetails for each kill (role-grouped roster)
-  const killEntries = [...bossData.values()].filter((e) => e.killed && e.killReportCode)
+  // Phase 2: fetch playerDetails (role-grouped roster) for each kill, and for the best pull
+  // of every boss that is not killed on any difficulty
+  const rosterJobs = [...bossData.values()]
+    .filter((e) => e.killed && e.killReportCode)
+    .map((e) => ({ entry: e, code: e.killReportCode, fightId: e.killFightId, label: 'kill' }))
+  const killedNames = new Set([...bossData.values()].filter((e) => e.killed).map((e) => e.name))
+  for (const name of new Set([...bossData.values()].map((e) => e.name))) {
+    if (killedNames.has(name)) continue
+    const entry = ['mythic', 'heroic', 'normal']
+      .map((d) => bossData.get(`${name}|${d}`))
+      .find((d) => d && d.bestPercent != null && d.bestReportCode)
+    if (entry) {
+      rosterJobs.push({
+        entry,
+        code: entry.bestReportCode,
+        fightId: entry.bestFightId,
+        label: 'best pull',
+      })
+    }
+  }
 
   // Fetch rosters in parallel (bounded to avoid rate limits)
   const BATCH_SIZE = 5
   const rosterMap = new Map()
-  const totalBatches = Math.ceil(killEntries.length / BATCH_SIZE)
+  const totalBatches = Math.ceil(rosterJobs.length / BATCH_SIZE)
 
   console.log(
-    `${LOG_PREFIX} Fetching rosters for ${killEntries.length} kills in ${totalBatches} batches...`,
+    `${LOG_PREFIX} Fetching ${rosterJobs.length} rosters (kills and best pulls) in ${totalBatches} batches...`,
   )
 
-  for (let i = 0; i < killEntries.length; i += BATCH_SIZE) {
+  for (let i = 0; i < rosterJobs.length; i += BATCH_SIZE) {
     const batchIndex = Math.floor(i / BATCH_SIZE) + 1
-    const batch = killEntries.slice(i, i + BATCH_SIZE)
-    const batchNames = batch.map((e) => `${e.name} (${e.difficulty})`).join(', ')
+    const batch = rosterJobs.slice(i, i + BATCH_SIZE)
+    const batchNames = batch
+      .map((j) => `${j.entry.name} (${j.entry.difficulty}, ${j.label})`)
+      .join(', ')
     console.log(`${LOG_PREFIX}   Batch ${batchIndex}/${totalBatches}: ${batchNames}`)
 
     const results = await Promise.all(
-      batch.map(async (entry) => {
-        const key = `${entry.name}|${entry.difficulty}`
-        const roster = await fetchRoster(token, entry.killReportCode, entry.killFightId)
+      batch.map(async (job) => {
+        const key = `${job.entry.name}|${job.entry.difficulty}`
+        const roster = await fetchRoster(token, job.code, job.fightId)
         return [key, roster]
       }),
     )
@@ -260,7 +285,7 @@ async function fetchProgression(token) {
     }
   }
 
-  console.log(`${LOG_PREFIX} Fetched ${rosterMap.size}/${killEntries.length} rosters successfully`)
+  console.log(`${LOG_PREFIX} Fetched ${rosterMap.size}/${rosterJobs.length} rosters successfully`)
 
   // Build output grouped by raid instance
   const raids = Object.entries(RAID_INSTANCE_ENCOUNTERS).map(([instanceName, bossNames]) => ({
@@ -288,7 +313,8 @@ async function fetchProgression(token) {
         (d) => d && !d.killed && d.bestPercent != null,
       )
 
-      const rosterKey = highestKill ? `${highestKill.name}|${highestKill.difficulty}` : null
+      const rosterEntry = highestKill ?? progressEntry
+      const rosterKey = rosterEntry ? `${rosterEntry.name}|${rosterEntry.difficulty}` : null
       const roster = rosterKey ? rosterMap.get(rosterKey) : undefined
 
       return {
