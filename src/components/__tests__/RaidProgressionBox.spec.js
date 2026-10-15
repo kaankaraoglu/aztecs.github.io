@@ -123,6 +123,33 @@ describe('RaidProgressionBox', () => {
     expect(bossRows[1].attributes('aria-expanded')).toBeUndefined()
   })
 
+  it('labels an unkilled boss roster as a best pull roster', () => {
+    const raids = [
+      {
+        name: 'Test Raid',
+        bosses: [
+          {
+            name: 'Boss 4',
+            normal: false,
+            heroic: false,
+            bestPercent: 8.5,
+            roster: {
+              tanks: [{ name: 'Phruity', class: 'druid', spec: 'Guardian' }],
+              healers: [],
+              dps: [],
+            },
+          },
+        ],
+      },
+    ]
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids, summary: { total: 1, normal: 0, heroic: 0, mythic: 0 } },
+    })
+    const row = wrapper.find('.boss-row')
+    expect(row.attributes('role')).toBe('button')
+    expect(row.attributes('aria-label')).toBe('Boss 4 best pull roster')
+  })
+
   it('updates aria-expanded to true after toggle', async () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },

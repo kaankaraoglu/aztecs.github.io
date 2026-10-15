@@ -105,7 +105,11 @@
                   :tabindex="hasRoster(boss) ? 0 : undefined"
                   :role="hasRoster(boss) ? 'button' : undefined"
                   :aria-expanded="hasRoster(boss) ? String(!!expanded[boss.name]) : undefined"
-                  :aria-label="hasRoster(boss) ? `${boss.name} kill roster` : undefined"
+                  :aria-label="
+                    hasRoster(boss)
+                      ? `${boss.name} ${boss.killedAt ? 'kill' : 'best pull'} roster`
+                      : undefined
+                  "
                   @click="hasRoster(boss) && toggle(boss.name)"
                   @keydown.enter.prevent="hasRoster(boss) && toggle(boss.name)"
                   @keydown.space.prevent="hasRoster(boss) && toggle(boss.name)"
