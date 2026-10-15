@@ -14,11 +14,11 @@
       "report": "https://www.warcraftlogs.com/reports/X6NgRCL9PpGZ2Fc4"
     },
     "highestDamageDoneMplus": {
-      "name": "Valorite",
-      "class": "death-knight",
-      "amount": 264275348,
-      "boss": "Magisters' Terrace",
-      "report": "https://www.warcraftlogs.com/reports/GXNJMmyfZkDw24PV"
+      "name": "Aerioth",
+      "class": "priest",
+      "amount": 341626621,
+      "boss": "Altar of Fangs",
+      "report": "https://www.warcraftlogs.com/reports/fNXx4mvCrZQjRd6H"
     },
     "bestHealer": {
       "name": "Sâmáar",
@@ -28,11 +28,11 @@
       "report": "https://www.warcraftlogs.com/reports/1QkXctvR9DwHdMNp"
     },
     "bestHealerMplus": {
-      "name": "Éowyn",
-      "class": "druid",
-      "amount": 71319993,
-      "boss": "Pit of Saron",
-      "report": "https://www.warcraftlogs.com/reports/g4wPvDZkCFx7TrBQ"
+      "name": "Zultharek",
+      "class": "shaman",
+      "amount": 143182938,
+      "boss": "Den of Nalorakk",
+      "report": "https://www.warcraftlogs.com/reports/fNXx4mvCrZQjRd6H"
     }
   }
 }
