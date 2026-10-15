@@ -8,7 +8,7 @@
 
 const GUILD_ID = 18606
 // Season 1: VS / DR / MQD (46) + Sporefall (50). Season 2: The Venomous Abyss (53) +
-// The Tidebound Grotto (57).
+// The Tidebound Grotto (57). Zone 53 also holds The Unbinding of Kith'ix.
 //
 // WCL lists a second zone also named "The Venomous Abyss" at id 54; guild reports
 // land in 53, so 54 returns nothing. Confirm an id against a real report's

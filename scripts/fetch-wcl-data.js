@@ -76,6 +76,7 @@ const RAID_INSTANCE_ENCOUNTERS = {
     'The Coiled Altar',
     "Ula'tek",
   ],
+  "The Unbinding of Kith'ix": ["Kith'ix"],
 }
 
 const DIFF_NAME = { 3: 'normal', 4: 'heroic', 5: 'mythic' }

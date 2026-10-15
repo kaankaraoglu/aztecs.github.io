@@ -2227,14 +2227,30 @@
           }
         }
       ]
+    },
+    {
+      "name": "The Unbinding of Kith'ix",
+      "mythicFlex": false,
+      "bosses": [
+        {
+          "name": "Kith'ix",
+          "normal": false,
+          "heroic": false,
+          "mythic": false,
+          "pullsByDifficulty": {
+            "heroic": 10
+          },
+          "bestPercent": 27.4
+        }
+      ]
     }
   ],
   "summary": {
-    "total": 19,
+    "total": 20,
     "normal": 19,
     "heroic": 19,
     "mythic": 0
   },
   "latestReport": "https://www.warcraftlogs.com/reports/X6NgRCL9PpGZ2Fc4",
-  "lastUpdated": "2026-10-14T19:48:49.181Z"
+  "lastUpdated": "2026-10-15T13:49:07.587Z"
 }
