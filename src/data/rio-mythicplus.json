@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Valorite",
+      "class": "death-knight",
+      "score": 3080,
+      "topKeys": [
+        "+13 AOF",
+        "+13 DON",
+        "+13 KR",
+        "+13 VSA",
+        "+13 RLP",
+        "+13 TOS",
+        "+12 MR",
+        "+12 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Frosteyes",
       "class": "death-knight",
       "score": 3072,
@@ -144,22 +160,6 @@
         "+12 TOS"
       ],
       "realmSlug": "skullcrusher"
-    },
-    {
-      "name": "Valorite",
-      "class": "death-knight",
-      "score": 3052,
-      "topKeys": [
-        "+13 DON",
-        "+13 VSA",
-        "+13 RLP",
-        "+13 TOS",
-        "+12 MR",
-        "+12 AOF",
-        "+12 KR",
-        "+12 BV"
-      ],
-      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-13T16:36:57.583Z"
+  "lastUpdated": "2026-10-15T06:04:40.250Z"
 }
