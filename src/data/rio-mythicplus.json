@@ -18,22 +18,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Sotray",
-      "class": "priest",
-      "score": 3528,
-      "topKeys": [
-        "+18 MR",
-        "+18 DON",
-        "+18 TOS",
-        "+17 AOF",
-        "+16 BV",
-        "+16 KR",
-        "+16 VSA",
-        "+15 RLP"
-      ],
-      "realmSlug": "burning-legion"
-    },
-    {
       "name": "Zultharek",
       "class": "shaman",
       "score": 3328,
@@ -160,6 +144,22 @@
         "+10 VSA"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 3050,
+      "topKeys": [
+        "+13 AOF",
+        "+13 DON",
+        "+13 KR",
+        "+13 TOS",
+        "+12 MR",
+        "+12 RLP",
+        "+12 VSA",
+        "+12 BV"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -168,7 +168,7 @@
       "level": 18,
       "timed": true,
       "team": [
-        "Sotray"
+        "Aerioth"
       ]
     },
     {
@@ -184,7 +184,7 @@
       "level": 18,
       "timed": true,
       "team": [
-        "Sotray"
+        "Aerioth"
       ]
     },
     {
@@ -196,19 +196,19 @@
       ]
     },
     {
-      "dungeon": "Temple of Sethraliss",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Sotray"
-      ]
-    },
-    {
       "dungeon": "Altar of Fangs",
       "level": 17,
       "timed": true,
       "team": [
-        "Sotray"
+        "Aerioth"
+      ]
+    },
+    {
+      "dungeon": "Temple of Sethraliss",
+      "level": 17,
+      "timed": true,
+      "team": [
+        "Aerioth"
       ]
     },
     {
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-15T22:51:04.042Z"
+  "lastUpdated": "2026-10-18T06:11:29.773Z"
 }
