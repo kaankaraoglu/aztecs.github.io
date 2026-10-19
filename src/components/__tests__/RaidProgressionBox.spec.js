@@ -205,7 +205,7 @@ describe('RaidProgressionBox', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mythicRaids, summary: mythicSummary },
     })
-    const mythicPip = wrapper.find('.pip.mythic')
+    const mythicPip = wrapper.find('.boss-status .pip.mythic')
     expect(mythicPip.exists()).toBe(true)
     expect(mythicPip.text()).toBe('M')
     expect(mythicPip.attributes('title')).toBe('Mythic')
@@ -218,7 +218,7 @@ describe('RaidProgressionBox', () => {
         summary: mythicSummary,
       },
     })
-    const mythicPip = wrapper.find('.pip.mythic')
+    const mythicPip = wrapper.find('.boss-status .pip.mythic')
     expect(mythicPip.text()).toBe('MX')
     expect(mythicPip.attributes('title')).toBe('Mythic Flex')
   })
@@ -234,7 +234,7 @@ describe('RaidProgressionBox', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: upcomingFlex, summary: { total: 1, normal: 0, heroic: 0, mythic: 0 } },
     })
-    const mythicPip = wrapper.find('.pip.mythic')
+    const mythicPip = wrapper.find('.boss-status .pip.mythic')
     expect(mythicPip.exists()).toBe(true)
     expect(mythicPip.text()).toBe('MX')
     expect(mythicPip.classes()).not.toContain('active')
@@ -259,35 +259,42 @@ describe('RaidProgressionBox', () => {
     expect(pips.map((p) => p.text())).toEqual(['MX', 'M'])
   })
 
-  it('collapses previous raids to a single header line by default', () => {
+  it('opens raids not cleared on heroic and collapses heroic-cleared ones', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    // Newest raid renders as a plain heading with its boss list open.
-    expect(wrapper.find('h3.instance-name').text()).toBe('Test Raid')
+    expect(wrapper.find('h3.instance-name').exists()).toBe(false)
     const toggles = wrapper.findAll('.instance-toggle')
-    expect(toggles.length).toBe(1)
-    expect(toggles[0].text()).toContain('Other Raid')
-    expect(toggles[0].attributes('aria-expanded')).toBe('false')
+    expect(toggles.map((t) => t.attributes('aria-expanded'))).toEqual(['true', 'false'])
 
     const lists = wrapper.findAll('.boss-list')
     expect(lists[0].attributes('style') || '').not.toContain('display: none')
     expect(lists[1].attributes('style')).toContain('display: none')
   })
 
+  it('collapses an open raid on click', async () => {
+    const wrapper = mount(RaidProgressionBox, {
+      props: { raids: mockRaids, summary: mockSummary },
+    })
+    const toggle = wrapper.findAll('.instance-toggle')[0]
+    await toggle.trigger('click')
+    expect(toggle.attributes('aria-expanded')).toBe('false')
+    expect(wrapper.findAll('.boss-list')[0].attributes('style')).toContain('display: none')
+  })
+
   it('shows per-difficulty kill tallies on a collapsed raid header', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    const tallies = wrapper.findAll('.instance-toggle .pip.tally')
+    const tallies = wrapper.findAll('.instance-toggle')[1].findAll('.pip.tally')
     expect(tallies.map((t) => t.text())).toEqual(['1/1 N', '1/1 HC'])
   })
 
-  it('expands a previous raid on click', async () => {
+  it('expands a heroic-cleared raid on click', async () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mockRaids, summary: mockSummary },
     })
-    const toggle = wrapper.find('.instance-toggle')
+    const toggle = wrapper.findAll('.instance-toggle')[1]
     await toggle.trigger('click')
 
     expect(toggle.attributes('aria-expanded')).toBe('true')
@@ -324,9 +331,9 @@ describe('RaidProgressionBox', () => {
     const wrapper = mount(RaidProgressionBox, {
       props: { raids: mixedRaids, summary: { total: 2, normal: 2, heroic: 1, mythic: 0 } },
     })
-    // Only the second raid collapses to a toggle, and it gets an empty third
-    // pip so its N and HC sit under the flex raid's.
-    const tallies = wrapper.findAll('.instance-toggle .pip.tally')
+    // The plain raid gets an empty third pip so its N and HC sit under the
+    // flex raid's.
+    const tallies = wrapper.findAll('.instance-toggle')[1].findAll('.pip.tally')
     expect(tallies).toHaveLength(3)
     expect(tallies[2].classes()).toContain('placeholder')
     expect(tallies[2].text()).toBe('')
