@@ -33,6 +33,22 @@ function computeSummary(raids) {
 }
 
 /**
+ * A kill on a higher difficulty also clears the lower ones, so a boss first
+ * killed on Heroic still lights its Normal pip and counts toward Normal tallies.
+ * @param {Raid} raid @returns {Raid}
+ */
+function withImpliedKills(raid) {
+  return {
+    ...raid,
+    bosses: raid.bosses.map((b) => ({
+      ...b,
+      normal: !!(b.normal || b.heroic || b.mythic),
+      heroic: !!(b.heroic || b.mythic),
+    })),
+  }
+}
+
+/**
  * Composable that provides raid progression data.
  *
  * Primary source: Warcraft Logs data fetched at build time (wcl-progression.json).
@@ -42,7 +58,7 @@ export function useProgression() {
   const hasWclData = wclData.raids && wclData.raids.length > 0
   const baseRaids = hasWclData ? wclData.raids : fallbackRaids
   // Announced-but-unlogged tiers (e.g. Mythic Flex raids) show alongside live data.
-  const allRaids = [...upcomingRaids, ...[...baseRaids].reverse()]
+  const allRaids = [...upcomingRaids, ...[...baseRaids].reverse()].map(withImpliedKills)
 
   /** @type {import('vue').Ref<Raid[]>} */
   const raids = ref(allRaids)
