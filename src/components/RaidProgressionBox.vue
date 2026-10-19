@@ -20,19 +20,12 @@
         </div>
       </div>
       <div class="instances">
-        <div
-          v-for="(raid, raidIndex) in raids"
-          :key="raid.name"
-          class="instance difficulty-section"
-          :class="{ collapsible: raidIndex > 0 }"
-        >
-          <h3 v-if="raidIndex === 0" class="instance-name">{{ raid.name }}</h3>
+        <div v-for="raid in raids" :key="raid.name" class="instance difficulty-section">
           <button
-            v-else
             type="button"
             class="instance-toggle"
             :aria-expanded="String(isRaidOpen(raid))"
-            @click="toggleRaid(raid.name)"
+            @click="toggleRaid(raid)"
           >
             <span class="instance-name">{{ raid.name }}</span>
             <span class="instance-summary">
@@ -212,17 +205,19 @@ const expanded = reactive({})
 // something to shrink. `inert` keeps the hidden ones out of the tab order.
 const revealed = reactive({})
 
+/** Raid name → open state the user picked by clicking its header. */
 const expandedRaids = reactive({})
 
-/** The newest raid is always open; older tiers collapse to their header line. */
+/** Raids not yet cleared on heroic start open; heroic-cleared ones start collapsed. */
 function isRaidOpen(raid) {
-  return props.raids[0]?.name === raid.name || !!expandedRaids[raid.name]
+  if (raid.name in expandedRaids) return expandedRaids[raid.name]
+  return !raid.bosses.every((b) => b.heroic)
 }
 
-function toggleRaid(raidName) {
-  expandedRaids[raidName] = !expandedRaids[raidName]
-  if (expandedRaids[raidName]) {
-    trackEvent('select_content', { content_type: 'raid_instance', item_id: raidName })
+function toggleRaid(raid) {
+  expandedRaids[raid.name] = !isRaidOpen(raid)
+  if (expandedRaids[raid.name]) {
+    trackEvent('select_content', { content_type: 'raid_instance', item_id: raid.name })
   }
 }
 
