@@ -101,4 +101,15 @@ describe('useProgression', () => {
     expect(summary.value.heroic).toBe(1)
     expect(summary.value.mythic).toBe(0)
   })
+
+  it('counts a higher-difficulty kill as clearing the lower ones', () => {
+    mockUpcoming.push({
+      name: 'Heroic Only',
+      bosses: [{ name: 'Skipper', normal: false, heroic: true, mythic: false }],
+    })
+
+    const { raids } = useProgression()
+
+    expect(raids.value[0].bosses[0]).toMatchObject({ normal: true, heroic: true, mythic: false })
+  })
 })

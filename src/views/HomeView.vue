@@ -69,7 +69,7 @@ const containerRef = ref(null)
 useScrollReveal(containerRef)
 
 const { raids, summary, latestReport, lastUpdated } = useProgression()
-const latestKills = kills.slice(0, 2)
+const latestKills = kills.slice(0, 4)
 const lightboxSrc = ref('')
 </script>
 
