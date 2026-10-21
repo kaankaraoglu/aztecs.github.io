@@ -34,6 +34,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Frugals",
+      "class": "shaman",
+      "score": 3227,
+      "topKeys": [
+        "+16 AOF",
+        "+16 TOS",
+        "+15 RLP",
+        "+15 MR",
+        "+15 DON",
+        "+13 KR",
+        "+13 VSA",
+        "+12 BV"
+      ],
+      "realmSlug": "genjuros"
+    },
+    {
       "name": "Shaw",
       "class": "rogue",
       "score": 3208,
@@ -48,22 +64,6 @@
         "+12 DON"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Frugals",
-      "class": "shaman",
-      "score": 3186,
-      "topKeys": [
-        "+16 AOF",
-        "+16 TOS",
-        "+15 MR",
-        "+15 DON",
-        "+13 KR",
-        "+13 VSA",
-        "+12 RLP",
-        "+12 BV"
-      ],
-      "realmSlug": "genjuros"
     },
     {
       "name": "Blackmaira",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-20T00:53:45.437Z"
+  "lastUpdated": "2026-10-21T15:32:24.209Z"
 }
