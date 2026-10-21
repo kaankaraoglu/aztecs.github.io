@@ -84,7 +84,7 @@
     {
       "name": "Valorite",
       "class": "death-knight",
-      "score": 3080,
+      "score": 3082,
       "topKeys": [
         "+13 AOF",
         "+13 DON",
@@ -130,6 +130,22 @@
       "realmSlug": "skullcrusher"
     },
     {
+      "name": "Phruity",
+      "class": "druid",
+      "score": 3067,
+      "topKeys": [
+        "+13 AOF",
+        "+13 DON",
+        "+13 KR",
+        "+13 VSA",
+        "+13 TOS",
+        "+12 MR",
+        "+12 RLP",
+        "+12 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Amorrlan",
       "class": "demon-hunter",
       "score": 3053,
@@ -142,22 +158,6 @@
         "+12 TOS",
         "+10 DON",
         "+10 VSA"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Phruity",
-      "class": "druid",
-      "score": 3050,
-      "topKeys": [
-        "+13 AOF",
-        "+13 DON",
-        "+13 KR",
-        "+13 TOS",
-        "+12 MR",
-        "+12 RLP",
-        "+12 VSA",
-        "+12 BV"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-21T19:29:38.407Z"
+  "lastUpdated": "2026-10-21T22:36:42.140Z"
 }
