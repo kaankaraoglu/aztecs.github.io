@@ -34,22 +34,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Frugals",
-      "class": "shaman",
-      "score": 3227,
-      "topKeys": [
-        "+16 AOF",
-        "+16 TOS",
-        "+15 RLP",
-        "+15 MR",
-        "+15 DON",
-        "+13 KR",
-        "+13 VSA",
-        "+12 BV"
-      ],
-      "realmSlug": "genjuros"
-    },
-    {
       "name": "Shaw",
       "class": "rogue",
       "score": 3208,
@@ -160,6 +144,22 @@
         "+10 VSA"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 2994,
+      "topKeys": [
+        "+13 TOS",
+        "+12 DON",
+        "+12 VSA",
+        "+12 AOF",
+        "+12 BV",
+        "+12 MR",
+        "+12 KR",
+        "+12 RLP"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-21T22:36:42.140Z"
+  "lastUpdated": "2026-10-22T17:26:30.219Z"
 }
