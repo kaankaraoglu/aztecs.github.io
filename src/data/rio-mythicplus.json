@@ -20,15 +20,15 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 3469,
+      "score": 3501,
       "topKeys": [
-        "+17 RLP",
+        "+18 RLP",
+        "+17 MR",
         "+17 AOF",
         "+17 DON",
-        "+16 VSA",
         "+16 BV",
+        "+16 VSA",
         "+16 KR",
-        "+16 MR",
         "+16 TOS"
       ],
       "realmSlug": "alakir"
@@ -36,13 +36,13 @@
     {
       "name": "Shaw",
       "class": "rogue",
-      "score": 3208,
+      "score": 3307,
       "topKeys": [
+        "+18 RLP",
+        "+17 MR",
+        "+16 BV",
         "+16 VSA",
-        "+15 MR",
-        "+15 RLP",
         "+15 KR",
-        "+14 BV",
         "+14 TOS",
         "+12 AOF",
         "+12 DON"
@@ -192,7 +192,7 @@
       "level": 18,
       "timed": true,
       "team": [
-        "Aerioth"
+        "Shaw"
       ]
     },
     {
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-24T16:10:00.623Z"
+  "lastUpdated": "2026-10-24T18:55:27.916Z"
 }
