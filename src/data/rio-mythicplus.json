@@ -20,13 +20,13 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 3501,
+      "score": 3511,
       "topKeys": [
         "+18 RLP",
         "+17 MR",
         "+17 AOF",
+        "+17 BV",
         "+17 DON",
-        "+16 BV",
         "+16 VSA",
         "+16 KR",
         "+16 TOS"
@@ -68,13 +68,13 @@
     {
       "name": "Frosteyes",
       "class": "death-knight",
-      "score": 3137,
+      "score": 3157,
       "topKeys": [
+        "+15 DON",
         "+14 BV",
         "+14 KR",
         "+14 TOS",
         "+14 MR",
-        "+13 DON",
         "+13 VSA",
         "+12 RLP",
         "+12 AOF"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-24T18:55:27.916Z"
+  "lastUpdated": "2026-10-25T18:31:15.432Z"
 }
