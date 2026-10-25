@@ -50,6 +50,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 3187,
+      "topKeys": [
+        "+15 DON",
+        "+14 BV",
+        "+14 KR",
+        "+14 RLP",
+        "+14 VSA",
+        "+14 TOS",
+        "+14 MR",
+        "+12 AOF"
+      ],
+      "realmSlug": "xavius"
+    },
+    {
       "name": "Blackmaira",
       "class": "paladin",
       "score": 3181,
@@ -64,22 +80,6 @@
         "+11 TOS"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 3176,
-      "topKeys": [
-        "+15 DON",
-        "+14 BV",
-        "+14 KR",
-        "+14 RLP",
-        "+14 TOS",
-        "+14 MR",
-        "+13 VSA",
-        "+12 AOF"
-      ],
-      "realmSlug": "xavius"
     },
     {
       "name": "Valorite",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-25T21:06:57.387Z"
+  "lastUpdated": "2026-10-25T23:25:17.241Z"
 }
