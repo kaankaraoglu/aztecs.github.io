@@ -82,6 +82,22 @@
       "realmSlug": "xavius"
     },
     {
+      "name": "Amorrlan",
+      "class": "demon-hunter",
+      "score": 3091,
+      "topKeys": [
+        "+16 AOF",
+        "+15 KR",
+        "+14 RLP",
+        "+13 BV",
+        "+12 MR",
+        "+12 DON",
+        "+12 TOS",
+        "+10 VSA"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 3082,
@@ -126,22 +142,6 @@
         "+12 MR",
         "+12 RLP",
         "+12 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Amorrlan",
-      "class": "demon-hunter",
-      "score": 3053,
-      "topKeys": [
-        "+16 AOF",
-        "+15 KR",
-        "+14 RLP",
-        "+13 BV",
-        "+12 MR",
-        "+12 TOS",
-        "+10 DON",
-        "+10 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-31T00:17:06.402Z"
+  "lastUpdated": "2026-10-31T11:53:56.888Z"
 }
