@@ -2,6 +2,22 @@
   "season": "season-mn-2",
   "topRunners": [
     {
+      "name": "Zultharek",
+      "class": "shaman",
+      "score": 3609,
+      "topKeys": [
+        "+18 DON",
+        "+18 TOS",
+        "+18 AOF",
+        "+18 KR",
+        "+18 RLP",
+        "+17 MR",
+        "+17 VSA",
+        "+17 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Aerioth",
       "class": "priest",
       "score": 3606,
@@ -14,22 +30,6 @@
         "+17 TOS",
         "+17 AOF",
         "+17 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Zultharek",
-      "class": "shaman",
-      "score": 3579,
-      "topKeys": [
-        "+18 DON",
-        "+18 KR",
-        "+18 RLP",
-        "+17 MR",
-        "+17 AOF",
-        "+17 BV",
-        "+17 TOS",
-        "+17 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -164,6 +164,14 @@
   ],
   "dungeonBests": [
     {
+      "dungeon": "Altar of Fangs",
+      "level": 18,
+      "timed": true,
+      "team": [
+        "Zultharek"
+      ]
+    },
+    {
       "dungeon": "Den of Nalorakk",
       "level": 18,
       "timed": true,
@@ -196,19 +204,11 @@
       ]
     },
     {
-      "dungeon": "Altar of Fangs",
-      "level": 17,
-      "timed": true,
-      "team": [
-        "Aerioth"
-      ]
-    },
-    {
       "dungeon": "Temple of Sethraliss",
-      "level": 17,
+      "level": 18,
       "timed": true,
       "team": [
-        "Aerioth"
+        "Zultharek"
       ]
     },
     {
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-10-31T16:29:58.406Z"
+  "lastUpdated": "2026-11-01T16:57:27.766Z"
 }
