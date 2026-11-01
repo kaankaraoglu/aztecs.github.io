@@ -146,18 +146,18 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 3014,
+      "name": "Agro",
+      "class": "warrior",
+      "score": 3015,
       "topKeys": [
+        "+13 VSA",
+        "+13 RLP",
         "+13 KR",
-        "+13 TOS",
-        "+12 DON",
-        "+12 VSA",
         "+12 AOF",
         "+12 BV",
         "+12 MR",
-        "+12 RLP"
+        "+12 DON",
+        "+12 TOS"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-01T16:57:27.766Z"
+  "lastUpdated": "2026-11-01T20:55:31.715Z"
 }
