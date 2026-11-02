@@ -4,15 +4,15 @@
     {
       "name": "Zultharek",
       "class": "shaman",
-      "score": 3609,
+      "score": 3627,
       "topKeys": [
         "+18 DON",
+        "+18 VSA",
         "+18 TOS",
         "+18 AOF",
         "+18 KR",
         "+18 RLP",
         "+17 MR",
-        "+17 VSA",
         "+17 BV"
       ],
       "realmSlug": "alakir"
@@ -212,15 +212,15 @@
       ]
     },
     {
-      "dungeon": "The Blinding Vale",
-      "level": 17,
+      "dungeon": "Voidscar Arena",
+      "level": 18,
       "timed": true,
       "team": [
-        "Aerioth"
+        "Zultharek"
       ]
     },
     {
-      "dungeon": "Voidscar Arena",
+      "dungeon": "The Blinding Vale",
       "level": 17,
       "timed": true,
       "team": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-02T13:06:02.013Z"
+  "lastUpdated": "2026-11-02T22:25:22.757Z"
 }
