@@ -68,13 +68,13 @@
     {
       "name": "Frosteyes",
       "class": "death-knight",
-      "score": 3207,
+      "score": 3236,
       "topKeys": [
+        "+16 VSA",
         "+15 DON",
         "+14 BV",
         "+14 KR",
         "+14 RLP",
-        "+14 VSA",
         "+14 TOS",
         "+14 AOF",
         "+14 MR"
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-05T00:13:20.246Z"
+  "lastUpdated": "2026-11-07T14:16:59.346Z"
 }
