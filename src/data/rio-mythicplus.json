@@ -114,6 +114,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Chaos",
+      "class": "warlock",
+      "score": 3067,
+      "topKeys": [
+        "+14 KR",
+        "+14 AOF",
+        "+13 RLP",
+        "+13 VSA",
+        "+12 DON",
+        "+12 MR",
+        "+12 BV",
+        "+12 TOS"
+      ],
+      "realmSlug": "skullcrusher"
+    },
+    {
       "name": "Phruity",
       "class": "druid",
       "score": 3067,
@@ -142,22 +158,6 @@
         "+12 MR",
         "+12 DON",
         "+12 TOS"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Daruni",
-      "class": "druid",
-      "score": 3014,
-      "topKeys": [
-        "+13 KR",
-        "+13 TOS",
-        "+12 DON",
-        "+12 VSA",
-        "+12 AOF",
-        "+12 BV",
-        "+12 MR",
-        "+12 RLP"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-10T03:42:25.700Z"
+  "lastUpdated": "2026-11-10T11:57:46.474Z"
 }
