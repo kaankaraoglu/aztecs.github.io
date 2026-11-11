@@ -2,22 +2,6 @@
   "season": "season-mn-2",
   "topRunners": [
     {
-      "name": "Zultharek",
-      "class": "shaman",
-      "score": 3637,
-      "topKeys": [
-        "+18 AOF",
-        "+18 DON",
-        "+18 VSA",
-        "+18 TOS",
-        "+18 MR",
-        "+18 KR",
-        "+18 RLP",
-        "+17 BV"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
       "name": "Aerioth",
       "class": "priest",
       "score": 3606,
@@ -114,22 +98,6 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Chaos",
-      "class": "warlock",
-      "score": 3067,
-      "topKeys": [
-        "+14 KR",
-        "+14 AOF",
-        "+13 RLP",
-        "+13 VSA",
-        "+12 DON",
-        "+12 MR",
-        "+12 BV",
-        "+12 TOS"
-      ],
-      "realmSlug": "skullcrusher"
-    },
-    {
       "name": "Phruity",
       "class": "druid",
       "score": 3067,
@@ -160,17 +128,41 @@
         "+12 TOS"
       ],
       "realmSlug": "alakir"
+    },
+    {
+      "name": "Daruni",
+      "class": "druid",
+      "score": 3014,
+      "topKeys": [
+        "+13 KR",
+        "+13 TOS",
+        "+12 DON",
+        "+12 VSA",
+        "+12 AOF",
+        "+12 BV",
+        "+12 MR",
+        "+12 RLP"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
+      "name": "Incendia",
+      "class": "mage",
+      "score": 2985,
+      "topKeys": [
+        "+13 VSA",
+        "+13 RLP",
+        "+13 KR",
+        "+12 MR",
+        "+12 AOF",
+        "+12 DON",
+        "+12 TOS",
+        "+11 BV"
+      ],
+      "realmSlug": "alakir"
     }
   ],
   "dungeonBests": [
-    {
-      "dungeon": "Altar of Fangs",
-      "level": 18,
-      "timed": true,
-      "team": [
-        "Zultharek"
-      ]
-    },
     {
       "dungeon": "Den of Nalorakk",
       "level": 18,
@@ -204,19 +196,19 @@
       ]
     },
     {
-      "dungeon": "Temple of Sethraliss",
-      "level": 18,
+      "dungeon": "Altar of Fangs",
+      "level": 17,
       "timed": true,
       "team": [
-        "Zultharek"
+        "Aerioth"
       ]
     },
     {
-      "dungeon": "Voidscar Arena",
-      "level": 18,
+      "dungeon": "Temple of Sethraliss",
+      "level": 17,
       "timed": true,
       "team": [
-        "Zultharek"
+        "Aerioth"
       ]
     },
     {
@@ -226,7 +218,15 @@
       "team": [
         "Aerioth"
       ]
+    },
+    {
+      "dungeon": "Voidscar Arena",
+      "level": 17,
+      "timed": true,
+      "team": [
+        "Aerioth"
+      ]
     }
   ],
-  "lastUpdated": "2026-11-10T11:57:46.474Z"
+  "lastUpdated": "2026-11-11T00:20:36.502Z"
 }
