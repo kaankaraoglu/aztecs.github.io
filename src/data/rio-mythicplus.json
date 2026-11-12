@@ -52,11 +52,11 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 3293,
+      "score": 3304,
       "topKeys": [
         "+17 KR",
+        "+16 RLP",
         "+16 AOF",
-        "+15 RLP",
         "+15 DON",
         "+14 MR",
         "+14 TOS",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-11T06:52:37.830Z"
+  "lastUpdated": "2026-11-12T23:47:00.976Z"
 }
