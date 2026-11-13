@@ -146,20 +146,20 @@
       "realmSlug": "alakir"
     },
     {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 3015,
+      "name": "Obscuríty",
+      "class": "warlock",
+      "score": 3057,
       "topKeys": [
-        "+13 VSA",
-        "+13 RLP",
-        "+13 KR",
-        "+12 AOF",
+        "+14 RLP",
+        "+14 KR",
         "+12 BV",
         "+12 MR",
-        "+12 DON",
-        "+12 TOS"
+        "+12 TOS",
+        "+12 AOF",
+        "+12 VSA",
+        "+12 DON"
       ],
-      "realmSlug": "alakir"
+      "realmSlug": "draenor"
     }
   ],
   "dungeonBests": [
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-12T23:47:00.976Z"
+  "lastUpdated": "2026-11-13T18:55:30.773Z"
 }
