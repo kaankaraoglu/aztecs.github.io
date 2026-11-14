@@ -114,6 +114,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Obscuríty",
+      "class": "warlock",
+      "score": 3073,
+      "topKeys": [
+        "+14 RLP",
+        "+14 KR",
+        "+14 TOS",
+        "+12 BV",
+        "+12 MR",
+        "+12 AOF",
+        "+12 VSA",
+        "+12 DON"
+      ],
+      "realmSlug": "draenor"
+    },
+    {
       "name": "Chaos",
       "class": "warlock",
       "score": 3067,
@@ -130,34 +146,18 @@
       "realmSlug": "skullcrusher"
     },
     {
-      "name": "Obscuríty",
-      "class": "warlock",
-      "score": 3057,
+      "name": "Phruity",
+      "class": "druid",
+      "score": 3067,
       "topKeys": [
-        "+14 RLP",
-        "+14 KR",
-        "+12 BV",
-        "+12 MR",
-        "+12 TOS",
-        "+12 AOF",
-        "+12 VSA",
-        "+12 DON"
-      ],
-      "realmSlug": "draenor"
-    },
-    {
-      "name": "Agro",
-      "class": "warrior",
-      "score": 3015,
-      "topKeys": [
-        "+13 VSA",
-        "+13 RLP",
+        "+13 AOF",
+        "+13 DON",
         "+13 KR",
-        "+12 AOF",
-        "+12 BV",
+        "+13 VSA",
+        "+13 TOS",
         "+12 MR",
-        "+12 DON",
-        "+12 TOS"
+        "+12 RLP",
+        "+12 BV"
       ],
       "realmSlug": "alakir"
     }
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-14T00:06:51.410Z"
+  "lastUpdated": "2026-11-14T05:31:02.291Z"
 }
