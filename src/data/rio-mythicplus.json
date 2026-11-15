@@ -98,6 +98,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Obscuríty",
+      "class": "warlock",
+      "score": 3119,
+      "topKeys": [
+        "+14 RLP",
+        "+14 DON",
+        "+14 KR",
+        "+14 BV",
+        "+14 TOS",
+        "+12 MR",
+        "+12 AOF",
+        "+12 VSA"
+      ],
+      "realmSlug": "draenor"
+    },
+    {
       "name": "Valorite",
       "class": "death-knight",
       "score": 3082,
@@ -112,22 +128,6 @@
         "+12 BV"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Obscuríty",
-      "class": "warlock",
-      "score": 3073,
-      "topKeys": [
-        "+14 RLP",
-        "+14 KR",
-        "+14 TOS",
-        "+12 BV",
-        "+12 MR",
-        "+12 AOF",
-        "+12 VSA",
-        "+12 DON"
-      ],
-      "realmSlug": "draenor"
     },
     {
       "name": "Chaos",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-14T22:39:22.117Z"
+  "lastUpdated": "2026-11-15T16:43:19.427Z"
 }
