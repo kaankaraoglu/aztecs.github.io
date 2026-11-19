@@ -82,6 +82,22 @@
       "realmSlug": "xavius"
     },
     {
+      "name": "Obscuríty",
+      "class": "warlock",
+      "score": 3132,
+      "topKeys": [
+        "+14 RLP",
+        "+14 DON",
+        "+14 KR",
+        "+14 BV",
+        "+14 TOS",
+        "+13 VSA",
+        "+12 MR",
+        "+12 AOF"
+      ],
+      "realmSlug": "draenor"
+    },
+    {
       "name": "Amorrlan",
       "class": "demon-hunter",
       "score": 3119,
@@ -96,22 +112,6 @@
         "+10 VSA"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Obscuríty",
-      "class": "warlock",
-      "score": 3119,
-      "topKeys": [
-        "+14 RLP",
-        "+14 DON",
-        "+14 KR",
-        "+14 BV",
-        "+14 TOS",
-        "+12 MR",
-        "+12 AOF",
-        "+12 VSA"
-      ],
-      "realmSlug": "draenor"
     },
     {
       "name": "Valorite",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-15T16:43:19.427Z"
+  "lastUpdated": "2026-11-19T17:30:29.649Z"
 }
