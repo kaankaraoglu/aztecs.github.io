@@ -105,6 +105,12 @@ describe('HeaderView', () => {
     expect(link.attributes('rel')).toBe('noopener noreferrer')
     expect(link.attributes('aria-label')).toContain('opens in new tab')
   })
+
+  it('links the sim site in a new tab', () => {
+    const link = mountHeader().find('a[href="https://sim.aztecs.se"]')
+    expect(link.attributes('target')).toBe('_blank')
+    expect(link.attributes('rel')).toBe('noopener noreferrer')
+  })
 })
 
 describe('HeaderView theme switch', () => {
