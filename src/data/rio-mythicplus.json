@@ -36,16 +36,16 @@
     {
       "name": "Blackmaira",
       "class": "paladin",
-      "score": 3336,
+      "score": 3376,
       "topKeys": [
         "+17 KR",
         "+16 MR",
         "+16 RLP",
+        "+16 BV",
         "+16 AOF",
         "+15 DON",
         "+14 TOS",
-        "+14 VSA",
-        "+13 BV"
+        "+14 VSA"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-21T10:26:40.803Z"
+  "lastUpdated": "2026-11-21T22:34:38.386Z"
 }
