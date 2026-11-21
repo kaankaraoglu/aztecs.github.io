@@ -30,6 +30,15 @@
         <RouterLink class="nav-link" to="/about" @click="menuOpen = false">About</RouterLink>
         <RouterLink class="nav-link" to="/contact" @click="menuOpen = false">Contact</RouterLink>
         <a
+          class="nav-link"
+          href="https://sim.aztecs.se"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Sim (opens in new tab)"
+          @click="trackEvent('click', { link_type: 'sim' })"
+          >Sim</a
+        >
+        <a
           class="discord-link"
           :href="DISCORD_INVITE_URL"
           target="_blank"
