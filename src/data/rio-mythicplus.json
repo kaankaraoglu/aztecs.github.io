@@ -34,6 +34,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Blackmaira",
+      "class": "paladin",
+      "score": 3336,
+      "topKeys": [
+        "+17 KR",
+        "+16 MR",
+        "+16 RLP",
+        "+16 AOF",
+        "+15 DON",
+        "+14 TOS",
+        "+14 VSA",
+        "+13 BV"
+      ],
+      "realmSlug": "alakir"
+    },
+    {
       "name": "Shaw",
       "class": "rogue",
       "score": 3307,
@@ -46,22 +62,6 @@
         "+14 TOS",
         "+12 AOF",
         "+12 DON"
-      ],
-      "realmSlug": "alakir"
-    },
-    {
-      "name": "Blackmaira",
-      "class": "paladin",
-      "score": 3304,
-      "topKeys": [
-        "+17 KR",
-        "+16 RLP",
-        "+16 AOF",
-        "+15 DON",
-        "+14 MR",
-        "+14 TOS",
-        "+14 VSA",
-        "+13 BV"
       ],
       "realmSlug": "alakir"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-19T23:43:08.807Z"
+  "lastUpdated": "2026-11-21T10:26:40.803Z"
 }
