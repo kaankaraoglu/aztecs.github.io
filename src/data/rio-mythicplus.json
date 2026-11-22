@@ -50,6 +50,22 @@
       "realmSlug": "alakir"
     },
     {
+      "name": "Frosteyes",
+      "class": "death-knight",
+      "score": 3311,
+      "topKeys": [
+        "+16 KR",
+        "+16 VSA",
+        "+16 AOF",
+        "+15 MR",
+        "+15 DON",
+        "+14 BV",
+        "+14 RLP",
+        "+14 TOS"
+      ],
+      "realmSlug": "xavius"
+    },
+    {
       "name": "Shaw",
       "class": "rogue",
       "score": 3307,
@@ -64,22 +80,6 @@
         "+12 DON"
       ],
       "realmSlug": "alakir"
-    },
-    {
-      "name": "Frosteyes",
-      "class": "death-knight",
-      "score": 3283,
-      "topKeys": [
-        "+16 KR",
-        "+16 VSA",
-        "+15 MR",
-        "+15 DON",
-        "+14 BV",
-        "+14 RLP",
-        "+14 TOS",
-        "+14 AOF"
-      ],
-      "realmSlug": "xavius"
     },
     {
       "name": "Obscuríty",
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-21T22:34:38.386Z"
+  "lastUpdated": "2026-11-22T23:08:35.353Z"
 }
