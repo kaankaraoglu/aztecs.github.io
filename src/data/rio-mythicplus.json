@@ -84,16 +84,16 @@
     {
       "name": "Obscuríty",
       "class": "warlock",
-      "score": 3160,
+      "score": 3181,
       "topKeys": [
         "+14 RLP",
         "+14 AOF",
+        "+14 MR",
         "+14 DON",
         "+14 KR",
         "+14 BV",
         "+14 TOS",
-        "+13 VSA",
-        "+12 MR"
+        "+13 VSA"
       ],
       "realmSlug": "draenor"
     },
@@ -228,5 +228,5 @@
       ]
     }
   ],
-  "lastUpdated": "2026-11-22T23:08:35.353Z"
+  "lastUpdated": "2026-11-23T13:50:17.643Z"
 }
